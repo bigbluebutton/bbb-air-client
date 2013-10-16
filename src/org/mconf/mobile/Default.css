@@ -1,0 +1,16 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace view "org.mconf.mobile.top.view.*";
+	
+s|Group
+{
+
+}
+view|TopView.topView
+{
+	fontWeight: bold;
+}
+s|Button.toogleButton
+{
+	chromeColor: #A3A3A3;
+}

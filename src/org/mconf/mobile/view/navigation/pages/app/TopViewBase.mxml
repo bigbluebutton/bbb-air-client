@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer    xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" 
+						 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:ui="org.mconf.mobile.view.mic.ui.*" xmlns:ui1="org.mconf.mobile.view.ui.*"
+						 >
+	<s:Group width="100%" height="100%">
+		<s:layout>
+			<s:HorizontalLayout gap="5"
+								paddingBottom="10"
+								paddingLeft="10"
+								paddingRight="10"
+								paddingTop="10"
+								/>
+		</s:layout>
+		<ui1:MicButton id="profileBtn"/>
+		<s:Group width="100%" height="{profileBtn.getStyle('height')}"/>
+		<s:Button id="microfoneBtn"/>		
+	</s:Group>
+</s:SkinnableContainer>

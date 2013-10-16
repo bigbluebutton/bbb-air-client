@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" 
+						 xmlns:mx="library://ns.adobe.com/flex/mx" 
+						 xmlns:ui="org.mconf.mobile.view.mic.ui.*" 
+						 xmlns:ui1="org.mconf.mobile.view.ui.*" 
+						 xmlns:app="org.mconf.mobile.view.navigation.pages.app.*" 
+						 xmlns:navigation="org.mconf.mobile.view.navigation.*" 
+						 xmlns:pages="org.mconf.mobile.view.navigation.pages.*" 
+						 xmlns:view="org.mconf.mobile.core.view.*"
+						 >
+	
+	<fx:Script>
+		<![CDATA[
+			import org.mconf.mobile.view.navigation.pages.app.views.presentation.PresentationView;
+			protected function button2_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		]]>
+	</fx:Script>
+	
+	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+		<s:layout>
+			<s:VerticalLayout gap="0"
+							  paddingBottom="0"
+							  paddingLeft="0"
+							  paddingRight="0"
+							  paddingTop="0"
+							  />
+		</s:layout>
+		<app:TopView id="top" left="0" right="0" top="0" styleName="topView" width="100%" height="50"/>
+		<app:MainNavigatorView id="mainviewnavigator" width="100%" height="100%" firstView="{PresentationView}"/>
+		<app:MenuView id="menu" left="0" right="0" bottom="0" width="100%" height="50"/>
+	</s:Group>
+</view:NoTabView>

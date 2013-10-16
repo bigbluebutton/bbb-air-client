@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						 xmlns:s="library://ns.adobe.com/flex/spark" 
+						 xmlns:mx="library://ns.adobe.com/flex/mx" 
+						 xmlns:ui="org.mconf.mobile.view.mic.ui.*" 
+						 xmlns:ui1="org.mconf.mobile.view.ui.*"
+						 xmlns:view="org.mconf.mobile.core.view.*"
+						 backgroundColor="0xFF0000"
+						 >
+
+</view:NoTabView>
