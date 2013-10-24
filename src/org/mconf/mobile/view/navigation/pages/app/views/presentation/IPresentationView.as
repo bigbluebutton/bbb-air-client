@@ -5,6 +5,6 @@ package org.mconf.mobile.view.navigation.pages.app.views.presentation
 
 	public interface IPresentationView extends IView
 	{
-
+		
 	}
 }

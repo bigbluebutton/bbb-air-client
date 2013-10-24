@@ -22,7 +22,7 @@ package org.mconf.mobile.model
 		public function set microphoneEnabled(value:Boolean):void
 		{
 			_microphoneEnabled = value;
-			changedSignal.dispatch();
+			changedSignal.dispatch(_microphoneEnabled);
 		}
 
 		/**

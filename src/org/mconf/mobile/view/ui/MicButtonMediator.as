@@ -1,12 +1,16 @@
 package org.mconf.mobile.view.ui
 {
 	import org.mconf.mobile.command.MicrophoneEnableSignal;
+	import org.mconf.mobile.model.IUserSettings;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class MicButtonMediator extends Mediator
 	{
+		[Inject]
+		public var userSettings: IUserSettings;
+		
 		[Inject]
 		public var microphoneEnableSignal: MicrophoneEnableSignal;
 				
@@ -21,7 +25,7 @@ package org.mconf.mobile.view.ui
 			view.turnOnMicSignal.add(turnOn);
 			view.turnOffMicSignal.add(turnOff);
 			
-			//todoCollection.changedSignal.add(setTodosOnView);
+			userSettings.changedSignal.add(update);
 		}
 		
 		override public function destroy():void
@@ -39,7 +43,7 @@ package org.mconf.mobile.view.ui
 		 */
 		private function turnOn(): void
 		{
-			microphoneEnableSignal.dispatch(view, true);
+			microphoneEnableSignal.dispatch(true);
 		}
 
 		/**
@@ -48,7 +52,12 @@ package org.mconf.mobile.view.ui
 		 */
 		private function turnOff(): void
 		{
-			microphoneEnableSignal.dispatch(view, false);
+			microphoneEnableSignal.dispatch(false);
+		}
+		
+		private function update(value:Boolean):void
+		{
+			view.selected = value;
 		}
 	}
 }

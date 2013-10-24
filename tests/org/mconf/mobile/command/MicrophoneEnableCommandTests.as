@@ -27,11 +27,13 @@ package org.mconf.mobile.command
 		[Test]
 		public function execute_microphoneEnabledOffAndCheckSelectedProperty(): void
 		{
+			var micButton:MicButton = new MicButton();
+			
 			var command: MicrophoneEnableCommand = createCommand();
 			command.boolean = false;
 			command.execute();
-			
-			assertFalse(command.button.selected);
+						
+			assertFalse(micButton.selected);
 		}
 		
 		/**
@@ -40,11 +42,13 @@ package org.mconf.mobile.command
 		[Test]
 		public function execute_microphoneEnabledOffAndCheckSelectedState(): void
 		{
+			var micButton:MicButton = new MicButton();
+			
 			var command: MicrophoneEnableCommand = createCommand();
 			command.boolean = false;
 			command.execute();
 			
-			assertThat(command.button.currentState, equalTo("unselected"));
+			assertThat(micButton.currentState, equalTo("unselected"));
 		}
 		
 		/**
@@ -53,11 +57,13 @@ package org.mconf.mobile.command
 		[Test]
 		public function execute_microphoneEnabledOnAndCheckSelectedProperty(): void
 		{
+			var micButton:MicButton = new MicButton();
+			
 			var command: MicrophoneEnableCommand = createCommand();
 			command.boolean = true;
 			command.execute();
 			
-			assertTrue(command.button.selected);
+			assertTrue(micButton.selected);
 		}
 		
 		/**
@@ -66,11 +72,13 @@ package org.mconf.mobile.command
 		[Test]
 		public function execute_microphoneEnabledOnAndCheckSelectedState(): void
 		{
+			var micButton:MicButton = new MicButton();
+			
 			var command: MicrophoneEnableCommand = createCommand();
 			command.boolean = true;
 			command.execute();
 			
-			assertThat(command.button.currentState, equalTo("selected"));
+			assertThat(micButton.currentState, equalTo("selected"));
 		}
 		
 		/**
@@ -79,6 +87,8 @@ package org.mconf.mobile.command
 		[Test]
 		public function execute_microphoneEnabledOnThenOffAndCheckIfOff(): void
 		{
+			var micButton:MicButton = new MicButton();
+			
 			var command: MicrophoneEnableCommand = createCommand();
 			command.boolean = true;
 			command.execute();
@@ -87,7 +97,7 @@ package org.mconf.mobile.command
 			command1.boolean = false;
 			command1.execute();
 			
-			assertFalse(command1.button.selected);
+			assertFalse(micButton.selected);
 		}
 		
 		/**
@@ -96,6 +106,8 @@ package org.mconf.mobile.command
 		[Test]
 		public function execute_microphoneEnabledOffThenOnAndCheckIfOn(): void
 		{
+			var micButton:MicButton = new MicButton();
+			
 			var command: MicrophoneEnableCommand = createCommand();
 			command.boolean = false;
 			command.execute();
@@ -104,7 +116,7 @@ package org.mconf.mobile.command
 			command1.boolean = true;
 			command1.execute();
 			
-			assertTrue(command1.button.selected);
+			assertTrue(micButton.selected);
 		}
 		
 		/**
@@ -114,7 +126,6 @@ package org.mconf.mobile.command
 		{
 			var command: MicrophoneEnableCommand = new MicrophoneEnableCommand();
 			command.userSettings = mock(IUserSettings);
-			command.button = new MicButton();
 			return command;
 		}
 	}

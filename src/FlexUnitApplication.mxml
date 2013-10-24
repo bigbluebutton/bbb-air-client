@@ -27,7 +27,7 @@
 			{
 				var firstViewDataVO: FirstViewDataVO = new FirstViewDataVO();
 				firstViewDataVO.tests = currentRunTestSuite();
-				firstViewDataVO.projectName = "mconf-mobile";
+				firstViewDataVO.projectName = "mobile-mconf";
 				firstViewDataVO.portNumber = 8765;
 				return firstViewDataVO;
 			}

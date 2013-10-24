@@ -7,23 +7,21 @@ package org.mconf.mobile.view.ui
 	
 	public class MicButton extends MicButtonBase implements IMicButton
 	{
+		/**
+		 * Dispatched when the user click the button to turn on the microphone
+		 */		
 		private var _turnOnMicSignal: Signal = new Signal();
 		
-		/**
-		 * Dispatched when the user wants to cancel the
-		 * adding or modifying of a todo item.
-		 */
 		public function get turnOnMicSignal(): ISignal
 		{
 			return _turnOnMicSignal;
 		}
-		
+
+		/**
+		 * Dispatched when the user click the button to turn off the microphone
+		 */
 		private var _turnOffMicSignal: Signal = new Signal();
 		
-		/**
-		 * Dispatched when the user wants to save the
-		 * description entered to the to do list.
-		 */
 		public function get turnOffMicSignal(): ISignal
 		{
 			return _turnOffMicSignal;
@@ -43,7 +41,6 @@ package org.mconf.mobile.view.ui
 		
 		protected function change(e:MouseEvent):void
 		{
-			// TODO: add validation to know if mic is on or not
 			if(this.selected)
 			{
 				turnOffMicSignal.dispatch();

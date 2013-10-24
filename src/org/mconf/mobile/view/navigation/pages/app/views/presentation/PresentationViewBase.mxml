@@ -5,7 +5,19 @@
 						 xmlns:ui="org.mconf.mobile.view.mic.ui.*" 
 						 xmlns:ui1="org.mconf.mobile.view.ui.*"
 						 xmlns:view="org.mconf.mobile.core.view.*"
-						 backgroundColor="0xFF0000"
 						 >
-
+	<fx:Script>
+		<![CDATA[
+			import org.mconf.mobile.view.navigation.pages.ActionsENUM;
+			import org.mconf.mobile.view.navigation.pages.PagesENUM;
+		]]>
+	</fx:Script>
+	<!--<s:VideoPlayer 
+		source="RTMP://143.54.10.122/bigbluebutton/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1382614104437"
+		loop="true"/>
+	-->
+	
+	<s:VideoDisplay width="320" height="240" source="RTMP://143.54.10.122/video/183f0bf3a0982a127bdb8161e0c44eb696b3e75c-1382643713034/320x240-m1htat3ibmcq-1382643432145" autoPlay="true"/>
+	
+	<ui1:NavigationButton action="{ActionsENUM.CLOSE}" />
 </view:NoTabView>

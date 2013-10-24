@@ -12,8 +12,8 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import org.mconf.mobile.view.navigation.pages.PagesENUM;
 			import org.mconf.mobile.view.navigation.pages.app.views.presentation.PresentationView;
-			import org.mconf.mobile.view.navigation.pages.login.LoginPageView;
 			protected function button2_clickHandler(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
@@ -31,8 +31,25 @@
 							  paddingTop="0"
 							  />
 		</s:layout>
-		<app:TopView id="top" left="0" right="0" top="0" styleName="topView" width="100%" height="50"/>
-		<app:MainNavigatorView id="mainviewnavigator" width="100%" height="100%" firstView="{PresentationView}"/>
-		<app:MenuView id="menu" left="0" right="0" bottom="0" width="100%" height="50"/>
+		<s:Group width="100%" height="50%">
+			<s:Rect height="100%" width="100%">
+				<s:fill>
+					<s:RadialGradient>
+						<s:entries>
+							<s:GradientEntry color="0x27525B" ratio="0.00" alpha="1"/>
+							<s:GradientEntry color="0x142C31" ratio="1.00" alpha="1"/>
+						</s:entries>
+					</s:RadialGradient>
+				</s:fill>
+			</s:Rect>
+			<s:Image horizontalCenter="0" source="assets/imgs/mconf-white-transp.png"
+					 verticalCenter="0"/>
+		</s:Group>
+		<s:Group width="100%" height="50%">
+			<s:TextInput y="11" width="60%" horizontalCenter="0" prompt="username"/>
+			<s:TextInput y="53" width="60%" horizontalCenter="0" prompt="password"/>
+			<s:TextInput y="113" width="60%" horizontalCenter="0" prompt="sala"/>
+			<ui1:NavigationButton pageToNavigate="{PagesENUM.APPLICATION}" y="177" width="60%" label="Entrar" horizontalCenter="0"/>
+		</s:Group>
 	</s:Group>
 </view:NoTabView>

@@ -26,7 +26,10 @@
 			import org.mconf.mobile.view.navigation.pages.app.TopConfig;
 			import org.mconf.mobile.view.navigation.pages.app.views.presentation.PresentationConfig;
 			import org.mconf.mobile.view.navigation.pages.app.views.videochat.VideoChatConfig;
+			import org.mconf.mobile.view.navigation.pages.login.LoginPageConfig;
+			import org.mconf.mobile.view.navigation.pages.login.LoginPageView;
 			import org.mconf.mobile.view.ui.MicButtonConfig;
+			import org.mconf.mobile.view.ui.NavigationButtonConfig;
 			import org.osmf.logging.Log;
 			import org.osmf.logging.Logger;
 			import org.osmf.logging.LoggerFactory;
@@ -59,11 +62,13 @@
 										.configure(AppPageConfig)
 											.configure(TopConfig)
 											.configure(MainNavigatorConfig)
-											.configure(MenuConfig)				
-									.configure(PresentationConfig)			
-									.configure(VideoChatConfig)	
-					
+												.configure(PresentationConfig)
+											.configure(MenuConfig)	
+										.configure(LoginPageConfig)
+												
+									.configure(VideoChatConfig)						
 									.configure(MicButtonConfig)
+									.configure(NavigationButtonConfig)
 					
 					.configure(new ContextView(this));
 				
@@ -92,5 +97,6 @@
 			}
 		]]>
 	</fx:Script>
-	<navigation:PagesNavigatorView width="100%" height="100%" firstView="{AppPageView}"/>
+	<navigation:PagesNavigatorView width="100%" height="100%"/>
+	
 </s:Application>

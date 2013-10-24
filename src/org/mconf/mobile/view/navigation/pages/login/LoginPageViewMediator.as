@@ -1,19 +1,22 @@
-package org.mconf.mobile.view.navigation.pages.app.views.presentation
+package org.mconf.mobile.view.navigation.pages.login
 {
-	import flash.display.DisplayObject;
-	
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
-	public class PresentationViewMediator extends Mediator
+	public class LoginPageViewMediator extends Mediator
 	{
 		[Inject]
-		public var view: IPresentationView;
+		public var view: ILoginPageView;
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.mconf.mobile").info(String(this));
+		}
+		
+		protected function test():void
+		{
+			
 		}
 		
 		override public function destroy():void
