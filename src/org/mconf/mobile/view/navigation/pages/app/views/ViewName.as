@@ -1,10 +1,10 @@
-package org.mconf.mobile.view.navigation.pages
+package org.mconf.mobile.view.navigation.pages.app.views
 {
-	public class PageName extends Object
+	public class ViewName extends Object
 	{
 		protected var _name:String
 		
-		public function PageName(value:*="")
+		public function ViewName(value:*="")
 		{
 			_name = value;
 		}

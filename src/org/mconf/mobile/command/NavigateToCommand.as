@@ -1,17 +1,20 @@
 package org.mconf.mobile.command
 {
+	import org.hamcrest.core.throws;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.view.navigation.pages.ActionsENUM;
+	import org.mconf.mobile.view.navigation.pages.PagesENUM;
+	import org.mconf.mobile.view.navigation.pages.app.views.ViewsENUM;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
-	public class NavigateToPageCommand extends Command
+	public class NavigateToCommand extends Command
 	{		
 		[Inject]
 		public var userSession: IUserSession;
 		
 		[Inject]
-		public var pageName: String;
+		public var to: String;
 		
 		[Inject]
 		public var actionName: Object;
@@ -19,9 +22,9 @@ package org.mconf.mobile.command
 		override public function execute():void
 		{
 			// update model
-			if(pageName != null && pageName != "")
+			if(to != null && to != "")
 			{
-				userSession.pushPage(pageName);
+				userSession.pushPage(to);
 			}
 			
 			if(actionName != null && actionName != "")

@@ -6,7 +6,7 @@
 			   applicationDPI="160"
 			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.mconf.mobile.view.navigation.*" xmlns:app="org.mconf.mobile.view.navigation.pages.app.*"  
 			   >
-	<fx:Style source="org/mconf/mobile/Default.css"/>
+	<fx:Style source="Default.css"/>
 	
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -20,25 +20,21 @@
 			import org.mconf.mobile.util.MconfLoggerFactory;
 			import org.mconf.mobile.view.navigation.PagesNavigatorConfig;
 			import org.mconf.mobile.view.navigation.pages.app.AppPageConfig;
-			import org.mconf.mobile.view.navigation.pages.app.AppPageView;
 			import org.mconf.mobile.view.navigation.pages.app.MainNavigatorConfig;
 			import org.mconf.mobile.view.navigation.pages.app.MenuConfig;
 			import org.mconf.mobile.view.navigation.pages.app.TopConfig;
 			import org.mconf.mobile.view.navigation.pages.app.views.presentation.PresentationConfig;
 			import org.mconf.mobile.view.navigation.pages.app.views.videochat.VideoChatConfig;
 			import org.mconf.mobile.view.navigation.pages.login.LoginPageConfig;
-			import org.mconf.mobile.view.navigation.pages.login.LoginPageView;
 			import org.mconf.mobile.view.ui.MicButtonConfig;
 			import org.mconf.mobile.view.ui.NavigationButtonConfig;
 			import org.osmf.logging.Log;
 			import org.osmf.logging.Logger;
-			import org.osmf.logging.LoggerFactory;
 			
 			import robotlegs.bender.bundles.mvcs.MVCSBundle;
 			import robotlegs.bender.extensions.contextView.ContextView;
 			import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 			import robotlegs.bender.framework.api.IContext;
-			import robotlegs.bender.framework.api.ILogger;
 			import robotlegs.bender.framework.api.LogLevel;
 			import robotlegs.bender.framework.impl.Context;
 			

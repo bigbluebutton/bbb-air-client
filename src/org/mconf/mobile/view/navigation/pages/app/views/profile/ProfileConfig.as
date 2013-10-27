@@ -1,7 +1,5 @@
-package org.mconf.mobile.view.ui
+package org.mconf.mobile.view.navigation.pages.app.views.profile
 {
-	import org.mconf.mobile.command.NavigateToCommand;
-	import org.mconf.mobile.command.NavigateToSignal;
 	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
@@ -9,7 +7,7 @@ package org.mconf.mobile.view.ui
 	import robotlegs.bender.framework.api.IInjector;
 
 
-	public class NavigationButtonConfig implements IConfig
+	public class ProfileConfig implements IConfig
 	{
 		[Inject]
 		public var injector: IInjector;
@@ -42,7 +40,7 @@ package org.mconf.mobile.view.ui
 		 */
 		private function mediators(): void
 		{
-			mediatorMap.map(INavigationButton).toMediator(NavigationButtonMediator);
+			mediatorMap.map(IProfileView).toMediator(ProfileViewMediator);
 		}
 		
 		/**
@@ -50,7 +48,7 @@ package org.mconf.mobile.view.ui
 		 */
 		private function signals(): void
 		{
-			signalCommandMap.map(NavigateToSignal).toCommand(NavigateToCommand);
+			//signalCommandMap.map(ButtonTestSignal).toCommand(ButtonTestCommand);
 		}	
 	}
 }

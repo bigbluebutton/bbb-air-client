@@ -1,6 +1,7 @@
 /* CSS file */
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace view "org.mconf.mobile.top.view.*";
+@namespace ui "org.mconf.mobile.view.ui.*";
 	
 s|Group
 {
@@ -13,4 +14,12 @@ view|TopView.topView
 s|Button.toogleButton
 {
 	chromeColor: #A3A3A3;
+}
+ui|MicButton.microfone:selected
+{
+	skin: Embed("assets/imgs/fake/microphone.png");
+}
+ui|MicButton.microfone:unselected
+{
+	skin: Embed("assets/imgs/fake/microphone-off.png");
 }

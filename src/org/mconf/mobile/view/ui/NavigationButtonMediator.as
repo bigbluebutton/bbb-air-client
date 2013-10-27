@@ -1,6 +1,6 @@
 package org.mconf.mobile.view.ui
 {
-	import org.mconf.mobile.command.NavigateToPageSignal;
+	import org.mconf.mobile.command.NavigateToSignal;
 	import org.mconf.mobile.model.IUserSession;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -11,7 +11,7 @@ package org.mconf.mobile.view.ui
 		public var userSession: IUserSession;
 		
 		[Inject]
-		public var pageChangeSignal: NavigateToPageSignal;
+		public var navigateToPageSignal: NavigateToSignal;
 				
 		[Inject]
 		public var view: INavigationButton;
@@ -36,7 +36,7 @@ package org.mconf.mobile.view.ui
 		 */
 		private function navigate(): void
 		{
-			pageChangeSignal.dispatch(view.pageToNavigate, view.action);
+			navigateToPageSignal.dispatch(view.navigateTo, view.action);
 		}
 	}
 }

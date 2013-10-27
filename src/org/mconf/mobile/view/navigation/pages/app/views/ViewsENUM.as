@@ -1,29 +1,32 @@
-package org.mconf.mobile.view.navigation.pages
+package org.mconf.mobile.view.navigation.pages.app.views
 {
 	import flash.utils.Dictionary;
 	
-	import org.mconf.mobile.view.navigation.pages.app.AppPageView;
-	import org.mconf.mobile.view.navigation.pages.login.LoginPageView;
+	import org.mconf.mobile.view.navigation.pages.app.views.profile.ProfileView;
 
-	public class PagesENUM
+	public class ViewsENUM
 	{
-		public static const APPLICATION:String = "app";
-		public static const LOGIN:String = "login";
+		public static const PROFILE:String = "profile";
+		public static const CHAT_ROOM:String = "chatroom";
+		public static const PARTICIPANTS:String = "participants";
+		public static const CAMERAS:String = "cameras";
 		
 		protected static function init():void
 		{
 			if(!dicInitiated) 
 			{
-				dic[APPLICATION] = AppPageView;
-				dic[LOGIN] = LoginPageView;
+				dic[PROFILE] = ProfileView;
+				//dic[CHAT_ROOM] = LoginPageView;
+				//dic[PARTICIPANTS] = LoginPageView;
+				//dic[CAMERAS] = LoginPageView;
 				
 				dicInitiated = true;
 			}
 		}
-				
+		
 		protected static var dic:Dictionary = new Dictionary();
 		protected static var dicInitiated:Boolean = false;
-				
+		
 		public static function contain(name:String):Boolean
 		{
 			init();

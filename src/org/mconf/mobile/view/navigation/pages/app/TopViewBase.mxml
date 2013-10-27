@@ -12,8 +12,8 @@
 								paddingTop="10"
 								/>
 		</s:layout>
-		<ui1:MicButton id="profileBtn" width="30" height="30"/>
+		<ui1:NavigationButton id="profileBtn" width="30" height="30" navigateTo="profile"/>		
 		<s:Group width="100%" height="30"/>
-		<s:Button id="microfoneBtn" width="30" height="30"/>		
+		<ui1:MicButton id="microfoneBtn" width="30" height="30"/>
 	</s:Group>
 </s:SkinnableContainer>

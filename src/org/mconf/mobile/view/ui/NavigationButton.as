@@ -41,16 +41,16 @@ package org.mconf.mobile.view.ui
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 		}
 		
-		protected var _pageToNavigate:String = "";
+		protected var _navigateTo:String = "";
 
-		public function get pageToNavigate():String
+		public function get navigateTo():String
 		{
-			return _pageToNavigate;
+			return _navigateTo;
 		}
 
-		public function set pageToNavigate(value:String):void
+		public function set navigateTo(value:String):void
 		{
-			_pageToNavigate = value;
+			_navigateTo = value;
 		}
 		
 		protected var _action:String = "";

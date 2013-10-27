@@ -49,7 +49,7 @@
 			<s:TextInput y="11" width="60%" horizontalCenter="0" prompt="username"/>
 			<s:TextInput y="53" width="60%" horizontalCenter="0" prompt="password"/>
 			<s:TextInput y="113" width="60%" horizontalCenter="0" prompt="sala"/>
-			<ui1:NavigationButton pageToNavigate="{PagesENUM.APPLICATION}" y="177" width="60%" label="Entrar" horizontalCenter="0"/>
+			<ui1:NavigationButton navigateTo="{PagesENUM.APPLICATION}" y="177" width="60%" horizontalCenter="0"/>
 		</s:Group>
 	</s:Group>
 </view:NoTabView>

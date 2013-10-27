@@ -17,7 +17,9 @@ package org.mconf.mobile.view.ui
 		[Inject]
 		public var view: IMicButton;
 		
-		
+		/**
+		 * Initialize listeners and Mediator initial state
+		 */
 		override public function initialize():void
 		{
 			Log.getLogger("org.mconf.mobile").info(String(this));
@@ -26,8 +28,13 @@ package org.mconf.mobile.view.ui
 			view.turnOffMicSignal.add(turnOff);
 			
 			userSettings.changedSignal.add(update);
+			
+			view.selected = userSettings.microphoneEnabled;
 		}
 		
+		/**
+		 * Destroy view and listeners
+		 */
 		override public function destroy():void
 		{
 			super.destroy();
@@ -35,11 +42,12 @@ package org.mconf.mobile.view.ui
 			view.dispose();
 			
 			view = null;
+			
+			userSettings.changedSignal.remove(update);
 		}
 		
 		/**
-		 * Cancels the adding or modifying of 
-		 * a todo.
+		 * Handle events to turnOn microphone
 		 */
 		private function turnOn(): void
 		{
@@ -47,14 +55,16 @@ package org.mconf.mobile.view.ui
 		}
 
 		/**
-		 * Cancels the adding or modifying of 
-		 * a todo.
+		 * Handle events to turnOff microphone
 		 */
 		private function turnOff(): void
 		{
 			microphoneEnableSignal.dispatch(false);
 		}
 		
+		/**
+		 * Update the view when there is a chenge in the model
+		 */ 
 		private function update(value:Boolean):void
 		{
 			view.selected = value;

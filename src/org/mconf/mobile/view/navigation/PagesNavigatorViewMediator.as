@@ -2,7 +2,6 @@ package org.mconf.mobile.view.navigation
 {
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.util.NoTransition;
-	import org.mconf.mobile.view.navigation.pages.PageName;
 	import org.mconf.mobile.view.navigation.pages.PagesENUM;
 	import org.osmf.logging.Log;
 	
@@ -22,7 +21,7 @@ package org.mconf.mobile.view.navigation
 			
 			userSession.pageChangedSignal.add(changePage);
 			
-			view.pushView(PagesENUM.getClassfromPageName(PagesENUM.LOGIN.toString()), null, null, null);
+			view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, null);
 		}
 		
 		protected function changePage(pageName:String, pageRemoved:Boolean):void
@@ -33,7 +32,7 @@ package org.mconf.mobile.view.navigation
 			}
 			else if(pageName != null && pageName != "") 
 			{
-				view.pushView(PagesENUM.getClassfromPageName(pageName));
+				view.pushView(PagesENUM.getClassfromName(pageName));
 			}
 		}
 		

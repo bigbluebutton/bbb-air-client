@@ -7,8 +7,8 @@ package org.mconf.mobile.view.ui
 	{
 		function get navigationSignal(): ISignal
 			
-		function get pageToNavigate():String
-		function set pageToNavigate(value:String):void
+		function get navigateTo():String
+		function set navigateTo(value:String):void
 			
 		function get action():String
 		function set action(value:String):void
