@@ -1,13 +1,15 @@
-package org.mconf.mobile.view.navigation.pages.login
+package org.mconf.mobile.view.navigation.pages.profile
 {
+	import flash.display.DisplayObject;
+	
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
-	public class LoginPageViewMediator extends Mediator
+	public class ProfileViewMediator extends Mediator
 	{
 		[Inject]
-		public var view: ILoginPageView;
+		public var view: IProfileView;
 		
 		override public function initialize():void
 		{

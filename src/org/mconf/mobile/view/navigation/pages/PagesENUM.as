@@ -2,20 +2,32 @@ package org.mconf.mobile.view.navigation.pages
 {
 	import flash.utils.Dictionary;
 	
-	import org.mconf.mobile.view.navigation.pages.app.AppPageView;
+	import org.mconf.mobile.view.navigation.pages.chat.ChatView;
 	import org.mconf.mobile.view.navigation.pages.login.LoginPageView;
+	import org.mconf.mobile.view.navigation.pages.participants.ParticipantsView;
+	import org.mconf.mobile.view.navigation.pages.presentation.PresentationView;
+	import org.mconf.mobile.view.navigation.pages.profile.ProfileView;
+	import org.mconf.mobile.view.navigation.pages.videochat.VideoChatView;
 
 	public class PagesENUM
 	{
-		public static const APPLICATION:String = "app";
+		public static const PRESENTATION:String = "presentation";
 		public static const LOGIN:String = "login";
+		public static const PROFILE:String = "profile";
+		public static const VIDEO_CHAT:String = "videochat";
+		public static const CHAT:String = "chat";
+		public static const PARTICIPANTS:String = "participants";
 		
 		protected static function init():void
 		{
 			if(!dicInitiated) 
 			{
-				dic[APPLICATION] = AppPageView;
+				dic[PRESENTATION] = PresentationView;
 				dic[LOGIN] = LoginPageView;
+				dic[PROFILE] = ProfileView;
+				dic[VIDEO_CHAT] = VideoChatView;
+				dic[CHAT] = ChatView;
+				dic[PARTICIPANTS] = ParticipantsView;
 				
 				dicInitiated = true;
 			}

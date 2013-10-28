@@ -23,3 +23,10 @@ ui|MicButton.microfone:unselected
 {
 	skin: Embed("assets/imgs/fake/microphone-off.png");
 }
+global
+{
+	font-family: Verdana;
+	font-size: 14;
+	vertical-align: middle;
+	font-weight: normal;
+}

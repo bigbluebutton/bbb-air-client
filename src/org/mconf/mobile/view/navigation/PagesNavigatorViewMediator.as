@@ -6,6 +6,11 @@ package org.mconf.mobile.view.navigation
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
+	
+	import spark.components.ViewNavigator;
+	import spark.transitions.SlideViewTransition;
+	import spark.transitions.ViewTransitionBase;
+	import spark.transitions.ViewTransitionDirection;
 
 	public class PagesNavigatorViewMediator extends Mediator
 	{
@@ -21,18 +26,33 @@ package org.mconf.mobile.view.navigation
 			
 			userSession.pageChangedSignal.add(changePage);
 			
-			view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, null);
+			var transition:SlideViewTransition = new SlideViewTransition();
+			transition.duration = 300;
+			transition.direction = ViewTransitionDirection.DOWN;
+			view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
 		}
 		
-		protected function changePage(pageName:String, pageRemoved:Boolean):void
+		protected function changePage(pageName:String, pageRemoved:Boolean = false, transition:ViewTransitionBase = null):void
 		{			
 			if(pageRemoved)
 			{
+				if(transition != null) {
+					var slideRight:SlideViewTransition = new SlideViewTransition();
+					slideRight.duration = 300;
+					slideRight.direction = ViewTransitionDirection.RIGHT;
+					transition = slideRight;
+				}
 				view.popView();
 			}
 			else if(pageName != null && pageName != "") 
 			{
-				view.pushView(PagesENUM.getClassfromName(pageName));
+				if(transition != null) {
+					var slideLeft:SlideViewTransition = new SlideViewTransition();
+					slideLeft.duration = 300;
+					slideLeft.direction = ViewTransitionDirection.LEFT;
+					transition = slideLeft;
+				}
+				view.pushView(PagesENUM.getClassfromName(pageName), null, null, transition);
 			}
 		}
 		

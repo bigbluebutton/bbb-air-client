@@ -36,8 +36,12 @@ package org.mconf.mobile.model
 		
 		public function pushPage(value:String):void
 		{
-			_listPages.addItem(value);
-			_pageChangedSignal.dispatch(currentPage, false);
+			if(value != currentPage)
+			{
+				_listPages.addItem(value);
+				var removeView:Boolean = false;
+				_pageChangedSignal.dispatch(currentPage, removeView);
+			}
 		}
 		
 		public function popPage():void
@@ -45,7 +49,8 @@ package org.mconf.mobile.model
 			if(_listPages.length > 0)
 			{
 				_listPages.removeItemAt(_listPages.length-1);
-				_pageChangedSignal.dispatch(currentPage, true);
+				var removeView:Boolean = true;
+				_pageChangedSignal.dispatch(currentPage, removeView);
 			}				
 		}
 	}

@@ -1,5 +1,7 @@
 package org.mconf.mobile.view.ui
 {
+	import mx.core.IUIComponent;
+	
 	import org.mconf.mobile.core.view.IView;
 	import org.osflash.signals.ISignal;
 
@@ -12,5 +14,10 @@ package org.mconf.mobile.view.ui
 			
 		function get action():String
 		function set action(value:String):void
+			
+		function get currentState():String
+		function set currentState(value:String):void
+			
+		function get states():Array
 	}
 }

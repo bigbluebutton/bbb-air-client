@@ -4,7 +4,7 @@
 			   xmlns:top="org.mconf.mobile.top.view.*"
 			   xmlns:ui="org.mconf.mobile.view.navigation.ui.*"
 			   applicationDPI="160"
-			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.mconf.mobile.view.navigation.*" xmlns:app="org.mconf.mobile.view.navigation.pages.app.*"  
+			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.mconf.mobile.view.navigation.*" xmlns:presentation="org.mconf.mobile.view.navigation.pages.presentation.*"  
 			   >
 	<fx:Style source="Default.css"/>
 	
@@ -19,13 +19,12 @@
 			import org.mconf.mobile.AppConfig;
 			import org.mconf.mobile.util.MconfLoggerFactory;
 			import org.mconf.mobile.view.navigation.PagesNavigatorConfig;
-			import org.mconf.mobile.view.navigation.pages.app.AppPageConfig;
-			import org.mconf.mobile.view.navigation.pages.app.MainNavigatorConfig;
-			import org.mconf.mobile.view.navigation.pages.app.MenuConfig;
-			import org.mconf.mobile.view.navigation.pages.app.TopConfig;
-			import org.mconf.mobile.view.navigation.pages.app.views.presentation.PresentationConfig;
-			import org.mconf.mobile.view.navigation.pages.app.views.videochat.VideoChatConfig;
+			import org.mconf.mobile.view.navigation.pages.chat.ChatConfig;
 			import org.mconf.mobile.view.navigation.pages.login.LoginPageConfig;
+			import org.mconf.mobile.view.navigation.pages.participants.ParticipantsConfig;
+			import org.mconf.mobile.view.navigation.pages.presentation.PresentationConfig;
+			import org.mconf.mobile.view.navigation.pages.profile.ProfileConfig;
+			import org.mconf.mobile.view.navigation.pages.videochat.VideoChatConfig;
 			import org.mconf.mobile.view.ui.MicButtonConfig;
 			import org.mconf.mobile.view.ui.NavigationButtonConfig;
 			import org.osmf.logging.Log;
@@ -55,14 +54,13 @@
 					.install(MVCSBundle, SignalCommandMapExtension)
 									.configure(AppConfig)
 									.configure(PagesNavigatorConfig)
-										.configure(AppPageConfig)
-											.configure(TopConfig)
-											.configure(MainNavigatorConfig)
-												.configure(PresentationConfig)
-											.configure(MenuConfig)	
+										.configure(PresentationConfig)
 										.configure(LoginPageConfig)
-												
-									.configure(VideoChatConfig)						
+										.configure(ChatConfig)
+										.configure(VideoChatConfig)
+										.configure(ProfileConfig)
+										.configure(ParticipantsConfig)		
+									
 									.configure(MicButtonConfig)
 									.configure(NavigationButtonConfig)
 					
@@ -94,5 +92,4 @@
 		]]>
 	</fx:Script>
 	<navigation:PagesNavigatorView width="100%" height="100%"/>
-	
 </s:Application>

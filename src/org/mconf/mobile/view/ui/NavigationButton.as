@@ -5,8 +5,10 @@ package org.mconf.mobile.view.ui
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
-	public class NavigationButton extends NavigationButtonBase implements INavigationButton
-	{
+	import spark.components.Group;
+	
+	public class NavigationButton extends Group implements INavigationButton
+	{		
 		private var _navigationSignal: Signal = new Signal();
 		
 		/**
@@ -31,8 +33,13 @@ package org.mconf.mobile.view.ui
 		
 		protected function onClick(e:MouseEvent):void
 		{
+			navigate();
+		}	
+		
+		protected function navigate():void
+		{
 			_navigationSignal.dispatch();
-		}		
+		}
 		
 		public function dispose():void
 		{
