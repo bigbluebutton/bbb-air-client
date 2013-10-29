@@ -1,5 +1,9 @@
 package org.mconf.mobile
 {
+	import org.mconf.mobile.core.IJoinService;
+	import org.mconf.mobile.core.JoinService;
+	import org.mconf.mobile.model.ConferenceParameters;
+	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserSettings;
 	import org.mconf.mobile.model.UserSession;
@@ -17,6 +21,8 @@ package org.mconf.mobile
 		{
 			injector.map(IUserSettings).toSingleton(UserSettings);
 			injector.map(IUserSession).toSingleton(UserSession);
+			injector.map(IConferenceParameters).toSingleton(ConferenceParameters);
+			injector.map(IJoinService).toType(JoinService);
 		}
 	}
 }

@@ -25,6 +25,7 @@
 			import org.mconf.mobile.view.navigation.pages.presentation.PresentationConfig;
 			import org.mconf.mobile.view.navigation.pages.profile.ProfileConfig;
 			import org.mconf.mobile.view.navigation.pages.videochat.VideoChatConfig;
+			import org.mconf.mobile.view.ui.LoginButtonConfig;
 			import org.mconf.mobile.view.ui.MicButtonConfig;
 			import org.mconf.mobile.view.ui.NavigationButtonConfig;
 			import org.osmf.logging.Log;
@@ -62,6 +63,7 @@
 										.configure(ParticipantsConfig)		
 									
 									.configure(MicButtonConfig)
+									.configure(LoginButtonConfig)
 									.configure(NavigationButtonConfig)
 					
 					.configure(new ContextView(this));

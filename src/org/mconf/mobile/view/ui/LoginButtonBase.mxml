@@ -13,5 +13,5 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:Button left="0" right="0" top="0" bottom="0" label="Entrar" />
+	<s:Button left="0" right="0" top="0" bottom="0" label="Log in" />
 </ui:NavigationButton>
