@@ -35,7 +35,7 @@ package org.mconf.mobile.view.ui
 			trace("Login get clicked, dispatching signal");
 			
 			// TEMPORARY CODE!!!
-			var url:String = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=random-9602927&fullName=air&password=ap&checksum=27065b2ba7da98274c894672306c137d1d63cb62";
+			var url:String = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
 			loginSignal.dispatch(url);
 		}		
 		

@@ -18,6 +18,7 @@ package org.mconf.mobile.core
 		private var _urlRequest:URLRequest = null;
 		private var _successfullyJoinedMeetingSignal:Signal = new Signal();
 		private var _unsuccessfullyJoinedMeetingSignal:Signal = new Signal();
+		private var _enterUrl:String;
 		
 		public function JoinService() {
 		}
@@ -30,7 +31,7 @@ package org.mconf.mobile.core
 			return _unsuccessfullyJoinedMeetingSignal;
 		}
 		
-		public function load(joinUrl:String):void {
+		public function load(joinUrl:String):void {			
 			_urlRequest = new URLRequest( joinUrl );
 			_urlRequest.method = URLRequestMethod.GET;
 			_urlRequest.manageCookies = true;
@@ -40,14 +41,27 @@ package org.mconf.mobile.core
 			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
 			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, joinIOErrorHandler );
 			urlLoader.load( _urlRequest );
+			
+			setEnterUrl(joinUrl);
+		}
+		
+		/**
+		 * \TODO get the enter URL from config.xml
+		 */
+		private function setEnterUrl(joinUrl:String):void {
+			var reg:RegExp = /(?P<protocol>[a-zA-Z]+) : \/\/  (?P<host>[^:\/]*) (:(?P<port>\d+))?  ((?P<path>[^?]*))? ((?P<parameters>.*))? /x;
+			var results:Array = reg.exec(joinUrl);
+			trace(ObjectUtil.toString(results));
+			_enterUrl = results.protocol + "://" + results.host + (results.port.length > 0? ":" + results.port: "") + results.path.replace("/join", "/enter");
+			trace("Enter URL: " + _enterUrl);
 		}
 		
 		private function httpStatusHandler(e:HTTPStatusEvent):void {
-			// doing nothing here
+			// do nothing here
 		}
 		
 		private function joinHandleComplete(e:Event):void {
-			enter("http://test-install.blindsidenetworks.com/bigbluebutton/api/enter");
+			enter(_enterUrl);
 		}
 		
 		private function joinIOErrorHandler(e:IOErrorEvent):void {
@@ -73,14 +87,10 @@ package org.mconf.mobile.core
 		private function enterHandleComplete(e:Event):void {
 			trace("JoinService::enterHandleComplete()");
 			var xml:XML = new XML(e.target.data);
+			trace(xml);
 			
 			var returncode:String = xml.returncode;
-			if (returncode == 'FAILED') {
-				trace("Join FAILED");
-				trace(ObjectUtil.toString(e));
-				
-				unsuccessfullyJoinedMeetingSignal.dispatch("Add some reason here!");
-			} else if (returncode == 'SUCCESS') {
+			if (returncode == 'SUCCESS') {
 				trace("Join SUCCESS");
 				var user:Object = {
 						username:xml.fullname, 
@@ -112,6 +122,11 @@ package org.mconf.mobile.core
 				}
 				trace("Dispatching successfullyJoinedMeetingSignal");
 				successfullyJoinedMeetingSignal.dispatch(user);
+			} else {
+				trace("Join FAILED");
+				trace(ObjectUtil.toString(e));
+				
+				unsuccessfullyJoinedMeetingSignal.dispatch("Add some reason here!");
 			}
 		}
 		

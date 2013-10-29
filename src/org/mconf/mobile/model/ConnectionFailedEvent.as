@@ -1,6 +1,8 @@
 package org.mconf.mobile.model
 {
-	public class ConnectionFailedEvent
+	import flash.events.Event;
+
+	public class ConnectionFailedEvent extends Event
 	{
 
 		public static const UNKNOWN_REASON:String = "unknownReason";

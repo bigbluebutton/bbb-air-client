@@ -1,6 +1,8 @@
 package org.mconf.mobile.command
 {
+	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IJoinService;
+	import org.mconf.mobile.model.ConferenceParameters;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSettings;
 	import org.mconf.mobile.view.ui.ILoginButton;
@@ -19,6 +21,9 @@ package org.mconf.mobile.command
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
+		[Inject]
+		public var connection: IBigBlueButtonConnection;
+		
 		override public function execute():void
 		{
 			joinService.successfullyJoinedMeetingSignal.add(successfullyJoined);
@@ -30,6 +35,9 @@ package org.mconf.mobile.command
 		private function successfullyJoined(user:Object):void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":successfullyJoined()");
 			conferenceParameters.load(user);
+			
+			connection.uri = "rtmp://test-install.blindsidenetworks.com/bigbluebutton";
+			connection.connect(conferenceParameters);
 		}
 		
 		private function unsuccessfullyJoined(reason:String):void {

@@ -1,5 +1,7 @@
 package org.mconf.mobile
 {
+	import org.mconf.mobile.core.BigBlueButtonConnection;
+	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IJoinService;
 	import org.mconf.mobile.core.JoinService;
 	import org.mconf.mobile.model.ConferenceParameters;
@@ -23,6 +25,7 @@ package org.mconf.mobile
 			injector.map(IUserSession).toSingleton(UserSession);
 			injector.map(IConferenceParameters).toSingleton(ConferenceParameters);
 			injector.map(IJoinService).toType(JoinService);
+			injector.map(IBigBlueButtonConnection).toSingleton(BigBlueButtonConnection);
 		}
 	}
 }
