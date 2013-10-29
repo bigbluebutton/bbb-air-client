@@ -29,13 +29,13 @@ package org.mconf.mobile.command
 		public var connectSignal: ConnectSignal;
 		
 		override public function execute():void
-		{			
-			joinService.successfullyJoinedMeetingSignal.add(successfullyJoined);
-			joinService.unsuccessfullyJoinedMeetingSignal.add(unsuccessfullyJoined);
-			
-			joinService.load(url);
+		{
+			joinService.successJoinedSignal.add(successfullyJoined);
+			joinService.unsuccessJoinedSignal.add(unsuccessfullyJoined);
 			
 			userUISession.loading = true;
+
+			joinService.load(url);
 		}
 
 		private function successfullyJoined(user:Object):void {

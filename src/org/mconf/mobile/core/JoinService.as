@@ -16,84 +16,58 @@ package org.mconf.mobile.core
 	public class JoinService implements IJoinService
 	{
 		private var _urlRequest:URLRequest = null;
-		private var _successfullyJoinedMeetingSignal:Signal = new Signal();
-		private var _unsuccessfullyJoinedMeetingSignal:Signal = new Signal();
-		private var _enterUrl:String;
+		private var _successJoinedSignal:Signal = new Signal();
+		private var _unsuccessJoinedSignal:Signal = new Signal();
+		private var _joinUrl:String;
 		
-		public function JoinService() {
-		}
-		
-		public function get successfullyJoinedMeetingSignal():ISignal {
-			return _successfullyJoinedMeetingSignal;
+		public function get successJoinedSignal():ISignal {
+			return _successJoinedSignal;
 		}
 
-		public function get unsuccessfullyJoinedMeetingSignal():ISignal {
-			return _unsuccessfullyJoinedMeetingSignal;
+		public function get unsuccessJoinedSignal():ISignal {
+			return _unsuccessJoinedSignal;
 		}
 		
-		public function load(joinUrl:String):void {			
-			_urlRequest = new URLRequest( joinUrl );
-			_urlRequest.method = URLRequestMethod.GET;
-			_urlRequest.manageCookies = true;
+		protected function fail(reason:String):void { 
+			trace("Join failed: " + reason);
+			unsuccessJoinedSignal.dispatch(reason);
+		}			
+		
+		public function load(joinUrl:String):void {
+			_joinUrl = joinUrl;
 			
-			var urlLoader:URLLoader = new URLLoader();
-			urlLoader.addEventListener( Event.COMPLETE, joinHandleComplete );
-			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
-			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, joinIOErrorHandler );
-			urlLoader.load( _urlRequest );
+			var joinSubservice:JoinSubservice = new JoinSubservice();
+			joinSubservice.successSignal.add(afterJoin);
+			joinSubservice.unsuccessSignal.add(fail);
+			joinSubservice.join(_joinUrl);
+		}
+		
+		protected function afterJoin(urlRequest:URLRequest):void {
+			_urlRequest = urlRequest;
 			
-			setEnterUrl(joinUrl);
+			var configSubservice:ConfigSubservice = new ConfigSubservice();
+			configSubservice.successSignal.add(afterConfig);
+			configSubservice.unsuccessSignal.add(fail);
+			configSubservice.getConfig(ConfigSubservice.joinUrlToConfigUrl(_joinUrl), _urlRequest);
 		}
 		
-		/**
-		 * \TODO get the enter URL from config.xml
-		 */
-		private function setEnterUrl(joinUrl:String):void {
-			var reg:RegExp = /(?P<protocol>[a-zA-Z]+) : \/\/  (?P<host>[^:\/]*) (:(?P<port>\d+))?  ((?P<path>[^?]*))? ((?P<parameters>.*))? /x;
-			var results:Array = reg.exec(joinUrl);
-			trace(ObjectUtil.toString(results));
-			_enterUrl = results.protocol + "://" + results.host + (results.port.length > 0? ":" + results.port: "") + results.path.replace("/join", "/enter");
-			trace("Enter URL: " + _enterUrl);
-		}
-		
-		private function httpStatusHandler(e:HTTPStatusEvent):void {
-			// do nothing here
-		}
-		
-		private function joinHandleComplete(e:Event):void {
-			enter(_enterUrl);
-		}
-		
-		private function joinIOErrorHandler(e:IOErrorEvent):void {
-			trace("Something went wrong fetching the join URL");
-			trace(ObjectUtil.toString(e));
-		}
-
-		public function enter(enterUrl:String):void {
-			// the flash app will call enter directly
-			if (!_urlRequest) {
-				_urlRequest = new URLRequest();
-				_urlRequest.method = URLRequestMethod.GET;
-			}
-			_urlRequest.url = enterUrl;
+		protected function afterConfig(xml:XML):void {
+			trace(xml);
 			
-			var urlLoader:URLLoader = new URLLoader();
-			urlLoader.addEventListener( Event.COMPLETE, enterHandleComplete );
-			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
-			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, enterIOErrorHandler );
-			urlLoader.load( _urlRequest );
+			var enterSubservice:EnterSubservice = new EnterSubservice();
+			enterSubservice.successSignal.add(afterEnter);
+			enterSubservice.unsuccessSignal.add(fail);
+			enterSubservice.enter(EnterSubservice.joinUrlToEnterUrl(_joinUrl), _urlRequest);
 		}
 		
-		private function enterHandleComplete(e:Event):void {
-			trace("JoinService::enterHandleComplete()");
-			var xml:XML = new XML(e.target.data);
+		protected function afterEnter(xml:XML):void {
 			trace(xml);
 			
 			var returncode:String = xml.returncode;
 			if (returncode == 'SUCCESS') {
 				trace("Join SUCCESS");
 				var user:Object = {
-						username:xml.fullname, 
+					username:xml.fullname, 
 						conference:xml.conference, 
 						conferenceName:xml.confname,
 						externMeetingID:xml.externMeetingID,
@@ -121,19 +95,12 @@ package org.mconf.mobile.core
 					}
 				}
 				trace("Dispatching successfullyJoinedMeetingSignal");
-				successfullyJoinedMeetingSignal.dispatch(user);
+				successJoinedSignal.dispatch(user);
 			} else {
 				trace("Join FAILED");
-				trace(ObjectUtil.toString(e));
 				
-				unsuccessfullyJoinedMeetingSignal.dispatch("Add some reason here!");
+				unsuccessJoinedSignal.dispatch("Add some reason here!");
 			}
 		}
-		
-		private function enterIOErrorHandler(e:IOErrorEvent):void {
-			trace("Something went wrong fetching the enter URL");
-			trace(ObjectUtil.toString(e));
-		}
-	
 	}
 }

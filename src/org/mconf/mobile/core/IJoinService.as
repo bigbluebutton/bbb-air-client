@@ -8,9 +8,8 @@ package org.mconf.mobile.core
 
 	public interface IJoinService
 	{
-		function get successfullyJoinedMeetingSignal():ISignal;
-		function get unsuccessfullyJoinedMeetingSignal():ISignal;
+		function get successJoinedSignal():ISignal;
+		function get unsuccessJoinedSignal():ISignal;
 		function load(joinUrl:String):void;
-		function enter(enterUrl:String):void;
 	}
 }
