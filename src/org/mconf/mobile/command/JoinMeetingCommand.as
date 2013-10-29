@@ -5,6 +5,7 @@ package org.mconf.mobile.command
 	import org.mconf.mobile.model.ConferenceParameters;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSettings;
+	import org.mconf.mobile.model.IUserUISession;
 	import org.mconf.mobile.view.ui.ILoginButton;
 	import org.osmf.logging.Log;
 	
@@ -16,6 +17,9 @@ package org.mconf.mobile.command
 		public var joinService: IJoinService;
 				
 		[Inject]
+		public var userUISession: IUserUISession;
+		
+		[Inject]
 		public var url: String;
 		
 		[Inject]
@@ -25,11 +29,13 @@ package org.mconf.mobile.command
 		public var connectSignal: ConnectSignal;
 		
 		override public function execute():void
-		{
+		{			
 			joinService.successfullyJoinedMeetingSignal.add(successfullyJoined);
 			joinService.unsuccessfullyJoinedMeetingSignal.add(unsuccessfullyJoined);
 			
 			joinService.load(url);
+			
+			userUISession.loading = true;
 		}
 
 		private function successfullyJoined(user:Object):void {

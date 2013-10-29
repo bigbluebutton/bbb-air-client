@@ -4,6 +4,7 @@
 		 xmlns:ui="org.mconf.mobile.view.ui.*">
 	<fx:Script>
 		<![CDATA[
+			import org.mconf.mobile.view.navigation.pages.ActionsENUM;
 			import org.mconf.mobile.view.navigation.pages.PagesENUM;
 		]]>
 	</fx:Script>

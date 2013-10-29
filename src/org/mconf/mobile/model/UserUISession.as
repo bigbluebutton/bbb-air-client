@@ -13,6 +13,16 @@ package org.mconf.mobile.model
 		}
 		
 		/**
+		 * Dispatched when the application is loading something
+		 */
+		private var _loadingSignal: Signal = new Signal();
+		
+		public function get loadingSignal(): ISignal
+		{
+			return _loadingSignal;
+		}
+		
+		/**
 		 * Dispatched when a setting was changed
 		 */
 		private var _pageChangedSignal: Signal = new Signal();
@@ -22,6 +32,9 @@ package org.mconf.mobile.model
 			return _pageChangedSignal;
 		}
 		
+		/**
+		 * Holds the page's names used on ViewNavigator
+		 */ 
 		protected var _listPages:ArrayList = new ArrayList([]);
 		
 		public function get currentPage():String
@@ -53,5 +66,22 @@ package org.mconf.mobile.model
 				_pageChangedSignal.dispatch(currentPage, removeView);
 			}				
 		}
+		
+		/**
+		 * Should be set true when the application is loading data
+		 */ 
+		private var _loading:Boolean = false;
+
+		public function get loading():Boolean
+		{
+			return _loading;
+		}
+
+		public function set loading(value:Boolean):void
+		{
+			_loading = value;
+			_loadingSignal.dispatch(_loading);
+		}
+
 	}
 }

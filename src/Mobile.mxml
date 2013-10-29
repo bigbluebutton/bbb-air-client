@@ -4,7 +4,7 @@
 			   xmlns:top="org.mconf.mobile.top.view.*"
 			   xmlns:ui="org.mconf.mobile.view.navigation.ui.*"
 			   applicationDPI="160"
-			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.mconf.mobile.view.navigation.*" xmlns:presentation="org.mconf.mobile.view.navigation.pages.presentation.*"  
+			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.mconf.mobile.view.navigation.*" xmlns:presentation="org.mconf.mobile.view.navigation.pages.presentation.*" xmlns:loading="org.mconf.mobile.view.ui.loading.*"  
 			   >
 	<fx:Style source="Default.css"/>
 	
@@ -28,6 +28,7 @@
 			import org.mconf.mobile.view.ui.LoginButtonConfig;
 			import org.mconf.mobile.view.ui.MicButtonConfig;
 			import org.mconf.mobile.view.ui.NavigationButtonConfig;
+			import org.mconf.mobile.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
 			import org.osmf.logging.Logger;
 			
@@ -54,6 +55,8 @@
 				context = new Context()
 					.install(MVCSBundle, SignalCommandMapExtension)
 									.configure(AppConfig)
+									.configure(LoadingScreenConfig)
+									
 									.configure(PagesNavigatorConfig)
 										.configure(PresentationConfig)
 										.configure(LoginPageConfig)
@@ -94,4 +97,5 @@
 		]]>
 	</fx:Script>
 	<navigation:PagesNavigatorView width="100%" height="100%"/>
+	<loading:LoadingScreen width="100%" height="100%" />
 </s:Application>

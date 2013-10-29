@@ -38,7 +38,10 @@ package org.mconf.mobile.view.ui
 		
 		protected function navigate():void
 		{
-			_navigationSignal.dispatch();
+			if(_navigateTo != "" || _action != "")
+			{
+				_navigationSignal.dispatch();
+			}
 		}
 		
 		public function dispose():void

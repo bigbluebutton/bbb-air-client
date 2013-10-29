@@ -6,6 +6,7 @@ package org.mconf.mobile.command
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserUISession;
+	import org.mconf.mobile.view.navigation.pages.PagesENUM;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
@@ -14,6 +15,9 @@ package org.mconf.mobile.command
 	{		
 		[Inject]
 		public var userSession: IUserSession;
+		
+		[Inject]
+		public var userUISession: IUserUISession;
 		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
@@ -38,6 +42,9 @@ package org.mconf.mobile.command
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":successConnected()");
 			
 			userSession.netconnection = connection.connection;
+			
+			userUISession.loading = false;
+			userUISession.pushPage(PagesENUM.PRESENTATION); 
 		}
 		
 		private function unsuccessConnected(reason:String):void {
