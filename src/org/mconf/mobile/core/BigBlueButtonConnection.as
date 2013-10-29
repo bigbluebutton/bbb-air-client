@@ -15,11 +15,16 @@ package org.mconf.mobile.core
 	import org.mconf.mobile.model.ConferenceParameters;
 	import org.mconf.mobile.model.ConnectionFailedEvent;
 	import org.mconf.mobile.model.IConferenceParameters;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
 	
 	public class BigBlueButtonConnection implements IBigBlueButtonConnection
 	{
 		public static const NAME:String = "BigBlueButtonConnection";
+		
+		private var _successConnected:Signal = new Signal();
+		private var _unsuccessConnected:Signal = new Signal();
 		
 		private var _netConnection:NetConnection;
 		private var _applicationURI:String;
@@ -38,9 +43,24 @@ package org.mconf.mobile.core
 			_netConnection.addEventListener( IOErrorEvent.IO_ERROR, netIOError );
 		}
 		
+		public function get unsuccessConnected():ISignal
+		{
+			return _unsuccessConnected;
+		}
+
+		public function get successConnected():ISignal
+		{
+			return _successConnected;
+		}
+
 		public function set uri(uri:String):void {
 			_applicationURI = uri;
 		}
+
+		public function get uri():String {
+			return _applicationURI;
+		}
+
 		
 		public function get connection():NetConnection {
 			return _netConnection;
@@ -108,7 +128,7 @@ package org.mconf.mobile.core
 							// result - On successful result
 							function(result:Object):void { 
 								trace("Userid [" + result + "]"); 
-								sendConnectionSuccessEvent(result);
+								sendConnectionSuccessEvent(result as String);
 							},	
 							// status - On error occurred
 							function(status:Object):void { 
@@ -175,12 +195,12 @@ package org.mconf.mobile.core
 			connect(_conferenceParameters, true);
 		}
 		
-		protected function sendConnectionSuccessEvent(userid:Object):void {
-			
+		protected function sendConnectionSuccessEvent(userid:String):void {
+			successConnected.dispatch(userid);
 		}
 		
 		protected function sendConnectionFailedEvent(reason:String):void {
-			
+			unsuccessConnected.dispatch(reason);
 		}
 		
 		protected function netSecurityError( event : SecurityErrorEvent ) : void 

@@ -22,7 +22,7 @@ package org.mconf.mobile.command
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
-		public var connection: IBigBlueButtonConnection;
+		public var connectSignal: ConnectSignal;
 		
 		override public function execute():void
 		{
@@ -34,10 +34,10 @@ package org.mconf.mobile.command
 
 		private function successfullyJoined(user:Object):void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":successfullyJoined()");
+			
 			conferenceParameters.load(user);
 			
-			connection.uri = "rtmp://test-install.blindsidenetworks.com/bigbluebutton";
-			connection.connect(conferenceParameters);
+			connectSignal.dispatch("rtmp://test-install.blindsidenetworks.com/bigbluebutton");
 		}
 		
 		private function unsuccessfullyJoined(reason:String):void {

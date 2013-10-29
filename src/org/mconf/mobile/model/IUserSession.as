@@ -1,13 +1,12 @@
 package org.mconf.mobile.model
 {
+	import flash.net.NetConnection;
+	
 	import org.osflash.signals.ISignal;
 
 	public interface IUserSession
 	{
-		function get pageChangedSignal(): ISignal
-
-		function get currentPage():String
-		function popPage():void	
-		function pushPage(value:String):void
+		function get netconnection():NetConnection
+		function set netconnection(value:NetConnection):void
 	}
 }

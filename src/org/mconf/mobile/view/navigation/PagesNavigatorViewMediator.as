@@ -1,6 +1,6 @@
 package org.mconf.mobile.view.navigation
 {
-	import org.mconf.mobile.model.IUserSession;
+	import org.mconf.mobile.model.IUserUISession;
 	import org.mconf.mobile.util.NoTransition;
 	import org.mconf.mobile.view.navigation.pages.PagesENUM;
 	import org.osmf.logging.Log;
@@ -18,7 +18,7 @@ package org.mconf.mobile.view.navigation
 		public var view: IPagesNavigatorView;
 		
 		[Inject]
-		public var userSession: IUserSession
+		public var userSession: IUserUISession
 		
 		override public function initialize():void
 		{

@@ -3,14 +3,14 @@ package org.mconf.mobile.view.ui
 	import mx.core.UIComponent;
 	
 	import org.mconf.mobile.command.NavigateToSignal;
-	import org.mconf.mobile.model.IUserSession;
+	import org.mconf.mobile.model.IUserUISession;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class NavigationButtonMediator extends Mediator
 	{
 		[Inject]
-		public var userSession: IUserSession;
+		public var userSession: IUserUISession;
 		
 		[Inject]
 		public var navigateToPageSignal: NavigateToSignal;

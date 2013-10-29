@@ -1,5 +1,7 @@
 package org.mconf.mobile.model
 {
+	import flash.net.NetConnection;
+	
 	import mx.collections.ArrayList;
 	
 	import org.osflash.signals.ISignal;
@@ -7,51 +9,22 @@ package org.mconf.mobile.model
 	
 	public class UserSession implements IUserSession
 	{
+		protected var _netconnection:NetConnection;
+		
 		public function UserSession()
 		{
 			
 		}
-		
-		/**
-		 * Dispatched when a setting was changed
-		 */
-		private var _pageChangedSignal: Signal = new Signal();
-		
-		public function get pageChangedSignal(): ISignal
+
+		public function get netconnection():NetConnection
 		{
-			return _pageChangedSignal;
+			return _netconnection;
 		}
-		
-		protected var _listPages:ArrayList = new ArrayList([]);
-		
-		public function get currentPage():String
+
+		public function set netconnection(value:NetConnection):void
 		{
-			var s:String = null;
-			if(_listPages.length > 0)
-			{
-				s = _listPages.getItemAt(_listPages.length-1) as String;
-			}
-			return s;
+			_netconnection = value;
 		}
-		
-		public function pushPage(value:String):void
-		{
-			if(value != currentPage)
-			{
-				_listPages.addItem(value);
-				var removeView:Boolean = false;
-				_pageChangedSignal.dispatch(currentPage, removeView);
-			}
-		}
-		
-		public function popPage():void
-		{
-			if(_listPages.length > 0)
-			{
-				_listPages.removeItemAt(_listPages.length-1);
-				var removeView:Boolean = true;
-				_pageChangedSignal.dispatch(currentPage, removeView);
-			}				
-		}
+
 	}
 }

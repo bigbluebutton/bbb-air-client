@@ -1,6 +1,6 @@
 package org.mconf.mobile.command
 {
-	import org.mconf.mobile.model.IUserSession;
+	import org.mconf.mobile.model.IUserUISession;
 	import org.mconf.mobile.view.navigation.IPagesNavigatorView;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
@@ -8,7 +8,7 @@ package org.mconf.mobile.command
 	public class RemovePageCommand extends Command
 	{		
 		[Inject]
-		public var userSession: IUserSession;
+		public var userSession: IUserUISession;
 		
 		[Inject]
 		public var pageNavigatorView: IPagesNavigatorView;
