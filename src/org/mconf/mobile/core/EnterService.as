@@ -12,18 +12,12 @@ package org.mconf.mobile.core
 	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-
-	public class JoinSubservice
+	
+	public class EnterService
 	{
 		protected var _successSignal:Signal = new Signal();
 		protected var _unsuccessSignal:Signal = new Signal();
-		protected var _urlRequest:URLRequest;
 		
-		public function get urlRequest():URLRequest
-		{
-			return _urlRequest;
-		}
-
 		public function get successSignal():ISignal {
 			return _successSignal;
 		}
@@ -32,18 +26,15 @@ package org.mconf.mobile.core
 			return _unsuccessSignal;
 		}
 		
-		public function join(joinUrl:String):void {
-			var fetcher:URLFetcher = new URLFetcher();
+		public function enter(enterUrl:String, urlRequest:URLRequest):void {
+			var fetcher:URLFetcher = new URLFetcher;
 			fetcher.successSignal.add(onSuccess);
 			fetcher.unsuccessSignal.add(onUnsuccess);
-			fetcher.fetch(joinUrl);
+			fetcher.fetch(enterUrl, urlRequest);
 		}
 		
 		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
-			trace(ObjectUtil.toString(data));
-			trace(ObjectUtil.toString(urlRequest));
-			_urlRequest = urlRequest;
-			successSignal.dispatch(_urlRequest);
+			successSignal.dispatch(new XML(data));
 		}
 		
 		protected function onUnsuccess(reason:String):void {

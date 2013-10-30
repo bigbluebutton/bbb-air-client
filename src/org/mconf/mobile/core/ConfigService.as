@@ -13,7 +13,7 @@ package org.mconf.mobile.core
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
-	public class EnterSubservice
+	public class ConfigService
 	{
 		protected var _successSignal:Signal = new Signal();
 		protected var _unsuccessSignal:Signal = new Signal();
@@ -26,11 +26,11 @@ package org.mconf.mobile.core
 			return _unsuccessSignal;
 		}
 		
-		public function enter(enterUrl:String, urlRequest:URLRequest):void {
+		public function getConfig(configUrl:String, urlRequest:URLRequest):void {
 			var fetcher:URLFetcher = new URLFetcher;
 			fetcher.successSignal.add(onSuccess);
 			fetcher.unsuccessSignal.add(onUnsuccess);
-			fetcher.fetch(enterUrl, urlRequest);
+			fetcher.fetch(configUrl, urlRequest);
 		}
 		
 		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
@@ -41,11 +41,11 @@ package org.mconf.mobile.core
 			unsuccessSignal.dispatch(reason);
 		}
 		
-		public static function joinUrlToEnterUrl(joinUrl:String):String {
+		public static function joinUrlToConfigUrl(joinUrl:String):String {
 			var reg:RegExp = /(?P<protocol>[a-zA-Z]+) : \/\/  (?P<host>[^:\/]*) (:(?P<port>\d+))?  ((?P<path>[^?]*))? ((?P<parameters>.*))? /x;
 			var results:Array = reg.exec(joinUrl);
 			
-			return results.protocol + "://" + results.host + (results.port.length > 0? ":" + results.port: "") + results.path.replace("/join", "/enter");
+			return results.protocol + "://" + results.host + (results.port.length > 0? ":" + results.port: "") + "/bigbluebutton/api/configXML?a=" + (new Date()).time;
 		}
 	}
 }

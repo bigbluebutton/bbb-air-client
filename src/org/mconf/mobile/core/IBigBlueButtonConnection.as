@@ -16,5 +16,6 @@ package org.mconf.mobile.core
 		
 		function get unsuccessConnected():ISignal;
 		function get successConnected():ISignal;
+		function get userId():String;
 	}
 }

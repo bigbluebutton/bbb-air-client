@@ -1,9 +1,11 @@
 package org.mconf.mobile.command
 {
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
-	import org.mconf.mobile.core.IJoinService;
+	import org.mconf.mobile.core.ILoginService;
 	import org.mconf.mobile.model.ConferenceParameters;
+	import org.mconf.mobile.model.Config;
 	import org.mconf.mobile.model.IConferenceParameters;
+	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserSettings;
 	import org.mconf.mobile.model.IUserUISession;
 	import org.mconf.mobile.view.ui.ILoginButton;
@@ -14,10 +16,13 @@ package org.mconf.mobile.command
 	public class JoinMeetingCommand extends Command
 	{		
 		[Inject]
-		public var joinService: IJoinService;
+		public var loginService: ILoginService;
 				
 		[Inject]
 		public var userUISession: IUserUISession;
+		
+		[Inject]
+		public var userSession: IUserSession;
 		
 		[Inject]
 		public var url: String;
@@ -30,24 +35,31 @@ package org.mconf.mobile.command
 		
 		override public function execute():void
 		{
-			joinService.successJoinedSignal.add(successfullyJoined);
-			joinService.unsuccessJoinedSignal.add(unsuccessfullyJoined);
+			loginService.successJoinedSignal.add(successJoined);
+			loginService.successGetConfigSignal.add(successConfig);
+			loginService.unsuccessJoinedSignal.add(unsuccessJoined);
 			
 			userUISession.loading = true;
 
-			joinService.load(url);
+			loginService.load(url);
 		}
 
-		private function successfullyJoined(user:Object):void {
-			Log.getLogger("org.mconf.mobile").info(String(this) + ":successfullyJoined()");
+		protected function successJoined(userObject:Object):void {
+			Log.getLogger("org.mconf.mobile").info(String(this) + ":successJoined()");
 			
-			conferenceParameters.load(user);
+			conferenceParameters.load(userObject);
 			
-			connectSignal.dispatch("rtmp://test-install.blindsidenetworks.com/bigbluebutton");
+			connectSignal.dispatch(new String(userSession.config.application.uri));
 		}
 		
-		private function unsuccessfullyJoined(reason:String):void {
-			Log.getLogger("org.mconf.mobile").info(String(this) + ":unsuccessfullyJoined()");
+		protected function successConfig(config:Config):void {
+			userSession.config = config;
+		}
+		
+		protected function unsuccessJoined(reason:String):void {
+			Log.getLogger("org.mconf.mobile").info(String(this) + ":unsuccessJoined()");
+			
+			userUISession.loading = false;
 		}
 		
 	}

@@ -2,8 +2,8 @@ package org.mconf.mobile.view.ui
 {
 	import org.mconf.mobile.command.JoinMeetingSignal;
 	import org.mconf.mobile.command.MicrophoneEnableSignal;
-	import org.mconf.mobile.core.IJoinService;
-	import org.mconf.mobile.core.JoinService;
+	import org.mconf.mobile.core.ILoginService;
+	import org.mconf.mobile.core.LoginService;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSettings;
 	import org.osmf.logging.Log;

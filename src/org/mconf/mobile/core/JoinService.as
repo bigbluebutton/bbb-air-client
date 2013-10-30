@@ -8,99 +8,50 @@ package org.mconf.mobile.core
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
 	
+	import mx.graphics.shaderClasses.ExclusionShader;
 	import mx.utils.ObjectUtil;
 	
+	import org.flexunit.internals.events.ExecutionCompleteEvent;
+	import org.mconf.mobile.model.Config;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 
-	public class JoinService implements IJoinService
+	public class JoinService
 	{
-		private var _urlRequest:URLRequest = null;
-		private var _successJoinedSignal:Signal = new Signal();
-		private var _unsuccessJoinedSignal:Signal = new Signal();
-		private var _joinUrl:String;
+		protected var _successSignal:Signal = new Signal();
+		protected var _unsuccessSignal:Signal = new Signal();
 		
-		public function get successJoinedSignal():ISignal {
-			return _successJoinedSignal;
-		}
-
-		public function get unsuccessJoinedSignal():ISignal {
-			return _unsuccessJoinedSignal;
+		public function get successSignal():ISignal {
+			return _successSignal;
 		}
 		
-		protected function fail(reason:String):void { 
-			trace("Join failed: " + reason);
-			unsuccessJoinedSignal.dispatch(reason);
-		}			
-		
-		public function load(joinUrl:String):void {
-			_joinUrl = joinUrl;
-			
-			var joinSubservice:JoinSubservice = new JoinSubservice();
-			joinSubservice.successSignal.add(afterJoin);
-			joinSubservice.unsuccessSignal.add(fail);
-			joinSubservice.join(_joinUrl);
+		public function get unsuccessSignal():ISignal {
+			return _unsuccessSignal;
 		}
 		
-		protected function afterJoin(urlRequest:URLRequest):void {
-			_urlRequest = urlRequest;
-			
-			var configSubservice:ConfigSubservice = new ConfigSubservice();
-			configSubservice.successSignal.add(afterConfig);
-			configSubservice.unsuccessSignal.add(fail);
-			configSubservice.getConfig(ConfigSubservice.joinUrlToConfigUrl(_joinUrl), _urlRequest);
+		public function join(joinUrl:String):void {
+			var fetcher:URLFetcher = new URLFetcher();
+			fetcher.successSignal.add(onSuccess);
+			fetcher.unsuccessSignal.add(onUnsuccess);
+			fetcher.fetch(joinUrl);
 		}
 		
-		protected function afterConfig(xml:XML):void {
-			trace(xml);
-			
-			var enterSubservice:EnterSubservice = new EnterSubservice();
-			enterSubservice.successSignal.add(afterEnter);
-			enterSubservice.unsuccessSignal.add(fail);
-			enterSubservice.enter(EnterSubservice.joinUrlToEnterUrl(_joinUrl), _urlRequest);
-		}
-		
-		protected function afterEnter(xml:XML):void {
-			trace(xml);
-			
-			var returncode:String = xml.returncode;
-			if (returncode == 'SUCCESS') {
-				trace("Join SUCCESS");
-				var user:Object = {
-					username:xml.fullname, 
-						conference:xml.conference, 
-						conferenceName:xml.confname,
-						externMeetingID:xml.externMeetingID,
-						meetingID:xml.meetingID, 
-						externUserID:xml.externUserID, 
-						internalUserId:xml.internalUserID,
-						role:xml.role, 
-						room:xml.room, 
-						authToken:xml.room, 
-						record:xml.record, 
-						webvoiceconf:xml.webvoiceconf, 
-						dialnumber:xml.dialnumber,
-						voicebridge:xml.voicebridge, 
-						mode:xml.mode, 
-						welcome:xml.welcome, 
-						logoutUrl:xml.logoutUrl, 
-						defaultLayout:xml.defaultLayout, 
-						avatarURL:xml.avatarURL };
-				user.customdata = new Object();
-				if(xml.customdata)
-				{
-					for each(var cdnode:XML in xml.customdata.elements()){
-						trace("checking user customdata: "+cdnode.name() + " = " + cdnode);
-						user.customdata[cdnode.name()] = cdnode.toString();
-					}
+		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
+			try {
+				var xml:XML = new XML(data);
+				if (xml.returncode == 'FAILED') {
+					unsuccessSignal.dispatch(xml.messageKey + ": " + xml.message);
+					return;
 				}
-				trace("Dispatching successfullyJoinedMeetingSignal");
-				successJoinedSignal.dispatch(user);
-			} else {
-				trace("Join FAILED");
-				
-				unsuccessJoinedSignal.dispatch("Add some reason here!");
+			} catch (e:Error) {
+				trace("The response is probably not an XML, continuing");
+				trace(ObjectUtil.toString(e));
 			}
+			successSignal.dispatch(urlRequest);
+		}
+		
+		protected function onUnsuccess(reason:String):void {
+			unsuccessSignal.dispatch(reason);
 		}
 	}
 }

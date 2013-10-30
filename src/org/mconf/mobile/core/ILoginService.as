@@ -6,9 +6,10 @@ package org.mconf.mobile.core
 	
 	import org.osflash.signals.ISignal;
 
-	public interface IJoinService
+	public interface ILoginService
 	{
 		function get successJoinedSignal():ISignal;
+		function get successGetConfigSignal():ISignal;
 		function get unsuccessJoinedSignal():ISignal;
 		function load(joinUrl:String):void;
 	}

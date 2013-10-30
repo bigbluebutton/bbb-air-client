@@ -2,7 +2,7 @@ package org.mconf.mobile.view.ui
 {
 	import flash.events.MouseEvent;
 	
-	import org.mconf.mobile.core.JoinService;
+	import org.mconf.mobile.core.LoginService;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	

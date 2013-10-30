@@ -38,10 +38,12 @@ package org.mconf.mobile.command
 			connection.connect(conferenceParameters);
 		}
 
-		private function successConnected(user:String):void {
+		private function successConnected():void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":successConnected()");
 			
 			userSession.netconnection = connection.connection;
+			userSession.userId = connection.userId;
+			trace("My userId is " + userSession.userId); 
 			
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PRESENTATION); 
@@ -50,8 +52,7 @@ package org.mconf.mobile.command
 		private function unsuccessConnected(reason:String):void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":unsuccessConnected()");
 			
-			trace("Something went wrong fetching the join URL");
-			trace(reason);
+			userUISession.loading = false;
 		}
 		
 	}

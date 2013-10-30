@@ -32,6 +32,7 @@ package org.mconf.mobile.core
 			if (_urlRequest == null) {
 				_urlRequest = new URLRequest();
 				_urlRequest.manageCookies = true;
+				_urlRequest.followRedirects = true;
 				_urlRequest.method = URLRequestMethod.GET;
 			}
 			_urlRequest.url = url;

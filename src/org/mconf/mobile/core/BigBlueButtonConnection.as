@@ -23,14 +23,15 @@ package org.mconf.mobile.core
 	{
 		public static const NAME:String = "BigBlueButtonConnection";
 		
-		private var _successConnected:Signal = new Signal();
-		private var _unsuccessConnected:Signal = new Signal();
+		private var _successConnected:ISignal = new Signal();
+		private var _unsuccessConnected:ISignal = new Signal();
 		
 		private var _netConnection:NetConnection;
 		private var _applicationURI:String;
 		private var _conferenceParameters:IConferenceParameters;
 		private var _tried_tunneling:Boolean = false;
 		private var _logoutOnUserCommand:Boolean = false;
+		private var _userId:String;
 		
 		public function BigBlueButtonConnection() {
 			Log.getLogger("org.mconf.mobile").info(String(this));
@@ -126,9 +127,9 @@ package org.mconf.mobile.core
 						"getMyUserId",// Remote function name
 						new Responder(
 							// result - On successful result
-							function(result:Object):void { 
-								trace("Userid [" + result + "]"); 
-								sendConnectionSuccessEvent(result as String);
+							function(result:Object):void {
+								_userId = result as String;
+								sendConnectionSuccessEvent();
 							},	
 							// status - On error occurred
 							function(status:Object):void { 
@@ -195,8 +196,8 @@ package org.mconf.mobile.core
 			connect(_conferenceParameters, true);
 		}
 		
-		protected function sendConnectionSuccessEvent(userid:String):void {
-			successConnected.dispatch(userid);
+		protected function sendConnectionSuccessEvent():void {
+			successConnected.dispatch();
 		}
 		
 		protected function sendConnectionFailedEvent(reason:String):void {
@@ -258,5 +259,11 @@ package org.mconf.mobile.core
 				_netConnection.call(service, responder, message);
 			}
 		}		
+
+		public function get userId():String
+		{
+			return _userId;
+		}
+
 	}
 }
