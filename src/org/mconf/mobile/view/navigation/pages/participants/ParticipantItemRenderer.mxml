@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:assets="assets.*"
+				width="500"
+				height="50"
+				>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			import org.mconf.mobile.model.User;
+			
+			override public function set data(obj:Object):void {
+				super.data = obj;
+				var user:User = data as User;
+				presentationIcon.visible = user.presenter;
+				profileIcon.visible = (user.role == User.MODERATOR);
+				cameraIcon.visible = user.hasStream;
+				//TODO: implement
+				micIcon.visible = false;
+				soundIcon.visible = false;
+				labelDisplay.text = user.name; 
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Label id="labelDisplay" x="79" width="300" height="51" fontWeight="bold"
+			 text="Lucas Jones&#xd;" textAlign="left" verticalCenter="0"/>
+	<assets:PresentationIcon id="presentationIcon" x="11" verticalCenter="0"/>
+	<assets:ProfileIcon id="profileIcon" x="41" y="14" verticalCenter="0"/>
+	<assets:CameraIcon id="cameraIcon" x="397" verticalCenter="0"/>
+	<assets:MicIcon id="micIcon" x="431" verticalCenter="0"/>
+	<assets:SoundIcon id="soundIcon" x="465" verticalCenter="0"/>
+</s:ItemRenderer>
