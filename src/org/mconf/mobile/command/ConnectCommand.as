@@ -3,6 +3,7 @@ package org.mconf.mobile.command
 	import mx.utils.ObjectUtil;
 	
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
+	import org.mconf.mobile.core.IUsersService;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserUISession;
@@ -27,14 +28,16 @@ package org.mconf.mobile.command
 		
 		[Inject]
 		public var uri: String;
+		
+		[Inject]
+		public var usersService: IUsersService;
 				
-		override public function execute():void
-		{
+		override public function execute():void {
 			connection.uri = uri;
 			
 			connection.successConnected.add(successConnected)
 			connection.unsuccessConnected.add(unsuccessConnected)
-				
+			trace("Trying to create the NetConnection");
 			connection.connect(conferenceParameters);
 		}
 
@@ -47,6 +50,8 @@ package org.mconf.mobile.command
 			
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PRESENTATION); 
+			
+			usersService.connect(uri);
 		}
 		
 		private function unsuccessConnected(reason:String):void {

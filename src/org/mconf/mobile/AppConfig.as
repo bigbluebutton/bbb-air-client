@@ -6,6 +6,10 @@ package org.mconf.mobile
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.ILoginService;
 	import org.mconf.mobile.core.LoginService;
+	import org.mconf.mobile.core.IUsersService;
+	import org.mconf.mobile.core.IUsersServiceSO;
+	import org.mconf.mobile.core.UsersService;
+	import org.mconf.mobile.core.UsersServiceSO;
 	import org.mconf.mobile.model.ConferenceParameters;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
@@ -34,6 +38,8 @@ package org.mconf.mobile
 			injector.map(IUserSession).toSingleton(UserSession);
 			injector.map(IConferenceParameters).toSingleton(ConferenceParameters);
 			injector.map(ILoginService).toType(LoginService);
+			injector.map(IUsersServiceSO).toType(UsersServiceSO);
+			injector.map(IUsersService).toSingleton(UsersService);
 			injector.map(IBigBlueButtonConnection).toType(BigBlueButtonConnection);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);

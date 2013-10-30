@@ -13,19 +13,30 @@ package org.mconf.mobile.model
 		protected var _config:Config;
 		protected var _userId:String;
 		
-		public function UserSession()
-		{
-			
-		}
-
 		public function get netconnection():NetConnection
 		{
 			return _netconnection;
 		}
-
+		
 		public function set netconnection(value:NetConnection):void
 		{
 			_netconnection = value;
+		}
+		
+		private var _userlist:UserList;
+
+		public function get userlist():UserList
+		{
+			return _userlist;
+		}
+		
+		// Don't allow manually setting the userlist
+		private function set userlist(value:UserList):void {}
+
+		
+		public function UserSession()
+		{
+			_userlist = new UserList();
 		}
 
 		public function get config():Config

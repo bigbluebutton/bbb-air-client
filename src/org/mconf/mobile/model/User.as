@@ -12,6 +12,9 @@ package org.mconf.mobile.model
 		[Bindable] public var userID:String = "UNKNOWN USER";
 		[Bindable] public var externUserID:String = "UNKNOWN USER";
 		[Bindable] public var name:String;
+		[Bindable] public var phoneUser:Boolean = false;
+		[Bindable] public var me:Boolean = false;
+		[Bindable] public var presenter:Boolean = false;
 		
 		private var _role:String = VIEWER;
 		[Bindable] 
@@ -23,11 +26,35 @@ package org.mconf.mobile.model
 			verifyUserStatus();
 		}
 		
-		public function User()
-		{
+		private var _raiseHand:Boolean = false;
+		[Bindable]
+		public function get raiseHand():Boolean {
+			return _raiseHand;
+		}
+		public function set raiseHand(r:Boolean):void {
+			_raiseHand = r;
+			verifyUserStatus();
 		}
 		
+		private var _hasStream:Boolean = false;
+		[Bindable]
+		public function get hasStream():Boolean {
+			return _hasStream;
+		}
+		public function set hasStream(s:Boolean):void {
+			_hasStream = s;
+			verifyMedia();
+		}
+		
+		public var streamName:String = "";
+		
+		// This used to only be used for accessibility and doesn't need to be filled in yet. - Chad
 		private function verifyUserStatus():void {
+			
+		}
+		
+		// This used to only be used for accessibility and doesn't need to be filled in yet. - Chad
+		private function verifyMedia():void {
 			
 		}
 	}

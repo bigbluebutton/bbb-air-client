@@ -12,5 +12,6 @@ package org.mconf.mobile.model
 		function set config(value:Config):void;
 		function get userId():String;
 		function set userId(value:String):void;		
+		function get userlist():UserList
 	}
 }

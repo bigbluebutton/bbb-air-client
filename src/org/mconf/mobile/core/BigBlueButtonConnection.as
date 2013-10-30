@@ -97,6 +97,12 @@ package org.mconf.mobile.core
 						_conferenceParameters.record, 
 						_conferenceParameters.externUserID,
 						_conferenceParameters.internalUserID);
+				trace("Finished connecting to " + uri + "[" + 
+					_conferenceParameters.username + "," + 
+					_conferenceParameters.role + "," + 
+					_conferenceParameters.conference + "," + 
+					_conferenceParameters.record + "," + 
+					_conferenceParameters.room + "]");
 			} catch(e:ArgumentError) {
 				trace(ObjectUtil.toString(e));
 				// Invalid parameters.
