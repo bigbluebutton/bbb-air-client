@@ -1,6 +1,5 @@
 package org.mconf.mobile.core
 {
-	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	
 	import org.mconf.mobile.model.IConferenceParameters;

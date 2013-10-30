@@ -42,7 +42,7 @@ package org.mconf.mobile.core
 			_participantsSO.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 			_participantsSO.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
 			_participantsSO.client = this;
-			_participantsSO.connect(userSession.netconnection);
+			_participantsSO.connect(userSession.mainConnection.connection);
 			queryForParticipants();
 		}
 		
@@ -55,7 +55,7 @@ package org.mconf.mobile.core
 		}
 		
 		private function queryForParticipants():void {
-			var nc:NetConnection = userSession.netconnection;
+			var nc:NetConnection = userSession.mainConnection.connection;
 			nc.call(
 				"participants.getParticipants",// Remote function name
 				new Responder(

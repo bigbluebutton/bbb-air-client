@@ -1,29 +1,15 @@
 package org.mconf.mobile.model
 {
-	import flash.net.NetConnection;
-	
-	import mx.collections.ArrayList;
-	
-	import org.osflash.signals.ISignal;
-	import org.osflash.signals.Signal;
+	import org.mconf.mobile.core.IBigBlueButtonConnection;
+	import org.mconf.mobile.core.IVoiceConnection;
 	
 	public class UserSession implements IUserSession
 	{
-		protected var _netconnection:NetConnection;
 		protected var _config:Config;
 		protected var _userId:String;
-		
-		public function get netconnection():NetConnection
-		{
-			return _netconnection;
-		}
-		
-		public function set netconnection(value:NetConnection):void
-		{
-			_netconnection = value;
-		}
-		
-		private var _userlist:UserList;
+		protected var _mainConnection:IBigBlueButtonConnection;
+		protected var _voiceConnection:IVoiceConnection;
+		protected var _userlist:UserList;
 
 		public function get userlist():UserList
 		{
@@ -58,6 +44,27 @@ package org.mconf.mobile.model
 		{
 			_userId = value;
 		}
+
+		public function get voiceConnection():IVoiceConnection
+		{
+			return _voiceConnection;
+		}
+
+		public function set voiceConnection(value:IVoiceConnection):void
+		{
+			_voiceConnection = value;
+		}
+
+		public function get mainConnection():IBigBlueButtonConnection
+		{
+			return _mainConnection;
+		}
+
+		public function set mainConnection(value:IBigBlueButtonConnection):void
+		{
+			_mainConnection = value;
+		}
+
 
 	}
 }

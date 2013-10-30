@@ -2,14 +2,18 @@ package org.mconf.mobile
 {
 	import org.mconf.mobile.command.ConnectCommand;
 	import org.mconf.mobile.command.ConnectSignal;
+	import org.mconf.mobile.command.JoinVoiceCommand;
+	import org.mconf.mobile.command.JoinVoiceSignal;
 	import org.mconf.mobile.core.BigBlueButtonConnection;
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.ILoginService;
-	import org.mconf.mobile.core.LoginService;
 	import org.mconf.mobile.core.IUsersService;
 	import org.mconf.mobile.core.IUsersServiceSO;
+	import org.mconf.mobile.core.IVoiceConnection;
+	import org.mconf.mobile.core.LoginService;
 	import org.mconf.mobile.core.UsersService;
 	import org.mconf.mobile.core.UsersServiceSO;
+	import org.mconf.mobile.core.VoiceConnection;
 	import org.mconf.mobile.model.ConferenceParameters;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
@@ -41,8 +45,10 @@ package org.mconf.mobile
 			injector.map(IUsersServiceSO).toType(UsersServiceSO);
 			injector.map(IUsersService).toSingleton(UsersService);
 			injector.map(IBigBlueButtonConnection).toType(BigBlueButtonConnection);
+			injector.map(IVoiceConnection).toType(VoiceConnection);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
+			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);
 		}
 	}
 }

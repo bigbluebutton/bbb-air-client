@@ -3,7 +3,7 @@ package org.mconf.mobile.command
 	import mx.utils.ObjectUtil;
 	
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
-	import org.mconf.mobile.core.IUsersService;
+	import org.mconf.mobile.core.IVoiceConnection;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserUISession;
@@ -12,7 +12,7 @@ package org.mconf.mobile.command
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
-	public class ConnectCommand extends Command
+	public class JoinVoiceCommand extends Command
 	{		
 		[Inject]
 		public var userSession: IUserSession;
@@ -24,45 +24,29 @@ package org.mconf.mobile.command
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
-		public var connection: IBigBlueButtonConnection;
+		public var connection: IVoiceConnection;
 		
-		[Inject]
-		public var joinVoiceSignal: JoinVoiceSignal;
-		
-		[Inject]
-		public var uri: String;
-		
-		[Inject]
-		public var usersService: IUsersService;
-				
-		override public function execute():void {
-			connection.uri = uri;
-			
+		override public function execute():void
+		{
+			connection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
+
 			connection.successConnected.add(successConnected)
 			connection.unsuccessConnected.add(unsuccessConnected)
-
+			
 			connection.connect(conferenceParameters);
 		}
 
-		private function successConnected():void {
+		private function successConnected(publishName:String, playName:String, codec:String):void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":successConnected()");
 			
-			userSession.mainConnection = connection;
-			userSession.userId = connection.userId;
-			trace("My userId is " + userSession.userId); 
-			
-			userUISession.loading = false;
-			userUISession.pushPage(PagesENUM.PRESENTATION); 
-			
-			usersService.connect(uri);
-
-			joinVoiceSignal.dispatch();
+			//userUISession.loading = false;
+			//userUISession.pushPage(PagesENUM.PRESENTATION); 
 		}
 		
 		private function unsuccessConnected(reason:String):void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":unsuccessConnected()");
 			
-			userUISession.loading = false;
+			//userUISession.loading = false;
 		}
 		
 	}
