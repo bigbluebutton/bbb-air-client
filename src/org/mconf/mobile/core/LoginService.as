@@ -55,7 +55,7 @@ package org.mconf.mobile.core
 			var configSubservice:ConfigService = new ConfigService();
 			configSubservice.successSignal.add(afterConfig);
 			configSubservice.unsuccessSignal.add(fail);
-			configSubservice.getConfig(ConfigService.joinUrlToConfigUrl(_joinUrl), _urlRequest);
+			configSubservice.getConfig(_joinUrl, _urlRequest);
 		}
 		
 		protected function afterConfig(xml:XML):void {

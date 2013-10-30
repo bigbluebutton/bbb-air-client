@@ -10,6 +10,7 @@ package org.mconf.mobile.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.mconf.mobile.core.util.URLParser;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
@@ -26,7 +27,9 @@ package org.mconf.mobile.core
 			return _unsuccessSignal;
 		}
 		
-		public function getConfig(configUrl:String, urlRequest:URLRequest):void {
+		public function getConfig(joinUrl:String, urlRequest:URLRequest):void {
+			var configUrl:String = joinToConfigUrl(joinUrl);
+			
 			var fetcher:URLFetcher = new URLFetcher;
 			fetcher.successSignal.add(onSuccess);
 			fetcher.unsuccessSignal.add(onUnsuccess);
@@ -41,11 +44,9 @@ package org.mconf.mobile.core
 			unsuccessSignal.dispatch(reason);
 		}
 		
-		public static function joinUrlToConfigUrl(joinUrl:String):String {
-			var reg:RegExp = /(?P<protocol>[a-zA-Z]+) : \/\/  (?P<host>[^:\/]*) (:(?P<port>\d+))?  ((?P<path>[^?]*))? ((?P<parameters>.*))? /x;
-			var results:Array = reg.exec(joinUrl);
-			
-			return results.protocol + "://" + results.host + (results.port.length > 0? ":" + results.port: "") + "/bigbluebutton/api/configXML?a=" + (new Date()).time;
+		protected static function joinToConfigUrl(joinUrl:String):String {
+			var parser:URLParser = new URLParser(joinUrl);
+			return parser.protocol + "://" + parser.host + ":" + parser.port + "/bigbluebutton/api/configXML?a=" + new Date().time;
 		}
 	}
 }
