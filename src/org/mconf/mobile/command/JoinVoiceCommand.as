@@ -4,6 +4,7 @@ package org.mconf.mobile.command
 	
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
+	import org.mconf.mobile.core.VoiceStreamManager;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserUISession;
@@ -30,8 +31,8 @@ package org.mconf.mobile.command
 		{
 			connection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
 
-			connection.successConnected.add(successConnected)
-			connection.unsuccessConnected.add(unsuccessConnected)
+			connection.successConnected.add(successConnected);
+			connection.unsuccessConnected.add(unsuccessConnected);
 			
 			connection.connect(conferenceParameters);
 		}
@@ -39,8 +40,15 @@ package org.mconf.mobile.command
 		private function successConnected(publishName:String, playName:String, codec:String):void {
 			Log.getLogger("org.mconf.mobile").info(String(this) + ":successConnected()");
 			
+			userSession.voiceConnection = connection;
+			
+			var manager:VoiceStreamManager = new VoiceStreamManager();
+			manager.play(connection.connection, playName);
+			manager.publish(connection.connection, publishName, codec);
+			userSession.voiceStreamManager = manager;
+
 			//userUISession.loading = false;
-			//userUISession.pushPage(PagesENUM.PRESENTATION); 
+			//userUISession.pushPage(PagesENUM.PRESENTATION);
 		}
 		
 		private function unsuccessConnected(reason:String):void {

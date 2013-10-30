@@ -2,6 +2,7 @@ package org.mconf.mobile.model
 {
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
+	import org.mconf.mobile.core.VoiceStreamManager;
 	
 	public class UserSession implements IUserSession
 	{
@@ -9,6 +10,7 @@ package org.mconf.mobile.model
 		protected var _userId:String;
 		protected var _mainConnection:IBigBlueButtonConnection;
 		protected var _voiceConnection:IVoiceConnection;
+		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _userlist:UserList;
 
 		public function get userlist():UserList
@@ -16,8 +18,10 @@ package org.mconf.mobile.model
 			return _userlist;
 		}
 		
-		// Don't allow manually setting the userlist
-		private function set userlist(value:UserList):void {}
+		public function set userlist(value:UserList):void
+		{
+			throw("It's not allowed to manually set the UserList");
+		}
 
 		
 		public function UserSession()
@@ -63,6 +67,16 @@ package org.mconf.mobile.model
 		public function set mainConnection(value:IBigBlueButtonConnection):void
 		{
 			_mainConnection = value;
+		}
+
+		public function get voiceStreamManager():VoiceStreamManager
+		{
+			return _voiceStreamManager;
+		}
+
+		public function set voiceStreamManager(value:VoiceStreamManager):void
+		{
+			_voiceStreamManager = value;
 		}
 
 

@@ -2,6 +2,7 @@ package org.mconf.mobile.model
 {
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
+	import org.mconf.mobile.core.VoiceStreamManager;
 	
 
 	public interface IUserSession
@@ -15,5 +16,7 @@ package org.mconf.mobile.model
 		function set voiceConnection(value:IVoiceConnection):void
 		function get mainConnection():IBigBlueButtonConnection
 		function set mainConnection(value:IBigBlueButtonConnection):void
+		function get voiceStreamManager():VoiceStreamManager
+		function set voiceStreamManager(value:VoiceStreamManager):void
 	}
 }
