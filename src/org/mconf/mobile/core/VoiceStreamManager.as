@@ -18,11 +18,13 @@ package org.mconf.mobile.core
 		protected var _outgoingStream:NetStream = null;
 		protected var _connection:NetConnection = null;
 		protected var _mic:Microphone = null;
+		protected var _incomingStreamName:String;
 		
 		public function VoiceStreamManager() {
 		}
 		
 		public function play(connection:NetConnection, streamName:String):void {
+			_incomingStreamName = streamName;
 			_incomingStream = new NetStream(connection);
 			_incomingStream.client = this;
 			_incomingStream.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
@@ -36,7 +38,7 @@ package org.mconf.mobile.core
 			* http://stackoverflow.com/questions/1079935/actionscript-netstream-stutters-after-buffering
 			* ralam (Dec 13, 2010)
 			*/
-			_incomingStream.bufferTime = 0;	
+			_incomingStream.bufferTime = 0;
 			_incomingStream.receiveAudio(true);
 			_incomingStream.receiveVideo(false);
 			_incomingStream.play(streamName);
@@ -55,22 +57,38 @@ package org.mconf.mobile.core
 			}
 		}
 		
+		private function noMicrophone():Boolean {
+			return ((Microphone.getMicrophone() == null) || (Microphone.names.length == 0) 
+				|| ((Microphone.names.length == 1) && (Microphone.names[0] == "Unknown Microphone")));
+		}
+		
 		private function setupMicrophone(codec:String):void
 		{
-			_mic = Microphone.getMicrophone(-1);
-			if (_mic == null) {
-				trace("No microphone! <o>");
-			} else {
-				_mic = Microphone(Microphone["getEnhancedMicrophone"]());
-				_mic.addEventListener(StatusEvent.STATUS, onMicStatusEvent);
+			if (noMicrophone()) {
+				_mic = null;
+				return;
+			}
+			
+			// first try to use the enhanced microphone
+			// if it doesn't work, get the regular one
+			_mic = Microphone.getEnhancedMicrophone();
+			if (_mic) {
 				var options:MicrophoneEnhancedOptions = new MicrophoneEnhancedOptions();
 				options.mode = MicrophoneEnhancedMode.FULL_DUPLEX;
 				options.autoGain = false;
 				options.echoPath = 128;
 				options.nonLinearProcessing = true;
 				_mic['enhancedOptions'] = options;
-				
 				_mic.setUseEchoSuppression(true);
+			} else {
+				_mic = Microphone.getMicrophone();
+			}
+			
+			if (_mic == null) {
+				trace("No microphone! <o>");
+			} else {
+				_mic.addEventListener(StatusEvent.STATUS, onMicStatusEvent);
+				
 				_mic.setLoopBack(false);
 				_mic.setSilenceLevel(0, 20000);
 				_mic.gain = 60;			
@@ -118,14 +136,18 @@ package org.mconf.mobile.core
 		{
 			trace(ObjectUtil.toString(event));
 
-			switch(event.info.code) {			
+			switch(event.info.code) {
+				case "NetStream.Play.Reset":
+					break;
 				case "NetStream.Play.StreamNotFound":
 					break;			
 				case "NetStream.Play.Failed":
 					break;
-				case "NetStream.Play.Start":	
+				case "NetStream.Play.Start":
 					break;
-				case "NetStream.Play.Stop":			
+				case "NetStream.Play.Stop":
+					break;
+				case "NetStream.Publish.Start":
 					break;
 				case "NetStream.Buffer.Full":
 					break;

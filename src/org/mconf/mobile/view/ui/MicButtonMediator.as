@@ -51,7 +51,7 @@ package org.mconf.mobile.view.ui
 		 */
 		private function turnOn(): void
 		{
-			microphoneEnableSignal.dispatch(true);
+			microphoneEnableSignal.dispatch(true, true);
 		}
 
 		/**
@@ -59,7 +59,7 @@ package org.mconf.mobile.view.ui
 		 */
 		private function turnOff(): void
 		{
-			microphoneEnableSignal.dispatch(false);
+			microphoneEnableSignal.dispatch(false, true);
 		}
 		
 		/**

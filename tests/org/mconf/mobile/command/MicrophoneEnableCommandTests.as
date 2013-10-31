@@ -30,7 +30,7 @@ package org.mconf.mobile.command
 			var micButton:MicButton = new MicButton();
 			
 			var command: MicrophoneEnableCommand = createCommand();
-			command.boolean = false;
+			command.enabled = false;
 			command.execute();
 						
 			assertFalse(micButton.selected);
@@ -45,7 +45,7 @@ package org.mconf.mobile.command
 			var micButton:MicButton = new MicButton();
 			
 			var command: MicrophoneEnableCommand = createCommand();
-			command.boolean = false;
+			command.enabled = false;
 			command.execute();
 			
 			assertThat(micButton.currentState, equalTo("unselected"));
@@ -60,7 +60,7 @@ package org.mconf.mobile.command
 			var micButton:MicButton = new MicButton();
 			
 			var command: MicrophoneEnableCommand = createCommand();
-			command.boolean = true;
+			command.enabled = true;
 			command.execute();
 			
 			assertTrue(micButton.selected);
@@ -75,7 +75,7 @@ package org.mconf.mobile.command
 			var micButton:MicButton = new MicButton();
 			
 			var command: MicrophoneEnableCommand = createCommand();
-			command.boolean = true;
+			command.enabled = true;
 			command.execute();
 			
 			assertThat(micButton.currentState, equalTo("selected"));
@@ -90,11 +90,11 @@ package org.mconf.mobile.command
 			var micButton:MicButton = new MicButton();
 			
 			var command: MicrophoneEnableCommand = createCommand();
-			command.boolean = true;
+			command.enabled = true;
 			command.execute();
 			
 			var command1: MicrophoneEnableCommand = createCommand();
-			command1.boolean = false;
+			command1.enabled = false;
 			command1.execute();
 			
 			assertFalse(micButton.selected);
@@ -109,11 +109,11 @@ package org.mconf.mobile.command
 			var micButton:MicButton = new MicButton();
 			
 			var command: MicrophoneEnableCommand = createCommand();
-			command.boolean = false;
+			command.enabled = false;
 			command.execute();
 			
 			var command1: MicrophoneEnableCommand = createCommand();
-			command1.boolean = true;
+			command1.enabled = true;
 			command1.execute();
 			
 			assertTrue(micButton.selected);

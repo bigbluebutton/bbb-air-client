@@ -2,8 +2,6 @@ package org.mconf.mobile.view.ui
 {
 	import org.mconf.mobile.command.JoinMeetingCommand;
 	import org.mconf.mobile.command.JoinMeetingSignal;
-	import org.mconf.mobile.command.MicrophoneEnableCommand;
-	import org.mconf.mobile.command.MicrophoneEnableSignal;
 	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
