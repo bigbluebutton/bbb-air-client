@@ -149,7 +149,7 @@ package org.mconf.mobile.model
 				//Signal that the presenter has been removed
 				
 				if (u.me)
-					me.presenter = false;
+					_me.presenter = false;
 			}
 		}
 		
@@ -161,7 +161,7 @@ package org.mconf.mobile.model
 				//Signal that there is a new presenter
 				
 				if (u.participant.me)
-					me.presenter = true;
+					_me.presenter = true;
 			}
 		}
 		
@@ -173,7 +173,7 @@ package org.mconf.mobile.model
 				p.participant.streamName = streamName;
 				
 				if (p.participants.me)
-					me.hasStream = hasStream;
+					_me.hasStream = hasStream;
 				
 				// Signal for stream change
 			}
@@ -188,7 +188,7 @@ package org.mconf.mobile.model
 				// Signal for raise hand change
 				
 				if (p.participant.me)
-					p.participant.raiseHand = value;
+					_me.raiseHand = value;
 			}
 		}
 		

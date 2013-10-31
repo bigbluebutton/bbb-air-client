@@ -36,7 +36,7 @@ package org.mconf.mobile.core
 		
 		private function onConnectionSuccess():void
 		{
-			_ns = new NetStream();
+			_ns = new NetStream(_baseConnection.connection);
 		}
 		
 		public function get unsuccessConnected():ISignal
