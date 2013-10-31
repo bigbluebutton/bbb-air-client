@@ -86,6 +86,9 @@ package org.mconf.mobile.core
 			user.role = joinedUser.role;
 			user.externUserID = joinedUser.externUserID;
 			user.isLeavingFlag = false;
+			user.hasStream = joinedUser.status.hasStream;
+			user.presenter = joinedUser.status.presenter;
+			user.raiseHand = joinedUser.status.raiseHand;
 			
 			trace("New user joined [" + user.userID + "," + user.name + "," + user.role + "]");
 			
@@ -93,13 +96,7 @@ package org.mconf.mobile.core
 		}
 		
 		public function participantLeft(userID:String):void { 			
-			var user:User = userSession.userlist.getUser(userID);
-			
-			trace("Notify others that user [" + user.userID + ", " + user.name + "] is leaving!!!!");
-			
-			// Flag that the user is leaving the meeting so that apps (such as avatar) doesn't hang
-			// around when the user already left.
-			if (user) user.isLeavingFlag = true;
+			trace("Notify others that user [" + userID + "] is leaving!!!!");
 			
 			userSession.userlist.removeUser(userID);
 		}
@@ -109,49 +106,17 @@ package org.mconf.mobile.core
 		 */
 		public function participantStatusChange(userID:String, status:String, value:Object):void {
 			trace("Received status change [" + userID + "," + status + "," + value + "]")			
-			var user:User = userSession.userlist.getUser(userID);
 			
-			if (user)
 			switch (status) {
-				/* I don't think we need this case because we already have a presenterCallback - Chad
-				case "presenter":
-					user.presenter = value as Boolean;
-					if (user.me) {
-						userSession.userlist.me.presenter = value as Boolean;
-					}
-					break;
-				*/
 				case "hasStream":
 					var streamInfo:Array = String(value).split(/,/); 
-					/**
-					 * Cannot use this statement as new Boolean(expression)
-					 * return true if the expression is a non-empty string not
-					 * when the string equals "true". See Boolean class def.
-					 * 
-					 * hasStream = new Boolean(String(streamInfo[0]));
-					 */					
-					if (String(streamInfo[0]).toUpperCase() == "TRUE") {
-						user.hasStream = true;
-					} else {
-						user.hasStream = false;
-					}
 					
-					if (user.me) {
-						userSession.userlist.me.hasStream = value as Boolean;
-					}
-					
-					var streamNameInfo:Array = String(streamInfo[1]).split(/=/);
-					user.streamName = streamNameInfo[1]; 
-					
-					if (user.hasStream) {
-						//Signal for new stream share
-					}
+					userSession.userlist.userStreamChange(userID,
+						(String(streamInfo[0]).toUpperCase() == "TRUE" ? true : false),
+						String(streamInfo[1]).split(/=/)[1]);
 					break;
 				case "raiseHand":
-					user.raiseHand = value as Boolean;
-					if (user.me) {
-						userSession.userlist.me.raiseHand = value as Boolean;
-					}
+					userSession.userlist.raiseHandChange(userID, value as Boolean);
 					break;
 			}
 		}

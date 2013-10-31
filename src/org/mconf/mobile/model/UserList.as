@@ -120,6 +120,10 @@ package org.mconf.mobile.model
 		public function removeUser(userID:String):void {
 			var p:Object = getUserIndex(userID);
 			if (p != null) {
+				// Flag that the user is leaving the meeting so that apps (such as avatar) doesn't hang
+				// around when the user already left.
+				p.participant.isLeavingFlag = true;
+				
 				trace("removing user[" + p.participant.name + "," + p.participant.userID + "]");				
 				_users.removeItemAt(p.index);
 				_users.refresh();
@@ -128,18 +132,63 @@ package org.mconf.mobile.model
 			}							
 		}
 		
-		public function assignPresenter(userID:String):void {
+		public function getPresenter():User {
 			var u:User;
 			for (var i:int = 0; i < _users.length; i++) {
 				u = _users.getItemAt(i) as User;				
 				if (u.presenter)
-					u.presenter = false;
+					return u;
 			}
-			
-			u = getUser(userID);
+			return null;
+		}
+		
+		public function removePresenter(userID:String):void {
+			var u:User = getPresenter();
+			if (u.presenter) {
+				u.presenter = false;
+				//Signal that the presenter has been removed
+				
+				if (u.me)
+					me.presenter = false;
+			}
+		}
+		
+		public function assignPresenter(userID:String):void {
+			var u:Object = getUser(userID);
 			if (u) {
-				u.presenter = true;
-				//Signal that the presenter has changed
+				u.participant.presenter = true;
+				
+				//Signal that there is a new presenter
+				
+				if (u.participant.me)
+					me.presenter = true;
+			}
+		}
+		
+		public function userStreamChange(userID:String, hasStream:Boolean, streamName:String):void {
+			var p:Object = getUserIndex(userID);
+			
+			if (p) {
+				p.participant.hasStream = hasStream;
+				p.participant.streamName = streamName;
+				
+				if (p.participants.me)
+					me.hasStream = hasStream;
+				
+				// Signal for stream change
+			}
+		}
+		
+		public function raiseHandChange(userID:String, value:Boolean):void {
+			var p:Object = getUserIndex(userID);
+			
+			if (p) {
+				p.participant.raiseHand = value;
+				
+				// Signal for raise hand change
+				
+				if (p.participant.me)
+					p.participant.raiseHand = value;
 			}
 		}
 		
