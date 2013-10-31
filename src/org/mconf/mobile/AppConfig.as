@@ -9,10 +9,12 @@ package org.mconf.mobile
 	import org.mconf.mobile.core.ILoginService;
 	import org.mconf.mobile.core.IUsersService;
 	import org.mconf.mobile.core.IUsersServiceSO;
+	import org.mconf.mobile.core.IVideoConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
 	import org.mconf.mobile.core.LoginService;
 	import org.mconf.mobile.core.UsersService;
 	import org.mconf.mobile.core.UsersServiceSO;
+	import org.mconf.mobile.core.VideoConnection;
 	import org.mconf.mobile.core.VoiceConnection;
 	import org.mconf.mobile.model.ConferenceParameters;
 	import org.mconf.mobile.model.IConferenceParameters;
@@ -46,6 +48,7 @@ package org.mconf.mobile
 			injector.map(IUsersService).toSingleton(UsersService);
 			injector.map(IBigBlueButtonConnection).toType(BigBlueButtonConnection);
 			injector.map(IVoiceConnection).toType(VoiceConnection);
+			injector.map(IVideoConnection).toType(VideoConnection);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
 			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);
