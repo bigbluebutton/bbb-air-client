@@ -24,7 +24,7 @@ package org.mconf.mobile.view.navigation.pages.videochat
 		{
 			Log.getLogger("org.mconf.mobile").info(String(this));
 			
-			userSession.userlist.newUserSignal.add(newUserHandler);
+			userSession.userlist.userAddedSignal.add(newUserHandler);
 			userSession.userlist.userChangeSignal.add(userChangeHandler);
 			
 			// find all currently open streams

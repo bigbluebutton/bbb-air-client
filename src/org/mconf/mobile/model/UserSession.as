@@ -1,15 +1,14 @@
 package org.mconf.mobile.model
 {
-	import org.mconf.mobile.core.IBigBlueButtonConnection;
-	import org.mconf.mobile.core.IVideoConnection;
-	import org.mconf.mobile.core.IVoiceConnection;
-	import org.mconf.mobile.core.VoiceStreamManager;
-	
 	import flash.net.NetConnection;
 	
 	import mx.collections.ArrayList;
 	
 	import org.hamcrest.core.throws;
+	import org.mconf.mobile.core.IBigBlueButtonConnection;
+	import org.mconf.mobile.core.IVideoConnection;
+	import org.mconf.mobile.core.IVoiceConnection;
+	import org.mconf.mobile.core.VoiceStreamManager;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
@@ -24,7 +23,16 @@ package org.mconf.mobile.model
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
 		protected var _userlist:UserList;
+				
+		public function get netconnection():NetConnection
+		{
+			return _netconnection;
+		}
 		
+		public function set netconnection(value:NetConnection):void
+		{
+			_netconnection = value;
+		}
 		
 		public function get userlist():UserList
 		{
