@@ -2,6 +2,7 @@ package org.mconf.mobile.core
 {
 	public interface IUsersService
 	{
-		function connect(uri:String):void;	
+		function connectUsers(uri:String):void;
+		function connectListeners(uri:String):void;	
 	}
 }

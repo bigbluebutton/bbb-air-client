@@ -1,14 +1,17 @@
 package org.mconf.mobile.core
 {
 	import flash.events.AsyncErrorEvent;
+	import flash.events.NetDataEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.StatusEvent;
+	import flash.events.TimerEvent;
 	import flash.media.Microphone;
 	import flash.media.MicrophoneEnhancedMode;
 	import flash.media.MicrophoneEnhancedOptions;
 	import flash.media.SoundCodec;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	import flash.utils.Timer;
 	
 	import mx.utils.ObjectUtil;
 
@@ -18,15 +21,23 @@ package org.mconf.mobile.core
 		protected var _outgoingStream:NetStream = null;
 		protected var _connection:NetConnection = null;
 		protected var _mic:Microphone = null;
-		protected var _incomingStreamName:String;
+		
+		protected var _heartbeat:Timer = new Timer(2000);
 		
 		public function VoiceStreamManager() {
+			_heartbeat.addEventListener(TimerEvent.TIMER, onHeartbeat);
+		}
+		
+		protected function onHeartbeat(event:TimerEvent):void
+		{
+			trace("+++ heartbeat +++");
+			trace(ObjectUtil.toString(_incomingStream.audioCodec));
 		}
 		
 		public function play(connection:NetConnection, streamName:String):void {
-			_incomingStreamName = streamName;
 			_incomingStream = new NetStream(connection);
 			_incomingStream.client = this;
+			_incomingStream.addEventListener(NetDataEvent.MEDIA_TYPE_DATA, onNetDataEvent);
 			_incomingStream.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 			_incomingStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
 			
@@ -42,6 +53,12 @@ package org.mconf.mobile.core
 			_incomingStream.receiveAudio(true);
 			_incomingStream.receiveVideo(false);
 			_incomingStream.play(streamName);
+//			_heartbeat.start();
+		}
+		
+		protected function onNetDataEvent(event:NetDataEvent):void
+		{
+			trace(ObjectUtil.toString(event));
 		}
 		
 		public function publish(connection:NetConnection, streamName:String, codec:String):void {
@@ -161,14 +178,19 @@ package org.mconf.mobile.core
 			trace(ObjectUtil.toString(event));
 		}
 		
-		protected function onPlayStatus(event:Object):void
+		public function onPlayStatus(... rest):void
 		{
-			trace(ObjectUtil.toString(event));
+			trace("onPlayStatus() " + ObjectUtil.toString(rest));
 		}
 		
-		protected function onMetadata(event:Object):void
+		public function onMetaData(... rest):void
 		{
-			trace(ObjectUtil.toString(event));
+			trace("onMetaData() " + ObjectUtil.toString(rest));
 		}
+		
+		public function onHeaderData(... rest):void {
+			trace("onHeaderData() " + ObjectUtil.toString(rest));
+		}
+		
 	}
 }

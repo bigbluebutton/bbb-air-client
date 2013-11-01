@@ -53,19 +53,20 @@ package org.mconf.mobile.command
 			
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
-			trace("My userId is " + userSession.userId); 
+			trace("My userId is " + userSession.userId);
 			
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PRESENTATION); 
-			
-			usersService.connect(uri);
 			
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
 			videoConnection.successConnected.add(successConnected);
 			videoConnection.unsuccessConnected.add(unsuccessConnected);
 			videoConnection.connect();
 			userSession.videoConnection = videoConnection;
-			
+
+			usersService.connectUsers(uri);
+			usersService.connectListeners(uri);
+
 			joinVoiceSignal.dispatch();
 		}
 		

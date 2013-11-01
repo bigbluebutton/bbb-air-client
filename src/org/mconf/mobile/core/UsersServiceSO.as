@@ -13,45 +13,21 @@ package org.mconf.mobile.core
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.User;
 
-	public class UsersServiceSO implements IUsersServiceSO
+	public class UsersServiceSO extends BaseServiceSO implements IUsersServiceSO
 	{
 		[Inject]
 		public var userSession: IUserSession;
 		
-		private var _participantsSO:SharedObject;
 		private static const SO_NAME:String = "participantsSO";
 		
-		private var _room:String;
-		private var _applicationURI:String;
-		
-		public function UsersServiceSO() { }
-		
-		public function connect(uri:String, params:IConferenceParameters):void {
-			_applicationURI = uri;
-			_room = params.room;
+		public function UsersServiceSO() {
+			super(SO_NAME);
 		}
 		
-		public function disconnect():void {
-			if (_participantsSO != null) {
-				_participantsSO.close();
-			}
-		}
-		
-		public function join():void {
-			_participantsSO = SharedObject.getRemote(SO_NAME, _applicationURI + "/" + _room, false);
-			_participantsSO.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
-			_participantsSO.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
-			_participantsSO.client = this;
-			_participantsSO.connect(userSession.mainConnection.connection);
+		override public function connect(connection:NetConnection, uri:String, params:IConferenceParameters):void {
+			super.connect(connection, uri, params);
+			
 			queryForParticipants();
-		}
-		
-		private function onNetStatusEvent(e:NetStatusEvent):void {
-			trace(ObjectUtil.toString(e));
-		}
-		
-		private function onAsyncErrorEvent(e:AsyncErrorEvent):void {
-			trace(ObjectUtil.toString(e));
 		}
 		
 		private function queryForParticipants():void {
@@ -147,7 +123,7 @@ package org.mconf.mobile.core
 			trace("The meeting has ended and a logout should be initiated");
 		}
 		
-		private function sendConnectionFailedEvent(reason:String):void {
+		override protected function sendConnectionFailedEvent(reason:String):void {
 			trace("Error in the UsersServiceSO connection");
 		}
 	}

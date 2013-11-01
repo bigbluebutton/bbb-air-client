@@ -32,8 +32,8 @@ package org.mconf.mobile.view.ui
 		
 		protected function change(e:MouseEvent):void
 		{
-			trace("Login get clicked, dispatching signal");
-			
+			trace("Login button clicked, dispatching signal");
+
 			// TEMPORARY CODE!!!
 			var url:String = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
 			loginSignal.dispatch(url);

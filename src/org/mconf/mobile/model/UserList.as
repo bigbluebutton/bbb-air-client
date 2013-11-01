@@ -6,33 +6,12 @@ package org.mconf.mobile.model
 	import org.osflash.signals.Signal;
 	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
-	
 	import spark.collections.Sort;
 
 	public class UserList
 	{
-		private var _userJoinedSignal: Signal = new Signal();
-
-		public function get userJoinedSignal():ISignal
-		{
-			return _userJoinedSignal;
-		}
-		
-		private var _userLeftSignal: Signal = new Signal();
-		
-		public function get userLeftSignal():ISignal
-		{
-			return _userLeftSignal;
-		}
-		
-		private var _userChangeSignal: Signal = new Signal();
-
-		public function get userChangeSignal():ISignal
-		{
-			return _userChangeSignal;
-		}
-		
 		private var _users:ArrayCollection;	
+		
 		[Bindable]
 		public function get users():ArrayCollection
 		{
@@ -67,7 +46,41 @@ package org.mconf.mobile.model
 			_users.sort = _sort;
 		}
 		
-		// Custom sort function for the users ArrayCollection. Need to put dial-in users at the very bottom.
+		
+		/**
+		 * Dispatched when a participant is added
+		 */
+		private var _userAddedSignal: Signal = new Signal();
+		
+		public function get userAddedSignal(): ISignal
+		{
+			return _userAddedSignal;
+		}
+		
+		
+		/**
+		 * Dispatched when a participant is removed
+		 */
+		private var _userRemovedSignal: Signal = new Signal();
+		
+		public function get userRemovedSignal(): ISignal
+		{
+			return _userRemovedSignal; 
+		}
+		
+		/**
+		 * Dispatched when a users' property have been changed
+		 */
+		private var _userChangeSignal: Signal = new Signal();
+		
+		public function get userChangeSignal():ISignal
+		{
+			return _userChangeSignal;
+		}		
+		
+		/** 
+		 * Custom sort function for the users ArrayCollection. Need to put dial-in users at the very bottom.
+		 */ 
 		private function sortFunction(a:Object, b:Object, array:Array = null):int {
 			var au:User = a as User, bu:User = b as User;
 			/*if (a.presenter)
@@ -93,7 +106,7 @@ package org.mconf.mobile.model
 			else if (bu.phoneUser)
 				return 1;
 			
-			/* 
+			/** 
 			* Check name (case-insensitive) in the event of a tie up above. If the name 
 			* is the same then use userID which should be unique making the order the same 
 			* across all clients.
@@ -121,7 +134,7 @@ package org.mconf.mobile.model
 				_users.addItem(newuser);
 				_users.refresh();
 				
-				userJoinedSignal.dispatch(newuser);
+				userAddedSignal.dispatch(newuser);
 			}					
 		}
 		
@@ -154,7 +167,7 @@ package org.mconf.mobile.model
 				_users.removeItemAt(p.index);
 				_users.refresh();
 				
-				userLeftSignal.dispatch(p.participant);
+				userRemovedSignal.dispatch(userID);
 			}							
 		}
 		
@@ -172,7 +185,8 @@ package org.mconf.mobile.model
 			var u:User = getPresenter();
 			if (u.presenter) {
 				u.presenter = false;
-				//Signal that the presenter has been removed
+				
+				userChangeSignal.dispatch(u.userID);
 				
 				if (u.me)
 					_me.presenter = false;
@@ -184,7 +198,7 @@ package org.mconf.mobile.model
 			if (u) {
 				u.participant.presenter = true;
 				
-				//Signal that there is a new presenter
+				userChangeSignal.dispatch(u.userID);
 				
 				if (u.participant.me)
 					_me.presenter = true;
@@ -211,7 +225,7 @@ package org.mconf.mobile.model
 			if (p) {
 				p.participant.raiseHand = value;
 				
-				// Signal for raise hand change
+				userChangeSignal.dispatch(p.participant.userID);
 				
 				if (p.participant.me)
 					_me.raiseHand = value;

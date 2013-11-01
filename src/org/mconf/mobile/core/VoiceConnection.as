@@ -64,7 +64,8 @@ package org.mconf.mobile.core
 		}
 		
 		public function connect(params:IConferenceParameters):void {
-			var uri:String = _applicationURI + "/" + params.room;
+			// we don't use scope in the voice communication (many hours lost on it)
+			var uri:String = _applicationURI;
 			_conferenceParameters = params;
 			_username = encodeURIComponent(params.externUserID + "-bbbID-" + params.username);
 				

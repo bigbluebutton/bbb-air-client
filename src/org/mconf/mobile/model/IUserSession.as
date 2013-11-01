@@ -1,5 +1,7 @@
 package org.mconf.mobile.model
 {
+	import flash.net.NetConnection;
+	
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IVideoConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
@@ -9,6 +11,8 @@ package org.mconf.mobile.model
 
 	public interface IUserSession
 	{
+		function get netconnection():NetConnection;
+		function set netconnection(value:NetConnection):void;
 		function get config():Config;
 		function set config(value:Config):void;
 		function get userId():String;

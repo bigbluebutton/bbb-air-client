@@ -1,12 +1,21 @@
 package org.mconf.mobile.model
 {
+	import flash.net.NetConnection;
+	
+	import mx.collections.ArrayList;
+	
+	import org.hamcrest.core.throws;
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IVideoConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
 	import org.mconf.mobile.core.VoiceStreamManager;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 	
 	public class UserSession implements IUserSession
 	{
+
+		protected var _netconnection:NetConnection;
 		protected var _config:Config;
 		protected var _userId:String;
 		protected var _mainConnection:IBigBlueButtonConnection;
@@ -14,21 +23,25 @@ package org.mconf.mobile.model
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
 		protected var _userlist:UserList;
-
+				
+		public function get netconnection():NetConnection
+		{
+			return _netconnection;
+		}
+		
+		public function set netconnection(value:NetConnection):void
+		{
+			_netconnection = value;
+		}
+		
 		public function get userlist():UserList
 		{
 			return _userlist;
 		}
 		
-		public function set userlist(value:UserList):void
+		private function set userlist(value:UserList):void
 		{
-			throw("Manually setting the UserList is not allowed");
-		}
-
-		
-		public function UserSession()
-		{
-			_userlist = new UserList();
+			throws("Don't allow manually setting the userlist");
 		}
 
 		public function get config():Config
@@ -49,6 +62,7 @@ package org.mconf.mobile.model
 		public function set userId(value:String):void
 		{
 			_userId = value;
+			_userlist.me.userID = value;
 		}
 
 		public function get voiceConnection():IVoiceConnection
@@ -91,6 +105,9 @@ package org.mconf.mobile.model
 			_videoConnection = value;
 		}
 
-
+		public function UserSession()
+		{
+			_userlist = new UserList();
+		}
 	}
 }

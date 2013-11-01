@@ -24,8 +24,8 @@ package org.mconf.mobile.view.navigation.pages.videochat
 		{
 			Log.getLogger("org.mconf.mobile").info(String(this));
 			
-			userSession.userlist.userJoinedSignal.add(userJoinedHandler);
-			userSession.userlist.userLeftSignal.add(userLeftHandler);
+			userSession.userlist.userRemovedSignal.add(userRemovedHandler);
+			userSession.userlist.userAddedSignal.add(userAddedHandler);
 			userSession.userlist.userChangeSignal.add(userChangeHandler);
 			
 			// find all currently open streams
@@ -48,12 +48,12 @@ package org.mconf.mobile.view.navigation.pages.videochat
 			view = null;
 		}
 		
-		private function userJoinedHandler(user:User):void {
+		private function userAddedHandler(user:User):void {
 			if (user.hasStream)
 				startStream(user.name, user.streamName);
 		}
 		
-		private function userLeftHandler(user:User):void {
+		private function userRemovedHandler(user:User):void {
 			stopStream(user.userID);
 		}
 		
