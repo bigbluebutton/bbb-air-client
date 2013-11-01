@@ -7,7 +7,7 @@ package org.mconf.mobile.core
 	public interface IBaseConnection
 	{
 		function get connection():NetConnection;
-		function connect(uri:String, ...parameters):void;	
+		function connect(uri:String, ...parameters):void;
 		function disconnect(onUserCommand:Boolean):void;
 		
 		function get unsuccessConnected():ISignal;

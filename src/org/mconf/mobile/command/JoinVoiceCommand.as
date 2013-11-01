@@ -1,8 +1,11 @@
 package org.mconf.mobile.command
 {
+	import flash.utils.setTimeout;
+	
 	import mx.utils.ObjectUtil;
 	
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
+	import org.mconf.mobile.core.IUsersService;
 	import org.mconf.mobile.core.IVoiceConnection;
 	import org.mconf.mobile.core.VoiceStreamManager;
 	import org.mconf.mobile.model.IConferenceParameters;
@@ -25,37 +28,35 @@ package org.mconf.mobile.command
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
-		public var connection: IVoiceConnection;
+		public var voiceConnection: IVoiceConnection;
 		
+		[Inject]
+		public var mainConnection: IBigBlueButtonConnection;
+		
+		[Inject]
+		public var usersService: IUsersService;
+
 		override public function execute():void
 		{
-			connection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
-
-			connection.successConnected.add(successConnected);
-			connection.unsuccessConnected.add(unsuccessConnected);
-			
-			connection.connect(conferenceParameters);
+			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
+			voiceConnection.successConnected.add(mediaSuccessConnected);
+			voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
+			voiceConnection.connect(conferenceParameters);
 		}
-
-		private function successConnected(publishName:String, playName:String, codec:String):void {
-			Log.getLogger("org.mconf.mobile").info(String(this) + ":successConnected()");
+		
+		private function mediaSuccessConnected(publishName:String, playName:String, codec:String):void {
+			Log.getLogger("org.mconf.mobile").info(String(this) + ":mediaSuccessConnected()");
 			
-			userSession.voiceConnection = connection;
+			userSession.voiceConnection = voiceConnection;
 			
 			var manager:VoiceStreamManager = new VoiceStreamManager();
-			manager.play(connection.connection, playName);
-			manager.publish(connection.connection, publishName, codec);
+			manager.play(voiceConnection.connection, playName);
+			manager.publish(voiceConnection.connection, publishName, codec);			
 			userSession.voiceStreamManager = manager;
-
-			//userUISession.loading = false;
-			//userUISession.pushPage(PagesENUM.PRESENTATION);
 		}
 		
-		private function unsuccessConnected(reason:String):void {
-			Log.getLogger("org.mconf.mobile").info(String(this) + ":unsuccessConnected()");
-			
-			//userUISession.loading = false;
+		private function mediaUnsuccessConnected(reason:String):void {
+			Log.getLogger("org.mconf.mobile").info(String(this) + ":mediaUnsuccessConnected()");
 		}
-		
 	}
 }

@@ -62,6 +62,7 @@ package org.mconf.mobile.model
 		public function set userId(value:String):void
 		{
 			_userId = value;
+			_userlist.me.userID = value;
 		}
 
 		public function get voiceConnection():IVoiceConnection
