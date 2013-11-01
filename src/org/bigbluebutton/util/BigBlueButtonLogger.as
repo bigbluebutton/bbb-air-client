@@ -6,11 +6,11 @@ package org.bigbluebutton.util
 	
 	import org.osmf.logging.Logger;
 	
-	public class MconfLogger extends Logger
+	public class BigBlueButtonLogger extends Logger
 	{
 		protected var traceTarget: TraceTarget
 		
-		public function MconfLogger(category:String)
+		public function BigBlueButtonLogger(category:String)
 		{
 			super(category);
 		}

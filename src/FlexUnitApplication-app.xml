@@ -15,22 +15,22 @@
 
 	<!-- A universally unique application identifier. Must be unique across all AIR applications.
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
-	<id>org.bigbluebutton</id>
+	<id>FlexUnitApplication</id>
 
 	<!-- Used as the filename for the application. Required. -->
-	<filename>Mobile</filename>
+	<filename>FlexUnitApplication</filename>
 
 	<!-- The name that is displayed in the AIR application installer. 
 	May have multiple values for each language. See samples or xsd schema file. Optional. -->
-	<name>Mobile</name>
+	<name>FlexUnitApplication</name>
 	
 	<!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application version which can be used to check for application upgrade. 
 	Values can also be 1-part or 2-part. It is not necessary to have a 3-part value.
 	An updated version of application must have a versionNumber value higher than the previous version. Required for namespace >= 2.5 . -->
-	<versionNumber>0.1.0</versionNumber>
+	<versionNumber>0.0.0</versionNumber>
 		         
 	<!-- A string value (such as "v1", "2.5", or "Alpha 1") that represents the version of the application, as it should be shown to users. Optional. -->
-	<!-- <versionLabel>Pre-alpha</versionLabel> -->
+	<!-- <versionLabel></versionLabel> -->
 
 	<!-- Description, displayed in the AIR application installer.
 	May have multiple values for each language. See samples or xsd schema file. Optional. -->
@@ -105,10 +105,9 @@
 
 		<!-- Whether or not to pan when a soft keyboard is raised or lowered (either "pan" or "none").  Optional.  Defaults "pan." -->
 		<!-- <softKeyboardBehavior></softKeyboardBehavior> -->
-	<autoOrients>true</autoOrients>
+	<autoOrients>false</autoOrients>
         <fullScreen>false</fullScreen>
         <visible>true</visible>
-        <softKeyboardBehavior>none</softKeyboardBehavior>
     </initialWindow>
 
 	<!-- We recommend omitting the supportedProfiles element, -->
@@ -238,19 +237,19 @@
 			    <!--Removing the permission android.permission.INTERNET will have the side effect
 		of preventing you from debugging your application on your device-->
 			    <uses-permission android:name="android.permission.INTERNET"/>
-			    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-			    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-			    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+			    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+			    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
+			    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
 			    <!--The DISABLE_KEYGUARD and WAKE_LOCK permissions should be toggled together
 		in order to access AIR's SystemIdleMode APIs-->
-			    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-			    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-			    <uses-permission android:name="android.permission.CAMERA"/>
-			    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+			    <!--<uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>-->
+			    <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
+			    <!--<uses-permission android:name="android.permission.CAMERA"/>-->
+			    <!--<uses-permission android:name="android.permission.RECORD_AUDIO"/>-->
 			    <!--The ACCESS_NETWORK_STATE and ACCESS_WIFI_STATE permissions should be toggled
 		together in order to use AIR's NetworkInfo APIs-->
-			    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-			    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+			    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
+			    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
 			</manifest>
 			
 		]]></manifestAdditions>

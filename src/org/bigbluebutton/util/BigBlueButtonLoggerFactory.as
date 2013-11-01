@@ -3,16 +3,16 @@ package org.bigbluebutton.util
 	import org.osmf.logging.Logger;
 	import org.osmf.logging.LoggerFactory;
 	
-	public class MconfLoggerFactory extends LoggerFactory
+	public class BigBlueButtonLoggerFactory extends LoggerFactory
 	{
-		public function MconfLoggerFactory()
+		public function BigBlueButtonLoggerFactory()
 		{
 			super();
 		}
 		
 		override public function getLogger(category:String):Logger
 		{
-			return new MconfLogger(category);
+			return new BigBlueButtonLogger(category);
 		}
 	}
 }

@@ -17,7 +17,7 @@
 			import mx.events.FlexEvent;
 			
 			import org.bigbluebutton.AppConfig;
-			import org.bigbluebutton.util.MconfLoggerFactory;
+			import org.bigbluebutton.util.BigBlueButtonLoggerFactory;
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.login.LoginPageConfig;
@@ -90,7 +90,7 @@
 			
 			private function setupLogger():void
 			{
-				Log.loggerFactory = new MconfLoggerFactory(); 
+				Log.loggerFactory = new BigBlueButtonLoggerFactory(); 
 				var logger:Logger = Log.getLogger("org.bigbluebutton");
 				logger.info("Logger on");
 			}
