@@ -56,11 +56,13 @@ package org.mconf.mobile.command
 			trace("My userId is " + userSession.userId);
 			
 			userUISession.loading = false;
-			userUISession.pushPage(PagesENUM.PRESENTATION); 
+			userUISession.pushPage(PagesENUM.PARTICIPANTS); 
 			
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
-			videoConnection.successConnected.add(successConnected);
-			videoConnection.unsuccessConnected.add(unsuccessConnected);
+			//TODO use proper callbacks
+			//TODO see if videoConnection.successConnected is dispatched when it's connected properly
+//			videoConnection.successConnected.add(successConnected);
+//			videoConnection.unsuccessConnected.add(unsuccessConnected);
 			videoConnection.connect();
 			userSession.videoConnection = videoConnection;
 

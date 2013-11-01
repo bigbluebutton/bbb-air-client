@@ -1,5 +1,6 @@
 package org.mconf.mobile.command
 {
+	import org.mconf.mobile.core.IUsersService;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserSettings;
 	
@@ -14,27 +15,32 @@ package org.mconf.mobile.command
 		public var enabled: Boolean;
 		
 		[Inject]
-		public var onUserRequest:Boolean;
+		public var onUserRequest:Object;
 		
 		[Inject]
 		public var userSession: IUserSession;
 		
+		[Inject]
+		public var userService: IUsersService;
+		
 		override public function execute():void
 		{
-			// update model
-			userSettings.microphoneEnabled = enabled;
 			trace("MicrophoneEnableCommand.execute() - userSettings.microphoneEnabled = "+userSettings.microphoneEnabled);
 			
-			// \TODO implement the remote mute and unmute
-/*
-			if (onUserRequest) {
+			//TODO the model update should came only on server update!
+			// update model
+			userSettings.microphoneEnabled = enabled;
+
+			if (onUserRequest as Boolean) {
 				if (enabled) {
-					userSession.voiceConnection.unmute();
+					userService.muteMe();
 				} else {
-					userSession.voiceConnection.mute();
+					userService.unmuteMe();
 				}
+			} else {
+				// update model
+//				userSettings.microphoneEnabled = enabled;
 			}
-*/
 		}
 	}
 }

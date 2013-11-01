@@ -99,7 +99,26 @@ package org.mconf.mobile.core
 			_muteStateSignal = value;
 		}
 
-
+		public function muteUnmuteUser(userId:Number, mute:Boolean):void {
+			var nc:NetConnection = userSession.mainConnection.connection;
+			nc.call(
+				"voice.muteUnmuteUser",// Remote function name
+				new Responder(
+					// participants - On successful result
+					function(result:Object):void {
+						trace("Successfully mute/unmute " + userId);
+					},	
+					// status - On error occurred
+					function(status:Object):void { 
+						trace("Error occurred");
+						trace(ObjectUtil.toString(status));
+					}
+				),//new Responder
+				userId,
+				mute
+			); //_netConnection.call
+		}
+		
 		/**
 		 * Callback from the server from many of the bellow nc.call methods
 		 */
@@ -112,22 +131,41 @@ package org.mconf.mobile.core
 				+ "muted:" + muted + "," 
 				+ "talking:" + talking + "," 
 				+ "locked:" + locked + "]");
+
+			var pattern:RegExp = /(.*)-bbbID-(.*)$/;
+			var result:Object = pattern.exec(cidName);
+			var externUserID:String = result[1] as String;
+			
+			var user:User = userSession.userlist.getUser(externUserID);
+			user.voiceUserId = userId;
+			user.voiceJoined = true;
+			user.muted = muted;
+			user.talking = talking;
+			user.locked = locked;
 		}
 		
 		public function userMute(userID:Number, mute:Boolean):void {
 			trace("userMuted() [" + userID + "," + mute + "]");
+			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			user.muted = mute;
 		}
 		
 		public function userLockedMute(userID:Number, locked:Boolean):void {
 			trace("userLockedMute() [" + userID + "," + locked + "]");
+			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			user.locked = locked;
 		}
 
 		public function userTalk(userID:Number, talk:Boolean):void {
 			trace("userTalk() [" + userID + "," + talk + "]");
+			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			user.talking = talk;
 		}
 		
 		public function userLeft(userID:Number):void {
 			trace("userTalk() [" + userID + "]");
+			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			user.voiceJoined = false;
 		}
 		
 		public function ping(message:String):void {

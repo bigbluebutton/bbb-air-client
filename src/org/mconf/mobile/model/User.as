@@ -1,10 +1,14 @@
 package org.mconf.mobile.model
 {
+	import org.mconf.mobile.command.MicrophoneEnableSignal;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 
 	public class User
 	{
+		[Inject]
+		public var microphoneEnableSignal: MicrophoneEnableSignal;
+		
 		public static const MODERATOR:String = "MODERATOR";
 		public static const VIEWER:String = "VIEWER";
 		public static const PRESENTER:String = "PRESENTER";
@@ -25,21 +29,6 @@ package org.mconf.mobile.model
 			change();
 		}
 
-		
-		private var _externUserID:String = "UNKNOWN USER";
-
-		public function get externUserID():String
-		{
-			return _externUserID;
-		}
-
-		public function set externUserID(value:String):void
-		{
-			_externUserID = value;
-			change();
-		}
-
-		
 		private var _name:String;
 
 		public function get name():String
@@ -128,6 +117,77 @@ package org.mconf.mobile.model
 			_hasStream = s;
 			verifyMedia();
 			change();
+		}
+		
+		private var _voiceUserId:Number;
+		public function get voiceUserId():Number
+		{
+			return _voiceUserId;
+		}
+		
+		public function set voiceUserId(value:Number):void
+		{
+			_voiceUserId = value;
+		}
+		
+		private var _voiceJoined:Boolean;
+		[Bindable]
+		public function get voiceJoined():Boolean
+		{
+			return _voiceJoined;
+		}
+		
+		public function set voiceJoined(value:Boolean):void
+		{
+			_voiceJoined = value;
+			verifyUserStatus();
+			change();
+		}
+		
+		private var _muted:Boolean;
+		[Bindable]
+		public function get muted():Boolean
+		{
+			return _muted;
+		}		
+		public function set muted(value:Boolean):void
+		{
+			_muted = value;
+			
+			//TODO hack here, please do it in the proper place
+			// the following code isn't working, sometimes microphoneEnableSignal is null <o>
+//			if (_me) {
+//				microphoneEnableSignal.dispatch(!_muted, false);
+//			}
+			
+			verifyUserStatus();
+			change();
+		}
+		
+		private var _talking:Boolean;
+		[Bindable]
+		public function get talking():Boolean
+		{
+			return _talking;
+		}
+		public function set talking(value:Boolean):void
+		{
+			_talking = value;
+			verifyUserStatus();
+			change();
+		}
+		
+		private var _locked:Boolean;
+		[Bindable]
+		public function get locked():Boolean
+		{
+			return _locked;
+			verifyUserStatus();
+			change();
+		}
+		public function set locked(value:Boolean):void
+		{
+			_locked = value;
 		}
 		
 		private function change():void

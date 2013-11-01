@@ -15,14 +15,16 @@
 				super.data = obj;
 				var user:User = data as User;
 				
-				presentationIcon.visible = user.presenter;
-				profileIcon.visible = ((user.role == User.MODERATOR) && (!user.presenter));
-				cameraIcon.visible = user.hasStream;
-				handIcon.visible = user.raiseHand; 
-				//TODO: implement
-				micIcon.visible = false;
-				soundIcon.visible = false;
-				labelDisplay.text = user.name; 
+				if (user) {
+					presentationIcon.visible = user.presenter;
+					profileIcon.visible = ((user.role == User.MODERATOR) && (!user.presenter));
+					cameraIcon.visible = user.hasStream;
+					handIcon.visible = user.raiseHand; 
+
+					micIcon.visible = user.voiceJoined;
+					soundIcon.visible = user.talking;
+					labelDisplay.text = user.name; 
+				}
 			}
 			
 		]]>

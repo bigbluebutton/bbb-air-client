@@ -60,7 +60,9 @@ package org.mconf.mobile.core
 			user.userID = joinedUser.userid;
 			user.name = joinedUser.name;
 			user.role = joinedUser.role;
-			user.externUserID = joinedUser.externUserID;
+			if (joinedUser.userid != joinedUser.externUserID) {
+				trace("We were wrong, userId[" + joinedUser.userid + "] != externUserID[" + joinedUser.externUserID + "]")
+			}
 			user.isLeavingFlag = false;
 			
 			trace("New user joined [" + ObjectUtil.toString(user) + "]");

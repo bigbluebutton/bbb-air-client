@@ -6,11 +6,12 @@ package org.mconf.mobile.command
 	{
 		public function MicrophoneEnableSignal()
 		{
+			//TODO use an AS Object with the two booleans as attributes
 			/**
 			 * @1 microphone enabled
 			 * @2 on user request
 			 */
-			super(Boolean, Boolean);
+			super(Boolean, Object);
 		}
 	}
 }

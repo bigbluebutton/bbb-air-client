@@ -20,6 +20,7 @@ package org.mconf.mobile.core
 		function connect(connection:NetConnection, uri:String, params:IConferenceParameters):void
 		function disconnect():void
 		function get muteStateSignal():ISignal
+		function muteUnmuteUser(userId:Number, mute:Boolean):void
 		/**
 		 * Callback from the server from many of the bellow nc.call methods
 		 */

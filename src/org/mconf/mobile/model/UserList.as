@@ -156,6 +156,21 @@ package org.mconf.mobile.model
 			return null;				
 		}
 		
+		public function getUserByVoiceUserId(voiceUserId:Number):User {
+			var aUser:User;
+			
+			for (var i:int = 0; i < _users.length; i++) {
+				aUser = _users.getItemAt(i) as User;
+				
+				if (aUser.voiceUserId == voiceUserId) {
+					return aUser;
+				}
+			}				
+			
+			// Participant not found.
+			return null;
+		}
+		
 		public function removeUser(userID:String):void {
 			var p:Object = getUserIndex(userID);
 			if (p != null) {
