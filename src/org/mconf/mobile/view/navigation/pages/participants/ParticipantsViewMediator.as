@@ -51,7 +51,6 @@ package org.mconf.mobile.view.navigation.pages.participants
 	
 			userSession.userlist.userAddedSignal.add(userAdded);
 			userSession.userlist.userRemovedSignal.add(userRemoved);
-			userSession.userlist.presentedChangedSignal.add(presenterChanged);
 		}
 		
 		private function userAdded(user:User):void
@@ -88,7 +87,6 @@ package org.mconf.mobile.view.navigation.pages.participants
 			
 			userSession.userlist.userAddedSignal.remove(userAdded);
 			userSession.userlist.userRemovedSignal.remove(userRemoved);
-			userSession.userlist.presentedChangedSignal.remove(presenterChanged);
 		}
 		
 		protected function updateList(participants:Object):void
