@@ -69,16 +69,6 @@ package org.mconf.mobile.model
 		}
 		
 		/**
-		 * Dispatched when the presenter was changed
-		 */
-		private var _presentedChangedSignal: Signal = new Signal();
-		
-		public function get presentedChangedSignal(): ISignal
-		{
-			return _presentedChangedSignal;
-		}
-		
-		/**
 		 * Dispatched when a users' property have been changed
 		 */
 		private var _userChangeSignal: Signal = new Signal();
@@ -86,9 +76,7 @@ package org.mconf.mobile.model
 		public function get userChangeSignal():ISignal
 		{
 			return _userChangeSignal;
-		}
-
-		
+		}		
 		
 		/** 
 		 * Custom sort function for the users ArrayCollection. Need to put dial-in users at the very bottom.
@@ -198,7 +186,7 @@ package org.mconf.mobile.model
 			if (u.presenter) {
 				u.presenter = false;
 				
-				//Signal that the presenter has been removed
+				userChangeSignal.dispatch(u.userID);
 				
 				if (u.me)
 					_me.presenter = false;
@@ -210,7 +198,7 @@ package org.mconf.mobile.model
 			if (u) {
 				u.participant.presenter = true;
 				
-				//Signal that there is a new presenter
+				userChangeSignal.dispatch(u.userID);
 				
 				if (u.participant.me)
 					_me.presenter = true;
@@ -237,7 +225,7 @@ package org.mconf.mobile.model
 			if (p) {
 				p.participant.raiseHand = value;
 				
-				// Signal for raise hand change
+				userChangeSignal.dispatch(p.participant.userID);
 				
 				if (p.participant.me)
 					_me.raiseHand = value;
