@@ -1,4 +1,4 @@
-package org.mconf.mobile.testing
+package org.bigbluebutton.testing
 {
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;

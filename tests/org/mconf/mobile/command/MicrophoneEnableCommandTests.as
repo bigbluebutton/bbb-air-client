@@ -1,4 +1,4 @@
-package org.mconf.mobile.command
+package org.bigbluebutton.command
 {
 	import flashx.textLayout.debug.assert;
 	
@@ -6,16 +6,16 @@ package org.mconf.mobile.command
 	import org.flexunit.asserts.assertFalse;
 	import org.flexunit.asserts.assertTrue;
 	import org.hamcrest.object.equalTo;
-	import org.mconf.mobile.model.IUserSettings;
-	import org.mconf.mobile.view.ui.IMicButton;
-	import org.mconf.mobile.view.ui.MicButton;
+	import org.bigbluebutton.model.IUserSettings;
+	import org.bigbluebutton.view.ui.IMicButton;
+	import org.bigbluebutton.view.ui.MicButton;
 	import org.mockito.integrations.flexunit4.MockitoRule;
 	import org.mockito.integrations.havingPropertyOf;
 	import org.mockito.integrations.mock;
 	import org.mockito.integrations.times;
 	import org.mockito.integrations.verify;
 	
-	[Mock(type="org.mconf.mobile.model.IUserSettings")]
+	[Mock(type="org.bigbluebutton.model.IUserSettings")]
 	public class MicrophoneEnableCommandTests
 	{
 		[Rule]

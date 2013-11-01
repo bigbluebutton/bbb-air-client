@@ -1,4 +1,4 @@
-package org.mconf.mobile
+package org.bigbluebutton
 {
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.notNullValue;

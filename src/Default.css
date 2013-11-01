@@ -1,7 +1,7 @@
 /* CSS file */
 @namespace s "library://ns.adobe.com/flex/spark";
-@namespace view "org.mconf.mobile.top.view.*";
-@namespace ui "org.mconf.mobile.view.ui.*";
+@namespace view "org.bigbluebutton.top.view.*";
+@namespace ui "org.bigbluebutton.view.ui.*";
 	
 s|Group
 {

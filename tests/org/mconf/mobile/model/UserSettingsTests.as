@@ -1,4 +1,4 @@
-package org.mconf.mobile.model
+package org.bigbluebutton.model
 {
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;

@@ -1,4 +1,4 @@
-package org.mconf.mobile
+package org.bigbluebutton
 {
 	[Suite]
 	[RunWith("org.flexunit.runners.Suite")]

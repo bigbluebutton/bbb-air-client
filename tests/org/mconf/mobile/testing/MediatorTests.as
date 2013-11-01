@@ -1,4 +1,4 @@
-package org.mconf.mobile.testing
+package org.bigbluebutton.testing
 {
 	import org.mockito.integrations.mock;
 	

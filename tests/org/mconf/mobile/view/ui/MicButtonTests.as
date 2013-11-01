@@ -1,4 +1,4 @@
-package org.mconf.mobile.view.ui
+package org.bigbluebutton.view.ui
 {
 	import flash.events.MouseEvent;
 	
@@ -8,7 +8,7 @@ package org.mconf.mobile.view.ui
 	import org.hamcrest.object.isFalse;
 	import org.hamcrest.object.isTrue;
 	import org.hamcrest.object.notNullValue;
-	import org.mconf.mobile.testing.ViewTests;
+	import org.bigbluebutton.testing.ViewTests;
 	import org.osflash.signals.utils.proceedOnSignal;
 	
 

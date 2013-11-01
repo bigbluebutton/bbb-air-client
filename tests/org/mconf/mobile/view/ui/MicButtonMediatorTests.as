@@ -1,9 +1,9 @@
-package org.mconf.mobile.view.ui
+package org.bigbluebutton.view.ui
 {
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.isTrue;
-	import org.mconf.mobile.command.MicrophoneEnableSignal;
-	import org.mconf.mobile.testing.MediatorTests;
+	import org.bigbluebutton.command.MicrophoneEnableSignal;
+	import org.bigbluebutton.testing.MediatorTests;
 	import org.mockito.integrations.flexunit4.MockitoRule;
 	import org.mockito.integrations.given;
 	import org.mockito.integrations.mock;
@@ -11,9 +11,9 @@ package org.mconf.mobile.view.ui
 	import org.mockito.integrations.verify;
 	import org.osflash.signals.Signal;
 	
-	[Mock(type="org.mconf.mobile.command.TurnOnMicSignal")]
-	[Mock(type="org.mconf.mobile.command.TurnOffMicSignal")]
-	[Mock(type="org.mconf.mobile.view.mic.api.IMicButton")]
+	[Mock(type="org.bigbluebutton.command.TurnOnMicSignal")]
+	[Mock(type="org.bigbluebutton.command.TurnOffMicSignal")]
+	[Mock(type="org.bigbluebutton.view.mic.api.IMicButton")]
 	[Mock(type="robotlegs.bender.extensions.localEventMap.api.IEventMap")]
 	public class MicButtonMediatorTests extends MediatorTests
 	{

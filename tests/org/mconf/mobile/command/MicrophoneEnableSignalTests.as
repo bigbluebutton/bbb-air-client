@@ -1,4 +1,4 @@
-package org.mconf.mobile.command
+package org.bigbluebutton.command
 {
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.equalTo;

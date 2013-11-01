@@ -1,4 +1,4 @@
-package org.mconf.mobile.view.ui
+package org.bigbluebutton.view.ui
 {
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.notNullValue;

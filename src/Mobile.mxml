@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:top="org.mconf.mobile.top.view.*"
-			   xmlns:ui="org.mconf.mobile.view.navigation.ui.*"
+			   xmlns:top="org.bigbluebutton.top.view.*"
+			   xmlns:ui="org.bigbluebutton.view.navigation.ui.*"
 			   applicationDPI="160"
-			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.mconf.mobile.view.navigation.*" xmlns:presentation="org.mconf.mobile.view.navigation.pages.presentation.*" xmlns:loading="org.mconf.mobile.view.ui.loading.*"  
+			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.bigbluebutton.view.navigation.*" xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
 			   >
 	<fx:Style source="Default.css"/>
 	
@@ -16,19 +16,19 @@
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
-			import org.mconf.mobile.AppConfig;
-			import org.mconf.mobile.util.MconfLoggerFactory;
-			import org.mconf.mobile.view.navigation.PagesNavigatorConfig;
-			import org.mconf.mobile.view.navigation.pages.chat.ChatConfig;
-			import org.mconf.mobile.view.navigation.pages.login.LoginPageConfig;
-			import org.mconf.mobile.view.navigation.pages.participants.ParticipantsConfig;
-			import org.mconf.mobile.view.navigation.pages.presentation.PresentationConfig;
-			import org.mconf.mobile.view.navigation.pages.profile.ProfileConfig;
-			import org.mconf.mobile.view.navigation.pages.videochat.VideoChatConfig;
-			import org.mconf.mobile.view.ui.LoginButtonConfig;
-			import org.mconf.mobile.view.ui.MicButtonConfig;
-			import org.mconf.mobile.view.ui.NavigationButtonConfig;
-			import org.mconf.mobile.view.ui.loading.LoadingScreenConfig;
+			import org.bigbluebutton.AppConfig;
+			import org.bigbluebutton.util.MconfLoggerFactory;
+			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
+			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
+			import org.bigbluebutton.view.navigation.pages.login.LoginPageConfig;
+			import org.bigbluebutton.view.navigation.pages.participants.ParticipantsConfig;
+			import org.bigbluebutton.view.navigation.pages.presentation.PresentationConfig;
+			import org.bigbluebutton.view.navigation.pages.profile.ProfileConfig;
+			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
+			import org.bigbluebutton.view.ui.LoginButtonConfig;
+			import org.bigbluebutton.view.ui.MicButtonConfig;
+			import org.bigbluebutton.view.ui.NavigationButtonConfig;
+			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
 			import org.osmf.logging.Logger;
 			
@@ -91,7 +91,7 @@
 			private function setupLogger():void
 			{
 				Log.loggerFactory = new MconfLoggerFactory(); 
-				var logger:Logger = Log.getLogger("org.mconf.mobile");
+				var logger:Logger = Log.getLogger("org.bigbluebutton");
 				logger.info("Logger on");
 			}
 		]]>
