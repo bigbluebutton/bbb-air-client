@@ -40,10 +40,7 @@
 					 verticalCenter="0"/>
 		</s:Group>
 		<s:Group width="100%" height="50%">
-			<s:TextInput y="11" width="60%" horizontalCenter="0" prompt="username"/>
-			<s:TextInput y="53" width="60%" horizontalCenter="0" prompt="password"/>
-			<s:TextInput y="113" width="60%" horizontalCenter="0" prompt="room"/>
-			<ui1:LoginButton y="177" width="60%" height="45" horizontalCenter="0"/>
+			<ui1:LoginButton y="99" width="60%" height="45" horizontalCenter="0"/>
 		</s:Group>
 	</s:Group>
 </view:NoTabView>
