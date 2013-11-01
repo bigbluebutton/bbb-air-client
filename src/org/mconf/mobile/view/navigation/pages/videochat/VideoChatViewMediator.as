@@ -24,7 +24,8 @@ package org.mconf.mobile.view.navigation.pages.videochat
 		{
 			Log.getLogger("org.mconf.mobile").info(String(this));
 			
-			userSession.userlist.newUserSignal.add(newUserHandler);
+			userSession.userlist.userJoinedSignal.add(userJoinedHandler);
+			userSession.userlist.userLeftSignal.add(userLeftHandler);
 			userSession.userlist.userChangeSignal.add(userChangeHandler);
 			
 			// find all currently open streams
@@ -47,13 +48,17 @@ package org.mconf.mobile.view.navigation.pages.videochat
 			view = null;
 		}
 		
-		private function newUserHandler(user:User):void {
+		private function userJoinedHandler(user:User):void {
 			if (user.hasStream)
 				startStream(user.name, user.streamName);
 		}
 		
+		private function userLeftHandler(user:User):void {
+			stopStream(user.userID);
+		}
+		
 		private function userChangeHandler(user:User, property:String):void {
-			if (property == "hasStream")
+			if (property == "hasStream" && user.hasStream)
 				startStream(user.name, user.streamName);
 		}
 		
@@ -64,8 +69,12 @@ package org.mconf.mobile.view.navigation.pages.videochat
 				trace(ObjectUtil.toString(resolution));
 				var width:Number = Number(String(resolution.dimensions[0]));
 				var length:Number = Number(String(resolution.dimensions[1]));
-				view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
+				if (view) view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
 			}
+		}
+		
+		private function stopStream(userID:String):void {
+			if (view) view.stopStream(userID);
 		}
 		
 		protected function getVideoResolution(stream:String):Object {

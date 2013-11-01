@@ -20,18 +20,22 @@ package org.mconf.mobile.view.navigation.pages.videochat
 		private var _video:Video;
 		private var streamName:String;
 		private var aspectRatio:Number;
+		public var userID:String;
+		public var userName:String;
 		static public var PADDING_HORIZONTAL:Number = 5;
 		static public var PADDING_VERTICAL:Number = 5;
 		
+		/*
 		private var timer:Timer = new Timer(2000);
 		
 		private function onHeartbeat(e:Event=null):void {
 			trace(ObjectUtil.toString(ns.info));
 		}
+		*/
 		
 		public function WebcamView() {
-			timer.addEventListener(TimerEvent.TIMER, onHeartbeat);
-			timer.start();
+			//timer.addEventListener(TimerEvent.TIMER, onHeartbeat);
+			//timer.start();
 		}
 		
 		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
@@ -65,14 +69,23 @@ package org.mconf.mobile.view.navigation.pages.videochat
 			_video.x = point.x;
 			_video.y = point.y;
 			
-			_video.z = 1;
-			trace("Video position [" + _video.getRect(this) + "]");
-			trace("Video position: " + ObjectUtil.toString(_video));
+			//_video.z = 1;
+			this.userName = name;
+			this.userID = userID;
+			//trace("Video position [" + _video.getRect(this) + "]");
+			//trace("Video position: " + ObjectUtil.toString(_video));
 		}
 		
 		protected function setAspectRatio(width:int,height:int):void {
 			aspectRatio = (width/height);
 			this.minHeight = Math.floor((this.minWidth - PADDING_HORIZONTAL) / aspectRatio) + PADDING_VERTICAL;
+		}
+		
+		public function setPosition(width:Number, height:Number, x:Number, y:Number):void {
+			_video.width = width;
+			_video.height = height;
+			_video.x = x;
+			_video.y = y;
 		}
 		
 		private function onNetStatus(e:NetStatusEvent):void{
@@ -100,6 +113,7 @@ package org.mconf.mobile.view.navigation.pages.videochat
 		}
 		
 		public function close():void{
+			stage.removeChild(_video);
 			ns.close();
 			//onCloseEvent();
 			//super.close(event);

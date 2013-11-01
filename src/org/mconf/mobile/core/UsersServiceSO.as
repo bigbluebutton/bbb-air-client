@@ -136,6 +136,17 @@ package org.mconf.mobile.core
 			userSession.userlist.assignPresenter(userID);
 		}
 		
+		public function kickUserCallback(userid:String):void {
+			trace("The Client has be kicked by someone");
+		}
+		
+		/**
+		 * Called by the server to tell the client that the meeting has ended.
+		 */
+		public function logout():void {
+			trace("The meeting has ended and a logout should be initiated");
+		}
+		
 		private function sendConnectionFailedEvent(reason:String):void {
 			trace("Error in the UsersServiceSO connection");
 		}

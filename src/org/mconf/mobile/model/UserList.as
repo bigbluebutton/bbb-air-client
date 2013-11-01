@@ -11,11 +11,18 @@ package org.mconf.mobile.model
 
 	public class UserList
 	{
-		private var _newUserSignal: Signal = new Signal();
+		private var _userJoinedSignal: Signal = new Signal();
 
-		public function get newUserSignal():ISignal
+		public function get userJoinedSignal():ISignal
 		{
-			return _newUserSignal;
+			return _userJoinedSignal;
+		}
+		
+		private var _userLeftSignal: Signal = new Signal();
+		
+		public function get userLeftSignal():ISignal
+		{
+			return _userLeftSignal;
 		}
 		
 		private var _userChangeSignal: Signal = new Signal();
@@ -114,7 +121,7 @@ package org.mconf.mobile.model
 				_users.addItem(newuser);
 				_users.refresh();
 				
-				newUserSignal.dispatch(newuser);
+				userJoinedSignal.dispatch(newuser);
 			}					
 		}
 		
@@ -147,7 +154,7 @@ package org.mconf.mobile.model
 				_users.removeItemAt(p.index);
 				_users.refresh();
 				
-				//TODO Send a signal saying that a user has left
+				userLeftSignal.dispatch(p.participant);
 			}							
 		}
 		
