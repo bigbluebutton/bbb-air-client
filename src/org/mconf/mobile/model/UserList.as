@@ -2,10 +2,29 @@ package org.mconf.mobile.model
 {
 	import mx.collections.ArrayCollection;
 	
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
+	
+	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
+	
 	import spark.collections.Sort;
 
 	public class UserList
 	{
+		private var _newUserSignal: Signal = new Signal();
+
+		public function get newUserSignal():ISignal
+		{
+			return _newUserSignal;
+		}
+		
+		private var _userChangeSignal: Signal = new Signal();
+
+		public function get userChangeSignal():ISignal
+		{
+			return _userChangeSignal;
+		}
+		
 		private var _users:ArrayCollection;	
 		[Bindable]
 		public function get users():ArrayCollection
@@ -95,7 +114,7 @@ package org.mconf.mobile.model
 				_users.addItem(newuser);
 				_users.refresh();
 				
-				//TODO Send a signal saying that a user has been added
+				newUserSignal.dispatch(newuser);
 			}					
 		}
 		
@@ -154,7 +173,7 @@ package org.mconf.mobile.model
 		}
 		
 		public function assignPresenter(userID:String):void {
-			var u:Object = getUser(userID);
+			var u:Object = getUserIndex(userID);
 			if (u) {
 				u.participant.presenter = true;
 				
@@ -172,10 +191,10 @@ package org.mconf.mobile.model
 				p.participant.hasStream = hasStream;
 				p.participant.streamName = streamName;
 				
-				if (p.participants.me)
+				if (p.participant.me)
 					_me.hasStream = hasStream;
 				
-				// Signal for stream change
+				userChangeSignal.dispatch(p.participant, "hasStream");
 			}
 		}
 		

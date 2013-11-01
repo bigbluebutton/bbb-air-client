@@ -1,7 +1,9 @@
 package org.mconf.mobile.model
 {
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
+	import org.mconf.mobile.core.IVideoConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
+	import org.mconf.mobile.core.VideoConnection;
 	import org.mconf.mobile.core.VoiceStreamManager;
 	
 
@@ -18,5 +20,7 @@ package org.mconf.mobile.model
 		function set mainConnection(value:IBigBlueButtonConnection):void
 		function get voiceStreamManager():VoiceStreamManager
 		function set voiceStreamManager(value:VoiceStreamManager):void
+		function get videoConnection():IVideoConnection
+		function set videoConnection(value:IVideoConnection):void
 	}
 }

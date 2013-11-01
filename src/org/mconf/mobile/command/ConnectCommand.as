@@ -4,6 +4,7 @@ package org.mconf.mobile.command
 	
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
 	import org.mconf.mobile.core.IUsersService;
+	import org.mconf.mobile.core.IVideoConnection;
 	import org.mconf.mobile.model.IConferenceParameters;
 	import org.mconf.mobile.model.IUserSession;
 	import org.mconf.mobile.model.IUserUISession;
@@ -28,6 +29,9 @@ package org.mconf.mobile.command
 		
 		[Inject]
 		public var joinVoiceSignal: JoinVoiceSignal;
+		
+		[Inject]
+		public var videoConnection: IVideoConnection;
 		
 		[Inject]
 		public var uri: String;
@@ -55,7 +59,13 @@ package org.mconf.mobile.command
 			userUISession.pushPage(PagesENUM.PRESENTATION); 
 			
 			usersService.connect(uri);
-
+			
+			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
+			videoConnection.successConnected.add(successConnected);
+			videoConnection.unsuccessConnected.add(unsuccessConnected);
+			videoConnection.connect();
+			userSession.videoConnection = videoConnection;
+			
 			joinVoiceSignal.dispatch();
 		}
 		

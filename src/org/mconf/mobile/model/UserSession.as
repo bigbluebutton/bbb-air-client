@@ -1,6 +1,7 @@
 package org.mconf.mobile.model
 {
 	import org.mconf.mobile.core.IBigBlueButtonConnection;
+	import org.mconf.mobile.core.IVideoConnection;
 	import org.mconf.mobile.core.IVoiceConnection;
 	import org.mconf.mobile.core.VoiceStreamManager;
 	
@@ -11,6 +12,7 @@ package org.mconf.mobile.model
 		protected var _mainConnection:IBigBlueButtonConnection;
 		protected var _voiceConnection:IVoiceConnection;
 		protected var _voiceStreamManager:VoiceStreamManager;
+		protected var _videoConnection:IVideoConnection;
 		protected var _userlist:UserList;
 
 		public function get userlist():UserList
@@ -20,7 +22,7 @@ package org.mconf.mobile.model
 		
 		public function set userlist(value:UserList):void
 		{
-			throw("It's not allowed to manually set the UserList");
+			throw("Manually setting the UserList is not allowed");
 		}
 
 		
@@ -77,6 +79,16 @@ package org.mconf.mobile.model
 		public function set voiceStreamManager(value:VoiceStreamManager):void
 		{
 			_voiceStreamManager = value;
+		}
+
+		public function get videoConnection():IVideoConnection
+		{
+			return _videoConnection;
+		}
+
+		public function set videoConnection(value:IVideoConnection):void
+		{
+			_videoConnection = value;
 		}
 
 

@@ -86,13 +86,15 @@ package org.mconf.mobile.core
 			user.role = joinedUser.role;
 			user.externUserID = joinedUser.externUserID;
 			user.isLeavingFlag = false;
-			user.hasStream = joinedUser.status.hasStream;
-			user.presenter = joinedUser.status.presenter;
-			user.raiseHand = joinedUser.status.raiseHand;
 			
-			trace("New user joined [" + user.userID + "," + user.name + "," + user.role + "]");
+			trace("New user joined [" + ObjectUtil.toString(user) + "]");
+			trace(ObjectUtil.toString(joinedUser));
 			
 			userSession.userlist.addUser(user);
+			
+			participantStatusChange(user.userID, "hasStream", joinedUser.status.hasStream);
+			participantStatusChange(user.userID, "presenter", joinedUser.status.presenter);
+			participantStatusChange(user.userID, "raiseHand", joinedUser.status.raiseHand);
 		}
 		
 		public function participantLeft(userID:String):void { 			
@@ -108,6 +110,10 @@ package org.mconf.mobile.core
 			trace("Received status change [" + userID + "," + status + "," + value + "]")			
 			
 			switch (status) {
+				case "presenter":
+					if (Boolean(value) == true)
+						userSession.userlist.assignPresenter(userID);
+					break;
 				case "hasStream":
 					var streamInfo:Array = String(value).split(/,/); 
 					
