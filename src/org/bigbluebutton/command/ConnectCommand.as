@@ -53,16 +53,17 @@ package org.bigbluebutton.command
 			
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
-			trace("My userId is " + userSession.userId);
-			
+
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PARTICIPANTS); 
 			
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
+			
 			//TODO use proper callbacks
 			//TODO see if videoConnection.successConnected is dispatched when it's connected properly
-//			videoConnection.successConnected.add(successConnected);
-//			videoConnection.unsuccessConnected.add(unsuccessConnected);
+			videoConnection.successConnected.add(successVideoConnected);
+			videoConnection.unsuccessConnected.add(unsuccessVideoConnected);
+			
 			videoConnection.connect();
 			userSession.videoConnection = videoConnection;
 
@@ -78,5 +79,12 @@ package org.bigbluebutton.command
 			userUISession.loading = false;
 		}
 		
+		private function successVideoConnected():void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":successVideoConnected()");
+		}
+		
+		private function unsuccessVideoConnected(reason:String):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessVideoConnected()");
+		}
 	}
 }

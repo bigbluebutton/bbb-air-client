@@ -6,6 +6,7 @@ package org.bigbluebutton.model
 	import org.osflash.signals.Signal;
 	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
+	
 	import spark.collections.Sort;
 
 	public class UserList
@@ -166,19 +167,18 @@ package org.bigbluebutton.model
 					return aUser;
 				}
 			}				
-			
-			// Participant not found.
+
 			return null;
 		}
 		
 		public function removeUser(userID:String):void {
 			var p:Object = getUserIndex(userID);
-			if (p != null) {
-				// Flag that the user is leaving the meeting so that apps (such as avatar) doesn't hang
-				// around when the user already left.
-				p.participant.isLeavingFlag = true;
+			if (p != null) 
+			{
+				var user:User = p.participant as User; 
+				user.isLeavingFlag = true;
 				
-				trace("removing user[" + p.participant.name + "," + p.participant.userID + "]");				
+				trace("removing user[" + user.name + "," + user.userID + "]");				
 				_users.removeItemAt(p.index);
 				_users.refresh();
 				
@@ -263,8 +263,7 @@ package org.bigbluebutton.model
 					return {index:i, participant:aUser};
 				}
 			}				
-			
-			// Participant not found.
+
 			return null;
 		}
 	}

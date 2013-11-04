@@ -122,11 +122,13 @@ package org.bigbluebutton.core
 			}
 		}
 		
-		protected function sendConnectionSuccessEvent():void {
+		protected function sendConnectionSuccessEvent():void 
+		{
 			successConnected.dispatch();
 		}
 		
-		protected function sendConnectionFailedEvent(reason:String):void {
+		protected function sendConnectionFailedEvent(reason:String):void 
+		{
 			unsuccessConnected.dispatch(reason);
 		}
 		

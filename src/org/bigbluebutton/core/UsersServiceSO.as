@@ -32,27 +32,30 @@ package org.bigbluebutton.core
 		
 		private function queryForParticipants():void {
 			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.getParticipants";
+			
 			nc.call(
-				"participants.getParticipants",// Remote function name
-				new Responder(
-					// participants - On successful result
-					function(result:Object):void { 
-						trace("Successfully queried participants: " + result.count); 
-						if (result.count > 0) {
-							for(var p:Object in result.participants) {
-								participantJoined(result.participants[p]);
-							}
-						}	
-//						becomePresenterIfLoneModerator();
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("Error occurred");
-						trace(ObjectUtil.toString(status));
-						sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
-					}
-				)//new Responder
-			); //_netConnection.call
+				restoreFunctionName,
+				new Responder(queryForParticipantsOnSucess, queryForParticipantsOnUnsucess)
+			);
+		}
+		
+		private function queryForParticipantsOnSucess(result:Object):void
+		{
+			trace("Successfully queried participants: " + result.count); 
+			if (result.count > 0) {
+				for(var p:Object in result.participants) {
+					participantJoined(result.participants[p]);
+				}
+			}	
+			//becomePresenterIfLoneModerator();
+		}
+		
+		private function queryForParticipantsOnUnsucess(status:Object):void
+		{
+			trace("Error occurred");
+			trace(ObjectUtil.toString(status));
+			sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
 		}
 		
 		public function participantJoined(joinedUser:Object):void {

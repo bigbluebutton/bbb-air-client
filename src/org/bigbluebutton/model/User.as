@@ -13,7 +13,9 @@ package org.bigbluebutton.model
 		public static const VIEWER:String = "VIEWER";
 		public static const PRESENTER:String = "PRESENTER";
 		
-		// Flag to tell that user is in the process of leaving the meeting.
+		/**
+		 * Flag to tell that user is in the process of leaving the meeting.
+		 */ 
 		public var isLeavingFlag:Boolean = false;
 
 		private var _userID:String = "UNKNOWN USER";

@@ -14,6 +14,7 @@ package org.bigbluebutton.core
 	public class VideoConnection extends DefaultConnectionCallback implements IVideoConnection
 	{
 		private var _ns:NetStream;
+		
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
 		

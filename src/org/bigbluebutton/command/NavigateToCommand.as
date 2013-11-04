@@ -18,7 +18,6 @@ package org.bigbluebutton.command
 		
 		override public function execute():void
 		{
-			// update model
 			if(to != null && to != "")
 			{
 				userSession.pushPage(to);

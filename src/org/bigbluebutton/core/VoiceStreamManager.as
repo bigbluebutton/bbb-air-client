@@ -86,42 +86,51 @@ package org.bigbluebutton.core
 				return;
 			}
 			
-			// first try to use the enhanced microphone
-			// if it doesn't work, get the regular one
-			_mic = Microphone.getEnhancedMicrophone();
-			if (_mic) {
+			_mic = getMicrophone(codec);
+		}
+		
+		/**
+		 * first try to use the enhanced microphone
+		 * if it doesn't work, get the regular one
+		 */ 
+		private function getMicrophone(codec:String):Microphone
+		{
+			var mic:Microphone = null;
+			mic = Microphone.getEnhancedMicrophone();
+			if (mic) {
 				var options:MicrophoneEnhancedOptions = new MicrophoneEnhancedOptions();
 				options.mode = MicrophoneEnhancedMode.FULL_DUPLEX;
 				options.autoGain = false;
 				options.echoPath = 128;
 				options.nonLinearProcessing = true;
-				_mic['enhancedOptions'] = options;
-				_mic.setUseEchoSuppression(true);
+				mic['enhancedOptions'] = options;
+				mic.setUseEchoSuppression(true);
 			} else {
-				_mic = Microphone.getMicrophone();
+				mic = Microphone.getMicrophone();
 			}
 			
-			if (_mic == null) {
+			if (mic == null) {
 				trace("No microphone! <o>");
 			} else {
-				_mic.addEventListener(StatusEvent.STATUS, onMicStatusEvent);
+				mic.addEventListener(StatusEvent.STATUS, onMicStatusEvent);
 				
-				_mic.setLoopBack(false);
-				_mic.setSilenceLevel(0, 20000);
-				_mic.gain = 60;			
+				mic.setLoopBack(false);
+				mic.setSilenceLevel(0, 20000);
+				mic.gain = 60;			
 				
 				if (codec == "SPEEX") {
-					_mic.encodeQuality = 6;
-					_mic.codec = SoundCodec.SPEEX;
-					_mic.framesPerPacket = 1;
-					_mic.rate = 16;
+					mic.encodeQuality = 6;
+					mic.codec = SoundCodec.SPEEX;
+					mic.framesPerPacket = 1;
+					mic.rate = 16;
 					trace("Using SPEEX wideband codec");
 				} else {
-					_mic.codec = SoundCodec.NELLYMOSER;
-					_mic.rate = 8;
+					mic.codec = SoundCodec.NELLYMOSER;
+					mic.rate = 8;
 					trace("Using Nellymoser codec");
 				}
 			}
+			return mic;
 		}
 		
 		protected function onMicStatusEvent(event:StatusEvent):void
