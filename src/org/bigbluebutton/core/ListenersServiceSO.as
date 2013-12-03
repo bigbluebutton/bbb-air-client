@@ -173,7 +173,16 @@ package org.bigbluebutton.core
 		public function userLeft(userID:Number):void {
 			trace("userTalk() [" + userID + "]");
 			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
-			user.voiceJoined = false;
+			if(user)
+			{
+				user.voiceJoined = false;
+			}
+			else
+			{
+				trace("--------------------------------------------------------------------------------");
+				trace("WARNING - ListenersServiceSO.userLeft(userID: "+userID+") - userIDnot found");
+				trace("--------------------------------------------------------------------------------");
+			}
 		}
 		
 		public function ping(message:String):void {

@@ -37,17 +37,33 @@
 						  paddingTop="0"
 						  />
 	</s:layout>
-	<s:Group y="0" left="0" width="20%" height="50">
-		<assets:ProfileIcon id="profileIcon" horizontalCenter="-20" verticalCenter="0"/>
-		<assets:PresentationIcon id="presentationIcon" horizontalCenter="-20" verticalCenter="0"/>
-		<assets:HandSp id="handIcon" horizontalCenter="20" verticalCenter="0"/>
+	<s:Group y="0" left="0" width="90" height="50">
+		<s:layout>
+			<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" />
+		</s:layout>
+		<s:Group y="0" left="0" width="50%" height="100%">
+			<assets:ProfileIcon id="profileIcon" horizontalCenter="0" verticalCenter="0"/>
+			<assets:PresentationIcon id="presentationIcon" horizontalCenter="0" verticalCenter="0"/>
+		</s:Group>
+		<s:Group y="0" left="0" width="50%" height="100%">
+			<assets:HandSp id="handIcon" horizontalCenter="0" verticalCenter="0"/>
+		</s:Group>
 	</s:Group>
 	<s:Label id="labelDisplay" x="79" width="60%" height="51" fontWeight="bold"
 			 text="Lucas Jones&#xd;" textAlign="left" verticalCenter="0"/>
 	<s:Group y="0" right="0" width="30%" height="49">
-		<assets:CameraIcon id="cameraIcon" x="23" y="12"/>
-		<assets:MicIcon id="micIcon" x="57" y="12"/>
-		<assets:SoundIcon id="soundIcon" x="91" y="12"/>
+		<s:layout>
+			<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" />
+		</s:layout>
+		<s:Group y="0" left="0" width="34%" height="100%">
+			<assets:CameraIcon id="cameraIcon" x="23" y="12" horizontalCenter="0"/>	
+		</s:Group>
+		<s:Group y="0" left="0" width="33%" height="100%">
+			<assets:MicIcon id="micIcon" y="12" horizontalCenter="0"/>
+		</s:Group>
+		<s:Group x="0" y="0" width="33%" height="100%">
+			<assets:SoundIcon id="soundIcon" y="12" horizontalCenter="0"/>
+		</s:Group>
 	</s:Group>
 
 </s:ItemRenderer>

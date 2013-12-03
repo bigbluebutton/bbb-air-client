@@ -14,7 +14,6 @@ package org.bigbluebutton.model
 	
 	public class UserSession implements IUserSession
 	{
-
 		protected var _netconnection:NetConnection;
 		protected var _config:Config;
 		protected var _userId:String;

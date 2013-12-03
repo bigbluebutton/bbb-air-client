@@ -45,6 +45,16 @@
 			{
 				setupContext();
 				setupLogger();
+				
+				NativeApplication.nativeApplication.addEventListener(BrowserInvokeEvent.BROWSER_INVOKE, onInvokeEvent);
+			}
+			
+			public function onInvokeEvent(invocation:InvokeEvent):void 
+			{
+				var arguments:Array = invocation.arguments;
+				var currentDir:File = invocation.currentDirectory;
+				trace("arguments: "+arguments);
+				trace("currentDir: "+currentDir);
 			}
 			
 			/**

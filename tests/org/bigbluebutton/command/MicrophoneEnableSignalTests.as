@@ -11,7 +11,7 @@ package org.bigbluebutton.command
 		[Test]
 		public function default_ShouldHaveStringAsArg(): void
 		{
-			assertThat(new MicrophoneEnableSignal().valueClasses.length, equalTo(2));
+			assertThat(new MicrophoneOnSignal().valueClasses.length, equalTo(2));
 		}
 	}
 }

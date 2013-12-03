@@ -26,6 +26,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		public function dispose():void
 		{
 			trace("Cleaning the VideoChatView");
+			cleanUpVideos();
 		}
 		
 		public function cleanUpVideos():void {
@@ -45,7 +46,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			this.videoGroup.addElement(newCam);
 			newCam.startStream(connection, name, streamName, userID, width, height);
 			
-			positionVideos();
+			invalidateDisplayList();
 		}
 		
 		public function stopStream(userID:String):void {
@@ -56,21 +57,22 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					videoGroup.removeElement(webcam);
 					webcamCollection.removeItemAt(i);
 					
-					positionVideos();
+					invalidateDisplayList();
 					
 					break;
 				}
 			}
 		}
 		
-		private function positionVideos():void {
-			var webcamWidth:Number = videoGroup.width /2;
-			var webcamHeight:Number = webcamWidth/320 * 240;
+		private function positionVideos(unscaledWidth:Number, unscaledHeight:Number):void {
+			//var webcamWidth:Number = videoGroup.width /2;
+			//var webcamHeight:Number = webcamWidth/320 * 240;
 			
-			trace("Setting webcam dimensions [ " + webcamWidth + "," + webcamHeight + " ]");
+			trace("Setting webcam dimensions [ " + unscaledWidth + "," + unscaledHeight + " ]");
 			for (var i:Number=0; i < webcamCollection.length; ++i) {
 				var webcam:WebcamView = WebcamView(webcamCollection.getItemAt(i))
 				
+				/*
 				var x:Number, y:Number;
 				if (i%2==0) { // place on the left
 					x = 0;
@@ -81,9 +83,20 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				}
 				
 				var point:Point = videoGroup.localToGlobal(new Point(x,y));
+					
 				trace("Positioning webcam for " + webcam.userName + " [ " + webcamWidth + "," + webcamHeight + "," + point.x + "," + point.y + " ] ");
 				WebcamView(webcamCollection.getItemAt(i)).setPosition(webcamWidth, webcamHeight, point.x, point.y);
+				*/
+				
+				webcam.setPosition(unscaledWidth, unscaledHeight, 0, 0);
 			}
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			
 		}
 	}
 }

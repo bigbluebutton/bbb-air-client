@@ -53,11 +53,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				startStream(user.name, user.streamName);
 		}
 		
-		private function userRemovedHandler(user:User):void {
-			stopStream(user.userID);
+		private function userRemovedHandler(userID:String):void {
+			stopStream(userID);
 		}
 		
-		private function userChangeHandler(user:User, property:String):void {
+		private function userChangeHandler(user:User, property:String = null):void {
 			if (property == "hasStream" && user.hasStream)
 				startStream(user.name, user.streamName);
 		}
@@ -69,12 +69,17 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				trace(ObjectUtil.toString(resolution));
 				var width:Number = Number(String(resolution.dimensions[0]));
 				var length:Number = Number(String(resolution.dimensions[1]));
-				if (view) view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
+				if (view) 
+				{
+					view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
+				}
 			}
 		}
 		
 		private function stopStream(userID:String):void {
-			if (view) view.stopStream(userID);
+			if (view) {
+				view.stopStream(userID);
+			}
 		}
 		
 		protected function getVideoResolution(stream:String):Object {

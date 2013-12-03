@@ -1,24 +1,23 @@
 package org.bigbluebutton.model
 {
-	import org.bigbluebutton.command.MicrophoneEnableSignal;
+	import org.bigbluebutton.command.MicrophoneOnSignal;
 	import org.osflash.signals.ISignal;
-	import org.osflash.signals.Signal;
 
 	public class User
 	{
-		[Inject]
-		public var microphoneEnableSignal: MicrophoneEnableSignal;
-		
 		public static const MODERATOR:String = "MODERATOR";
 		public static const VIEWER:String = "VIEWER";
 		public static const PRESENTER:String = "PRESENTER";
+		
+		
+		public static const UNKNOWN_USER:String = "UNKNOWN USER";
 		
 		/**
 		 * Flag to tell that user is in the process of leaving the meeting.
 		 */ 
 		public var isLeavingFlag:Boolean = false;
 
-		private var _userID:String = "UNKNOWN USER";
+		private var _userID:String = UNKNOWN_USER;
 
 		public function get userID():String
 		{
@@ -156,14 +155,8 @@ package org.bigbluebutton.model
 		{
 			_muted = value;
 			
-			//TODO hack here, please do it in the proper place
-			// the following code isn't working, sometimes microphoneEnableSignal is null <o>
-//			if (_me) {
-//				microphoneEnableSignal.dispatch(!_muted, false);
-//			}
-			
-			verifyUserStatus();
-			change();
+			verifyUserStatus();		
+			change("muted");
 		}
 		
 		private var _talking:Boolean;
@@ -192,11 +185,11 @@ package org.bigbluebutton.model
 			_locked = value;
 		}
 		
-		private function change():void
+		private function change(property:String = null):void
 		{
-			if(_signal)
+			if(_changeSignal)
 			{
-				_signal.dispatch(this);
+				_changeSignal.dispatch(this, property);
 			}
 		}
 		
@@ -212,13 +205,13 @@ package org.bigbluebutton.model
 			
 		}
 		
-		private var _signal:ISignal;
+		private var _changeSignal:ISignal;
 
 		public function get signal():ISignal {
-			return _signal;
+			return _changeSignal;
 		}
 		public function set signal(signal:ISignal):void {
-			_signal = signal;
+			_changeSignal = signal;
 		}
 	}
 }

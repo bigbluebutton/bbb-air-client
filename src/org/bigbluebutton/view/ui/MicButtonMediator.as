@@ -1,6 +1,6 @@
 package org.bigbluebutton.view.ui
 {
-	import org.bigbluebutton.command.MicrophoneEnableSignal;
+	import org.bigbluebutton.command.MicrophoneOnSignal;
 	import org.bigbluebutton.model.IUserSettings;
 	import org.osmf.logging.Log;
 	
@@ -12,7 +12,7 @@ package org.bigbluebutton.view.ui
 		public var userSettings: IUserSettings;
 		
 		[Inject]
-		public var microphoneEnableSignal: MicrophoneEnableSignal;
+		public var microphoneEnableSignal: MicrophoneOnSignal;
 				
 		[Inject]
 		public var view: IMicButton;

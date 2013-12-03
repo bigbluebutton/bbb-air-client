@@ -36,19 +36,18 @@ package org.bigbluebutton.view.navigation.pages.participants
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 
+			dataProvider = new ArrayCollection();
+			view.list.dataProvider = dataProvider;
+			
 			dicUserIdtoUser = new Dictionary();
-			
-			dataProvider = view.list.dataProvider as ArrayCollection;
-			
-			usersSignal = new Signal();
-			usersSignal.add(usersDataChanged);
 			
 			var users:ArrayCollection = userSession.userlist.users;
 			for each (var user:User in users) 
 			{				
 				userAdded(user)
 			}
-	
+			
+			userSession.userlist.userChangeSignal.add(userChanged);
 			userSession.userlist.userAddedSignal.add(userAdded);
 			userSession.userlist.userRemovedSignal.add(userRemoved);
 		}
@@ -56,8 +55,8 @@ package org.bigbluebutton.view.navigation.pages.participants
 		private function userAdded(user:User):void
 		{
 			dataProvider.addItem(user);		
+			dataProvider.refresh();
 			dicUserIdtoUser[user.userID] = user;
-			user.signal = usersSignal;
 		}
 		
 		private function userRemoved(userID:String):void
@@ -65,6 +64,12 @@ package org.bigbluebutton.view.navigation.pages.participants
 			var user:User = dicUserIdtoUser[userID] as User;
 			var index:uint = dataProvider.getItemIndex(user);
 			dataProvider.removeItemAt(index);
+			dicUserIdtoUser[user.userID] = null;
+		}
+		
+		private function userChanged(user:User, property:String = null):void
+		{
+			
 		}
 		
 		private function presenterChanged():void
@@ -85,6 +90,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 			view.dispose();
 			view = null;
 			
+			userSession.userlist.userChangeSignal.remove(userChanged);
 			userSession.userlist.userAddedSignal.remove(userAdded);
 			userSession.userlist.userRemovedSignal.remove(userRemoved);
 		}

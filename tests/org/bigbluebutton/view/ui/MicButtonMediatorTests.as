@@ -2,7 +2,7 @@ package org.bigbluebutton.view.ui
 {
 	import org.hamcrest.assertThat;
 	import org.hamcrest.object.isTrue;
-	import org.bigbluebutton.command.MicrophoneEnableSignal;
+	import org.bigbluebutton.command.MicrophoneOnSignal;
 	import org.bigbluebutton.testing.MediatorTests;
 	import org.mockito.integrations.flexunit4.MockitoRule;
 	import org.mockito.integrations.given;
@@ -53,7 +53,7 @@ package org.bigbluebutton.view.ui
 		{
 			var micButtonMediator: MicButtonMediator = new MicButtonMediator();
 			micButtonMediator.view = createMockOfMicButton();
-			micButtonMediator.microphoneEnableSignal = mock(MicrophoneEnableSignal);
+			micButtonMediator.microphoneEnableSignal = mock(MicrophoneOnSignal);
 
 			//given(micButtonMediator.view.turnOffMicSignal).willReturn(activeTodo);
 			

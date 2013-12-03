@@ -132,6 +132,7 @@ package org.bigbluebutton.model
 					newuser.me = true;
 				}						
 				
+				newuser.signal = _userChangeSignal;
 				_users.addItem(newuser);
 				_users.refresh();
 				
@@ -201,7 +202,7 @@ package org.bigbluebutton.model
 			if (u.presenter) {
 				u.presenter = false;
 				
-				userChangeSignal.dispatch(u.userID);
+				userChangeSignal.dispatch(u);
 				
 				if (u.me)
 					_me.presenter = false;
@@ -209,13 +210,15 @@ package org.bigbluebutton.model
 		}
 		
 		public function assignPresenter(userID:String):void {
-			var u:Object = getUserIndex(userID);
-			if (u) {
-				u.participant.presenter = true;
+			var p:Object = getUserIndex(userID);
+			if (p) {
+				var user:User = p.participant as User;
 				
-				userChangeSignal.dispatch(u.userID);
+				user.presenter = true;
 				
-				if (u.participant.me)
+				userChangeSignal.dispatch(user);
+				
+				if (user.me)
 					_me.presenter = true;
 			}
 		}
@@ -240,7 +243,7 @@ package org.bigbluebutton.model
 			if (p) {
 				p.participant.raiseHand = value;
 				
-				userChangeSignal.dispatch(p.participant.userID);
+				userChangeSignal.dispatch(p.participant);
 				
 				if (p.participant.me)
 					_me.raiseHand = value;

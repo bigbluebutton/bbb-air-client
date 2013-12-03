@@ -48,14 +48,14 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			ns.receiveVideo(true);
 			ns.receiveAudio(false);
 			
-			width = width/2;
-			height = height/2;
+			//width = width/2;
+			//height = height/2;
 			
 			_video = new Video(width, height);
 			_video.width = width;
 			_video.height = height;
 			_video.smoothing = true;
-			setAspectRatio(width, height); 
+			//setAspectRatio(width, height); 
 			_video.attachNetStream(ns);
 			
 			ns.play(streamName);
@@ -97,7 +97,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					this.close();
 					break;
 				case "NetStream.Play.Start":
-					trace("Netstatus: " + e.info.code);					
+					trace("Netstatus: " + e.info.code);
 					break;
 				case "NetStream.Play.FileStructureInvalid":
 					trace("The MP4's file structure is invalid.");
