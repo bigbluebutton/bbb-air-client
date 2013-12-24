@@ -1,4 +1,4 @@
-package org.bigbluebutton.core
+package org.bigbluebutton.core.util
 {
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
@@ -39,7 +39,7 @@ package org.bigbluebutton.core
 			
 			var urlLoader:URLLoader = new URLLoader();
 			urlLoader.addEventListener( Event.COMPLETE, handleComplete );
-			//urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
+			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
 			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, ioErrorHandler );
 			urlLoader.load( _urlRequest );
 		}

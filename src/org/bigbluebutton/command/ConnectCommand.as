@@ -3,6 +3,7 @@ package org.bigbluebutton.command
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
+	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.model.IConferenceParameters;
@@ -38,7 +39,10 @@ package org.bigbluebutton.command
 		
 		[Inject]
 		public var usersService: IUsersService;
-				
+		
+		[Inject]
+		public var chatService: IChatMessageService;
+		
 		override public function execute():void {
 			connection.uri = uri;
 			
@@ -69,6 +73,8 @@ package org.bigbluebutton.command
 
 			usersService.connectUsers(uri);
 			usersService.connectListeners(uri);
+			
+			chatService.getPublicChatMessages();
 
 			joinVoiceSignal.dispatch();
 		}

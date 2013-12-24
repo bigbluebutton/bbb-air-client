@@ -4,11 +4,12 @@ package org.bigbluebutton.model
 	
 	import mx.collections.ArrayList;
 	
-	import org.hamcrest.core.throws;
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
+	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.hamcrest.core.throws;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
@@ -22,6 +23,7 @@ package org.bigbluebutton.model
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
 		protected var _userlist:UserList;
+		protected var _publicChat:ChatMessages;
 				
 		public function get netconnection():NetConnection
 		{
@@ -107,6 +109,12 @@ package org.bigbluebutton.model
 		public function UserSession()
 		{
 			_userlist = new UserList();
+			_publicChat = new ChatMessages();
+		}
+		
+		public function get publicChat():ChatMessages
+		{
+			return _publicChat;
 		}
 	}
 }

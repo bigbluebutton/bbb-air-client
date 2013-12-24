@@ -1,6 +1,7 @@
 package org.bigbluebutton.model
 {
 	import org.bigbluebutton.command.MicrophoneOnSignal;
+	import org.bigbluebutton.model.chat.ChatMessages;
 	import org.osflash.signals.ISignal;
 
 	public class User
@@ -210,8 +211,16 @@ package org.bigbluebutton.model
 		public function get signal():ISignal {
 			return _changeSignal;
 		}
+		
 		public function set signal(signal:ISignal):void {
 			_changeSignal = signal;
+		}
+		
+		private var _privateChat:ChatMessages = new ChatMessages();
+		
+		public function get privateChat():ChatMessages
+		{
+			return _privateChat;
 		}
 	}
 }

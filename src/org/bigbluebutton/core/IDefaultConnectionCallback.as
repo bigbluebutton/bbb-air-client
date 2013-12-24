@@ -10,6 +10,7 @@ package org.bigbluebutton.core
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.ConnectionFailedEvent;
+	import org.bigbluebutton.model.IMessageListener;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
@@ -19,6 +20,7 @@ package org.bigbluebutton.core
 		function onBWCheck(... rest):Number
 		function onBWDone(... rest):void 
 		function onMessageFromServer(messageName:String, result:Object):void
-		// function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void
+		function addMessageListener(listener:IMessageListener):void
+		function removeMessageListener(listener:IMessageListener):void
 	}
 }

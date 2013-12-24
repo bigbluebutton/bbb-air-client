@@ -118,5 +118,8 @@ package org.bigbluebutton.core
 			return _userId;
 		}
 
+		public function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void {
+			_baseConnection.sendMessage(service, onSuccess, onFailure, message);
+		}
 	}
 }

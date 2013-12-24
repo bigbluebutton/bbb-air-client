@@ -15,6 +15,7 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.Config;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import org.bigbluebutton.core.util.URLFetcher;
 
 	public class JoinService
 	{

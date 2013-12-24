@@ -5,10 +5,12 @@ package org.bigbluebutton.core
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.NetConnection;
+	import flash.net.Responder;
 	
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.ConnectionFailedEvent;
+	import org.bigbluebutton.model.IMessageListener;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
@@ -148,6 +150,28 @@ package org.bigbluebutton.core
 		{
 			trace("Asynchronous code error - " + event.error );
 			sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
+		}
+		
+		public function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void {
+			trace("SENDING [" + service + "]");
+			var responder:Responder =	new Responder(                    
+				function(result:Object):void { // On successful result
+					onSuccess("Successfully sent [" + service + "]."); 
+				},	                   
+				function(status:Object):void { // status - On error occurred
+					var errorReason:String = "Failed to send [" + service + "]:\n"; 
+					for (var x:Object in status) { 
+						errorReason += "\t" + x + " : " + status[x]; 
+					}
+					onFailure(errorReason);
+				}
+			);
+			
+			if (message == null) {
+				_netConnection.call(service, responder);			
+			} else {
+				_netConnection.call(service, responder, message);
+			}
 		}
 	}
 }
