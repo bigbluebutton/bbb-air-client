@@ -4,6 +4,7 @@ package org.bigbluebutton.core
 	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
+	import org.osflash.signals.Signal;
 
 	public class ChatMessageSender implements IChatMessageSender
 	{
@@ -15,10 +16,10 @@ package org.bigbluebutton.core
 			trace("Sending [chat.getPublicMessages] to server.");
 			userSession.mainConnection.sendMessage("chat.sendPublicChatHistory", 
 				function(result:String):void { // On successful result
-					trace(result); 
+					publicChatMessagesOnSucessSignal.dispatch(result);
 				},	                   
 				function(status:String):void { // status - On error occurred
-					trace(status); 
+					publicChatMessagesOnFailureSignal.dispatch(status); 
 				}
 			);
 		}
@@ -28,10 +29,10 @@ package org.bigbluebutton.core
 			trace("Sending [chat.sendPublicMessage] to server. [" + message.message + "]");
 			userSession.mainConnection.sendMessage("chat.sendPublicMessage", 
 				function(result:String):void { // On successful result
-					trace(result); 
+					sendPublicMessageOnSucessSignal.dispatch(result);
 				},	                   
 				function(status:String):void { // status - On error occurred
-					trace(status); 
+					sendPublicMessageOnFailureSignal.dispatch(status); 
 				},
 				message.toObj()
 			);
@@ -43,13 +44,50 @@ package org.bigbluebutton.core
 			trace("Sending fromUserID [" + message.fromUserID + "] to toUserID [" + message.toUserID + "]");
 			userSession.mainConnection.sendMessage("chat.sendPrivateMessage", 
 				function(result:String):void { // On successful result
-					trace(result); 
+					sendPrivateMessageOnSucessSignal.dispatch(result);
 				},	                   
 				function(status:String):void { // status - On error occurred
-					trace(status); 
+					sendPrivateMessageOnFailureSignal.dispatch(status);
 				},
 				message.toObj()
 			);
+		}
+
+		private var _publicChatMessagesOnSucessSignal:Signal = new Signal();
+		private var _publicChatMessagesOnFailureSignal:Signal = new Signal();
+		private var _sendPublicMessageOnSucessSignal:Signal = new Signal();
+		private var _sendPublicMessageOnFailureSignal:Signal = new Signal();
+		private var _sendPrivateMessageOnSucessSignal:Signal = new Signal();
+		private var _sendPrivateMessageOnFailureSignal:Signal = new Signal();
+		
+		public function get publicChatMessagesOnSucessSignal():Signal
+		{
+			return _publicChatMessagesOnSucessSignal;
+		}
+
+		public function get publicChatMessagesOnFailureSignal():Signal
+		{
+			return _publicChatMessagesOnFailureSignal;
+		}
+
+		public function get sendPublicMessageOnSucessSignal():Signal
+		{
+			return _sendPublicMessageOnSucessSignal;
+		}
+
+		public function get sendPublicMessageOnFailureSignal():Signal
+		{
+			return _sendPublicMessageOnFailureSignal;
+		}
+
+		public function get sendPrivateMessageOnSucessSignal():Signal
+		{
+			return _sendPrivateMessageOnSucessSignal;
+		}
+
+		public function get sendPrivateMessageOnFailureSignal():Signal
+		{
+			return _sendPrivateMessageOnFailureSignal;
 		}
 	}
 }
