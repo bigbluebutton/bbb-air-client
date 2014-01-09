@@ -46,6 +46,8 @@
 				setupContext();
 				setupLogger();
 				
+				resizeForSoftKeyboard = true;
+				
 				NativeApplication.nativeApplication.addEventListener(BrowserInvokeEvent.BROWSER_INVOKE, onInvokeEvent);
 			}
 			
