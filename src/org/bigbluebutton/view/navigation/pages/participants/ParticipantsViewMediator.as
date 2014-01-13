@@ -69,7 +69,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 		
 		private function userChanged(user:User, property:String = null):void
 		{
-			
+			dataProvider.refresh();
 		}
 		
 		private function presenterChanged():void

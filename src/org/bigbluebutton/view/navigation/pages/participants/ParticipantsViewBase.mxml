@@ -9,13 +9,6 @@
 		<![CDATA[
 			import org.bigbluebutton.view.navigation.pages.ActionsENUM;
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
-			
-			import spark.components.List;
-			
-			public function get list():List
-			{
-				return participantslist;
-			}
 		]]>
 	</fx:Script>
 	<view:states>
@@ -48,14 +41,7 @@
 			</s:Group>	
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>
-		<participants:ParticipantsList id="participantslist" width="100%" height="100%">
-			<!-- fake view
-			<assets:ParticipantsScreenSp width="100%" height="100%" visible="true" visible.participantsuser="false" 
-								  click="{ParticipantsViewBase(document).currentState = 'participantsuser'}"/>
-			<assets:ParticipantsUserScreenSp width="100%" height="100%" visible="false" visible.participantsuser="true"
-									   click="{ParticipantsViewBase(document).currentState = 'participants'}"/>
-			-->
-		</participants:ParticipantsList>
+		<participants:ParticipantsList id="participantslist" width="100%" height="100%" />
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
 </view:NoTabView>

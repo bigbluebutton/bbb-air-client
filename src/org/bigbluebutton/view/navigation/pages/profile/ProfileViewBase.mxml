@@ -39,8 +39,19 @@
 		</s:Group>
 		<s:Group width="100%" height="100%">
 			<assets:ProfileScreenSp width="100%" height="100%"/>
-			<ui:NavigationButton left="32" right="26" top="99" alpha="0"
-								 navigateTo="{PagesENUM.LOGIN}"/>
+			<s:Group width="100%" height="100%">
+				<s:Label y="26" left="20" right="20" height="30" fontSize="18" text="User:"/>
+				<s:Label y="166" left="20" right="20" height="30" fontSize="18" text="Settings:"/>
+				<s:Label y="57" left="20" right="20" height="30" fontSize="20" text="Lucas Jones"
+						 textAlign="center"/>
+				<s:Button y="99" label="Sign Out" horizontalCenter="0"/>
+				<s:Button y="193" label="Camera" horizontalCenter="0"/>
+				<s:Button y="243" label="Camera" horizontalCenter="0"/>
+				<s:Button y="293" label="Camera" horizontalCenter="0"/>
+				<s:Button y="344" label="Camera" horizontalCenter="0"/>
+				<s:Button y="394" label="Camera" horizontalCenter="0"/>
+				<s:Button y="444" label="Camera" horizontalCenter="0"/>
+			</s:Group>
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>

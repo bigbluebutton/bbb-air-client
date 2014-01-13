@@ -21,7 +21,7 @@
 					message.text = m.senderText;
 					//TODO: What is translatedText, where should it be used?
 					
-					removeUnneededInformationFromDisplay(m);
+					//removeUnneededInformationFromDisplay(m);
 				}
 			}
 			

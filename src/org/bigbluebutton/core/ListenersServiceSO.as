@@ -126,7 +126,12 @@ package org.bigbluebutton.core
 			trace(ObjectUtil.toString(status));
 		}
 		
-		
+		//TODO: server calling this when muting or unmuting multiple users 
+		public function muteStateCallback(param0:Object = null, param1:Object = null, param2:Object = null, param3:Object = null, param4:Object = null):void
+		{
+			trace("muteStateCallback")
+		}
+			
 		/**
 		 * Callback from the server from many of the bellow nc.call methods
 		 */
@@ -180,7 +185,7 @@ package org.bigbluebutton.core
 			else
 			{
 				trace("--------------------------------------------------------------------------------");
-				trace("WARNING - ListenersServiceSO.userLeft(userID: "+userID+") - userIDnot found");
+				trace("WARNING - ListenersServiceSO.userLeft(userID: "+userID+") - userID not found");
 				trace("--------------------------------------------------------------------------------");
 			}
 		}

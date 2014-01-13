@@ -63,18 +63,20 @@ package org.bigbluebutton.view.navigation.pages.chat
 			view.inputMessage.enabled = false;
 			view.sendButton.enabled = false;
 			
+			var currentDate:Date = new Date();
+			
 			//TODO get info from the right source
 			var m:ChatMessageVO = new ChatMessageVO();
 			m.chatType = "PUBLIC";
 			m.fromUserID = userSession.userId;
-			m.fromUsername = "fromUsername";
+			m.fromUsername = "XXfromUsernameXX";
 			m.fromColor = "0";
-			m.fromTime = 1389215529008;
-			m.fromTimezoneOffset = 120;
+			m.fromTime = currentDate.time;
+			m.fromTimezoneOffset = currentDate.timezoneOffset;
 			m.fromLang = "en";
 			m.message = view.inputMessage.text;
-			m.toUserID = "asdsadasda";
-			m.toUsername = "fromUsername";
+			m.toUserID = "FAKE_USERID";
+			m.toUsername = "XXfromUsernameXX";
 			
 			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
 			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);

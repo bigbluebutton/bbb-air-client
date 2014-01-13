@@ -209,7 +209,10 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function assignPresenter(userID:String):void {
+		public function assignPresenter(userID:String):void 
+		{
+			clearPresenter();			
+			
 			var p:Object = getUserIndex(userID);
 			if (p) {
 				var user:User = p.participant as User;
@@ -220,6 +223,14 @@ package org.bigbluebutton.model
 				
 				if (user.me)
 					_me.presenter = true;
+			}
+		}
+		
+		private function clearPresenter():void
+		{
+			for each(var user:User in _users)
+			{
+				user.presenter = false;
 			}
 		}
 		
