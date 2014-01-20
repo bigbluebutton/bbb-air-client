@@ -24,7 +24,7 @@ package org.bigbluebutton.model
 		protected var _videoConnection:IVideoConnection;
 		protected var _userlist:UserList;
 		protected var _publicChat:ChatMessages;
-				
+
 		public function get netconnection():NetConnection
 		{
 			return _netconnection;

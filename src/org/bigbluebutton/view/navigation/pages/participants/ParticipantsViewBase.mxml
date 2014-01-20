@@ -36,7 +36,7 @@
 			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="profile"/>                
 			<s:Group width="100%" height="30">
 				<s:Label horizontalCenter="0" verticalCenter="0"
-						 text.participants="User - Fred Dixon" text.participantsuser="Participants (15)"/>
+						 text.participants="Participants" text.participantsuser="Participants (15)"/>
 			</s:Group>	
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>

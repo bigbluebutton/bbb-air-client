@@ -15,5 +15,7 @@ package org.bigbluebutton.view.navigation
 			
 		function set visible(value:Boolean):void
 		function set includeInLayout(value:Boolean):void
+		function get joinURL():String
+		function set joinURL(value:String):void
 	}
 }

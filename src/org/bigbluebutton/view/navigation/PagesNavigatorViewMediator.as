@@ -20,11 +20,22 @@ package org.bigbluebutton.view.navigation
 		[Inject]
 		public var userSession: IUserUISession
 		
+		[Inject]
+		public var userUISession: IUserUISession
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
 			userSession.pageChangedSignal.add(changePage);
+			
+			//var transition:SlideViewTransition = new SlideViewTransition();
+			//transition.duration = 300;
+			//transition.direction = ViewTransitionDirection.DOWN;
+			
+			//view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
+			
+			userUISession.pushPage(PagesENUM.LOGIN, view.joinURL);
 		}
 		
 		protected function changePage(pageName:String, pageRemoved:Boolean = false, transition:ViewTransitionBase = null):void

@@ -85,25 +85,25 @@ package org.bigbluebutton.view.navigation.pages.chat
 			var m:ChatMessageVO = new ChatMessageVO();
 			
 			m.fromUserID = userSession.userId;
-			m.fromUsername = "XXfromUsernameXX";
+			m.fromUsername = userSession.userlist.getUser(userSession.userId).name;
 			m.fromColor = "0";
 			m.fromTime = currentDate.time;
 			m.fromTimezoneOffset = currentDate.timezoneOffset;
 			m.fromLang = "en";
 			m.message = view.inputMessage.text;
-			m.toUserID = user?user.userID:"";
-			m.toUsername = user?user.name:"";
+			m.toUserID = publicChat?"public_chat_userid":user.userID;
+			m.toUsername = publicChat?"public_chat_username":user.name;
 			
 			if(publicChat)
 			{
-				m.chatType = "PUBLIC";
+				m.chatType = "PUBLIC_CHAT";
 				chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
 				chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
 				chatMessageSender.sendPublicMessage(m);
 			}
 			else
 			{
-				m.chatType = "PRIVATE";
+				m.chatType = "PRIVATE_CHAT";
 				chatMessageSender.sendPrivateMessageOnSucessSignal.add(onSendSucess);
 				chatMessageSender.sendPrivateMessageOnFailureSignal.add(onSendFailure);
 				chatMessageSender.sendPrivateMessage(m);

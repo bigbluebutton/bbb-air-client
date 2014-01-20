@@ -8,7 +8,6 @@
 			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
 			   preinitialize="preinitializeHandler(event)" 
-			   creationComplete="creationCompleteHandler(event)"
 			   >
 	<fx:Style source="Default.css"/>
 	
@@ -61,12 +60,19 @@
 				NativeApplication.nativeApplication.addEventListener(BrowserInvokeEvent.BROWSER_INVOKE, onInvokeEvent);
 			}
 			
+			protected var startURL:String;
+			
 			public function onInvokeEvent(invocation:InvokeEvent):void 
 			{
 				var arguments:Array = invocation.arguments;
 				var currentDir:File = invocation.currentDirectory;
 				trace("arguments: "+arguments);
 				trace("currentDir: "+currentDir);
+				
+				startURL = arguments.join("-");
+				trace("startURL: "+startURL);
+												
+				//pagesNavigatorView.joinURL = endURL;
 			}
 			
 			/**
@@ -117,15 +123,6 @@
 				Log.loggerFactory = new BigBlueButtonLoggerFactory(); 
 				var logger:Logger = Log.getLogger("org.bigbluebutton");
 				logger.info("Logger on");
-			}
-			
-			protected function creationCompleteHandler(event:FlexEvent):void
-			{
-				var transition:SlideViewTransition = new SlideViewTransition();
-				transition.duration = 300;
-				transition.direction = ViewTransitionDirection.DOWN;
-				
-				pagesNavigatorView.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
 			}
 			
 		]]>

@@ -17,10 +17,10 @@
 				title.text = obj.name;
 				var chatMessages:ChatMessages = obj.chatMessages as ChatMessages; 
 				newMesseges.text.text = String(chatMessages.newMessages);
-				if(chatMessages.newMessages)
-					newMesseges.visible = false;
-				else
+				if(chatMessages.newMessages > 0)
 					newMesseges.visible = true;
+				else
+					newMesseges.visible = false;
 			}
 			
 		]]>
@@ -34,7 +34,7 @@
 						  />
 	</s:layout>
 	<s:Label id="title" y="0" left="0" right="0" width="100%" height="100%" color="#000000"
-			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="right"/>
+			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"/>
 	
 	<assets:NewMesseges id="newMesseges"/>
 	<s:Group width="40" height="100%">

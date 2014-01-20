@@ -17,21 +17,7 @@
 	</fx:Script>
 	
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
-		<s:layout>
-			<s:VerticalLayout gap="0"
-							  paddingBottom="0"
-							  paddingLeft="0"
-							  paddingRight="0"
-							  paddingTop="0"
-							  verticalAlign="middle"
-							  />
-		</s:layout>
-		<s:Group width="100%" height="50%">
-			<s:Image horizontalCenter="0" source="assets/imgs/logo.png"
-					 verticalCenter="0"/>
-		</s:Group>
-		<s:Group width="100%" height="50%">
-			<ui1:LoginButton width="60%" height="45" horizontalCenter="0" verticalCenter="0"/>
-		</s:Group>
+		<s:Image horizontalCenter="0" source="assets/imgs/logo.png"
+				 verticalCenter="0"/>
 	</s:Group>
 </view:NoTabView>

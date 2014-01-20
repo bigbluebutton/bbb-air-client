@@ -6,6 +6,18 @@ package org.bigbluebutton.view.navigation
 	
 	public class PagesNavigatorView extends PagesNavigatorViewBase implements IPagesNavigatorView
 	{
+		protected var _joinURL:String
+
+		public function get joinURL():String
+		{
+			return _joinURL;
+		}
+
+		public function set joinURL(value:String):void
+		{
+			_joinURL = value;
+		}
+				
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
