@@ -12,9 +12,6 @@
 		<![CDATA[
 			import mx.events.FlexEvent;
 			
-			import org.bigbluebutton.view.navigation.pages.ActionsENUM;
-			import org.bigbluebutton.view.navigation.pages.PagesENUM;
-			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				var camera:Camera = Camera.getCamera();              

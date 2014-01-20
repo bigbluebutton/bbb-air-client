@@ -10,6 +10,8 @@ package org.bigbluebutton.model.chat
 		[Bindable]
 		public var messages:ArrayCollection = new ArrayCollection();
 		
+		private var _newMessages:uint = 0;
+		
 		private var _autoTranslate:Boolean = false;
 
 		private var _changeSignal:ISignal;
@@ -49,6 +51,9 @@ package org.bigbluebutton.model.chat
 			cm.time = ChatUtil.getHours(sentTime) + ":" + ChatUtil.getMinutes(sentTime);
 			
 			messages.addItem(cm);
+			
+			_newMessages++;
+			
 			change();
 		}
 		
@@ -86,5 +91,15 @@ package org.bigbluebutton.model.chat
 				_changeSignal.dispatch(this, property);
 			}
 		}		
+
+		public function get newMessages():uint
+		{
+			return _newMessages;
+		}
+		
+		public function resetNewMessages():void
+		{
+			_newMessages = 0;
+		}
 	}
 }

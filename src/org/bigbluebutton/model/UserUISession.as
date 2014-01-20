@@ -42,16 +42,16 @@ package org.bigbluebutton.model
 			var s:String = null;
 			if(_listPages.length > 0)
 			{
-				s = _listPages.getItemAt(_listPages.length-1) as String;
+				s = _listPages.getItemAt(_listPages.length-1).value as String;
 			}
 			return s;
 		}
 		
-		public function pushPage(value:String):void
+		public function pushPage(value:String, details:Object = null):void
 		{
 			if(value != currentPage)
 			{
-				_listPages.addItem(value);
+				_listPages.addItem({value:value, details:details});
 				var removeView:Boolean = false;
 				_pageChangedSignal.dispatch(currentPage, removeView);
 			}
@@ -65,6 +65,16 @@ package org.bigbluebutton.model
 				var removeView:Boolean = true;
 				_pageChangedSignal.dispatch(currentPage, removeView);
 			}				
+		}
+		
+		public function get currentPageDetails():Object
+		{
+			var details:Object = null;
+			if(_listPages.length > 0)
+			{
+				details = _listPages.getItemAt(_listPages.length-1).details;
+			}
+			return details; 
 		}
 		
 		/**
@@ -82,6 +92,5 @@ package org.bigbluebutton.model
 			_loading = value;
 			_loadingSignal.dispatch(_loading);
 		}
-
 	}
 }

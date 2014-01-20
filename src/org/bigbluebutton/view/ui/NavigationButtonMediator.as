@@ -46,7 +46,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function navigate(): void
 		{
-			navigateToPageSignal.dispatch(view.navigateTo, view.action);
+			navigateToPageSignal.dispatch(view.navigateTo, view.pageDetails);
 		}
 		
 		/**

@@ -7,8 +7,7 @@
 				>
 	<fx:Script>
 		<![CDATA[
-			import org.bigbluebutton.view.navigation.pages.ActionsENUM;
-			import org.bigbluebutton.view.navigation.pages.PagesENUM;
+			
 		]]>
 	</fx:Script>
 	<view:states>

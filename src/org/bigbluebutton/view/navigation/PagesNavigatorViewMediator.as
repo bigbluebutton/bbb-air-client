@@ -25,11 +25,6 @@ package org.bigbluebutton.view.navigation
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
 			userSession.pageChangedSignal.add(changePage);
-			
-			var transition:SlideViewTransition = new SlideViewTransition();
-			transition.duration = 300;
-			transition.direction = ViewTransitionDirection.DOWN;
-			view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
 		}
 		
 		protected function changePage(pageName:String, pageRemoved:Boolean = false, transition:ViewTransitionBase = null):void

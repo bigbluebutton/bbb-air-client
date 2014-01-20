@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:assets="assets.*"
+				width="100%">
+	
+	<fx:Script>
+		<![CDATA[
+			import org.bigbluebutton.model.chat.ChatMessage;
+			import org.bigbluebutton.model.chat.ChatMessages;
+			
+			
+			override public function set data(obj:Object):void {
+				super.data = obj;
+				
+				title.text = obj.name;
+				var chatMessages:ChatMessages = obj.chatMessages as ChatMessages; 
+				newMesseges.text.text = String(chatMessages.newMessages);
+				if(chatMessages.newMessages)
+					newMesseges.visible = false;
+				else
+					newMesseges.visible = true;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout gap="0"
+						  paddingBottom="0"
+						  paddingLeft="0"
+						  paddingRight="0"
+						  paddingTop="5"
+						  />
+	</s:layout>
+	<s:Label id="title" y="0" left="0" right="0" width="100%" height="100%" color="#000000"
+			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="right"/>
+	
+	<assets:NewMesseges id="newMesseges"/>
+	<s:Group width="40" height="100%">
+		<assets:ArrowRight x="7" y="0"/>
+	</s:Group> 
+</s:ItemRenderer>

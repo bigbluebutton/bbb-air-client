@@ -1,4 +1,4 @@
-package org.bigbluebutton.view.navigation.pages.chat
+package org.bigbluebutton.view.navigation.pages.chatrooms
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
@@ -18,17 +18,20 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import org.bigbluebutton.model.chat.ChatMessage;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	import spark.components.List;
+	import spark.events.IndexChangeEvent;
+	import spark.events.ListEvent;
 	
-	public class ChatViewMediator extends Mediator
+	public class ChatRoomsViewMediator extends Mediator
 	{
 		[Inject]
-		public var view: IChatView;
+		public var view: IChatRoomsView;
 		
 		[Inject]
 		public var chatMessageSender: IChatMessageSender;
@@ -42,38 +45,40 @@ package org.bigbluebutton.view.navigation.pages.chat
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
 		protected var list:List;
-		protected var publicChat:Boolean = true;
-		protected var user:User;
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			var currentPageDetails:Object = userUISession.currentPageDetails;
+			dataProvider = new ArrayCollection();
+			dataProvider.addItem({name: "Group Chat", publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
-			publicChat = currentPageDetails.publicChat;
+			var users:ArrayCollection = userSession.userlist.users;
 			
-			user = currentPageDetails.user;
-			
-			view.pageTitle.text = currentPageDetails.name;
-			
-			var chatMessages:ChatMessages = currentPageDetails.chatMessages as ChatMessages;
-			chatMessages.resetNewMessages();
-			
-			dataProvider = chatMessages.messages as ArrayCollection;
+			for each(var user:User in users)
+			{
+				if(user.privateChat.messages.length > 0 && !user.me)
+				{
+					dataProvider.addItem({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat});
+				}
+			}
+				
 			list = view.list;
 			list.dataProvider = dataProvider;
 			
-			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
-			
-			view.sendButton.addEventListener(MouseEvent.CLICK, onSendButtonClick);
+			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 		}
 		
-		private function scrollUpdate(e:Event):void
+		protected function onIndexChangeHandler(event:IndexChangeEvent):void
 		{
-			list.dataGroup.verticalScrollPosition = list.dataGroup.contentHeight - list.dataGroup.height;
+			var item:Object = dataProvider.getItemAt(event.newIndex);
+			if(item)
+			{
+				userUISession.pushPage(PagesENUM.CHAT, item)
+			}
 		}
-				
+		
+/*		
 		private function onSendButtonClick(e:MouseEvent):void
 		{
 			view.inputMessage.enabled = false;
@@ -83,7 +88,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			//TODO get info from the right source
 			var m:ChatMessageVO = new ChatMessageVO();
-			
+			m.chatType = "PUBLIC";
 			m.fromUserID = userSession.userId;
 			m.fromUsername = "XXfromUsernameXX";
 			m.fromColor = "0";
@@ -91,23 +96,12 @@ package org.bigbluebutton.view.navigation.pages.chat
 			m.fromTimezoneOffset = currentDate.timezoneOffset;
 			m.fromLang = "en";
 			m.message = view.inputMessage.text;
-			m.toUserID = user?user.userID:"";
-			m.toUsername = user?user.name:"";
+			m.toUserID = "FAKE_USERID";
+			m.toUsername = "XXfromUsernameXX";
 			
-			if(publicChat)
-			{
-				m.chatType = "PUBLIC";
-				chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
-				chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
-				chatMessageSender.sendPublicMessage(m);
-			}
-			else
-			{
-				m.chatType = "PRIVATE";
-				chatMessageSender.sendPrivateMessageOnSucessSignal.add(onSendSucess);
-				chatMessageSender.sendPrivateMessageOnFailureSignal.add(onSendFailure);
-				chatMessageSender.sendPrivateMessage(m);
-			}
+			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
+			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
+			chatMessageSender.sendPublicMessage(m);			
 		}
 		
 		private function onSendSucess(result:String):void
@@ -121,14 +115,14 @@ package org.bigbluebutton.view.navigation.pages.chat
 			view.inputMessage.enabled = true;
 			view.sendButton.enabled = true;
 		}
-		
+*/		
 		override public function destroy():void
 		{
 			super.destroy();
 			
-			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
+//			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
-			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
+//			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			
 			view.dispose();
 			view = null;

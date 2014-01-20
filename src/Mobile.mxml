@@ -4,7 +4,11 @@
 			   xmlns:top="org.bigbluebutton.top.view.*"
 			   xmlns:ui="org.bigbluebutton.view.navigation.ui.*"
 			   applicationDPI="160"
-			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.bigbluebutton.view.navigation.*" xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
+			   xmlns:navigation="org.bigbluebutton.view.navigation.*" 
+			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
+			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
+			   preinitialize="preinitializeHandler(event)" 
+			   creationComplete="creationCompleteHandler(event)"
 			   >
 	<fx:Style source="Default.css"/>
 	
@@ -19,11 +23,14 @@
 			import org.bigbluebutton.AppConfig;
 			import org.bigbluebutton.util.BigBlueButtonLoggerFactory;
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
+			import org.bigbluebutton.view.navigation.pages.PagesENUM;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
+			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
 			import org.bigbluebutton.view.navigation.pages.login.LoginPageConfig;
 			import org.bigbluebutton.view.navigation.pages.participants.ParticipantsConfig;
 			import org.bigbluebutton.view.navigation.pages.presentation.PresentationConfig;
 			import org.bigbluebutton.view.navigation.pages.profile.ProfileConfig;
+			import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisConfig;
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
 			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
@@ -38,6 +45,9 @@
 			import robotlegs.bender.framework.api.IContext;
 			import robotlegs.bender.framework.api.LogLevel;
 			import robotlegs.bender.framework.impl.Context;
+			
+			import spark.transitions.SlideViewTransition;
+			import spark.transitions.ViewTransitionDirection;
 			
 			protected var context: IContext;
 			
@@ -73,8 +83,10 @@
 										.configure(PresentationConfig)
 										.configure(LoginPageConfig)
 										.configure(ChatConfig)
+										.configure(ChatRoomsConfig)
 										.configure(VideoChatConfig)
 										.configure(ProfileConfig)
+										.configure(UserDetaisConfig)
 										.configure(ParticipantsConfig)		
 									
 									.configure(MicButtonConfig)
@@ -106,8 +118,18 @@
 				var logger:Logger = Log.getLogger("org.bigbluebutton");
 				logger.info("Logger on");
 			}
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				var transition:SlideViewTransition = new SlideViewTransition();
+				transition.duration = 300;
+				transition.direction = ViewTransitionDirection.DOWN;
+				
+				pagesNavigatorView.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
+			}
+			
 		]]>
 	</fx:Script>
-	<navigation:PagesNavigatorView width="100%" height="100%"/>
+	<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
 	<loading:LoadingScreen width="100%" height="100%" />
 </s:Application>
