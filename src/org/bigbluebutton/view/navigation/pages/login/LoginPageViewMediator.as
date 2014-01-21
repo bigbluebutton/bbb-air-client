@@ -1,5 +1,10 @@
 package org.bigbluebutton.view.navigation.pages.login
 {
+	import flash.desktop.NativeApplication;
+	import flash.events.InvokeEvent;
+	import flash.filesystem.File;
+	import flash.system.Capabilities;
+	
 	import org.bigbluebutton.command.JoinMeetingSignal;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.UserSession;
@@ -7,6 +12,8 @@ package org.bigbluebutton.view.navigation.pages.login
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
+	
+	import spark.components.Application;
 	
 	public class LoginPageViewMediator extends Mediator
 	{
@@ -18,18 +25,40 @@ package org.bigbluebutton.view.navigation.pages.login
 		
 		[Inject]
 		public var userSession: IUserSession;
-		
-		//[Inject]
-		//public var pageNavigatorView: IPagesNavigatorView;
-		
+
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
+												
+			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
+		}
+		
+		public function onInvokeEvent(invocation:InvokeEvent):void 
+		{
+			var url:String = invocation.arguments.toString();
 			
-			var endURL:String = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
-						
-			joinMeetingSignal.dispatch(endURL);
+			if(Capabilities.isDebugger)
+			{
+				url = "bigbluebutton://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
+			}
+			
+			if(url.lastIndexOf("://") != -1)
+			{
+				NativeApplication.nativeApplication.removeEventListener(InvokeEvent.INVOKE, onInvokeEvent);	
+				
+				var finalURL:String = getEndURL(url);
+				
+				joinMeetingSignal.dispatch(finalURL);
+			}
+		}
+		
+		/**
+		 * Replace the schema with "http"
+		 */ 
+		protected function getEndURL(origin:String):String
+		{
+			return origin.replace('bigbluebutton://', 'http://');
 		}
 		
 		override public function destroy():void

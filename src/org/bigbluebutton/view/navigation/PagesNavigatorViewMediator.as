@@ -35,7 +35,7 @@ package org.bigbluebutton.view.navigation
 			
 			//view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
 			
-			userUISession.pushPage(PagesENUM.LOGIN, view.joinURL);
+			userUISession.pushPage(PagesENUM.LOGIN);
 		}
 		
 		protected function changePage(pageName:String, pageRemoved:Boolean = false, transition:ViewTransitionBase = null):void
