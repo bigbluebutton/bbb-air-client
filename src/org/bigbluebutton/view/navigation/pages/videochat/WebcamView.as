@@ -10,21 +10,24 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import flash.net.NetStream;
 	import flash.utils.Timer;
 	
+	import mx.graphics.SolidColor;
+	import mx.graphics.SolidColorStroke;
 	import mx.utils.ObjectUtil;
 	
 	import spark.components.Group;
+	import spark.primitives.Rect;
 
 	public class WebcamView extends Group
 	{
 		private var ns:NetStream;
 		private var _video:Video;
 		private var streamName:String;
-		private var aspectRatio:Number;
+		private var aspectRatio:Number = 0;
 		public var userID:String;
 		public var userName:String;
-		static public var PADDING_HORIZONTAL:Number = 5;
-		static public var PADDING_VERTICAL:Number = 5;
-		
+//		static public var PADDING_HORIZONTAL:Number = 5;
+//		static public var PADDING_VERTICAL:Number = 5;
+
 		/*
 		private var timer:Timer = new Timer(2000);
 		
@@ -32,10 +35,19 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			trace(ObjectUtil.toString(ns.info));
 		}
 		*/
+		private var rect:Rect;
+		private var rectVideo:Rect;
 		
 		public function WebcamView() {
 			//timer.addEventListener(TimerEvent.TIMER, onHeartbeat);
 			//timer.start();
+						
+			rect = new Rect();
+			rect.percentHeight = 100;
+			rect.percentWidth = 100;
+			rect.stroke = new SolidColorStroke(0x000000, 2);
+			rect.fill = new SolidColor(0x0000FF, 1);
+			this.addElement(rect);
 		}
 		
 		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
@@ -51,18 +63,18 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			//width = width/2;
 			//height = height/2;
 			
-			_video = new Video(width, height);
-			_video.width = width;
-			_video.height = height;
+			_video = new Video()
+//			_video.width = width;
+//			_video.height = height;
 			_video.smoothing = true;
-			//setAspectRatio(width, height); 
+			setAspectRatio(width, height); 
 			_video.attachNetStream(ns);
 			
 			ns.play(streamName);
 			this.streamName = streamName;
 			
-			this.width = _video.width;//+ paddingHorizontal;
-			this.height = _video.height;// + paddingVertical;
+//			this.width = _video.width;//+ paddingHorizontal;
+//			this.height = _video.height;// + paddingVertical;
 			
 			var point:Point = this.localToGlobal(new Point(0,0));
 			this.stage.addChild(_video);
@@ -78,14 +90,37 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		
 		protected function setAspectRatio(width:int,height:int):void {
 			aspectRatio = (width/height);
-			this.minHeight = Math.floor((this.minWidth - PADDING_HORIZONTAL) / aspectRatio) + PADDING_VERTICAL;
+			//this.minHeight = Math.floor((this.minWidth - PADDING_HORIZONTAL) / aspectRatio) + PADDING_VERTICAL;
 		}
 		
-		public function setPosition(width:Number, height:Number, x:Number, y:Number):void {
-			_video.width = width;
-			_video.height = height;
-			_video.x = x;
-			_video.y = y;
+		public function setSizeRespectingAspectRationBasedOnWidth(width0:Number):void {
+			if(aspectRatio!=0)
+			{
+				this.width = width0;
+				this.height = width0 / aspectRatio;
+				_video.width = this.width;
+				_video.height = this.height;
+			}
+			
+		}
+		
+		public function setSizeRespectingAspectRationBasedOnHeight(height0:Number):void {
+			if(aspectRatio!=0)
+			{
+				this.height = height0;
+				this.width = height0 * aspectRatio;
+				_video.width = this.height;
+				_video.height = this.width;
+			}
+		}
+		
+		public function setSize(width0:Number, height0:Number):void {
+			this.width = width0;
+			this.height = height0;
+			_video.width = width0;
+			_video.height = height0;
+//			_video.x = x;
+//			_video.y = y;
 		}
 		
 		private function onNetStatus(e:NetStatusEvent):void{

@@ -53,8 +53,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				startStream(user.name, user.streamName);
 		}
 		
-		private function userRemovedHandler(userID:String):void {
-			stopStream(userID);
+		private function userRemovedHandler():void {//userID:String):void {
+			stopStream();//userID);
 		}
 		
 		private function userChangeHandler(user:User, property:String = null):void {
@@ -76,9 +76,9 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		private function stopStream(userID:String):void {
+		private function stopStream():void { //userID:String):void {
 			if (view) {
-				view.stopStream(userID);
+				view.stopStream();//userID);
 			}
 		}
 		

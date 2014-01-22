@@ -52,7 +52,7 @@
 				setupContext();
 				setupLogger();
 				
-				resizeForSoftKeyboard = true;	
+				resizeForSoftKeyboard = true;
 				
 				//NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
 			}

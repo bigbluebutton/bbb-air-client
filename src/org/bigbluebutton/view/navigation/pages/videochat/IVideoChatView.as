@@ -9,6 +9,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	{
 		function cleanUpVideos():void
 		function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
-		function stopStream(userID:String):void
+		function stopStream():void
 	}
 }
