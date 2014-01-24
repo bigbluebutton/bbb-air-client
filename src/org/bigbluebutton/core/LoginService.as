@@ -90,7 +90,8 @@ package org.bigbluebutton.core
 						welcome:xml.welcome, 
 						logoutUrl:xml.logoutUrl, 
 						defaultLayout:xml.defaultLayout, 
-						avatarURL:xml.avatarURL };
+						avatarURL:xml.avatarURL,
+						guest:xml.guest };
 				user.customdata = new Object();
 				if(xml.customdata)
 				{
