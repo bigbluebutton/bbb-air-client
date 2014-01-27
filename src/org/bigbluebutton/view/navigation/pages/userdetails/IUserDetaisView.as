@@ -11,5 +11,6 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		function get user():User
 		function update():void
 		function get showCameraButton():Button
+		function get showPrivateChat():Button
 	}
 }

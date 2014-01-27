@@ -50,7 +50,11 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 			var users:ArrayCollection = userSession.userlist.users;
 			for each (var user:User in users) 
 			{				
-				userAdded(user)
+				if(!user.me)
+				{
+					userAdded(user)
+				}
+					
 			}
 			
 			userSession.userlist.userChangeSignal.add(userChanged);

@@ -74,7 +74,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				startStream(user.name, user.streamName);
 		}
 		
-		private function userRemovedHandler():void {//userID:String):void {
+		private function userRemovedHandler(userID:String):void {
 			stopStream();//userID);
 		}
 		

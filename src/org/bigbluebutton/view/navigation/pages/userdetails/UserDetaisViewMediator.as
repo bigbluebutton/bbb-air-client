@@ -38,12 +38,17 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			view.user = user;	
 			
 			view.showCameraButton.addEventListener(MouseEvent.CLICK, onShowCameraButton);
+			view.showPrivateChat.addEventListener(MouseEvent.CLICK, onShowPrivateChatButton);
 		}
 		
 		protected function onShowCameraButton(event:MouseEvent):void
 		{
-			// TODO Auto-generated method stub
 			userUISession.pushPage(PagesENUM.VIDEO_CHAT, user);
+		}
+		
+		protected function onShowPrivateChatButton(event:MouseEvent):void
+		{
+			userUISession.pushPage(PagesENUM.CHAT, user);
 		}
 		
 		private function userRemoved(userID:String):void
@@ -65,6 +70,9 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		override public function destroy():void
 		{
 			super.destroy();
+			
+			view.showCameraButton.removeEventListener(MouseEvent.CLICK, onShowCameraButton);
+			view.showPrivateChat.removeEventListener(MouseEvent.CLICK, onShowPrivateChatButton);
 			
 			userSession.userlist.userChangeSignal.remove(userChanged);
 			userSession.userlist.userRemovedSignal.remove(userRemoved);

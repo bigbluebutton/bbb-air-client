@@ -42,6 +42,9 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 				//TODO: buttons
 				showCameraButton0.includeInLayout = _user.hasStream;
 				showCameraButton0.visible = _user.hasStream;
+				
+				showPrivateChat0.includeInLayout = !_user.me;
+				showPrivateChat0.visible = !_user.me;
 			}
 		}
 		
@@ -54,5 +57,12 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		{
 			return showCameraButton0;
 		}
+		
+		public function get showPrivateChat():Button
+		{
+			return showPrivateChat0;
+		}
+		
+		
 	}
 }
