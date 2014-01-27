@@ -29,12 +29,6 @@ package org.bigbluebutton.view.navigation
 			
 			userSession.pageChangedSignal.add(changePage);
 			
-			//var transition:SlideViewTransition = new SlideViewTransition();
-			//transition.duration = 300;
-			//transition.direction = ViewTransitionDirection.DOWN;
-			
-			//view.pushView(PagesENUM.getClassfromName(PagesENUM.LOGIN), null, null, transition);
-			
 			userUISession.pushPage(PagesENUM.LOGIN);
 		}
 		

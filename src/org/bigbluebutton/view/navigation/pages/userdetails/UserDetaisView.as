@@ -4,8 +4,16 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 	
 	import org.bigbluebutton.model.User;
 	
+	import spark.components.Button;
+	
 	public class UserDetaisView extends UserDetaisViewBase implements IUserDetaisView
 	{
+		public function UserDetaisView():void
+		{
+				
+		}	
+		
+		
 		
 		protected var _user:User;
 		
@@ -22,15 +30,19 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		
 		public function update():void
 		{
-			userNameText.text = _user.name;
-			statusText.text = _user.role;
-			cameraIcon.visible = _user.hasStream;
-			micIcon.visible = (_user.voiceJoined && !_user.muted);
-			micOffIcon.visible = (_user.voiceJoined && _user.muted);
-			soundIcon.visible = user.talking; 
-			
-			//TODO: buttons
-			
+			if(user != null && mainshell != null)
+			{
+				userNameText.text = _user.name;
+				statusText.text = _user.role;
+				cameraIcon.visible = _user.hasStream;
+				micIcon.visible = (_user.voiceJoined && !_user.muted);
+				micOffIcon.visible = (_user.voiceJoined && _user.muted);
+				soundIcon.visible = user.talking; 
+				
+				//TODO: buttons
+				showCameraButton0.includeInLayout = _user.hasStream;
+				showCameraButton0.visible = _user.hasStream;
+			}
 		}
 		
 		public function dispose():void
@@ -38,5 +50,9 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			
 		}
 
+		public function get showCameraButton():Button
+		{
+			return showCameraButton0;
+		}
 	}
 }

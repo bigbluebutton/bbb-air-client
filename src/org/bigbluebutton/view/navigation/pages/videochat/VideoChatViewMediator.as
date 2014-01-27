@@ -6,6 +6,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserSession;
 	import org.osmf.logging.Log;
@@ -20,6 +21,9 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userSession: IUserSession;
 		
+		[Inject]
+		public var userUISession: IUserUISession;
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -29,12 +33,29 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			userSession.userlist.userChangeSignal.add(userChangeHandler);
 			
 			// find all currently open streams
-			var users:ArrayCollection = userSession.userlist.users;
-			for (var i:Number=0; i < users.length; i++) {
-				var u:User = users.getItemAt(i) as User;
-				if (u.hasStream) {
-					startStream(u.name, u.streamName);
-				}
+			//var users:ArrayCollection = userSession.userlist.users;
+			//for (var i:Number=0; i < users.length; i++) {
+			//	var u:User = users.getItemAt(i) as User;
+			//	if (u.hasStream) {
+			//		startStream(u.name, u.streamName);
+			//	}
+			//}
+			
+			var user:User = userUISession.currentPageDetails as User;
+			var presenter:User = userSession.userlist.getPresenter();
+			if(user && user.hasStream)
+			{
+				startStream(user.name, user.streamName);
+				view.noVideoMessage.visible = false;
+			}
+			else if(presenter != null)
+			{
+				startStream(presenter.name, presenter.streamName);
+				view.noVideoMessage.visible = false;
+			}
+			else
+			{
+				view.noVideoMessage.visible = true;
 			}
 		}
 		

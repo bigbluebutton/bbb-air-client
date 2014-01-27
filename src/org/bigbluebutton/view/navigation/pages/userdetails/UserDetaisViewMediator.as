@@ -1,10 +1,12 @@
 package org.bigbluebutton.view.navigation.pages.userdetails
 {
 	import flash.display.DisplayObject;
+	import flash.events.MouseEvent;
 	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -33,7 +35,15 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			
 			user.signal.add(userChanged);
 			
-			view.user = user;			
+			view.user = user;	
+			
+			view.showCameraButton.addEventListener(MouseEvent.CLICK, onShowCameraButton);
+		}
+		
+		protected function onShowCameraButton(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+			userUISession.pushPage(PagesENUM.VIDEO_CHAT, user);
 		}
 		
 		private function userRemoved(userID:String):void
