@@ -1,7 +1,9 @@
 package org.bigbluebutton.view.ui
 {
-	import org.bigbluebutton.command.JoinMeetingCommand;
-	import org.bigbluebutton.command.JoinMeetingSignal;
+	import org.bigbluebutton.command.MicrophoneEnableCommand;
+	import org.bigbluebutton.command.MicrophoneEnableSignal;
+	import org.bigbluebutton.command.MicrophoneOnCommand;
+	import org.bigbluebutton.command.MicrophoneOnSignal;
 	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
@@ -9,7 +11,7 @@ package org.bigbluebutton.view.ui
 	import robotlegs.bender.framework.api.IInjector;
 
 
-	public class LoginButtonConfig implements IConfig
+	public class MicStatusConfig implements IConfig
 	{
 		[Inject]
 		public var injector: IInjector;
@@ -42,7 +44,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function mediators(): void
 		{
-			mediatorMap.map(ILoginButton).toMediator(LoginButtonMediator);
+			mediatorMap.map(IMicStatus).toMediator(MicStatusMediator);
 		}
 		
 		/**
@@ -50,7 +52,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function signals(): void
 		{
-			
+
 		}	
 	}
 }

@@ -3,7 +3,9 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				xmlns:ui="org.bigbluebutton.view.ui.*"
-				xmlns:view="org.bigbluebutton.core.view.*" xmlns:assets="assets.*" xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
+				xmlns:view="org.bigbluebutton.core.view.*" 
+				xmlns:assets="assets.*" 
+				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
 				>
 	<fx:Script>
 		<![CDATA[
@@ -30,43 +32,73 @@
 									paddingTop="10"
 									/>
 			</s:layout>
-			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="profile"/>                
+			<ui:ProfileButton id="profileBtn" width="30" height="30" />                
 			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" text="IMD1001 Graphic Design" verticalCenter="0"/>
+				<s:Label horizontalCenter="0" text="Profile" verticalCenter="0"/>
 			</s:Group>				
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>
 		<s:Group width="100%" height="100%">
-			<assets:ProfileScreenSp width="100%" height="100%"/>
-			<s:Rect x="20" y="47" width="281" height="93" radiusX="10" radiusY="10">
-				<s:stroke>
-					<s:SolidColorStroke color="0x000000" weight="2"/>
-				</s:stroke>
-				<s:fill>
-					<s:RadialGradient>
-						<s:entries>
-							<s:GradientEntry color="0x0056FF" ratio="0.00" alpha="0.5"/>
-							<s:GradientEntry color="0x00CC99" ratio="0.33" alpha="0.5"/>
-							<s:GradientEntry color="0xECEC21" ratio="0.66" alpha="0.5"/>
-						</s:entries>
-					</s:RadialGradient>
-				</s:fill>
-			</s:Rect>
-		<!--
-			<s:Group width="100%" height="100%">
-				<s:Label y="26" left="20" right="20" height="30" fontSize="18" text="User:"/>
-				<s:Label y="166" left="20" right="20" height="30" fontSize="18" text="Settings:"/>
-				<s:Label y="57" left="20" right="20" height="30" fontSize="20" text="Lucas Jones" textAlign="center"/>
-				<s:Button y="99" label="Sign Out" horizontalCenter="0"/>
-				<s:Button y="193" label="Camera" horizontalCenter="0"/>
-				<s:Button y="243" label="Camera" horizontalCenter="0"/>
-				<s:Button y="293" label="Camera" horizontalCenter="0"/>
-				<s:Button y="344" label="Camera" horizontalCenter="0"/>
-				<s:Button y="394" label="Camera" horizontalCenter="0"/>
-				<s:Button y="444" label="Camera" horizontalCenter="0"/>
+			<s:layout>
+				<s:VerticalLayout gap="5"
+									paddingBottom="10"
+									paddingLeft="10"
+									paddingRight="10"
+									paddingTop="10"
+									horizontalAlign="center"
+									/>
+			</s:layout>
+			<s:Group y="9" width="300" height="133">
+				<s:Rect x="2" y="23" width="296" height="98" radiusX="5" radiusY="5">
+					<s:stroke>
+						<s:SolidColorStroke color="0x000000" weight="2"/>
+					</s:stroke>
+				</s:Rect>
+				<s:Line x="3" y="82" width="294" height="0">
+					<s:stroke>
+						<s:SolidColorStroke color="0x000000" weight="2"/>
+					</s:stroke>
+				</s:Line>
+				<s:Label id="userName" x="1" y="39" width="299" fontSize="18"
+						 text="Lucas Herbert Jones" textAlign="center"/>
+				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="User"/>
 			</s:Group>
-		-->
+			<s:Group width="300" height="183">
+				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="Settings"/>
+				<s:Group width="300" height="50">
+					<assets:ArrowRight x="268" y="23"/>
+					<s:Rect x="2" y="23" width="296" height="26" radiusX="5" radiusY="5">
+						<s:stroke>
+							<s:SolidColorStroke color="0x000000" weight="2"/>
+						</s:stroke>
+					</s:Rect>					
+					<s:Label id="userName0" x="13" y="30" width="247" fontSize="14"
+							 text="Camera" textAlign="left"/>
+				</s:Group>
+				<s:Group x="0" y="63" width="300">
+					<assets:ArrowRight x="268" y="0"/>
+					<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
+						<s:stroke>
+							<s:SolidColorStroke color="0x000000" weight="2"/>
+						</s:stroke>
+					</s:Rect>					
+					<s:Label id="userName1" x="13" y="7" width="247" fontSize="14"
+							 text="Item" textAlign="left"/>
+					<s:Group x="0" y="42" width="300">
+						<assets:ArrowRight x="268" y="0"/>
+						<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
+							<s:stroke>
+								<s:SolidColorStroke color="0x000000" weight="2"/>
+							</s:stroke>
+						</s:Rect>					
+						<s:Label id="userName2" x="13" y="7" width="247" fontSize="14"
+								 text="About" textAlign="left"/>
+					</s:Group>
+				</s:Group>
+			</s:Group>
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
+	<s:Button x="10" y="141" width="300" height="41" alpha="0" click="NativeApplication.nativeApplication.exit()"/>
+	<s:Label x="128" y="154" fontWeight="normal" text="Sign Out"/>
 </view:NoTabView>

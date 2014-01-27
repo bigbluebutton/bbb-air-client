@@ -1,7 +1,5 @@
-package org.bigbluebutton.view.ui
+package org.bigbluebutton.view.navigation.pages.selectparticipant
 {
-	import org.bigbluebutton.command.JoinMeetingCommand;
-	import org.bigbluebutton.command.JoinMeetingSignal;
 	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
@@ -9,7 +7,7 @@ package org.bigbluebutton.view.ui
 	import robotlegs.bender.framework.api.IInjector;
 
 
-	public class LoginButtonConfig implements IConfig
+	public class SelectParticipantConfig implements IConfig
 	{
 		[Inject]
 		public var injector: IInjector;
@@ -42,7 +40,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function mediators(): void
 		{
-			mediatorMap.map(ILoginButton).toMediator(LoginButtonMediator);
+			mediatorMap.map(ISelectParticipantView).toMediator(SelectParticipantViewMediator);
 		}
 		
 		/**
@@ -50,7 +48,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function signals(): void
 		{
-			
+			//signalCommandMap.map(ButtonTestSignal).toCommand(ButtonTestCommand);
 		}	
 	}
 }

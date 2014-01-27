@@ -46,9 +46,15 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		protected var usersSignal:ISignal; 
 		protected var list:List;
 		
+		protected var dicUsertoChat:Dictionary;
+		
+		protected var button:Object;
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
+			
+			dicUsertoChat = new Dictionary();
 			
 			dataProvider = new ArrayCollection();
 			dataProvider.addItem({name: "Group Chat", publicChat:true, user:null, chatMessages: userSession.publicChat});
@@ -59,22 +65,61 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			{
 				if(user.privateChat.messages.length > 0 && !user.me)
 				{
-					dataProvider.addItem({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat});
+					addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat});
 				}
 			}
 				
+			button = {name: "New Private Chat", button:true};
+			dataProvider.addItem(button);
+			
 			list = view.list;
 			list.dataProvider = dataProvider;
 			
 			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
+
+			//userSession.userlist.userChangeSignal.add(userChanged);
+			userSession.userlist.userAddedSignal.add(addChat);
+			//userSession.userlist.userRemovedSignal.add(userRemoved);
 		}
 		
+		private function addChat(chat:Object):void
+		{
+			dataProvider.addItem(chat);
+			//dataProvider.setItemAt(button, dataProvider.length-1);
+			dataProvider.refresh();
+			//dicUsertoChat[chat.user] = chat;		
+		}
+/*		
+		private function userRemoved(userID:String):void
+		{
+			var user:User = dicUsertoChat[userID] as User;
+			var index:uint = dataProvider.getItemIndex(user);
+			dataProvider.removeItemAt(index);
+			dicUsertoChat[user.userID] = null;
+		}
+		
+		private function userChanged(user:User, property:String = null):void
+		{
+			dataProvider.refresh();
+		}
+*/		
 		protected function onIndexChangeHandler(event:IndexChangeEvent):void
 		{
 			var item:Object = dataProvider.getItemAt(event.newIndex);
 			if(item)
 			{
-				userUISession.pushPage(PagesENUM.CHAT, item)
+				if(item.hasOwnProperty("button"))
+				{
+					userUISession.pushPage(PagesENUM.SELECT_PARTICIPANT, item)
+				}
+				else
+				{
+					userUISession.pushPage(PagesENUM.CHAT, item)
+				}
+			}
+			else
+			{
+				throw new Error("item null on ChatRoomsViewMediator");
 			}
 		}
 		
@@ -121,6 +166,12 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			super.destroy();
 			
 //			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
+			
+			//userSession.userlist.userChangeSignal.add(userChanged);
+			userSession.userlist.userAddedSignal.remove(addChat);
+			//userSession.userlist.userRemovedSignal.add(userRemoved);
+			
+			list.removeEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 			
 //			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			

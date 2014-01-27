@@ -8,6 +8,7 @@ package org.bigbluebutton.view.navigation.pages
 	import org.bigbluebutton.view.navigation.pages.participants.ParticipantsView;
 	import org.bigbluebutton.view.navigation.pages.presentation.PresentationView;
 	import org.bigbluebutton.view.navigation.pages.profile.ProfileView;
+	import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantView;
 	import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisView;
 	import org.bigbluebutton.view.navigation.pages.videochat.VideoChatView;
 
@@ -21,6 +22,12 @@ package org.bigbluebutton.view.navigation.pages
 		public static const CHATROOMS:String = "chatrooms";
 		public static const CHAT:String = "chat";
 		public static const PARTICIPANTS:String = "participants";
+		public static const SELECT_PARTICIPANT:String = "selectparticipant";
+		
+		/**
+		 * Especials
+		 */
+		public static const LAST:String = "last";
 		
 		protected static function init():void
 		{
@@ -34,6 +41,7 @@ package org.bigbluebutton.view.navigation.pages
 				dic[CHATROOMS] = ChatRoomsView;
 				dic[CHAT] = ChatView;
 				dic[PARTICIPANTS] = ParticipantsView;
+				dic[SELECT_PARTICIPANT] = SelectParticipantView;
 				
 				dicInitiated = true;
 			}

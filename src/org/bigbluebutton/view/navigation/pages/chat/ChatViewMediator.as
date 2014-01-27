@@ -49,26 +49,52 @@ package org.bigbluebutton.view.navigation.pages.chat
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			var currentPageDetails:Object = userUISession.currentPageDetails;
+			var data:Object = userUISession.currentPageDetails;
 			
-			publicChat = currentPageDetails.publicChat;
+			if(data is User)
+			{
+				createNewChat(data as User);
+			}
+			else
+			{
+				openChat(data);
+			}
+
+			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
+			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
 			
-			user = currentPageDetails.user;
-			
-			view.pageTitle.text = currentPageDetails.name;
-			
-			var chatMessages:ChatMessages = currentPageDetails.chatMessages as ChatMessages;
-			chatMessages.resetNewMessages();
-			
-			dataProvider = chatMessages.messages as ArrayCollection;
-			list = view.list;
-			list.dataProvider = dataProvider;
+			chatMessageSender.sendPrivateMessageOnSucessSignal.add(onSendSucess);
+			chatMessageSender.sendPrivateMessageOnFailureSignal.add(onSendFailure);
 			
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			view.sendButton.addEventListener(MouseEvent.CLICK, onSendButtonClick);
 		}
 		
+		protected function createNewChat(user:User):void
+		{
+			publicChat = false;
+			this.user = user;
+			view.pageTitle.text = user.name;
+			
+			dataProvider = user.privateChat.messages;
+			list = view.list;
+			list.dataProvider = dataProvider;
+		}
+		
+		protected function openChat(currentPageDetails:Object):void
+		{
+			publicChat = currentPageDetails.publicChat;
+			user = currentPageDetails.user;
+			view.pageTitle.text = currentPageDetails.name;
+			
+			var chatMessages:ChatMessages = currentPageDetails.chatMessages as ChatMessages;
+			chatMessages.resetNewMessages();
+			dataProvider = chatMessages.messages as ArrayCollection;
+			list = view.list;
+			list.dataProvider = dataProvider;
+		}
+				
 		private function scrollUpdate(e:Event):void
 		{
 			list.dataGroup.verticalScrollPosition = list.dataGroup.contentHeight - list.dataGroup.height;
@@ -97,15 +123,11 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if(publicChat)
 			{
 				m.chatType = "PUBLIC_CHAT";
-				chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
-				chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
 				chatMessageSender.sendPublicMessage(m);
 			}
 			else
 			{
 				m.chatType = "PRIVATE_CHAT";
-				chatMessageSender.sendPrivateMessageOnSucessSignal.add(onSendSucess);
-				chatMessageSender.sendPrivateMessageOnFailureSignal.add(onSendFailure);
 				chatMessageSender.sendPrivateMessage(m);
 			}
 		}
@@ -129,6 +151,12 @@ package org.bigbluebutton.view.navigation.pages.chat
 			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
+			
+			chatMessageSender.sendPublicMessageOnSucessSignal.remove(onSendSucess);
+			chatMessageSender.sendPublicMessageOnFailureSignal.remove(onSendFailure);
+			
+			chatMessageSender.sendPrivateMessageOnSucessSignal.remove(onSendSucess);
+			chatMessageSender.sendPrivateMessageOnFailureSignal.remove(onSendFailure);
 			
 			view.dispose();
 			view = null;

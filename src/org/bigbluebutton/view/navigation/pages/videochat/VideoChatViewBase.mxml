@@ -87,6 +87,7 @@
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>
 		<s:Group id="videoGroup" width="100%" height="100%">
+			<!--
 			<s:Rect id="rct"
 					width="100%" height="100%">
 				<s:fill>
@@ -94,7 +95,7 @@
 				</s:fill>
 			</s:Rect>
 			<s:Label id="userName" bottom="9" text="Label"/>
-			
+			-->
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>

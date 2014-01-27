@@ -38,10 +38,7 @@ package org.bigbluebutton.view.ui
 		
 		protected function navigate():void
 		{
-			if(_navigateTo != "" && _navigateTo != null)
-			{
-				_navigationSignal.dispatch();
-			}
+			_navigationSignal.dispatch();
 		}
 		
 		public function dispose():void

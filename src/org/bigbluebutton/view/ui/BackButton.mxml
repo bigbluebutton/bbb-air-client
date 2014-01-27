@@ -6,11 +6,7 @@
 					 width="30" height="30" 
 					 buttonMode="true"
 					 mouseEnabled="true"
-					 navigateTo="{PagesENUM.PROFILE}">
-	<ui:states>
-		<s:State name="unselected"/>
-		<s:State name="selected"/>
-	</ui:states>
+					 navigateTo="{PagesENUM.LAST}">
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
@@ -19,6 +15,5 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<assets:ProfileButtonSelectedSp visible="false" visible.selected="true"/>
-	<assets:ProfileButtonSp visible="true" visible.selected="false"/>
+	<assets:BackButton/>
 </ui:NavigationButton>

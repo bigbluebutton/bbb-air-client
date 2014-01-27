@@ -1,9 +1,8 @@
-package org.bigbluebutton.view.navigation.pages.chatrooms
+package org.bigbluebutton.view.navigation.pages.selectparticipant
 {
 	import flash.events.MouseEvent;
-	import spark.components.List;
 	
-	public class ChatRoomsView extends ChatRoomsViewBase implements IChatRoomsView
+	public class SelectParticipantView extends SelectParticipantViewBase implements ISelectParticipantView 
 	{
 		
 		//private var _buttonTestSignal: Signal = new Signal();
@@ -12,11 +11,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		//	return _buttonTestSignal;
 		//}
 		
-		public function get list():List
-		{
-			return chatroomslist;
-		}
-		
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
@@ -24,11 +18,18 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			//this.addEventListener(MouseEvent.CLICK, onClick);
 		}
 		
+		import spark.components.List;
+		
+		public function get list():List
+		{
+			return participantslist;
+		}
+		/*
 		public function onClick(e:MouseEvent):void
 		{
 			//buttonTestSignal.dispatch();
 		}
-
+		*/
 		public function dispose():void
 		{
 			

@@ -1,6 +1,9 @@
 package org.bigbluebutton.view.navigation
 {
 	
+	import org.bigbluebutton.command.JoinMeetingCommand;
+	import org.bigbluebutton.command.JoinMeetingSignal;
+	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
@@ -48,7 +51,7 @@ package org.bigbluebutton.view.navigation
 		 */
 		private function signals(): void
 		{
-			//signalCommandMap.map(ButtonTestSignal).toCommand(ButtonTestCommand);
+			signalCommandMap.map(JoinMeetingSignal).toCommand(JoinMeetingCommand);
 		}	
 	}
 }

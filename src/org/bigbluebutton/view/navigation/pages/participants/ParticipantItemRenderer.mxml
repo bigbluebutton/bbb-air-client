@@ -21,7 +21,6 @@
 					cameraIcon.visible = user.hasStream;
 					handIcon.visible = user.raiseHand; 
 					
-					//TODO: is it correct?
 					micIcon.visible = (user.voiceJoined && !user.muted);
 					micOffIcon.visible = (user.voiceJoined && user.muted);
 					
@@ -67,6 +66,9 @@
 		</s:Group>
 		<s:Group x="0" y="0" width="33%" height="100%">
 			<assets:SoundIcon id="soundIcon" y="12" horizontalCenter="0"/>
+		</s:Group>
+		<s:Group x="0" y="0" width="33%" height="100%">
+			<assets:ArrowRight y="12" horizontalCenter="0"/>
 		</s:Group>
 	</s:Group>
 

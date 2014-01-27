@@ -6,6 +6,7 @@ package org.bigbluebutton.view.navigation.pages.login
 	import flash.system.Capabilities;
 	
 	import org.bigbluebutton.command.JoinMeetingSignal;
+	import org.bigbluebutton.core.ILoginService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.view.navigation.IPagesNavigatorView;
@@ -24,6 +25,9 @@ package org.bigbluebutton.view.navigation.pages.login
 		public var joinMeetingSignal: JoinMeetingSignal;
 		
 		[Inject]
+		public var loginService: ILoginService;
+		
+		[Inject]
 		public var userSession: IUserSession;
 
 		
@@ -31,7 +35,14 @@ package org.bigbluebutton.view.navigation.pages.login
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 												
+			loginService.unsuccessJoinedSignal.add(onUnsucess);
+			
 			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
+		}
+		
+		private function onUnsucess(reason:String):void 
+		{			
+			
 		}
 		
 		public function onInvokeEvent(invocation:InvokeEvent):void 
