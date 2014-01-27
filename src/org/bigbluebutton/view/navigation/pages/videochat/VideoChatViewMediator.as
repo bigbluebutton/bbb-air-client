@@ -75,7 +75,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		}
 		
 		private function userRemovedHandler(userID:String):void {
-			stopStream();//userID);
+			stopStream();
 		}
 		
 		private function userChangeHandler(user:User, property:String = null):void {

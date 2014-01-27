@@ -45,17 +45,23 @@ package org.bigbluebutton.command
 		
 		private function setupCamera():Camera {
 			var camera:Camera = Camera.getCamera();
-			camera.setMode(160, 120, 5);
+			if(camera)
+			{
+				camera.setMode(160, 120, 5);
+			}
 			return camera;
 		}
 		
 		private function enableCamera():void {
 			var camera:Camera = setupCamera();
 			var userId:String = userSession.userId;
-			var streamName:String = buildStreamName(camera.width, camera.height, userId);
+			if(camera)
+			{
+				var streamName:String = buildStreamName(camera.width, camera.height, userId);
 			
-			usersService.addStream(userId, streamName);
-			userSession.videoConnection.startPublishing(camera, streamName);
+				usersService.addStream(userId, streamName);
+				userSession.videoConnection.startPublishing(camera, streamName);
+			}
 		}
 		
 		private function disableCamera():void {
