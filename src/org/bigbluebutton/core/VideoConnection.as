@@ -4,8 +4,11 @@ package org.bigbluebutton.core
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.media.Camera;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
+	
+	import mx.utils.ObjectUtil;
 	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
@@ -38,6 +41,7 @@ package org.bigbluebutton.core
 		private function onConnectionSuccess():void
 		{
 			_ns = new NetStream(_baseConnection.connection);
+			successConnected.dispatch();
 		}
 		
 		public function get unsuccessConnected():ISignal
@@ -64,6 +68,36 @@ package org.bigbluebutton.core
 		
 		public function connect():void {
 			_baseConnection.connect(uri);
+		}
+		
+		public function startPublishing(camera:Camera, streamName:String):void {
+			_ns.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus );
+			_ns.addEventListener( IOErrorEvent.IO_ERROR, onIOError );
+			_ns.addEventListener( AsyncErrorEvent.ASYNC_ERROR, onAsyncError );
+			_ns.client = this;
+			_ns.attachCamera(camera);
+			_ns.publish(streamName);
+		}
+		
+		private function onNetStatus(e:NetStatusEvent):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":onNetStatus() " + e.info.code);
+		}
+		
+		private function onIOError(e:IOErrorEvent):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":onIOError() " + e.toString());
+		}
+		
+		private function onAsyncError(e:AsyncErrorEvent):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":onAsyncError() " + e.toString());
+		}
+		
+		public function stopPublishing():void {
+			if (_ns != null) {
+				_ns.attachCamera(null);
+				_ns.close();
+				_ns = null;
+				_ns = new NetStream(_baseConnection.connection);
+			}
 		}
 	}
 }

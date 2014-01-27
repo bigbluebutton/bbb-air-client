@@ -131,5 +131,36 @@ package org.bigbluebutton.core
 		override protected function sendConnectionFailedEvent(reason:String):void {
 			trace("Error in the UsersServiceSO connection");
 		}
+		
+		public function addStream(userId:String, streamName:String):void {
+			setStream(userId, streamName);
+		}
+		
+		public function removeStream(userId:String, streamName:String):void {
+			setStream(userId, streamName);
+		}
+		
+		private function setStream(userId:String, streamName:String):void {
+			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.setParticipantStatus";
+			
+			nc.call(
+				restoreFunctionName,
+				responder,
+				userId,
+				"hasStream",
+				Boolean(streamName.length > 0).toString() + ",stream=" + streamName
+			);
+		}
+		
+		private var responder:Responder = new Responder(
+			// On successful result
+			function(result:Boolean):void { 	
+			},	
+			// On error occurred
+			function(status:Object):void {
+				trace(ObjectUtil.toString(status));
+			}
+		)		
 	}
 }
