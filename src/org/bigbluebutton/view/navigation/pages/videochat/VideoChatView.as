@@ -10,11 +10,18 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import mx.graphics.SolidColor;
 	import mx.graphics.SolidColorStroke;
 	
+	import spark.components.Label;
 	import spark.primitives.Rect;
 	
 	public class VideoChatView extends VideoChatViewBase implements IVideoChatView
 	{
-//		private var webcamCollection:ArrayCollection = new ArrayCollection;
+
+		public function VideoChatView():void	
+		{
+			
+		}
+		
+		//		private var webcamCollection:ArrayCollection = new ArrayCollection;
 		
 		private var webcam:WebcamView;
 		
@@ -92,6 +99,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				
 				invalidateDisplayList();
 			}
+		}
+		
+		public function get noVideoMessage():Label
+		{
+			return noVideoMessage0;
 		}
 		
 		private function positionVideos(unscaledWidth:Number, unscaledHeight:Number):void {

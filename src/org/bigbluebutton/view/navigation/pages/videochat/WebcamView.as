@@ -41,13 +41,15 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		public function WebcamView() {
 			//timer.addEventListener(TimerEvent.TIMER, onHeartbeat);
 			//timer.start();
-						
+			
+			/*
 			rect = new Rect();
 			rect.percentHeight = 100;
 			rect.percentWidth = 100;
 			rect.stroke = new SolidColorStroke(0x000000, 2);
 			rect.fill = new SolidColor(0x0000FF, 1);
 			this.addElement(rect);
+			*/
 		}
 		
 		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void

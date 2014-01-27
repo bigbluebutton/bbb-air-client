@@ -187,6 +187,11 @@ package org.bigbluebutton.model
 			}							
 		}
 		
+		/**
+		 * Get the presenter user 
+		 * @return null if participant not found
+		 * 
+		 */	
 		public function getPresenter():User {
 			var u:User;
 			for (var i:int = 0; i < _users.length; i++) {

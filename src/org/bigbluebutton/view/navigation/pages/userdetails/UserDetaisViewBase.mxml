@@ -67,11 +67,20 @@
 			</s:Group>
 			<userdetails:HRule width="90%"/>
 			<s:Group width="100%" height="100%">
-				<s:Button y="10" width="200" label="Show Camera" horizontalCenter="0"/>
+				<s:layout>
+					<s:VerticalLayout gap="0"
+									  paddingBottom="0"
+									  paddingLeft="0"
+									  paddingRight="0"
+									  paddingTop="0"
+									  horizontalAlign="center"
+									  />
+				</s:layout>
+				
+				<s:Button id="showCameraButton0" y="10" width="200" label="Show Camera" horizontalCenter="0"/>
 				<s:Button y="60" width="200" label="Private Chat" horizontalCenter="0"/>
 				<s:Button y="111" width="200" label="Make Presenter" horizontalCenter="0"/>
-				<s:Button y="161" width="200" label="Kick User" horizontalCenter="0"/>
-				
+				<s:Button y="161" width="200" label="Kick User" horizontalCenter="0"/>				
 			</s:Group>
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
