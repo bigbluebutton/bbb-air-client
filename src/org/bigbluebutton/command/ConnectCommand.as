@@ -45,8 +45,6 @@ package org.bigbluebutton.command
 		[Inject]
 		public var chatService: IChatMessageService;
 
-		[Inject]
-		public var cameraEnableSignal: CameraEnableSignal;
 
 		override public function execute():void {
 			connection.uri = uri;
@@ -92,10 +90,6 @@ package org.bigbluebutton.command
 		
 		private function successVideoConnected():void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":successVideoConnected()");
-			
-			//TODO this is a temporary location to enable the camera
-			// put this signal in the handling of the enable camera button 
-			cameraEnableSignal.dispatch(true);
 		}
 		
 		private function unsuccessVideoConnected(reason:String):void {

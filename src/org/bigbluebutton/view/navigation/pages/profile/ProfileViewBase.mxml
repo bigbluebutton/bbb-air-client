@@ -34,7 +34,7 @@
 			</s:layout>
 			<ui:ProfileButton id="profileBtn" width="30" height="30" />                
 			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" text="Profile" verticalCenter="0"/>
+				<s:Label horizontalCenter="0" text="Perfil" verticalCenter="0"/>
 			</s:Group>				
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>
@@ -59,23 +59,36 @@
 						<s:SolidColorStroke color="0x000000" weight="2"/>
 					</s:stroke>
 				</s:Line>
-				<s:Label id="userName" x="1" y="39" width="299" fontSize="18"
+				<s:Label id="userName" x="1" y="44" width="299" fontSize="18"
 						 text="Lucas Herbert Jones" textAlign="center"/>
-				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="User"/>
+				<s:Label x="11" y="5" width="279" color="#BEBEBE" text="Participante"/>
 			</s:Group>
 			<s:Group width="300" height="183">
-				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="Settings"/>
-				<s:Group width="300" height="50">
-					<assets:ArrowRight x="268" y="23"/>
-					<s:Rect x="2" y="23" width="296" height="26" radiusX="5" radiusY="5">
+				<s:layout>
+					<s:VerticalLayout gap="5"
+									  paddingBottom="10"
+									  paddingLeft="10"
+									  paddingRight="10"
+									  paddingTop="10"
+									  horizontalAlign="center"
+									  />
+				</s:layout>
+				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="Configurações"/>
+				<s:Group x="0" y="10" width="300">
+					<s:Rect x="2" y="1" width="296" height="36" radiusX="5" radiusY="5">
 						<s:stroke>
 							<s:SolidColorStroke color="0x000000" weight="2"/>
 						</s:stroke>
-					</s:Rect>					
-					<s:Label id="userName0" x="13" y="30" width="247" fontSize="14"
-							 text="Camera" textAlign="left"/>
+						<s:fill>
+							<s:SolidColor color="0xFFFFFF" />
+						</s:fill>
+					</s:Rect>
+					<s:ToggleSwitch x="193" y="4"/>
+					<s:Label id="userName0" x="13" y="12" width="172" fontSize="14"
+							 text="Camera" textAlign="left"/>					
 				</s:Group>
-				<s:Group x="0" y="63" width="300">
+				<!--
+				<s:Group x="0" y="93" width="300">
 					<assets:ArrowRight x="268" y="0"/>
 					<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
 						<s:stroke>
@@ -84,21 +97,23 @@
 					</s:Rect>					
 					<s:Label id="userName1" x="13" y="7" width="247" fontSize="14"
 							 text="Item" textAlign="left"/>
-					<s:Group x="0" y="42" width="300">
-						<assets:ArrowRight x="268" y="0"/>
-						<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
-							<s:stroke>
-								<s:SolidColorStroke color="0x000000" weight="2"/>
-							</s:stroke>
-						</s:Rect>					
-						<s:Label id="userName2" x="13" y="7" width="247" fontSize="14"
-								 text="About" textAlign="left"/>
-					</s:Group>
 				</s:Group>
+				<s:Group x="0" y="42" width="300">
+					<assets:ArrowRight x="268" y="0"/>
+					<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
+						<s:stroke>
+							<s:SolidColorStroke color="0x000000" weight="2"/>
+						</s:stroke>
+					</s:Rect>					
+					<s:Label id="userName2" x="13" y="7" width="247" fontSize="14"
+							 text="About" textAlign="left"/>
+				</s:Group>
+				-->
 			</s:Group>
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
-	<s:Button x="10" y="141" width="300" height="41" alpha="0" click="NativeApplication.nativeApplication.exit()"/>
-	<s:Label x="128" y="154" fontWeight="normal" text="Sign Out"/>
+	<s:Button y="135" width="300" height="53" alpha="0" buttonMode="true" useHandCursor="true"
+			  click="NativeApplication.nativeApplication.exit()" horizontalCenter="0"/>
+	<s:Label y="154" fontWeight="normal" horizontalCenter="0" text="Sair"/>
 </view:NoTabView>

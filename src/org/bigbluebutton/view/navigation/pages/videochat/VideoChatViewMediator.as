@@ -24,6 +24,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
+		protected var user:User;
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -41,8 +43,10 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			//	}
 			//}
 			
-			var user:User = userUISession.currentPageDetails as User;
+			user = userUISession.currentPageDetails as User;
+			
 			var presenter:User = userSession.userlist.getPresenter();
+			var userWithCamera:User = getUserWithCamera();
 			if(user && user.hasStream)
 			{
 				startStream(user.name, user.streamName);
@@ -51,12 +55,27 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			else if(presenter != null)
 			{
 				startStream(presenter.name, presenter.streamName);
-				view.noVideoMessage.visible = false;
+			}
+			else if(userWithCamera != null)
+			{
+				startStream(userWithCamera.name, userWithCamera.streamName);
 			}
 			else
 			{
 				view.noVideoMessage.visible = true;
 			}
+		}
+		
+		protected function getUserWithCamera():User
+		{
+			var users:ArrayCollection = userSession.userlist.users;
+			for each(var u:User in users) 
+			{
+				if (u.hasStream) {
+					return u;
+				}
+			}
+			return null;
 		}
 		
 		override public function destroy():void
@@ -70,17 +89,26 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		}
 		
 		private function userAddedHandler(user:User):void {
-			if (user.hasStream)
-				startStream(user.name, user.streamName);
+			//if (user.hasStream)
+			//	startStream(user.name, user.streamName);
 		}
 		
 		private function userRemovedHandler(userID:String):void {
-			stopStream();
+			if(user.userID == userID)
+			{
+				stopStream();
+				userUISession.popPage();
+			}
 		}
 		
 		private function userChangeHandler(user:User, property:String = null):void {
-			if (property == "hasStream" && user.hasStream)
-				startStream(user.name, user.streamName);
+			if(user == user)
+			{
+				if (property == "hasStream" && user.hasStream)
+				{
+					startStream(user.name, user.streamName);
+				}
+			}
 		}
 		
 		private function startStream(name:String, streamName:String):void {

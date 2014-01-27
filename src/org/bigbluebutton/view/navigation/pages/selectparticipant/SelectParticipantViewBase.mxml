@@ -5,15 +5,6 @@
 				xmlns:ui="org.bigbluebutton.view.ui.*"
 				xmlns:view="org.bigbluebutton.core.view.*" xmlns:assets="assets.*" xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" xmlns:participants="org.bigbluebutton.view.navigation.pages.participants.*" xmlns:selectparticipant="org.bigbluebutton.view.navigation.pages.selectparticipant.*"
 				>
-	<fx:Script>
-		<![CDATA[
-			
-		]]>
-	</fx:Script>
-	<view:states>
-		<s:State name="participants" />
-		<s:State name="participantsuser" />
-	</view:states>
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
 		<s:layout>
 			<s:VerticalLayout gap="0"
@@ -36,7 +27,7 @@
 			<ui:ProfileButton id="profileBtn" width="30" height="30" />                
 			<s:Group width="100%" height="30">
 				<s:Label horizontalCenter="0" verticalCenter="0"
-						 text.participants="Select participant" text.participantsuser="Participants (15)"/>
+						 text="Selecione um participante"/>
 			</s:Group>	
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>

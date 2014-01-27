@@ -57,7 +57,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dicUsertoChat = new Dictionary();
 			
 			dataProvider = new ArrayCollection();
-			dataProvider.addItem({name: "Group Chat", publicChat:true, user:null, chatMessages: userSession.publicChat});
+			dataProvider.addItem({name: "Chat Público", publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
 			var users:ArrayCollection = userSession.userlist.users;
 			
@@ -69,7 +69,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 				}
 			}
 				
-			button = {name: "New Private Chat", button:true};
+			button = {button:true};
 			dataProvider.addItem(button);
 			
 			list = view.list;
