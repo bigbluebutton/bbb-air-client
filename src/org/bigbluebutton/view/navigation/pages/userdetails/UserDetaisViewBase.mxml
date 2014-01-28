@@ -56,7 +56,7 @@
 				<s:Label id="statusText" width="187" horizontalCenter="43" text="Moderator"
 						 textAlign="left" verticalCenter="0"/>
 			</s:Group>
-			<userdetails:HRule width="90%"/>
+			<userdetails:HRule width="280"/>
 			<s:Group width="100%" height="50">
 				<s:Label width="82" color="#BEBEBE" horizontalCenter="-98" text="Media"
 						 verticalCenter="0"/>
@@ -65,7 +65,7 @@
 				<assets:MicOffIcon id="micOffIcon" visible="false" horizontalCenter="4" verticalCenter="0"/>
 				<assets:SoundIcon id="soundIcon" horizontalCenter="41" verticalCenter="0"/>
 			</s:Group>
-			<userdetails:HRule width="90%"/>
+			<userdetails:HRule width="280"/>
 			<s:Group width="100%" height="100%">
 				<s:layout>
 					<s:VerticalLayout gap="5"

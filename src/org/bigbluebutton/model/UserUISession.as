@@ -23,7 +23,17 @@ package org.bigbluebutton.model
 		}
 		
 		/**
-		 * Dispatched when a setting was changed
+		 * Dispatched a transition between pages starts
+		 */
+		private var _pageTransitionStartSignal: Signal = new Signal();
+		
+		public function get pageTransitionStartSignal(): ISignal
+		{
+			return _pageTransitionStartSignal;
+		}
+		
+		/**
+		 * Dispatched when there is a page change
 		 */
 		private var _pageChangedSignal: Signal = new Signal();
 		
@@ -46,6 +56,18 @@ package org.bigbluebutton.model
 			}
 			return s;
 		}
+		
+		public function get lastPage():String
+		{
+			var s:String = null;
+			if(_listPages.length > 1)
+			{
+				s = _listPages.getItemAt(_listPages.length-2).value as String;
+			}
+			return s;
+		}
+		
+		
 		
 		public function pushPage(value:String, details:Object = null):void
 		{

@@ -42,7 +42,8 @@ package org.bigbluebutton.view.navigation.pages.login
 		
 		private function onUnsucess(reason:String):void 
 		{			
-			
+			view.currentState = LoginPageViewBase.STATE_NO_REDIRECT;
+			view.messageText.text = reason;
 		}
 		
 		public function onInvokeEvent(invocation:InvokeEvent):void 
@@ -51,18 +52,21 @@ package org.bigbluebutton.view.navigation.pages.login
 			
 			if(Capabilities.isDebugger)
 			{
-				url = "bigbluebutton://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
+//				url = "bigbluebutton://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
 				//url = "bigbluebutton://lab1.mconf.org/bigbluebutton/api/join?fullName=Air+client&meetingID=Test+room+4&password=prof123&checksum=5805753edd08fbf9af50f9c28bb676c7e5241349"
 			}
-			
-			if(url.lastIndexOf("://") != -1)
+			else if (url.lastIndexOf("://") != -1)
 			{
 				NativeApplication.nativeApplication.removeEventListener(InvokeEvent.INVOKE, onInvokeEvent);	
 				
-				var finalURL:String = getEndURL(url);
-				
-				joinMeetingSignal.dispatch(finalURL);
+				url = getEndURL(url);
 			}
+			else
+			{
+				
+			}
+			
+			joinMeetingSignal.dispatch(url);
 		}
 		
 		/**
@@ -76,6 +80,10 @@ package org.bigbluebutton.view.navigation.pages.login
 		override public function destroy():void
 		{
 			super.destroy();
+			
+			loginService.unsuccessJoinedSignal.remove(onUnsucess);
+			
+			NativeApplication.nativeApplication.removeEventListener(InvokeEvent.INVOKE, onInvokeEvent);
 			
 			view.dispose();
 			view = null;

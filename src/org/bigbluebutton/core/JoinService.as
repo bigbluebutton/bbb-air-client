@@ -41,12 +41,11 @@ package org.bigbluebutton.core
 			try {
 				var xml:XML = new XML(data);
 				if (xml.returncode == 'FAILED') {
-					unsuccessSignal.dispatch(xml.messageKey + ": " + xml.message);
+					unsuccessSignal.dispatch(xml.message); //xml.messageKey + ": "
 					return;
 				}
 			} catch (e:Error) {
-				trace("The response is probably not an XML, continuing");
-				trace(ObjectUtil.toString(e));
+				trace("The response is probably not a XML, continuing");
 			}
 			successSignal.dispatch(urlRequest, responseUrl);
 		}

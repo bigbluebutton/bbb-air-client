@@ -9,6 +9,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserSession;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.mockito.integrations.currentMockito;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -33,6 +35,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			userSession.userlist.userRemovedSignal.add(userRemovedHandler);
 			userSession.userlist.userAddedSignal.add(userAddedHandler);
 			userSession.userlist.userChangeSignal.add(userChangeHandler);
+			
+			userUISession.pageTransitionStartSignal.add(onPageTransitionStart);
 			
 			// find all currently open streams
 			//var users:ArrayCollection = userSession.userlist.users;
@@ -77,10 +81,24 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 			return null;
 		}
+				
+		private function onPageTransitionStart(lastPage:String):void
+		{
+			if(lastPage == PagesENUM.VIDEO_CHAT)
+			{
+				view.dispose();
+			}
+		}
 		
 		override public function destroy():void
 		{
 			view.cleanUpVideos();
+			
+			userSession.userlist.userRemovedSignal.remove(userRemovedHandler);
+			userSession.userlist.userAddedSignal.remove(userAddedHandler);
+			userSession.userlist.userChangeSignal.remove(userChangeHandler);
+			
+			userUISession.pageTransitionStartSignal.remove(onPageTransitionStart);
 			
 			super.destroy();
 			

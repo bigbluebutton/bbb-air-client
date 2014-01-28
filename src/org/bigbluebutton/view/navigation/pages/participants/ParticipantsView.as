@@ -35,5 +35,9 @@ package org.bigbluebutton.view.navigation.pages.participants
 			
 		}
 
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+		}
 	}
 }
