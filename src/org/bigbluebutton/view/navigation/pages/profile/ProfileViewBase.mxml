@@ -59,7 +59,7 @@
 						<s:SolidColorStroke color="0x000000" weight="2"/>
 					</s:stroke>
 				</s:Line>
-				<s:Label id="userName" x="1" y="44" width="299" fontSize="18"
+				<s:Label id="userName" x="1" y="44" width="299" fontFamily="Georgia" fontSize="18"
 						 text="Lucas Herbert Jones" textAlign="center"/>
 				<s:Label x="11" y="5" width="279" color="#BEBEBE" text="Participante"/>
 			</s:Group>
@@ -113,7 +113,7 @@
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
+	<s:Label y="154" fontWeight="bold" horizontalCenter="0" text="Sair"/>
 	<s:Button y="135" width="300" height="53" alpha="0" buttonMode="true" useHandCursor="true"
 			  click="NativeApplication.nativeApplication.exit()" horizontalCenter="0"/>
-	<s:Label y="154" fontWeight="normal" horizontalCenter="0" text="Sair"/>
 </view:NoTabView>
