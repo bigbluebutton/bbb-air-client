@@ -82,14 +82,14 @@
 			</s:layout>
 			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="{PagesENUM.PROFILE}"/>                
 			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" verticalCenter="0" text="Video" />
+				<s:Label horizontalCenter="0" verticalCenter="0" text="Vídeo" />
 			</s:Group>	
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>
 		<s:Group id="videoGroup" width="100%" height="100%">
 			<s:Label id="noVideoMessage0" includeIn="verticalState" width="90%" height="100"
 					 fontSize="20" horizontalCenter="12"
-					 initialize="{noVideoMessage0.visible=false;}" text="Nenhum video para apresentar"
+					 initialize="{noVideoMessage0.visible=false;}" text="Nenhum vídeo para apresentar"
 					 textAlign="center" verticalCenter="-11"/>
 			<!--
 			<s:Rect id="rct"

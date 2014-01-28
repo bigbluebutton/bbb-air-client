@@ -49,6 +49,7 @@ package org.bigbluebutton.core.util
 		
 		private function httpResponseStatusHandler(e:HTTPStatusEvent):void {
 			_responseUrl = e.responseURL;
+			trace("Redirected to " + _responseUrl);
 		}
 		
 		private function httpStatusHandler(e:HTTPStatusEvent):void {

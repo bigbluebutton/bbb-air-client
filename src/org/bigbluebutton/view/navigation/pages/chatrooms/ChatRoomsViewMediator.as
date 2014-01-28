@@ -57,7 +57,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dicUsertoChat = new Dictionary();
 			
 			dataProvider = new ArrayCollection();
-			dataProvider.addItem({name: "Chat Público", publicChat:true, user:null, chatMessages: userSession.publicChat});
+			dataProvider.addItem({name: "Bate-papo Público", publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
 			var users:ArrayCollection = userSession.userlist.users;
 			

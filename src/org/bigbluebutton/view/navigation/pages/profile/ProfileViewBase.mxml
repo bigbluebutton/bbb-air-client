@@ -85,7 +85,7 @@
 					</s:Rect>
 					<s:ToggleSwitch x="193" y="4"/>
 					<s:Label id="userName0" x="13" y="12" width="172" fontSize="14"
-							 text="Camera" textAlign="left"/>					
+							 text="Câmera" textAlign="left"/>					
 				</s:Group>
 				<!--
 				<s:Group x="0" y="93" width="300">
