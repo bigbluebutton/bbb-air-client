@@ -37,7 +37,7 @@ package org.bigbluebutton.core
 			fetcher.fetch(joinUrl);
 		}
 		
-		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
+		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
 			try {
 				var xml:XML = new XML(data);
 				if (xml.returncode == 'FAILED') {
@@ -48,7 +48,7 @@ package org.bigbluebutton.core
 				trace("The response is probably not an XML, continuing");
 				trace(ObjectUtil.toString(e));
 			}
-			successSignal.dispatch(urlRequest);
+			successSignal.dispatch(urlRequest, responseUrl);
 		}
 		
 		protected function onUnsuccess(reason:String):void {

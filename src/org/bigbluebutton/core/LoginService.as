@@ -10,6 +10,7 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.core.util.URLParser;
 	import org.bigbluebutton.model.Config;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
@@ -51,13 +52,18 @@ package org.bigbluebutton.core
 			joinSubservice.join(_joinUrl);
 		}
 		
-		protected function afterJoin(urlRequest:URLRequest):void {
+		protected function afterJoin(urlRequest:URLRequest, responseUrl:String):void {
 			_urlRequest = urlRequest;
 			
 			var configSubservice:ConfigService = new ConfigService();
 			configSubservice.successSignal.add(afterConfig);
 			configSubservice.unsuccessSignal.add(fail);
-			configSubservice.getConfig(_joinUrl, _urlRequest);
+			configSubservice.getConfig(getServerUrl(responseUrl), _urlRequest);
+		}
+		
+		protected function getServerUrl(url:String):String {
+			var parser:URLParser = new URLParser(url);
+			return parser.protocol + "://" + parser.host + ":" + parser.port;
 		}
 		
 		protected function afterConfig(xml:XML):void {

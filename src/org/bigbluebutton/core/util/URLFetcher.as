@@ -18,6 +18,7 @@ package org.bigbluebutton.core.util
 		protected var _successSignal:Signal = new Signal();
 		protected var _unsuccessSignal:Signal = new Signal();
 		protected var _urlRequest:URLRequest = null;
+		protected var _responseUrl:String = null;
 		
 		public function get successSignal():ISignal {
 			return _successSignal;
@@ -28,6 +29,7 @@ package org.bigbluebutton.core.util
 		}
 		
 		public function fetch(url:String, urlRequest:URLRequest = null):void {
+			trace("Fetching " + url);
 			_urlRequest = urlRequest;
 			if (_urlRequest == null) {
 				_urlRequest = new URLRequest();
@@ -41,7 +43,12 @@ package org.bigbluebutton.core.util
 			urlLoader.addEventListener( Event.COMPLETE, handleComplete );
 			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
 			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, ioErrorHandler );
+			urlLoader.addEventListener( HTTPStatusEvent.HTTP_RESPONSE_STATUS, httpResponseStatusHandler );
 			urlLoader.load( _urlRequest );
+		}
+		
+		private function httpResponseStatusHandler(e:HTTPStatusEvent):void {
+			_responseUrl = e.responseURL;
 		}
 		
 		private function httpStatusHandler(e:HTTPStatusEvent):void {
@@ -49,7 +56,7 @@ package org.bigbluebutton.core.util
 		}
 		
 		private function handleComplete(e:Event):void {
-			successSignal.dispatch(e.target.data, _urlRequest);
+			successSignal.dispatch(e.target.data, _responseUrl, _urlRequest);
 		}
 		
 		private function ioErrorHandler(e:IOErrorEvent):void {

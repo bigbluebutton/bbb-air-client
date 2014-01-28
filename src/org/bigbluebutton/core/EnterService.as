@@ -10,9 +10,9 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.core.util.URLFetcher;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.bigbluebutton.core.util.URLFetcher;
 	
 	public class EnterService
 	{
@@ -34,7 +34,7 @@ package org.bigbluebutton.core
 			fetcher.fetch(enterUrl, urlRequest);
 		}
 		
-		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
+		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
 			successSignal.dispatch(new XML(data));
 		}
 		
