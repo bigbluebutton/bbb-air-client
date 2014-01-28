@@ -77,8 +77,8 @@
 									  />
 				</s:layout>
 				
-				<s:Button id="showCameraButton0" y="10" width="200" label="Mostar Câmera" horizontalCenter="0"/>
-				<s:Button id="showPrivateChat0" y="60" width="200" label="Chat Privado" horizontalCenter="0"/>
+				<s:Button id="showCameraButton0" y="10" width="200" label="Mostrar Câmera" horizontalCenter="0"/>
+				<s:Button id="showPrivateChat0" y="60" width="200" label="Bate-papo Privado" horizontalCenter="0"/>
 				<!--<s:Button id="showCameraButton0" y="111" width="200" label="Make Presenter" horizontalCenter="0"/>
 				<s:Button id="showCameraButton0" y="161" width="200" label="Kick User" horizontalCenter="0"/>-->				
 			</s:Group>
