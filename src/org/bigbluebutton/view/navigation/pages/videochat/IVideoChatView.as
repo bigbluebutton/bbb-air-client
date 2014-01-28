@@ -10,8 +10,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	public interface IVideoChatView extends IView
 	{
 		function cleanUpVideos():void
-		function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
 		function stopStream():void
+		function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
 		function get noVideoMessage():Label
 	}
 }

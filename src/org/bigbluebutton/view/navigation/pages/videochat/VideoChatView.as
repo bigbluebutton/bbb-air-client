@@ -21,39 +21,21 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 		}
 		
-		//		private var webcamCollection:ArrayCollection = new ArrayCollection;
-		
 		private var webcam:WebcamView;
 		
 		
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
-			trace("The VideoChatView children have been created");
-			//this.addEventListener(MouseEvent.CLICK, onClick);
-		}
-		
-		public function onClick(e:MouseEvent):void
-		{
-			//buttonTestSignal.dispatch();
 		}
 
 		public function dispose():void
 		{
-			trace("Cleaning the VideoChatView");
 			cleanUpVideos();
 		}
 		
-		public function cleanUpVideos():void {
-//			trace("Cleaning up " + webcamCollection.length + " videos");
-			
-//			for (var i:Number=webcamCollection.length; i > 0; --i) {
-//				var webcam:WebcamView = WebcamView(webcamCollection.getItemAt(i-1));
-//				webcam.close();
-//				videoGroup.removeElement(webcam);
-//				webcamCollection.removeItemAt(i-1);
-//			}
-			
+		public function cleanUpVideos():void 
+		{			
 			if(webcam)
 			{
 				webcam.close();
@@ -62,36 +44,19 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 
-		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void {
-//			var newCam:WebcamView = new WebcamView();
-//			webcamCollection.addItem(newCam);
-//			this.videoGroup.addElement(newCam);
-//			newCam.startStream(connection, name, streamName, userID, width, height);
-			
+		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void 
+		{
 			webcam = new WebcamView();
 			webcam.percentWidth = 100;
 			webcam.percentHeight = 100;
-			this.videoGroup.addElement(webcam);
 			webcam.startStream(connection, name, streamName, userID, width, height);
+			this.videoGroup.addElement(webcam);
 			
 			invalidateDisplayList();
 		}
 		
-		public function stopStream():void {//userID:String):void {
-			/*			
-			for (var i:Number=0; i < webcamCollection.length; ++i) {
-				var webcam:WebcamView = WebcamView(webcamCollection.getItemAt(i))
-				if (webcam.userID == userID) {
-					webcam.close();
-					videoGroup.removeElement(webcam);
-					webcamCollection.removeItemAt(i);
-					
-					invalidateDisplayList();
-					
-					break;
-				}
-			}
-			*/
+		public function stopStream():void 
+		{
 			if(webcam)
 			{
 				webcam.close();
@@ -106,7 +71,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			return noVideoMessage0;
 		}
 		
-		private function positionVideos(unscaledWidth:Number, unscaledHeight:Number):void {
+//		private function positionVideo(unscaledWidth:Number, unscaledHeight:Number):void {
 			//var webcamWidth:Number = videoGroup.width /2;
 			//var webcamHeight:Number = webcamWidth/320 * 240;
 			
@@ -132,7 +97,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				
 //				webcam.setPosition(unscaledWidth, unscaledHeight, 0, 0);
 //			}
-		}
+//		}
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
 		{
@@ -140,7 +105,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			if(webcam)
 			{
-				webcam.setSizeRespectingAspectRationBasedOnWidth(unscaledWidth);
+				//webcam.setSizeRespectingAspectRationBasedOnWidth(unscaledWidth);
 			}
 		}
 	}

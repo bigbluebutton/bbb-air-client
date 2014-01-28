@@ -11,6 +11,7 @@ package org.bigbluebutton.command
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.IUserSettings;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.osmf.logging.Log;
@@ -27,6 +28,9 @@ package org.bigbluebutton.command
 
 		[Inject]
 		public var usersService: IUsersService;
+		
+		[Inject]
+		public var userSettings: IUserSettings;
 		
 		override public function execute():void {
 			if (enabled) {
@@ -103,12 +107,15 @@ package org.bigbluebutton.command
 			
 				usersService.addStream(userId, streamName);
 				userSession.videoConnection.startPublishing(camera, streamName);
+				
+				userSettings.cameraEnabled = true;
 			}
 		}
 		
 		private function disableCamera():void {
 			usersService.removeStream(userSession.userId, "");
 			userSession.videoConnection.stopPublishing();
+			userSettings.cameraEnabled = false;
 		}
 	}
 }
