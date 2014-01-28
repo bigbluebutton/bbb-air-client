@@ -2,6 +2,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 {
 	import flash.events.MouseEvent;
 	
+	import spark.components.Label;
+	
 	public class ProfileView extends ProfileViewBase implements IProfileView
 	{
 		
@@ -26,6 +28,11 @@ package org.bigbluebutton.view.navigation.pages.profile
 		public function dispose():void
 		{
 			
+		}
+		
+		public function get userNameText():Label
+		{
+			return userName;
 		}
 
 	}
