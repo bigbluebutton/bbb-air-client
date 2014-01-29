@@ -80,6 +80,9 @@ package org.bigbluebutton.command
 			} else {
 				Log.getLogger("org.bigbluebutton").info(String(this) + ":onGuestResponse() not allowed to join");
 				
+				//TODO disconnect from all connections, not only the main one
+				connection.disconnect(true);
+				
 				userUISession.loading = false;
 				userUISession.unsuccessJoined.dispatch("accessDenied");
 			}
