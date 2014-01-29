@@ -12,6 +12,7 @@ package org.bigbluebutton.view.navigation.pages.login
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.UserUISession;
 	import org.bigbluebutton.view.navigation.IPagesNavigatorView;
+	import org.flexunit.internals.namespaces.classInternal;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -47,9 +48,30 @@ package org.bigbluebutton.view.navigation.pages.login
 		}
 		
 		private function onUnsucess(reason:String):void 
-		{			
-			view.currentState = LoginPageViewBase.STATE_NO_REDIRECT;
-			//view.messageText.text = reason;
+		{
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":onUnsucess() " + reason);
+			
+			switch(reason) {
+				case "emptyJoinUrl":
+					view.currentState = LoginPageViewBase.STATE_NO_REDIRECT;
+					break;
+				case "invalidMeetingIdentifier":
+					view.currentState = LoginPageViewBase.STATE_INVALID_MEETING_IDENTIFIER;
+					break;
+				case "checksumError":
+					view.currentState = LoginPageViewBase.STATE_CHECKSUM_ERROR;
+					break;
+				case "invalidPassword":
+					view.currentState = LoginPageViewBase.STATE_INVALID_PASSWORD;
+					break;
+				case "accessDenied":
+					view.currentState = LoginPageViewBase.STATE_ACCESS_DENIED;
+					break;
+				default:
+					view.currentState = LoginPageViewBase.STATE_GENERIC_ERROR;
+					break;
+			}
+			// view.messageText.text = reason;
 		}
 		
 		public function onInvokeEvent(invocation:InvokeEvent):void 

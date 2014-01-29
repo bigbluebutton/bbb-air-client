@@ -13,18 +13,48 @@
 		<![CDATA[
 			public static const STATE_BASE:String = "Base";
 			public static const STATE_NO_REDIRECT:String = "NoRedirect";
+			public static const STATE_INVALID_MEETING_IDENTIFIER:String = "InvalidMeetingIdentifier";
+			public static const STATE_CHECKSUM_ERROR:String = "ChecksumError";
+			public static const STATE_INVALID_PASSWORD:String = "InvalidPassword";
+			public static const STATE_GENERIC_ERROR:String = "GenericError";
+			public static const STATE_ACCESS_DENIED:String = "AccessDenied";
 		]]>
 	</fx:Script>
 	<view:states>
 		<s:State name="Base"/>
 		<s:State name="NoRedirect"/>
+		<s:State name="InvalidMeetingIdentifier"/>
+		<s:State name="ChecksumError"/>
+		<s:State name="InvalidPassword"/>
+		<s:State name="GenericError"/>
+		<s:State name="AccessDenied"/>
 	</view:states>
-	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell"
+			 width.AccessDenied="320"
+			 width.ChecksumError="320"
+			 width.GenericError="320"
+			 width.InvalidMeetingIdentifier="320"
+			 width.InvalidPassword="320"
+			 width.NoRedirect="320">
 		<s:Image horizontalCenter="0" source="@Embed('assets/imgs/ic_launcher_144.png')"
 				 verticalCenter="0"
+				 horizontalCenter.AccessDenied="0" verticalCenter.AccessDenied="-83"
+				 horizontalCenter.ChecksumError="0" verticalCenter.ChecksumError="-83"
+				 horizontalCenter.GenericError="0" verticalCenter.GenericError="-83"
+				 horizontalCenter.InvalidMeetingIdentifier="0"
+				 verticalCenter.InvalidMeetingIdentifier="-83"
+				 horizontalCenter.InvalidPassword="0" verticalCenter.InvalidPassword="-83"
 				 horizontalCenter.NoRedirect="0" verticalCenter.NoRedirect="-83"/>
-		<s:Label id="messageText0" includeIn="NoRedirect" width="352" height="168" fontSize="20"
-				 horizontalCenter="0" text="Utilize o navegador web para acessar uma conferência. "
-				 textAlign="center" verticalCenter="51"/>
+		<s:Label id="messageText0"
+				 includeIn="AccessDenied,ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect"
+				 width="90%" height="168" fontSize="20" horizontalCenter="0"
+				 text="Utilize o navegador web para acessar uma conferência" textAlign="center"
+				 verticalCenter="51"
+				 text.AccessDenied="O moderador não permitiu sua entrada na sala."
+				 text.ChecksumError="Acesso não autorizado.&#xd;Tente acessar a sala novamente."
+				 text.GenericError="Não foi possível conectar na sala desejada, por favor tente novamente mais tarde."
+				 text.InvalidMeetingIdentifier="Sala não encontrada.&#xd;Certifique-se de que a sala está aberta."
+				 text.InvalidPassword="Acesso não autorizado.&#xd;A senha utilizada para acesso à sala é inválida."
+				 text.NoRedirect="Utilize o navegador web para acessar uma conferência."/>
 	</s:Group>
 </view:NoTabView>

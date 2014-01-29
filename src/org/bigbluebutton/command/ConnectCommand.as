@@ -81,6 +81,7 @@ package org.bigbluebutton.command
 				Log.getLogger("org.bigbluebutton").info(String(this) + ":onGuestResponse() not allowed to join");
 				
 				userUISession.loading = false;
+				userUISession.unsuccessJoined.dispatch("accessDenied");
 			}
 		}
 		

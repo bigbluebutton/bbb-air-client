@@ -31,6 +31,11 @@ package org.bigbluebutton.core
 		}
 		
 		public function join(joinUrl:String):void {
+			if (joinUrl.length == 0) {
+				onUnsuccess("emptyJoinUrl");
+				return;
+			}
+			
 			var fetcher:URLFetcher = new URLFetcher();
 			fetcher.successSignal.add(onSuccess);
 			fetcher.unsuccessSignal.add(onUnsuccess);
@@ -40,8 +45,8 @@ package org.bigbluebutton.core
 		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
 			try {
 				var xml:XML = new XML(data);
-				if (xml.returncode == 'FAILED') {
-					unsuccessSignal.dispatch(xml.message); //xml.messageKey + ": "
+				if (xml.returncode == "FAILED") {
+					onUnsuccess(xml.messageKey);
 					return;
 				}
 			} catch (e:Error) {
