@@ -130,6 +130,10 @@ package org.bigbluebutton.model
 				trace("Am I this new user [" + newuser.userID + ", " + _me.userID + "]");
 				if (newuser.userID == _me.userID) {
 					newuser.me = true;
+					//TODO check if this is correct
+					// if we don't set _me to the just added user, _me won't get any update ever, it wouldn't be
+					// possible to use me.isModerator(), for instance
+					_me = newuser;
 				}						
 				
 				newuser.signal = _userChangeSignal;

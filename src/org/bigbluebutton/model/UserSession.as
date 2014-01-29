@@ -24,6 +24,7 @@ package org.bigbluebutton.model
 		protected var _videoConnection:IVideoConnection;
 		protected var _userlist:UserList;
 		protected var _publicChat:ChatMessages;
+		protected var _guestSignal:ISignal = new Signal();
 
 		public function get netconnection():NetConnection
 		{
@@ -115,6 +116,11 @@ package org.bigbluebutton.model
 		public function get publicChat():ChatMessages
 		{
 			return _publicChat;
+		}
+		
+		public function get guestSignal():ISignal
+		{
+			return _guestSignal;
 		}
 	}
 }

@@ -40,7 +40,7 @@ package org.bigbluebutton.core
 			trace("Login failed. " + reason);
 			unsuccessJoinedSignal.dispatch(reason);
 			
-			//TODO: show message to user saing that the meeting identifier is invalid 
+			//TODO: show message to user saying that the meeting identifier is invalid 
 		}			
 		
 		public function load(joinUrl:String):void {

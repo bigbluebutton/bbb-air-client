@@ -58,7 +58,7 @@ package org.bigbluebutton.core
 		
 		protected function onNetDataEvent(event:NetDataEvent):void
 		{
-			trace(ObjectUtil.toString(event));
+//			trace(ObjectUtil.toString(event));
 		}
 		
 		public function publish(connection:NetConnection, streamName:String, codec:String):void {
@@ -160,7 +160,7 @@ package org.bigbluebutton.core
 
 		protected function onNetStatusEvent(event:NetStatusEvent):void
 		{
-			trace(ObjectUtil.toString(event));
+//			trace(ObjectUtil.toString(event));
 
 			switch(event.info.code) {
 				case "NetStream.Play.Reset":

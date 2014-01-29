@@ -60,10 +60,31 @@ package org.bigbluebutton.command
 			
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
-
-			userUISession.loading = false;
-			userUISession.pushPage(PagesENUM.PARTICIPANTS); 
 			
+			usersService.connectUsers(uri);
+			
+			if (conferenceParameters.isGuestDefined() && conferenceParameters.guest) {
+				// I'm a guest, let's ask to enter
+				userSession.guestSignal.add(onGuestResponse);
+				usersService.askToEnter();
+			} else {
+				connectAfterGuest();
+			}
+		}
+		
+		private function onGuestResponse(allowed:Boolean):void {
+			if (allowed) {
+				Log.getLogger("org.bigbluebutton").info(String(this) + ":onGuestResponse() allowed to join");
+
+				connectAfterGuest();
+			} else {
+				Log.getLogger("org.bigbluebutton").info(String(this) + ":onGuestResponse() not allowed to join");
+				
+				userUISession.loading = false;
+			}
+		}
+		
+		private function connectAfterGuest():void {
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
 			
 			//TODO use proper callbacks
@@ -73,13 +94,15 @@ package org.bigbluebutton.command
 			
 			videoConnection.connect();
 			userSession.videoConnection = videoConnection;
-
-			usersService.connectUsers(uri);
+			
 			usersService.connectListeners(uri);
 			
 			chatService.getPublicChatMessages();
-
+			
 			joinVoiceSignal.dispatch();
+			
+			userUISession.loading = false;
+			userUISession.pushPage(PagesENUM.PARTICIPANTS);
 		}
 		
 		private function unsuccessConnected(reason:String):void {

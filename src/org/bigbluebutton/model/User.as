@@ -222,5 +222,10 @@ package org.bigbluebutton.model
 		{
 			return _privateChat;
 		}
+		
+		public function isModerator():Boolean
+		{
+			return role == MODERATOR;
+		}
 	}
 }

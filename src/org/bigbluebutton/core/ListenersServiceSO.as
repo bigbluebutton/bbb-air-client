@@ -170,13 +170,13 @@ package org.bigbluebutton.core
 		}
 
 		public function userTalk(userID:Number, talk:Boolean):void {
-			trace("userTalk() [" + userID + "," + talk + "]");
+//			trace("userTalk() [" + userID + "," + talk + "]");
 			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
 			user.talking = talk;
 		}
 		
 		public function userLeft(userID:Number):void {
-			trace("userTalk() [" + userID + "]");
+			trace("userLeft() [" + userID + "]");
 			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
 			if(user)
 			{

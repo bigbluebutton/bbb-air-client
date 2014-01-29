@@ -8,6 +8,7 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.osflash.signals.ISignal;
 	
 
 	public interface IUserSession
@@ -29,5 +30,6 @@ package org.bigbluebutton.model
 		function set videoConnection(value:IVideoConnection):void
 			
 		function get publicChat():ChatMessages
+		function get guestSignal():ISignal
 	}
 }

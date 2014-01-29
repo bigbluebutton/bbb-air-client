@@ -12,6 +12,7 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
+	import org.osmf.logging.Log;
 
 	public class UsersServiceSO extends BaseServiceSO implements IUsersServiceSO
 	{
@@ -28,6 +29,7 @@ package org.bigbluebutton.core
 			super.connect(connection, uri, params);
 			
 			queryForParticipants();
+			retrieveWaitingGuests();
 		}
 		
 		private function queryForParticipants():void {
@@ -118,7 +120,7 @@ package org.bigbluebutton.core
 		}
 		
 		public function kickUserCallback(userid:String):void {
-			trace("The Client has be kicked by someone");
+			trace("The user " + userid + " has been kicked by someone");
 		}
 		
 		/**
@@ -162,5 +164,111 @@ package org.bigbluebutton.core
 				trace(ObjectUtil.toString(status));
 			}
 		)		
+
+		/**========================
+		 * 
+		 * GUEST MANAGEMENT BELOW *
+		 * 
+		 *========================*/
+			
+		public function askToEnter(userId:String):void {
+			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.askingToEnter";
+
+			nc.call(
+				restoreFunctionName,
+				responder,
+				userId
+			);
+		}
+
+		// callback from server  
+		public function guestEntrance(userId:String, name:String):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":guestEntrance() userId: " + userId + " name: " + name);
+			
+			if (userSession.userlist.me.isModerator()) {
+				trace("User " + name + " trying to join");
+				allowAllIfNoOtherModerator([userId]);
+			}
+		}
+		
+		private function allowAllIfNoOtherModerator(excludeUserIdArray:Array):void {
+			//TODO do proper guest handling
+			// this is a workaround to allow guests if I'm the only moderator of the session
+			if (amITheOnlyModerator(excludeUserIdArray)) {
+				responseToAllGuests(true);
+			}
+		}
+		
+		private function amITheOnlyModerator(excludeUserIdArray:Array):Boolean {
+			for each (var user:User in userSession.userlist.users) {
+				// user is moderator
+				// user is not in the exclude list
+				// user is not me
+				if (user.isModerator() && excludeUserIdArray.indexOf(user.userID) == -1 && user.userID != userSession.userlist.me.userID) {
+					trace("I'm not the only moderator");
+					return false;
+				}
+			}
+			trace("amITheOnlyModerator? " + userSession.userlist.me.isModerator());
+			return userSession.userlist.me.isModerator();
+		}
+		
+		public function guestWaitingForModerator(userId:String, info:String):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":guestWaitingForModerator() userId: " + userId + " info: " + info);
+
+			if (userSession.userlist.me.isModerator() && userSession.userlist.me.userID == userId) {
+				if (info.length > 0) {
+					var infoArray:Array = info.split("!1");
+					var userIdArray:Array = new Array();
+					for each (var userInfo:String in infoArray) {
+						if (userInfo.length > 0) {
+							var userInfoArray:Array = userInfo.split("!2");
+							var userId:String = userInfoArray[0];
+							var userName:String = userInfoArray[1];
+							
+							userIdArray.push(userId);
+							//TODO do something with this information
+						}
+					}
+					
+					allowAllIfNoOtherModerator(userIdArray);
+				}
+			}
+		}
+		
+		public function guestResponse(userId:String, allowed:Boolean):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":guestResponse() userId: " + userId + " allowed: " + allowed);
+
+			if (userId == userSession.userId) {
+				userSession.guestSignal.dispatch(allowed);
+			}
+		}
+		
+		public function responseToAllGuests(allowed:Boolean):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":responseToAllGuests() allowed: " + allowed);
+
+			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.responseToAllGuests";
+			
+			nc.call(
+				restoreFunctionName,
+				responder,
+				allowed
+			);
+		}
+		
+		public function retrieveWaitingGuests():void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":retrieveWaitingGuests()");
+
+			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.askingForGuestWaiting";
+			
+			nc.call(
+				restoreFunctionName,
+				responder,
+				userSession.userlist.me.userID
+			);
+		}
 	}
 }

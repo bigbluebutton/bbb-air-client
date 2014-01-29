@@ -14,5 +14,6 @@ package org.bigbluebutton.core
 		function addStream(userId:String, streamName:String):void;
 		function removeStream(userId:String, streamName:String):void;
 		function disconnect():void;
+		function askToEnter(userId:String):void;
 	}
 }

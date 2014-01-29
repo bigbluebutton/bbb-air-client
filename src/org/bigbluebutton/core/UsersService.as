@@ -65,5 +65,9 @@ package org.bigbluebutton.core
 			usersServiceSO.disconnect();
 			listenersServiceSO.disconnect();
 		}
+		
+		public function askToEnter():void {
+			usersServiceSO.askToEnter(userSession.userlist.me.userID);
+		}
 	}
 }
