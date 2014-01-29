@@ -23,7 +23,8 @@
 		<s:Image horizontalCenter="0" source="@Embed('assets/imgs/ic_launcher_144.png')"
 				 verticalCenter="0"
 				 horizontalCenter.NoRedirect="0" verticalCenter.NoRedirect="-83"/>
-		<s:Label id="messageText0" includeIn="NoRedirect" x="65" y="355" width="352" height="168" fontSize="20"
-				 text="Utilize o navegador web para acessar uma conferência. " textAlign="center"/>
+		<s:Label id="messageText0" includeIn="NoRedirect" width="352" height="168" fontSize="20"
+				 horizontalCenter="0" text="Utilize o navegador web para acessar uma conferência. "
+				 textAlign="center" verticalCenter="51"/>
 	</s:Group>
 </view:NoTabView>

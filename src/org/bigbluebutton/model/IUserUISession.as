@@ -7,7 +7,8 @@ package org.bigbluebutton.model
 		function get pageChangedSignal(): ISignal;
 		function get pageTransitionStartSignal(): ISignal;
 		function get loadingSignal(): ISignal;
-
+		function get unsuccessJoined(): ISignal;
+		
 		function get currentPage():String;
 		function get lastPage():String;
 		function popPage():void	;

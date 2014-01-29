@@ -8,7 +8,9 @@ package org.bigbluebutton.view.navigation.pages.login
 	import org.bigbluebutton.command.JoinMeetingSignal;
 	import org.bigbluebutton.core.ILoginService;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.UserSession;
+	import org.bigbluebutton.model.UserUISession;
 	import org.bigbluebutton.view.navigation.IPagesNavigatorView;
 	import org.osmf.logging.Log;
 	
@@ -29,13 +31,17 @@ package org.bigbluebutton.view.navigation.pages.login
 		
 		[Inject]
 		public var userSession: IUserSession;
+		
+		[Inject]
+		public var userUISession: IUserUISession;
 
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 												
-			loginService.unsuccessJoinedSignal.add(onUnsucess);
+			//loginService.unsuccessJoinedSignal.add(onUnsucess);
+			userUISession.unsuccessJoined.add(onUnsucess);
 			
 			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
 		}
@@ -43,7 +49,7 @@ package org.bigbluebutton.view.navigation.pages.login
 		private function onUnsucess(reason:String):void 
 		{			
 			view.currentState = LoginPageViewBase.STATE_NO_REDIRECT;
-			view.messageText.text = reason;
+			//view.messageText.text = reason;
 		}
 		
 		public function onInvokeEvent(invocation:InvokeEvent):void 

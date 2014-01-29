@@ -12,6 +12,18 @@ package org.bigbluebutton.model
 			
 		}
 		
+		
+		
+		/**
+		 * Dispatched when the application is loading something
+		 */
+		private var _unsuccessJoined: Signal = new Signal();
+		
+		public function get unsuccessJoined(): ISignal
+		{
+			return _unsuccessJoined;
+		}
+		
 		/**
 		 * Dispatched when the application is loading something
 		 */
