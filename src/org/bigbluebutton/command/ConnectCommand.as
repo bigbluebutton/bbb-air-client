@@ -66,7 +66,6 @@ package org.bigbluebutton.command
 			if (conferenceParameters.isGuestDefined() && conferenceParameters.guest) {
 				// I'm a guest, let's ask to enter
 				userSession.guestSignal.add(onGuestResponse);
-				usersService.askToEnter();
 			} else {
 				connectAfterGuest();
 			}
@@ -81,6 +80,7 @@ package org.bigbluebutton.command
 				Log.getLogger("org.bigbluebutton").info(String(this) + ":onGuestResponse() not allowed to join");
 				
 				//TODO disconnect from all connections, not only the main one
+				connection.unsuccessConnected.remove(unsuccessConnected);
 				connection.disconnect(true);
 				
 				userUISession.loading = false;
@@ -113,6 +113,7 @@ package org.bigbluebutton.command
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessConnected()");
 			
 			userUISession.loading = false;
+			userUISession.unsuccessJoined.dispatch("connectionFailed");
 		}
 		
 		private function successVideoConnected():void {

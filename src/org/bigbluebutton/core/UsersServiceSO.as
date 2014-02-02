@@ -19,6 +19,9 @@ package org.bigbluebutton.core
 		[Inject]
 		public var userSession: IUserSession;
 		
+		[Inject]
+		public var conferenceParameters: IConferenceParameters;
+		
 		private static const SO_NAME:String = "participantsSO";
 		
 		public function UsersServiceSO() {
@@ -30,6 +33,7 @@ package org.bigbluebutton.core
 			
 			queryForParticipants();
 			retrieveWaitingGuests();
+			getGuestPolicy();			
 		}
 		
 		private function queryForParticipants():void {
@@ -57,7 +61,7 @@ package org.bigbluebutton.core
 		{
 			trace("Error occurred");
 			trace(ObjectUtil.toString(status));
-			sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
+			onConnectionFailed(ConnectionFailedEvent.UNKNOWN_REASON);
 		}
 		
 		public function participantJoined(joinedUser:Object):void {
@@ -130,7 +134,7 @@ package org.bigbluebutton.core
 			trace("The meeting has ended and a logout should be initiated");
 		}
 		
-		override protected function sendConnectionFailedEvent(reason:String):void {
+		override protected function onConnectionFailed(reason:String):void {
 			trace("Error in the UsersServiceSO connection");
 		}
 		
@@ -212,6 +216,42 @@ package org.bigbluebutton.core
 			}
 			trace("amITheOnlyModerator? " + userSession.userlist.me.isModerator());
 			return userSession.userlist.me.isModerator();
+		}
+		
+		public function guestPolicyChanged(guestPolicy:String):void {
+			
+		}
+		
+		private function getGuestPolicy():void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":getGuestPolicy()");
+			
+			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.getGuestPolicy";
+			
+			nc.call(
+				restoreFunctionName,
+				new Responder(getGuestPolicyOnSuccess, getGuestPolicyOnUnsuccess)
+			);
+		}
+		
+		private function getGuestPolicyOnSuccess(policy:String):void {
+			if (conferenceParameters.isGuestDefined() && conferenceParameters.guest) {
+				switch (policy) {
+					case "ALWAYS_DENY":
+						userSession.guestSignal.dispatch(false);
+						break;
+					case "ALWAYS_ACCEPT":
+						userSession.guestSignal.dispatch(true);
+						break;
+					default:
+						askToEnter(userSession.userId);
+						break;
+				}
+			}
+		}
+		
+		private function getGuestPolicyOnUnsuccess(status:Object):void {
+			trace(ObjectUtil.toString(status));
 		}
 		
 		public function guestWaitingForModerator(userId:String, info:String):void {

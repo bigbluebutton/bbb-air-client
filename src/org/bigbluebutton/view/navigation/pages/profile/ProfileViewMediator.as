@@ -3,6 +3,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	
+	import mx.resources.ResourceManager;
+	
 	import org.bigbluebutton.command.CameraEnableSignal;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserSettings;
@@ -32,14 +34,14 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 			view.userNameText.text = userSession.userlist.getUser(userSession.userId).name;
 			
-			view.cameraOnOFFText.text = userSettings.cameraEnabled?"ON":"OFF"; 
+			view.cameraOnOFFText.text = ResourceManager.getInstance().getString('resources', userSettings.cameraEnabled? 'profile.settings.camera.on':'profile.settings.camera.off'); 
 						
 			view.cameraButton.addEventListener(MouseEvent.CLICK, onCameraClick);
 		}
 		
 		private function onCameraSettingChange(cameraEnabled:Boolean):void
 		{
-			view.cameraOnOFFText.text = cameraEnabled ? "ON" : "OFF"; 
+			view.cameraOnOFFText.text = ResourceManager.getInstance().getString('resources', cameraEnabled? 'profile.settings.camera.on':'profile.settings.camera.off'); 
 		}
 		
 		protected function onCameraClick(event:MouseEvent):void

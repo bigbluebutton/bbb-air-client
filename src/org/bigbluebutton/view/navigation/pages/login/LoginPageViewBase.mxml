@@ -48,13 +48,13 @@
 		<s:Label id="messageText0"
 				 includeIn="AccessDenied,ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect"
 				 width="90%" height="168" fontSize="20" horizontalCenter="0"
-				 text="Utilize o navegador web para acessar uma conferência" textAlign="center"
+				 textAlign="center"
 				 verticalCenter="51"
-				 text.AccessDenied="O moderador não permitiu sua entrada na sala."
-				 text.ChecksumError="Acesso não autorizado.&#xd;Tente acessar a sala novamente."
-				 text.GenericError="Não foi possível conectar na sala desejada, por favor tente novamente mais tarde."
-				 text.InvalidMeetingIdentifier="Sala não encontrada.&#xd;Certifique-se de que a sala está aberta."
-				 text.InvalidPassword="Acesso não autorizado.&#xd;A senha utilizada para acesso à sala é inválida."
-				 text.NoRedirect="Utilize o navegador web para acessar uma conferência."/>
+				 text.AccessDenied="{resourceManager.getString('resources', 'login.error.accessDenied')}"
+				 text.ChecksumError="{resourceManager.getString('resources', 'login.error.checksumError')}"
+				 text.GenericError="{resourceManager.getString('resources', 'login.error.genericError')}"
+				 text.InvalidMeetingIdentifier="{resourceManager.getString('resources', 'login.error.invalidMeetingIdentifier')}"
+				 text.InvalidPassword="{resourceManager.getString('resources', 'login.error.invalidPassword')}"
+				 text.NoRedirect="{resourceManager.getString('resources', 'login.error.noRedirect')}"/>
 	</s:Group>
 </view:NoTabView>

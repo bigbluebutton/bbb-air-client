@@ -58,7 +58,7 @@ package org.bigbluebutton.core
 		{
 			trace("Error occurred");
 			trace(ObjectUtil.toString(status));
-			sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
+			onConnectionFailed(ConnectionFailedEvent.UNKNOWN_REASON);
 		}
 		
 		private function getRoomMuteState():void {
@@ -79,7 +79,7 @@ package org.bigbluebutton.core
 		{
 			trace("Error occurred");
 			trace(ObjectUtil.toString(status));
-			sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
+			onConnectionFailed(ConnectionFailedEvent.UNKNOWN_REASON);
 		}
 		
 		

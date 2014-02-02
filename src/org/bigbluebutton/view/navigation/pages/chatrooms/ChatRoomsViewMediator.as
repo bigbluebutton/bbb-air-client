@@ -7,6 +7,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.FlexEvent;
+	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.core.IChatMessageReceiver;
 	import org.bigbluebutton.core.IChatMessageSender;
@@ -57,7 +58,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dicUsertoChat = new Dictionary();
 			
 			dataProvider = new ArrayCollection();
-			dataProvider.addItem({name: "Bate-papo Público", publicChat:true, user:null, chatMessages: userSession.publicChat});
+			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
 			var users:ArrayCollection = userSession.userlist.users;
 			
