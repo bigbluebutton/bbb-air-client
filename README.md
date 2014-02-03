@@ -19,3 +19,5 @@ Add extra arguments to Flex Compiler:
 ```
 
 Everytime you change the localization files (and when you first compile the client), run *build-locale.bat* to compile the localization resources.
+
+By default, when you run the app in debug mode, you will join the *Demo Meeting* on http://test-install.blindsidenetworks.com/, but only if you open the session first in your browser. The app will never call *create*, it only knows how to handle *join*.
