@@ -10,6 +10,5 @@ package org.bigbluebutton.core
 		function unmute(userId:String):void
 		function addStream(userId:String, streamName:String):void
 		function removeStream(userId:String, streamName:String):void
-		function askToEnter():void
 	}
 }

@@ -64,9 +64,6 @@ package org.bigbluebutton.view.navigation.pages.login
 				case "invalidPassword":
 					view.currentState = LoginPageViewBase.STATE_INVALID_PASSWORD;
 					break;
-				case "accessDenied":
-					view.currentState = LoginPageViewBase.STATE_ACCESS_DENIED;
-					break;
 				default:
 					view.currentState = LoginPageViewBase.STATE_GENERIC_ERROR;
 					break;

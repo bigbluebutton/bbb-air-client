@@ -63,8 +63,6 @@ package org.bigbluebutton.model
 		 */		
 		private var _userid:String;
 		private var _record:Boolean;
-		private var _guest:Boolean;
-		private var _guestDefined:Boolean;
 
 		public function ConferenceParameters()
 		{
@@ -214,19 +212,6 @@ package org.bigbluebutton.model
 			_changedSignal.dispatch();
 		}
 		
-		public function get guest():Boolean {
-			return _guest;
-		}
-		
-		public function set guest(value:Boolean):void {
-			_guest = value;
-			_changedSignal.dispatch();
-		}
-		
-		public function isGuestDefined():Boolean {
-			return _guestDefined;
-		}
-		
 		public function load(obj:Object):void {
 			_meetingName = obj.conferenceName;
 			_externMeetingID = obj.externMeetingID;
@@ -242,8 +227,6 @@ package org.bigbluebutton.model
 			_internalUserID = obj.internalUserId;
 			_logoutUrl = obj.logoutUrl;
 			_record = !(obj.record == "false");
-			_guest = (obj.guest == "true");
-			_guestDefined = (obj.guest != undefined);
 			
 			_changedSignal.dispatch();
 		}
