@@ -14,6 +14,7 @@ bin-release-temp/
 .fxpProperties
 *.p12
 *.apk
+*.log
 resources.swf
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
