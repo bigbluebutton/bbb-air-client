@@ -12,11 +12,15 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
+	import org.osmf.logging.Log;
 
 	public class UsersServiceSO extends BaseServiceSO implements IUsersServiceSO
 	{
 		[Inject]
 		public var userSession: IUserSession;
+		
+		[Inject]
+		public var conferenceParameters: IConferenceParameters;
 		
 		private static const SO_NAME:String = "participantsSO";
 		
@@ -32,27 +36,30 @@ package org.bigbluebutton.core
 		
 		private function queryForParticipants():void {
 			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.getParticipants";
+			
 			nc.call(
-				"participants.getParticipants",// Remote function name
-				new Responder(
-					// participants - On successful result
-					function(result:Object):void { 
-						trace("Successfully queried participants: " + result.count); 
-						if (result.count > 0) {
-							for(var p:Object in result.participants) {
-								participantJoined(result.participants[p]);
-							}
-						}	
-//						becomePresenterIfLoneModerator();
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("Error occurred");
-						trace(ObjectUtil.toString(status));
-						sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
-					}
-				)//new Responder
-			); //_netConnection.call
+				restoreFunctionName,
+				new Responder(queryForParticipantsOnSucess, queryForParticipantsOnUnsucess)
+			);
+		}
+		
+		private function queryForParticipantsOnSucess(result:Object):void
+		{
+			trace("Successfully queried participants: " + result.count); 
+			if (result.count > 0) {
+				for(var p:Object in result.participants) {
+					participantJoined(result.participants[p]);
+				}
+			}	
+			//becomePresenterIfLoneModerator();
+		}
+		
+		private function queryForParticipantsOnUnsucess(status:Object):void
+		{
+			trace("Error occurred");
+			trace(ObjectUtil.toString(status));
+			onConnectionFailed(ConnectionFailedEvent.UNKNOWN_REASON);
 		}
 		
 		public function participantJoined(joinedUser:Object):void {
@@ -115,7 +122,7 @@ package org.bigbluebutton.core
 		}
 		
 		public function kickUserCallback(userid:String):void {
-			trace("The Client has be kicked by someone");
+			trace("The user " + userid + " has been kicked by someone");
 		}
 		
 		/**
@@ -125,8 +132,39 @@ package org.bigbluebutton.core
 			trace("The meeting has ended and a logout should be initiated");
 		}
 		
-		override protected function sendConnectionFailedEvent(reason:String):void {
+		override protected function onConnectionFailed(reason:String):void {
 			trace("Error in the UsersServiceSO connection");
 		}
+		
+		public function addStream(userId:String, streamName:String):void {
+			setStream(userId, streamName);
+		}
+		
+		public function removeStream(userId:String, streamName:String):void {
+			setStream(userId, streamName);
+		}
+		
+		private function setStream(userId:String, streamName:String):void {
+			var nc:NetConnection = userSession.mainConnection.connection;
+			var restoreFunctionName:String = "participants.setParticipantStatus";
+			
+			nc.call(
+				restoreFunctionName,
+				responder,
+				userId,
+				"hasStream",
+				Boolean(streamName.length > 0).toString() + ",stream=" + streamName
+			);
+		}
+		
+		private var responder:Responder = new Responder(
+			// On successful result
+			function(result:Boolean):void { 	
+			},	
+			// On error occurred
+			function(status:Object):void {
+				trace(ObjectUtil.toString(status));
+			}
+		)		
 	}
 }

@@ -2,12 +2,7 @@
 <s:List xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark"
 		itemRenderer="org.bigbluebutton.view.navigation.pages.participants.ParticipantItemRenderer"
-		dataProvider="{new ArrayCollection()}">
-	<fx:Script>
-		<![CDATA[
-			import mx.collections.ArrayCollection;
-		]]>
-	</fx:Script>
+		>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>

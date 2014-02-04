@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
+				xmlns:assets="assets.*"
+				width="500">
+	
+	<fx:Script>
+		<![CDATA[
+			import org.bigbluebutton.model.chat.ChatMessage;
+			
+			
+			override public function set data(obj:Object):void {
+				super.data = obj;
+				
+				var m:ChatMessage = obj as ChatMessage;
+				
+				if (m) {
+					username.text = m.name;
+					time.text = m.time
+					message.text = m.senderText;
+					//TODO: What is translatedText, where should it be used?
+					
+					//removeUnneededInformationFromDisplay(m);
+				}
+			}
+			
+			private function removeUnneededInformationFromDisplay(m:ChatMessage):void
+			{
+				var sameUser:Boolean = (m.lastSenderId == m.senderId);
+				var sameTime:Boolean = (m.lastTime == m.time);
+				
+				if(sameUser && sameTime)
+				{
+					nameTimeGroup.includeInLayout = false;						
+				}
+				else if(sameUser)
+				{
+					username.visible = false;
+				}
+				else if(sameTime)
+				{
+					time.visible = false;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout gap="0"
+						  paddingBottom="0"
+						  paddingLeft="0"
+						  paddingRight="0"
+						  paddingTop="5"
+						  />
+	</s:layout>
+	<s:states>
+		<s:State name="others_state"/>
+		<s:State name="me_state"/>
+	</s:states>
+	<s:Group id="nameTimeGroup" y="6" width="100%" height="18">
+		<s:Label id="username" y="0" left="0" width="50%" height="100%" color="#9E9E9E" fontSize="10"
+				 paddingLeft="5" paddingRight="5" textAlign="left" left.me_state="" right.me_state="0" textAlign.me_state="right"/>
+		<s:Label id="time" y="0" right="0" width="50%" height="100%" color="#9E9E9E" fontSize="10"
+				 paddingLeft="5" paddingRight="5" textAlign="right" left.me_state="0" right.me_state="" textAlign.me_state="left"/>
+	</s:Group>
+	<s:Group width="100%">
+		<s:Label id="message" x="0" y="0" width="100%" height="100%" paddingLeft="5" paddingRight="5"
+				 textAlign="left"/>
+	</s:Group>
+</s:ItemRenderer>

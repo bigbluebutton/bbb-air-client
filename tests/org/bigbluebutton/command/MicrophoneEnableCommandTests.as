@@ -29,7 +29,7 @@ package org.bigbluebutton.command
 		{
 			var micButton:MicButton = new MicButton();
 			
-			var command: MicrophoneEnableCommand = createCommand();
+			var command: MicrophoneOnCommand = createCommand();
 			command.enabled = false;
 			command.execute();
 						
@@ -44,7 +44,7 @@ package org.bigbluebutton.command
 		{
 			var micButton:MicButton = new MicButton();
 			
-			var command: MicrophoneEnableCommand = createCommand();
+			var command: MicrophoneOnCommand = createCommand();
 			command.enabled = false;
 			command.execute();
 			
@@ -59,7 +59,7 @@ package org.bigbluebutton.command
 		{
 			var micButton:MicButton = new MicButton();
 			
-			var command: MicrophoneEnableCommand = createCommand();
+			var command: MicrophoneOnCommand = createCommand();
 			command.enabled = true;
 			command.execute();
 			
@@ -74,7 +74,7 @@ package org.bigbluebutton.command
 		{
 			var micButton:MicButton = new MicButton();
 			
-			var command: MicrophoneEnableCommand = createCommand();
+			var command: MicrophoneOnCommand = createCommand();
 			command.enabled = true;
 			command.execute();
 			
@@ -89,11 +89,11 @@ package org.bigbluebutton.command
 		{
 			var micButton:MicButton = new MicButton();
 			
-			var command: MicrophoneEnableCommand = createCommand();
+			var command: MicrophoneOnCommand = createCommand();
 			command.enabled = true;
 			command.execute();
 			
-			var command1: MicrophoneEnableCommand = createCommand();
+			var command1: MicrophoneOnCommand = createCommand();
 			command1.enabled = false;
 			command1.execute();
 			
@@ -108,11 +108,11 @@ package org.bigbluebutton.command
 		{
 			var micButton:MicButton = new MicButton();
 			
-			var command: MicrophoneEnableCommand = createCommand();
+			var command: MicrophoneOnCommand = createCommand();
 			command.enabled = false;
 			command.execute();
 			
-			var command1: MicrophoneEnableCommand = createCommand();
+			var command1: MicrophoneOnCommand = createCommand();
 			command1.enabled = true;
 			command1.execute();
 			
@@ -122,9 +122,9 @@ package org.bigbluebutton.command
 		/**
 		 * Creates the test subject with its dependencies.
 		 */
-		private function createCommand(): MicrophoneEnableCommand
+		private function createCommand(): MicrophoneOnCommand
 		{
-			var command: MicrophoneEnableCommand = new MicrophoneEnableCommand();
+			var command: MicrophoneOnCommand = new MicrophoneOnCommand();
 			command.userSettings = mock(IUserSettings);
 			return command;
 		}

@@ -6,8 +6,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserSession;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.mockito.integrations.currentMockito;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -20,6 +23,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userSession: IUserSession;
 		
+		[Inject]
+		public var userUISession: IUserUISession;
+		
+		protected var user:User;
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -28,19 +36,69 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			userSession.userlist.userAddedSignal.add(userAddedHandler);
 			userSession.userlist.userChangeSignal.add(userChangeHandler);
 			
+			userUISession.pageTransitionStartSignal.add(onPageTransitionStart);
+			
 			// find all currently open streams
+			//var users:ArrayCollection = userSession.userlist.users;
+			//for (var i:Number=0; i < users.length; i++) {
+			//	var u:User = users.getItemAt(i) as User;
+			//	if (u.hasStream) {
+			//		startStream(u.name, u.streamName);
+			//	}
+			//}
+			
+			user = userUISession.currentPageDetails as User;
+			
+			var presenter:User = userSession.userlist.getPresenter();
+			var userWithCamera:User = getUserWithCamera();
+			if(user && user.hasStream)
+			{
+				startStream(user.name, user.streamName);
+				view.noVideoMessage.visible = false;
+			}
+			else if(presenter != null)
+			{
+				startStream(presenter.name, presenter.streamName);
+			}
+			else if(userWithCamera != null)
+			{
+				startStream(userWithCamera.name, userWithCamera.streamName);
+			}
+			else
+			{
+				view.noVideoMessage.visible = true;
+			}
+		}
+		
+		protected function getUserWithCamera():User
+		{
 			var users:ArrayCollection = userSession.userlist.users;
-			for (var i:Number=0; i < users.length; i++) {
-				var u:User = users.getItemAt(i) as User;
+			for each(var u:User in users) 
+			{
 				if (u.hasStream) {
-					startStream(u.name, u.streamName);
+					return u;
 				}
+			}
+			return null;
+		}
+				
+		private function onPageTransitionStart(lastPage:String):void
+		{
+			if(lastPage == PagesENUM.VIDEO_CHAT)
+			{
+				view.dispose();
 			}
 		}
 		
 		override public function destroy():void
 		{
 			view.cleanUpVideos();
+			
+			userSession.userlist.userRemovedSignal.remove(userRemovedHandler);
+			userSession.userlist.userAddedSignal.remove(userAddedHandler);
+			userSession.userlist.userChangeSignal.remove(userChangeHandler);
+			
+			userUISession.pageTransitionStartSignal.remove(onPageTransitionStart);
 			
 			super.destroy();
 			
@@ -49,17 +107,26 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		}
 		
 		private function userAddedHandler(user:User):void {
-			if (user.hasStream)
-				startStream(user.name, user.streamName);
+			//if (user.hasStream)
+			//	startStream(user.name, user.streamName);
 		}
 		
-		private function userRemovedHandler(user:User):void {
-			stopStream(user.userID);
+		private function userRemovedHandler(userID:String):void {
+			if(user.userID == userID)
+			{
+				stopStream();
+				userUISession.popPage();
+			}
 		}
 		
-		private function userChangeHandler(user:User, property:String):void {
-			if (property == "hasStream" && user.hasStream)
-				startStream(user.name, user.streamName);
+		private function userChangeHandler(user:User, property:String = null):void {
+			if(user == user)
+			{
+				if (property == "hasStream" && user.hasStream)
+				{
+					startStream(user.name, user.streamName);
+				}
+			}
 		}
 		
 		private function startStream(name:String, streamName:String):void {
@@ -69,12 +136,17 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				trace(ObjectUtil.toString(resolution));
 				var width:Number = Number(String(resolution.dimensions[0]));
 				var length:Number = Number(String(resolution.dimensions[1]));
-				if (view) view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
+				if (view) 
+				{
+					view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
+				}
 			}
 		}
 		
-		private function stopStream(userID:String):void {
-			if (view) view.stopStream(userID);
+		private function stopStream():void { //userID:String):void {
+			if (view) {
+				view.stopStream();//userID);
+			}
 		}
 		
 		protected function getVideoResolution(stream:String):Object {

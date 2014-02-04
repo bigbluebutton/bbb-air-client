@@ -5,8 +5,12 @@ package org.bigbluebutton.model
 	public interface IUserSettings
 	{
 		function get changedSignal(): ISignal
+		function get cameraChangeSignal(): ISignal
 			
 		function get microphoneEnabled():Boolean
 		function set microphoneEnabled(value:Boolean):void
+			
+		function get cameraEnabled():Boolean
+		function set cameraEnabled(value:Boolean):void
 	}
 }

@@ -6,6 +6,7 @@ package org.bigbluebutton.model
 	import org.osflash.signals.Signal;
 	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
+	
 	import spark.collections.Sort;
 
 	public class UserList
@@ -129,8 +130,13 @@ package org.bigbluebutton.model
 				trace("Am I this new user [" + newuser.userID + ", " + _me.userID + "]");
 				if (newuser.userID == _me.userID) {
 					newuser.me = true;
+					//TODO check if this is correct
+					// if we don't set _me to the just added user, _me won't get any update ever, it wouldn't be
+					// possible to use me.isModerator(), for instance
+					_me = newuser;
 				}						
 				
+				newuser.signal = _userChangeSignal;
 				_users.addItem(newuser);
 				_users.refresh();
 				
@@ -166,19 +172,18 @@ package org.bigbluebutton.model
 					return aUser;
 				}
 			}				
-			
-			// Participant not found.
+
 			return null;
 		}
 		
 		public function removeUser(userID:String):void {
 			var p:Object = getUserIndex(userID);
-			if (p != null) {
-				// Flag that the user is leaving the meeting so that apps (such as avatar) doesn't hang
-				// around when the user already left.
-				p.participant.isLeavingFlag = true;
+			if (p != null) 
+			{
+				var user:User = p.participant as User; 
+				user.isLeavingFlag = true;
 				
-				trace("removing user[" + p.participant.name + "," + p.participant.userID + "]");				
+				trace("removing user[" + user.name + "," + user.userID + "]");				
 				_users.removeItemAt(p.index);
 				_users.refresh();
 				
@@ -186,6 +191,11 @@ package org.bigbluebutton.model
 			}							
 		}
 		
+		/**
+		 * Get the presenter user 
+		 * @return null if participant not found
+		 * 
+		 */	
 		public function getPresenter():User {
 			var u:User;
 			for (var i:int = 0; i < _users.length; i++) {
@@ -201,22 +211,35 @@ package org.bigbluebutton.model
 			if (u.presenter) {
 				u.presenter = false;
 				
-				userChangeSignal.dispatch(u.userID);
+				userChangeSignal.dispatch(u);
 				
 				if (u.me)
 					_me.presenter = false;
 			}
 		}
 		
-		public function assignPresenter(userID:String):void {
-			var u:Object = getUserIndex(userID);
-			if (u) {
-				u.participant.presenter = true;
+		public function assignPresenter(userID:String):void 
+		{
+			clearPresenter();			
+			
+			var p:Object = getUserIndex(userID);
+			if (p) {
+				var user:User = p.participant as User;
 				
-				userChangeSignal.dispatch(u.userID);
+				user.presenter = true;
 				
-				if (u.participant.me)
+				userChangeSignal.dispatch(user);
+				
+				if (user.me)
 					_me.presenter = true;
+			}
+		}
+		
+		private function clearPresenter():void
+		{
+			for each(var user:User in _users)
+			{
+				user.presenter = false;
 			}
 		}
 		
@@ -240,7 +263,7 @@ package org.bigbluebutton.model
 			if (p) {
 				p.participant.raiseHand = value;
 				
-				userChangeSignal.dispatch(p.participant.userID);
+				userChangeSignal.dispatch(p.participant);
 				
 				if (p.participant.me)
 					_me.raiseHand = value;
@@ -263,8 +286,7 @@ package org.bigbluebutton.model
 					return {index:i, participant:aUser};
 				}
 			}				
-			
-			// Participant not found.
+
 			return null;
 		}
 	}

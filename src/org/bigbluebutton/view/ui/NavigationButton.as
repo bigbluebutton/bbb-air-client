@@ -38,10 +38,7 @@ package org.bigbluebutton.view.ui
 		
 		protected function navigate():void
 		{
-			if(_navigateTo != "" || _action != "")
-			{
-				_navigationSignal.dispatch();
-			}
+			_navigationSignal.dispatch();
 		}
 		
 		public function dispose():void
@@ -63,16 +60,16 @@ package org.bigbluebutton.view.ui
 			_navigateTo = value;
 		}
 		
-		protected var _action:String = "";
+		protected var _pageDetails:String = "";
 		
-		public function get action():String
+		public function get pageDetails():String
 		{
-			return _action;
+			return _pageDetails;
 		}
 		
-		public function set action(value:String):void
+		public function set pageDetails(value:String):void
 		{
-			_action = value;
+			_pageDetails = value;
 		}
 	}
 }

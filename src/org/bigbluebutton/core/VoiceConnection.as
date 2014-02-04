@@ -107,40 +107,46 @@ package org.bigbluebutton.core
 
 		public function call(webvoiceconf:String):void
 		{
+			var restoreFunctionName:String = "voiceconf.call";
+			
 			_baseConnection.connection.call(
-				"voiceconf.call",
-				new Responder(
-					// result - On successful result
-					function(result:Object):void {
-						trace("call success: " + ObjectUtil.toString(result));
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("call error: " + ObjectUtil.toString(status));
-						unsuccessConnected.dispatch("Failed on call()");
-					}
-				), //new Responder
+				restoreFunctionName,
+				new Responder(callOnSucess, callUnsucess),
 				"default",
 				_username,
 				webvoiceconf
-			); //_netConnection.call
+			);
+		}
+		
+		private function callOnSucess(result:Object):void
+		{
+			trace("call success: " + ObjectUtil.toString(result));
+		}
+		
+		private function callUnsucess(status:Object):void
+		{
+			trace("call error: " + ObjectUtil.toString(status));
+			unsuccessConnected.dispatch("Failed on call()");
 		}
 		
 		public function hangUp():void {
+			var restoreFunctionName:String = "voiceconf.hangup";
+			
 			_baseConnection.connection.call(
-				"voiceconf.hangup",
-				new Responder(
-					// result - On successful result
-					function(result:Object):void {
-						trace("call success: " + ObjectUtil.toString(result));
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("call error: " + ObjectUtil.toString(status));
-					}
-				), //new Responder
+				restoreFunctionName,
+				new Responder(hangUpOnSucess, hangUpUnsucess),
 				"default"
-			); //_netConnection.call
-		}		
+			);
+		}
+		
+		private function hangUpOnSucess(result:Object):void
+		{
+			trace("call success: " + ObjectUtil.toString(result));
+		}
+		
+		private function hangUpUnsucess(status:Object):void
+		{
+			trace("call error: " + ObjectUtil.toString(status));
+		}
 	}
 }

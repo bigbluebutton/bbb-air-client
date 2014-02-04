@@ -17,11 +17,9 @@ package org.bigbluebutton.core
 
 	public class BaseServiceSO
 	{
-/*		
-		protected var _successConnected:ISignal = new Signal();
-		protected var _unsuccessConnected:ISignal = new Signal();
-		protected var _disconnected:ISignal = new Signal();
-*/
+		private var _successConnected:ISignal = new Signal();
+		private var _unsuccessConnected:ISignal = new Signal();
+		private var _disconnected:ISignal = new Signal();
 		
 		private var _sharedObjectName:String;
 		private var _sharedObject:SharedObject;
@@ -53,26 +51,27 @@ package org.bigbluebutton.core
 			switch(e.info.code)
 			{
 				case "NetConnection.Connect.Success":
+					onConnectionSucceeded();
 					break;
 				
 				case "NetConnection.Connect.Failed":
-					sendConnectionFailedEvent(e.info.description);
+					onConnectionFailed(e.info.description);
 					break;
 				
 				case "NetConnection.Connect.InvalidApp":	
-					sendConnectionFailedEvent(e.info.description);
+					onConnectionFailed(e.info.description);
 					break;
 				
 				case "NetConnection.Connect.AppShutDown":
-					sendConnectionFailedEvent(e.info.description);
+					onConnectionFailed(e.info.description);
 					break;
 				
 				case "NetConnection.Connect.Rejected":
-					sendConnectionFailedEvent(e.info.description);
+					onConnectionFailed(e.info.description);
 					break;
 				
 				case "NetConnection.Connect.Closed":
-					sendDisconnectionEvent();
+					onConnectionClosed();
 					break;
 				
 				default:
@@ -80,24 +79,24 @@ package org.bigbluebutton.core
 			}
 		}
 		
-		protected function sendDisconnectionEvent():void
+		protected function onConnectionClosed():void
 		{
-//			disconnected.dispatch(_disconnectRequested);
+			disconnected.dispatch(_disconnectRequested);
 		}
 		
 		protected function onAsyncErrorEvent(e:AsyncErrorEvent):void {
 			trace(ObjectUtil.toString(e));
-			sendConnectionFailedEvent(e.text);
+			onConnectionFailed(e.text);
 		}
 		
-		protected function sendConnectionSuccessEvent():void {
-//			successConnected.dispatch();
+		protected function onConnectionSucceeded():void {
+			successConnected.dispatch();
 		}
 		
-		protected function sendConnectionFailedEvent(reason:String):void {
-//			unsuccessConnected.dispatch(reason);
+		protected function onConnectionFailed(reason:String):void {
+			unsuccessConnected.dispatch(reason);
 		}
-/*
+		
 		public function get successConnected():ISignal
 		{
 			return _successConnected;
@@ -127,7 +126,5 @@ package org.bigbluebutton.core
 		{
 			_disconnected = value;
 		}
-*/
-
 	}
 }

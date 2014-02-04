@@ -4,7 +4,11 @@
 			   xmlns:top="org.bigbluebutton.top.view.*"
 			   xmlns:ui="org.bigbluebutton.view.navigation.ui.*"
 			   applicationDPI="160"
-			   preinitialize="preinitializeHandler(event)" xmlns:navigation="org.bigbluebutton.view.navigation.*" xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
+			   xmlns:navigation="org.bigbluebutton.view.navigation.*" 
+			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
+			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
+			   preinitialize="preinitializeHandler(event)" 
+			   creationComplete="creationCompleteHandler(event)"
 			   >
 	<fx:Style source="Default.css"/>
 	
@@ -14,19 +18,26 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.adobe.utils.LocaleUtil;
+			
 			import mx.events.FlexEvent;
+			import mx.resources.ResourceManager;
 			
 			import org.bigbluebutton.AppConfig;
 			import org.bigbluebutton.util.BigBlueButtonLoggerFactory;
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
+			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
 			import org.bigbluebutton.view.navigation.pages.login.LoginPageConfig;
 			import org.bigbluebutton.view.navigation.pages.participants.ParticipantsConfig;
 			import org.bigbluebutton.view.navigation.pages.presentation.PresentationConfig;
 			import org.bigbluebutton.view.navigation.pages.profile.ProfileConfig;
+			import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantConfig;
+			import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisConfig;
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
 			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
+			import org.bigbluebutton.view.ui.MicStatusConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
 			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
@@ -45,8 +56,33 @@
 			{
 				setupContext();
 				setupLogger();
+				
+				resizeForSoftKeyboard = true;
+				
+				//NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
+				
+				ResourceManager.getInstance().localeChain = LocaleUtil.sortLanguagesByPreference(['en_US', 'pt_BR'], Capabilities.languages, "en_US");
 			}
-			
+			/*
+			public function onInvokeEvent(invocation:InvokeEvent):void 
+			{
+				var traceString:String = "";
+				
+				var arguments:Array = invocation.arguments;
+				var currentDir:File = invocation.currentDirectory;
+				var reason:String = invocation.reason;
+				traceString += "-----InvokeEvent.INVOKE----\n";
+				traceString += "arguments: "+arguments.toString()+"\n\n";
+				traceString += "currentDir: "+currentDir+"\n\n";
+				traceString += "reason: "+reason+"\n\n";
+				
+				var url:String = arguments.toString().replace('bigbluebutton://', 'http://');
+				
+				traceString += "url: "+url+"\n\n";
+				
+				traceText.text += traceString;
+			}
+			*/
 			/**
 			 * Sets up the Robotlegs context.
 			 */
@@ -61,11 +97,15 @@
 										.configure(PresentationConfig)
 										.configure(LoginPageConfig)
 										.configure(ChatConfig)
+										.configure(ChatRoomsConfig)
 										.configure(VideoChatConfig)
 										.configure(ProfileConfig)
-										.configure(ParticipantsConfig)		
+										.configure(UserDetaisConfig)
+										.configure(ParticipantsConfig)
+										.configure(SelectParticipantConfig)	
 									
 									.configure(MicButtonConfig)
+									.configure(MicStatusConfig)
 									.configure(LoginButtonConfig)
 									.configure(NavigationButtonConfig)
 					
@@ -94,8 +134,20 @@
 				var logger:Logger = Log.getLogger("org.bigbluebutton");
 				logger.info("Logger on");
 			}
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				
+			}
+			
 		]]>
 	</fx:Script>
-	<navigation:PagesNavigatorView width="100%" height="100%"/>
+
+	<fx:Metadata>
+		[ResourceBundle("resources")]
+	</fx:Metadata> 
+
+	<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
 	<loading:LoadingScreen width="100%" height="100%" />
+	<!--<s:TextArea id="traceText" x="10" y="10" height="488"/>-->
 </s:Application>

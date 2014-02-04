@@ -1,5 +1,6 @@
 package org.bigbluebutton.core
 {
+	import flash.media.Camera;
 	import flash.net.NetConnection;
 	
 	import org.osflash.signals.ISignal;
@@ -12,5 +13,7 @@ package org.bigbluebutton.core
 		function get uri():String
 		function get connection():NetConnection
 		function connect():void 
+		function startPublishing(camera:Camera, streamName:String):void
+		function stopPublishing():void
 	}
 }

@@ -11,6 +11,8 @@ package org.bigbluebutton.core
 		//function get successfullyJoinedMeetingSignal():ISignal;
 		//function get unsuccessfullyJoinedMeetingSignal():ISignal;
 		function connect(connection:NetConnection, uri:String, params:IConferenceParameters):void;
+		function addStream(userId:String, streamName:String):void;
+		function removeStream(userId:String, streamName:String):void;
 		function disconnect():void;
 	}
 }

@@ -98,7 +98,16 @@ package org.bigbluebutton.core
 			_tried_tunneling = tunnel;
 			
 			var uri:String = _applicationURI + "/" + _conferenceParameters.room;
-				
+			var connectParams:Array = [
+				_conferenceParameters.username, 
+				_conferenceParameters.role,
+				_conferenceParameters.room, 
+				_conferenceParameters.voicebridge, 
+				_conferenceParameters.record, 
+				_conferenceParameters.externUserID,
+				_conferenceParameters.internalUserID
+			];
+			/*
 			_baseConnection.connect(uri, 
 					_conferenceParameters.username, 
 					_conferenceParameters.role,
@@ -107,6 +116,8 @@ package org.bigbluebutton.core
 					_conferenceParameters.record, 
 					_conferenceParameters.externUserID,
 					_conferenceParameters.internalUserID);
+			*/
+			_baseConnection.connect.apply(null, new Array(uri).concat(connectParams));
 		}
 		
 		public function disconnect(onUserCommand:Boolean):void {
@@ -118,5 +129,8 @@ package org.bigbluebutton.core
 			return _userId;
 		}
 
+		public function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void {
+			_baseConnection.sendMessage(service, onSuccess, onFailure, message);
+		}
 	}
 }

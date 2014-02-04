@@ -9,13 +9,17 @@ package org.bigbluebutton.view.navigation.pages.participants
 	import org.bigbluebutton.core.IUsersServiceSO;
 	import org.bigbluebutton.core.UsersServiceSO;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
+	
+	import spark.events.IndexChangeEvent;
 	
 	public class ParticipantsViewMediator extends Mediator
 	{
@@ -24,6 +28,9 @@ package org.bigbluebutton.view.navigation.pages.participants
 		
 		[Inject]
 		public var userSession: IUserSession
+		
+		[Inject]
+		public var userUISession: IUserUISession
 		
 		[Inject]
 		public var usersServiceSO: IUsersServiceSO;
@@ -36,28 +43,29 @@ package org.bigbluebutton.view.navigation.pages.participants
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 
+			dataProvider = new ArrayCollection();
+			view.list.dataProvider = dataProvider;
+			
+			view.list.addEventListener(IndexChangeEvent.CHANGE, onSelectParticipant);
+			
 			dicUserIdtoUser = new Dictionary();
-			
-			dataProvider = view.list.dataProvider as ArrayCollection;
-			
-			usersSignal = new Signal();
-			usersSignal.add(usersDataChanged);
 			
 			var users:ArrayCollection = userSession.userlist.users;
 			for each (var user:User in users) 
 			{				
-				userAdded(user)
+				addUser(user)
 			}
-	
-			userSession.userlist.userAddedSignal.add(userAdded);
+			
+			userSession.userlist.userChangeSignal.add(userChanged);
+			userSession.userlist.userAddedSignal.add(addUser);
 			userSession.userlist.userRemovedSignal.add(userRemoved);
 		}
 		
-		private function userAdded(user:User):void
+		private function addUser(user:User):void
 		{
 			dataProvider.addItem(user);		
-			dicUserIdtoUser[user.userID] = user;
-			user.signal = usersSignal;
+			dataProvider.refresh();
+			dicUserIdtoUser[user.userID] = user;			
 		}
 		
 		private function userRemoved(userID:String):void
@@ -65,19 +73,20 @@ package org.bigbluebutton.view.navigation.pages.participants
 			var user:User = dicUserIdtoUser[userID] as User;
 			var index:uint = dataProvider.getItemIndex(user);
 			dataProvider.removeItemAt(index);
+			dicUserIdtoUser[user.userID] = null;
 		}
 		
-		private function presenterChanged():void
+		private function userChanged(user:User, property:String = null):void
 		{
-			// TODO Auto Generated method stub
+			dataProvider.refresh();
+		}
+		
+		protected function onSelectParticipant(event:IndexChangeEvent):void
+		{
+			var user:User = dataProvider.getItemAt(event.newIndex) as User;
+			userUISession.pushPage(PagesENUM.USER_DETAIS, user);
+		}
 			
-		}
-				
-		private function usersDataChanged(user:User):void
-		{
-			trace("usersDataChanged - user:"+user)
-		}
-		
 		override public function destroy():void
 		{
 			super.destroy();
@@ -85,13 +94,9 @@ package org.bigbluebutton.view.navigation.pages.participants
 			view.dispose();
 			view = null;
 			
-			userSession.userlist.userAddedSignal.remove(userAdded);
+			userSession.userlist.userChangeSignal.remove(userChanged);
+			userSession.userlist.userAddedSignal.remove(addUser);
 			userSession.userlist.userRemovedSignal.remove(userRemoved);
-		}
-		
-		protected function updateList(participants:Object):void
-		{
-			trace("test");
 		}
 	}
 }

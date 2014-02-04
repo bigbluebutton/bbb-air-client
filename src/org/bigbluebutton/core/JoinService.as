@@ -15,6 +15,7 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.Config;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import org.bigbluebutton.core.util.URLFetcher;
 
 	public class JoinService
 	{
@@ -30,24 +31,28 @@ package org.bigbluebutton.core
 		}
 		
 		public function join(joinUrl:String):void {
+			if (joinUrl.length == 0) {
+				onUnsuccess("emptyJoinUrl");
+				return;
+			}
+			
 			var fetcher:URLFetcher = new URLFetcher();
 			fetcher.successSignal.add(onSuccess);
 			fetcher.unsuccessSignal.add(onUnsuccess);
 			fetcher.fetch(joinUrl);
 		}
 		
-		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
+		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
 			try {
 				var xml:XML = new XML(data);
-				if (xml.returncode == 'FAILED') {
-					unsuccessSignal.dispatch(xml.messageKey + ": " + xml.message);
+				if (xml.returncode == "FAILED") {
+					onUnsuccess(xml.messageKey);
 					return;
 				}
 			} catch (e:Error) {
-				trace("The response is probably not an XML, continuing");
-				trace(ObjectUtil.toString(e));
+				trace("The response is probably not a XML, continuing");
 			}
-			successSignal.dispatch(urlRequest);
+			successSignal.dispatch(urlRequest, responseUrl);
 		}
 		
 		protected function onUnsuccess(reason:String):void {

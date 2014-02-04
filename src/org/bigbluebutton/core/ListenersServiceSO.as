@@ -37,47 +37,52 @@ package org.bigbluebutton.core
 		
 		private function getCurrentUsers():void {
 			var nc:NetConnection = userSession.mainConnection.connection;
-			nc.call(
-				"voice.getMeetMeUsers",// Remote function name
-				new Responder(
-					// participants - On successful result
-					function(result:Object):void { 
-						trace("Successfully queried listeners: " + result.count); 
-						if (result.count > 0) {
-							for(var p:Object in result.participants) {
-								participantJoined(result.participants[p]);
-							}
-						}	
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("Error occurred");
-						trace(ObjectUtil.toString(status));
-						sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
-					}
-				)//new Responder
-			); //_netConnection.call
+			var restoreFunctionName:String = "voice.getMeetMeUsers";
+			
+			nc.call(restoreFunctionName,
+					new Responder(getCurrentUsersOnSucess, getCurrentUsersOnUnsucess)
+			);
+		}
+		
+		private function getCurrentUsersOnSucess(result:Object):void
+		{
+			trace("Successfully queried listeners: " + result.count); 
+			if (result.count > 0) {
+				for(var p:Object in result.participants) {
+					participantJoined(result.participants[p]);
+				}
+			}	
+		}
+		
+		private function getCurrentUsersOnUnsucess(status:Object):void
+		{
+			trace("Error occurred");
+			trace(ObjectUtil.toString(status));
+			onConnectionFailed(ConnectionFailedEvent.UNKNOWN_REASON);
 		}
 		
 		private function getRoomMuteState():void {
 			var nc:NetConnection = userSession.mainConnection.connection;
-			nc.call(
-				"voice.isRoomMuted",// Remote function name
-				new Responder(
-					// participants - On successful result
-					function(result:Object):void {
-						_muteStateSignal.dispatch(result as Boolean);
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("Error occurred");
-						trace(ObjectUtil.toString(status));
-						sendConnectionFailedEvent(ConnectionFailedEvent.UNKNOWN_REASON);
-					}
-				)//new Responder
-			); //_netConnection.call
+			var restoreFunctionName:String = "voice.isRoomMuted";
+			
+			nc.call(restoreFunctionName,
+					new Responder(getRoomMuteStateOnSucess, getRoomMuteStateOnUnsucess)
+			);
 		}
 
+		private function getRoomMuteStateOnSucess(result:Object):void
+		{
+			_muteStateSignal.dispatch(result as Boolean);
+		}
+		
+		private function getRoomMuteStateOnUnsucess(status:Object):void
+		{
+			trace("Error occurred");
+			trace(ObjectUtil.toString(status));
+			onConnectionFailed(ConnectionFailedEvent.UNKNOWN_REASON);
+		}
+		
+		
 		private function participantJoined(joinedUser:Object):void {
 			var userId:Number = joinedUser.participant;
 			var cidName:String = joinedUser.name;
@@ -101,24 +106,32 @@ package org.bigbluebutton.core
 
 		public function muteUnmuteUser(userId:Number, mute:Boolean):void {
 			var nc:NetConnection = userSession.mainConnection.connection;
-			nc.call(
-				"voice.muteUnmuteUser",// Remote function name
-				new Responder(
-					// participants - On successful result
-					function(result:Object):void {
-						trace("Successfully mute/unmute " + userId);
-					},	
-					// status - On error occurred
-					function(status:Object):void { 
-						trace("Error occurred");
-						trace(ObjectUtil.toString(status));
-					}
-				),//new Responder
-				userId,
-				mute
-			); //_netConnection.call
+			var restoreFunctionName:String = "voice.muteUnmuteUser";
+			
+			nc.call(restoreFunctionName,
+					new Responder(muteUnmuteUserOnSucess, muteUnmuteUserOnUnsucess),
+					userId,
+					mute
+			);
 		}
 		
+		private function muteUnmuteUserOnSucess(result:Object):void
+		{
+			trace("Successfully mute/unmute");// + userId);
+		}
+		
+		private function muteUnmuteUserOnUnsucess(status:Object):void
+		{
+			trace("Error occurred");
+			trace(ObjectUtil.toString(status));
+		}
+		
+		//TODO: server calling this when muting or unmuting multiple users 
+		public function muteStateCallback(param0:Object = null, param1:Object = null, param2:Object = null, param3:Object = null, param4:Object = null):void
+		{
+			trace("muteStateCallback")
+		}
+			
 		/**
 		 * Callback from the server from many of the bellow nc.call methods
 		 */
@@ -157,15 +170,24 @@ package org.bigbluebutton.core
 		}
 
 		public function userTalk(userID:Number, talk:Boolean):void {
-			trace("userTalk() [" + userID + "," + talk + "]");
+//			trace("userTalk() [" + userID + "," + talk + "]");
 			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
 			user.talking = talk;
 		}
 		
 		public function userLeft(userID:Number):void {
-			trace("userTalk() [" + userID + "]");
+			trace("userLeft() [" + userID + "]");
 			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
-			user.voiceJoined = false;
+			if(user)
+			{
+				user.voiceJoined = false;
+			}
+			else
+			{
+				trace("--------------------------------------------------------------------------------");
+				trace("WARNING - ListenersServiceSO.userLeft(userID: "+userID+") - userID not found");
+				trace("--------------------------------------------------------------------------------");
+			}
 		}
 		
 		public function ping(message:String):void {

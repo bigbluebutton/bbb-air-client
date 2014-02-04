@@ -2,6 +2,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 {
 	import flash.events.AsyncErrorEvent;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
@@ -10,36 +11,56 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import flash.net.NetStream;
 	import flash.utils.Timer;
 	
+	import mx.events.FlexEvent;
+	import mx.graphics.SolidColor;
+	import mx.graphics.SolidColorStroke;
 	import mx.utils.ObjectUtil;
 	
 	import spark.components.Group;
+	import spark.primitives.Rect;
 
 	public class WebcamView extends Group
 	{
 		private var ns:NetStream;
 		private var _video:Video;
 		private var streamName:String;
-		private var aspectRatio:Number;
-		public var userID:String;
-		public var userName:String;
-		static public var PADDING_HORIZONTAL:Number = 5;
-		static public var PADDING_VERTICAL:Number = 5;
-		
-		/*
-		private var timer:Timer = new Timer(2000);
-		
-		private function onHeartbeat(e:Event=null):void {
-			trace(ObjectUtil.toString(ns.info));
+		private var _aspectRatio:Number = 0;
+
+		public function get aspectRatio():Number
+		{
+			return _aspectRatio;
 		}
-		*/
+
+		private var _userID:String;
+
+		public function get userID():String
+		{
+			return _userID;
+		}
+
+		private var userName:String;
+
+		public function WebcamView() 
+		{
+			_video = new Video();
+			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		}
 		
-		public function WebcamView() {
-			//timer.addEventListener(TimerEvent.TIMER, onHeartbeat);
-			//timer.start();
+		protected function onAddedToStage(event:Event):void
+		{
+			this.stage.addChild(_video);
+			var point:Point = this.localToGlobal(new Point(0,0));
+			_video.x = point.x;
+			_video.y = point.y	
+			setSizeRespectingAspectRationBasedOnWidth(stage.stageWidth);
 		}
 		
 		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
 		{
+			this.userName = name;
+			this._userID = userID;
+			this.streamName = streamName;
+			
 			ns = new NetStream(connection);
 			ns.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus);
 			ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
@@ -48,44 +69,43 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			ns.receiveVideo(true);
 			ns.receiveAudio(false);
 			
-			width = width/2;
-			height = height/2;
-			
-			_video = new Video(width, height);
-			_video.width = width;
-			_video.height = height;
 			_video.smoothing = true;
-			setAspectRatio(width, height); 
 			_video.attachNetStream(ns);
+			setAspectRatio(width, height);
 			
 			ns.play(streamName);
-			this.streamName = streamName;
-			
-			this.width = _video.width;//+ paddingHorizontal;
-			this.height = _video.height;// + paddingVertical;
-			
-			var point:Point = this.localToGlobal(new Point(0,0));
-			this.stage.addChild(_video);
-			_video.x = point.x;
-			_video.y = point.y;
-			
-			//_video.z = 1;
-			this.userName = name;
-			this.userID = userID;
-			//trace("Video position [" + _video.getRect(this) + "]");
-			//trace("Video position: " + ObjectUtil.toString(_video));
+		}
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		{
+			//setSizeRespectingAspectRationBasedOnWidth(unscaledWidth);
+			//_video.width = unscaledWidth;
+			//_video.height = unscaledHeight;
 		}
 		
 		protected function setAspectRatio(width:int,height:int):void {
-			aspectRatio = (width/height);
-			this.minHeight = Math.floor((this.minWidth - PADDING_HORIZONTAL) / aspectRatio) + PADDING_VERTICAL;
+			_aspectRatio = (width/height);
 		}
 		
-		public function setPosition(width:Number, height:Number, x:Number, y:Number):void {
-			_video.width = width;
-			_video.height = height;
-			_video.x = x;
-			_video.y = y;
+		public function setSizeRespectingAspectRationBasedOnWidth(width0:Number):void {
+			if(aspectRatio!=0)
+			{
+				_video.width = width0;
+				_video.height = width0 / aspectRatio;
+			}
+		}
+		
+		public function setSizeRespectingAspectRationBasedOnHeight(height0:Number):void {
+			if(aspectRatio!=0)
+			{
+				_video.width = height0;
+				_video.height = height0 * aspectRatio;
+			}
+		}
+		
+		public function setSize(width0:Number, height0:Number):void {
+			_video.width = width0;
+			_video.height = height0;
 		}
 		
 		private function onNetStatus(e:NetStatusEvent):void{
@@ -97,7 +117,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					this.close();
 					break;
 				case "NetStream.Play.Start":
-					trace("Netstatus: " + e.info.code);					
+					trace("Netstatus: " + e.info.code);
 					break;
 				case "NetStream.Play.FileStructureInvalid":
 					trace("The MP4's file structure is invalid.");
@@ -113,10 +133,15 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		}
 		
 		public function close():void{
-			stage.removeChild(_video);
-			ns.close();
-			//onCloseEvent();
-			//super.close(event);
+			if(_video && _video.stage)
+			{
+				_video.stage.removeChild(_video);
+			}
+			
+			if(ns)
+			{
+				ns.close();
+			}
 		}	
 	}
 }

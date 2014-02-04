@@ -50,7 +50,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function signals(): void
 		{
-			signalCommandMap.map(JoinMeetingSignal).toCommand(JoinMeetingCommand);
+			
 		}	
 	}
 }

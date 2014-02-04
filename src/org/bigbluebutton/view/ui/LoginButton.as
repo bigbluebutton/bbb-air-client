@@ -34,9 +34,12 @@ package org.bigbluebutton.view.ui
 		{
 			trace("Login button clicked, dispatching signal");
 
-			// TEMPORARY CODE!!!
-			var url:String = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
-			loginSignal.dispatch(url);
+ 			//TODO: Enviar 
+			//var base:String = "http://mconf.mobi/launch?join_url=";
+			var startURL:String = "bigbluebutton://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
+			var endURL:String = "http://test-install.blindsidenetworks.com/bigbluebutton/api/join?meetingID=Demo%20Meeting&fullName=Air%20client&password=ap&checksum=e9c5f7a397509e908ada2787aa0a284842ef4faf";
+			
+			loginSignal.dispatch(endURL);
 		}		
 		
 		override public function dispose():void

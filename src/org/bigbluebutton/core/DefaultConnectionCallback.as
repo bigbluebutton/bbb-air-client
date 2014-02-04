@@ -10,6 +10,7 @@ package org.bigbluebutton.core
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.ConnectionFailedEvent;
+	import org.bigbluebutton.model.IMessageListener;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
@@ -18,6 +19,8 @@ package org.bigbluebutton.core
 	{
 		public static const NAME:String = "DefaultConnectionCallback";
 		
+		private var _messageListeners:Array = new Array();
+
 		public function onBWCheck(... rest):Number {
 			return 0; 
 		} 
@@ -32,29 +35,31 @@ package org.bigbluebutton.core
 		}
 		
 		public function onMessageFromServer(messageName:String, result:Object):void {
-			trace("Got message from server [" + messageName + "]\n" + ObjectUtil.toString(result));    
+			trace("Got message from server [" + messageName + "]");    
+			notifyListeners(messageName, result);
+		}		
+
+		public function addMessageListener(listener:IMessageListener):void {
+			_messageListeners.push(listener);
 		}
-/*
-		public function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void {
-			trace("SENDING [" + service + "]");
-			var responder:Responder =	new Responder(                    
-				function(result:Object):void { // On successful result
-					onSuccess("Successfully sent [" + service + "]."); 
-				},	                   
-				function(status:Object):void { // status - On error occurred
-					var errorReason:String = "Failed to send [" + service + "]:\n"; 
-					for (var x:Object in status) { 
-						errorReason += "\t" + x + " : " + status[x]; 
-					} 
+		
+		public function removeMessageListener(listener:IMessageListener):void {
+			for (var ob:int=0; ob<_messageListeners.length; ob++) {
+				if (_messageListeners[ob] == listener) {
+					_messageListeners.splice (ob,1);
+					break;
 				}
-			);
-			
-			if (message == null) {
-				_netConnection.call(service, responder);
-			} else {
-				_netConnection.call(service, responder, message);
 			}
 		}
-*/
+		
+		private function notifyListeners(messageName:String, message:Object):void {
+			if (messageName != null && messageName != "") {
+				for (var notify:String in _messageListeners) {
+					_messageListeners[notify].onMessage(messageName, message);
+				}                
+			} else {
+				trace("Message name is undefined");
+			}
+		}   
 	}
 }

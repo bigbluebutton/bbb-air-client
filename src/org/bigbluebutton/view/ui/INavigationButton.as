@@ -12,8 +12,8 @@ package org.bigbluebutton.view.ui
 		function get navigateTo():String
 		function set navigateTo(value:String):void
 			
-		function get action():String
-		function set action(value:String):void
+		function get pageDetails():String
+		function set pageDetails(value:String):void
 			
 		function get currentState():String
 		function set currentState(value:String):void

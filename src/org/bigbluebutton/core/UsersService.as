@@ -53,6 +53,14 @@ package org.bigbluebutton.core
 			}
 		}
 		
+		public function addStream(userId:String, streamName:String):void {
+			usersServiceSO.addStream(userId, streamName);
+		}
+		
+		public function removeStream(userId:String, streamName:String):void {
+			usersServiceSO.removeStream(userId, streamName);
+		}
+		
 		public function disconnect():void {
 			usersServiceSO.disconnect();
 			listenersServiceSO.disconnect();

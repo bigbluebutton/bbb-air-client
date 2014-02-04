@@ -2,14 +2,34 @@ package org.bigbluebutton.view.navigation.pages.chat
 {
 	import flash.events.MouseEvent;
 	
+	import spark.components.Button;
+	import spark.components.Label;
+	import spark.components.List;
+	import spark.components.TextInput;
+	
 	public class ChatView extends ChatViewBase implements IChatView
 	{
 		
-		//private var _buttonTestSignal: Signal = new Signal();
-		//public function get buttonTestSignal(): ISignal
-		//{
-		//	return _buttonTestSignal;
-		//}
+		
+		public function get list():List
+		{
+			return chatlist;
+		}
+		
+		public function get inputMessage():TextInput
+		{
+			return inputMessage0;
+		}
+		
+		public function get sendButton():Button
+		{
+			return sendButton0;
+		}
+		
+		public function get pageTitle():Label
+		{
+			return pageTitle0;
+		}
 		
 		override protected function childrenCreated():void
 		{

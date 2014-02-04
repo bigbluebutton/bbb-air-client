@@ -5,23 +5,6 @@
 				xmlns:ui="org.bigbluebutton.view.ui.*"
 				xmlns:view="org.bigbluebutton.core.view.*" xmlns:assets="assets.*" xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" xmlns:participants="org.bigbluebutton.view.navigation.pages.participants.*"
 				>
-	<fx:Script>
-		<![CDATA[
-			import org.bigbluebutton.view.navigation.pages.ActionsENUM;
-			import org.bigbluebutton.view.navigation.pages.PagesENUM;
-			
-			import spark.components.List;
-			
-			public function get list():List
-			{
-				return participantslist;
-			}
-		]]>
-	</fx:Script>
-	<view:states>
-		<s:State name="participants" />
-		<s:State name="participantsuser" />
-	</view:states>
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
 		<s:layout>
 			<s:VerticalLayout gap="0"
@@ -41,21 +24,14 @@
 									paddingTop="10"
 									/>
 			</s:layout>
-			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="profile"/>                
+			<ui:ProfileButton id="profileBtn" width="30" height="30" />                
 			<s:Group width="100%" height="30">
 				<s:Label horizontalCenter="0" verticalCenter="0"
-						 text.participants="User - Fred Dixon" text.participantsuser="Participants (15)"/>
+						 text="{resourceManager.getString('resources', 'participants.title')}"/>
 			</s:Group>	
 			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
 		</s:Group>
-		<participants:ParticipantsList id="participantslist" width="100%" height="100%">
-			<!-- fake view
-			<assets:ParticipantsScreenSp width="100%" height="100%" visible="true" visible.participantsuser="false" 
-								  click="{ParticipantsViewBase(document).currentState = 'participantsuser'}"/>
-			<assets:ParticipantsUserScreenSp width="100%" height="100%" visible="false" visible.participantsuser="true"
-									   click="{ParticipantsViewBase(document).currentState = 'participants'}"/>
-			-->
-		</participants:ParticipantsList>
+		<participants:ParticipantsList id="participantslist" width="100%" height="100%" />
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
 </view:NoTabView>

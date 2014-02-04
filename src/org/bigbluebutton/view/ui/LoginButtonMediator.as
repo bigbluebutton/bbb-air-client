@@ -1,7 +1,7 @@
 package org.bigbluebutton.view.ui
 {
 	import org.bigbluebutton.command.JoinMeetingSignal;
-	import org.bigbluebutton.command.MicrophoneEnableSignal;
+	import org.bigbluebutton.command.MicrophoneOnSignal;
 	import org.bigbluebutton.core.ILoginService;
 	import org.bigbluebutton.core.LoginService;
 	import org.bigbluebutton.model.IConferenceParameters;

@@ -4,7 +4,9 @@
 					 xmlns:ui="org.bigbluebutton.view.ui.*"
 					 xmlns:assets="assets.*"
 					 width="30" height="30" 
-					 navigateTo="{PagesENUM.LOGIN}">
+					 buttonMode="true"
+					 mouseEnabled="true"
+					 navigateTo="{PagesENUM.PROFILE}">
 	<ui:states>
 		<s:State name="unselected"/>
 		<s:State name="selected"/>

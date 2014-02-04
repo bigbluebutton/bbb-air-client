@@ -13,6 +13,7 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.core.util.URLParser;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import org.bigbluebutton.core.util.URLFetcher;
 	
 	public class ConfigService
 	{
@@ -27,8 +28,8 @@ package org.bigbluebutton.core
 			return _unsuccessSignal;
 		}
 		
-		public function getConfig(joinUrl:String, urlRequest:URLRequest):void {
-			var configUrl:String = joinToConfigUrl(joinUrl);
+		public function getConfig(serverUrl:String, urlRequest:URLRequest):void {
+			var configUrl:String = serverUrl + "/bigbluebutton/api/configXML?a=" + new Date().time;
 			
 			var fetcher:URLFetcher = new URLFetcher;
 			fetcher.successSignal.add(onSuccess);
@@ -36,17 +37,12 @@ package org.bigbluebutton.core
 			fetcher.fetch(configUrl, urlRequest);
 		}
 		
-		protected function onSuccess(data:Object, urlRequest:URLRequest):void {
+		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
 			successSignal.dispatch(new XML(data));
 		}
 		
 		protected function onUnsuccess(reason:String):void {
 			unsuccessSignal.dispatch(reason);
-		}
-		
-		protected static function joinToConfigUrl(joinUrl:String):String {
-			var parser:URLParser = new URLParser(joinUrl);
-			return parser.protocol + "://" + parser.host + ":" + parser.port + "/bigbluebutton/api/configXML?a=" + new Date().time;
 		}
 	}
 }

@@ -60,6 +60,7 @@ package org.bigbluebutton.command
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessJoined()");
 			
 			userUISession.loading = false;
+			userUISession.unsuccessJoined.dispatch(reason);
 		}
 		
 	}

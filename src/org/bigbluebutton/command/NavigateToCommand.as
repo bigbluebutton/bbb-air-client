@@ -1,42 +1,36 @@
 package org.bigbluebutton.command
 {
 	import org.bigbluebutton.model.IUserUISession;
-	import org.bigbluebutton.view.navigation.pages.ActionsENUM;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class NavigateToCommand extends Command
 	{		
 		[Inject]
-		public var userSession: IUserUISession;
+		public var userUISession: IUserUISession;
 		
 		[Inject]
 		public var to: String;
 		
 		[Inject]
-		public var actionName: Object;
+		public var details: Object;
 		
 		override public function execute():void
 		{
-			// update model
-			if(to != null && to != "")
+			if(to == null || to == "") throw new Error("NavigateTo should not be empty");
+			
+			if(to == PagesENUM.LAST)
 			{
-				userSession.pushPage(to);
+				userUISession.popPage();
+			}
+			else
+			{
+				userUISession.pushPage(to, details);
 			}
 			
-			if(actionName != null && actionName != "")
-			{
-				switch(actionName)
-				{
-					case ActionsENUM.CLOSE:
-					{
-						userSession.popPage();
-						break;
-					}
-				}				
-			}
 			
-			trace("MicrophoneEnableCommand.execute() - userSession.currentPage = "+userSession.currentPage);
+			trace("NavigateToCommand.execute() - userUISession.currentPage = "+userUISession.currentPage);
 		}
 	}
 }

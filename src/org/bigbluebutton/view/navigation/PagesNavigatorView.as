@@ -6,6 +6,7 @@ package org.bigbluebutton.view.navigation
 	
 	public class PagesNavigatorView extends PagesNavigatorViewBase implements IPagesNavigatorView
 	{
+		
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
