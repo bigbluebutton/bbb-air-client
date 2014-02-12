@@ -96,8 +96,11 @@ package org.bigbluebutton.view.navigation.pages.chat
 		}
 				
 		private function scrollUpdate(e:Event):void
-		{
-			list.dataGroup.verticalScrollPosition = list.dataGroup.contentHeight - list.dataGroup.height;
+		{		
+			if (list.dataGroup.contentHeight > list.dataGroup.height)
+			{
+				list.dataGroup.verticalScrollPosition = list.dataGroup.contentHeight - list.dataGroup.height;
+			}
 		}
 				
 		private function onSendButtonClick(e:MouseEvent):void
