@@ -42,7 +42,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		
 		[Inject]
 		public var userUISession: IUserUISession;
-		
+        [Bindable]
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
 		protected var list:List;
@@ -67,6 +67,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 				if(user.privateChat.messages.length > 0 && !user.me)
 				{
 					addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat});
+					user.privateChat.signal.add(RefreshList);
 				}
 			}
 				
@@ -78,9 +79,18 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 
-			//userSession.userlist.userChangeSignal.add(userChanged);
+			// userSession.userlist.userChangeSignal.add(userChanged);
 			userSession.userlist.userAddedSignal.add(addChat);
+			userSession.publicChat.signal.add(RefreshList);
 			//userSession.userlist.userRemovedSignal.add(userRemoved);
+		}
+		
+		/*
+		 Refresh ArrayCollection after new message recievied 
+		*/
+		public function RefreshList():void
+		{
+			dataProvider.refresh();		
 		}
 		
 		private function addChat(chat:Object):void
@@ -98,14 +108,15 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dataProvider.removeItemAt(index);
 			dicUsertoChat[user.userID] = null;
 		}
-		
+*/		
 		private function userChanged(user:User, property:String = null):void
 		{
 			dataProvider.refresh();
 		}
-*/		
+		
 		protected function onIndexChangeHandler(event:IndexChangeEvent):void
 		{
+			
 			var item:Object = dataProvider.getItemAt(event.newIndex);
 			if(item)
 			{

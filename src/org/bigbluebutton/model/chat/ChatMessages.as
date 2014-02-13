@@ -4,6 +4,7 @@ package org.bigbluebutton.model.chat
 	
 	import org.bigbluebutton.util.ChatUtil;
 	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 
 	public class ChatMessages
 	{ 
@@ -14,7 +15,7 @@ package org.bigbluebutton.model.chat
 		
 		private var _autoTranslate:Boolean = false;
 
-		private var _changeSignal:ISignal;
+		private var _changeSignal:ISignal = new Signal();
 		
 		public function numMessages():int {
 			return messages.length;
@@ -22,7 +23,7 @@ package org.bigbluebutton.model.chat
 		
 		public function newChatMessage(msg:ChatMessageVO):void {
 			var cm:ChatMessage = new ChatMessage();
-			
+
 			if (messages.length == 0) {
 				cm.lastSenderId = "";
 				cm.lastTime = cm.time;
@@ -54,7 +55,7 @@ package org.bigbluebutton.model.chat
 			
 			_newMessages++;
 			
-			change();
+		    change();
 		}
 		
 		public function getAllMessageAsString():String{
@@ -76,21 +77,21 @@ package org.bigbluebutton.model.chat
 			return msg.time;
 		}
 				
-		public function get signal():ISignal {
+		 public function get signal():ISignal {
 			return _changeSignal;
-		}
+		 }
 		
-		public function set signal(signal:ISignal):void {
+		 public function set signal(signal:ISignal):void {
 			_changeSignal = signal;
-		}
+		 }
 		
-		private function change(property:String = null):void
-		{
-			if(_changeSignal)
+		 private function change(property:String = null):void
+		 {
+		    if(_changeSignal)
 			{
-				_changeSignal.dispatch(this, property);
+				_changeSignal.dispatch();
 			}
-		}		
+		 }		
 
 		public function get newMessages():uint
 		{
