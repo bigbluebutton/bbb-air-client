@@ -42,7 +42,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		
 		[Inject]
 		public var userUISession: IUserUISession;
-        [Bindable]
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
 		protected var list:List;
