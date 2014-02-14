@@ -31,7 +31,7 @@
 			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
 		</s:Group>
 
-		<chat:ChatList id="chatlist" width="100%" height="100%" />
+		<chat:ChatList id="chatlist" width="100%" height="100%" contentBackgroundColor="white"/>
 		
 		<s:Group width="100%" height="50">
 			<s:layout>
