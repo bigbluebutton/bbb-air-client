@@ -65,7 +65,7 @@ package org.bigbluebutton.core
 			msg.message = message.message;
 			
 			var userId:String = (msg.fromUserID == userSession.userId? msg.toUserID: msg.fromUserID);
-			userSession.userlist.getUser(userId).privateChat.newChatMessage(msg);
+			userSession.userList.getUser(userId).privateChat.newChatMessage(msg);
 		}
 	}
 }

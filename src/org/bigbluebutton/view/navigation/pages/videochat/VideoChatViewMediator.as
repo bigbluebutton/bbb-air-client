@@ -32,9 +32,9 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			userSession.userlist.userRemovedSignal.add(userRemovedHandler);
-			userSession.userlist.userAddedSignal.add(userAddedHandler);
-			userSession.userlist.userChangeSignal.add(userChangeHandler);
+			userSession.userList.userRemovedSignal.add(userRemovedHandler);
+			userSession.userList.userAddedSignal.add(userAddedHandler);
+			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
 			userUISession.pageTransitionStartSignal.add(onPageTransitionStart);
 			
@@ -49,7 +49,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			user = userUISession.currentPageDetails as User;
 			
-			var presenter:User = userSession.userlist.getPresenter();
+			var presenter:User = userSession.userList.getPresenter();
 			var userWithCamera:User = getUserWithCamera();
 			if(user && user.hasStream)
 			{
@@ -72,7 +72,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		
 		protected function getUserWithCamera():User
 		{
-			var users:ArrayCollection = userSession.userlist.users;
+			var users:ArrayCollection = userSession.userList.users;
 			for each(var u:User in users) 
 			{
 				if (u.hasStream) {
@@ -94,9 +94,9 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		{
 			view.cleanUpVideos();
 			
-			userSession.userlist.userRemovedSignal.remove(userRemovedHandler);
-			userSession.userlist.userAddedSignal.remove(userAddedHandler);
-			userSession.userlist.userChangeSignal.remove(userChangeHandler);
+			userSession.userList.userRemovedSignal.remove(userRemovedHandler);
+			userSession.userList.userAddedSignal.remove(userAddedHandler);
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
 			
 			userUISession.pageTransitionStartSignal.remove(onPageTransitionStart);
 			

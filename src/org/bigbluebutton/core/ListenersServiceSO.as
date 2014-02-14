@@ -149,7 +149,7 @@ package org.bigbluebutton.core
 			var result:Object = pattern.exec(cidName);
 			var externUserID:String = result[1] as String;
 			
-			var user:User = userSession.userlist.getUser(externUserID);
+			var user:User = userSession.userList.getUser(externUserID);
 			user.voiceUserId = userId;
 			user.voiceJoined = true;
 			user.muted = muted;
@@ -159,25 +159,25 @@ package org.bigbluebutton.core
 		
 		public function userMute(userID:Number, mute:Boolean):void {
 			trace("userMuted() [" + userID + "," + mute + "]");
-			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			var user:User = userSession.userList.getUserByVoiceUserId(userID);
 			user.muted = mute;
 		}
 		
 		public function userLockedMute(userID:Number, locked:Boolean):void {
 			trace("userLockedMute() [" + userID + "," + locked + "]");
-			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			var user:User = userSession.userList.getUserByVoiceUserId(userID);
 			user.locked = locked;
 		}
 
 		public function userTalk(userID:Number, talk:Boolean):void {
 //			trace("userTalk() [" + userID + "," + talk + "]");
-			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			var user:User = userSession.userList.getUserByVoiceUserId(userID);
 			user.talking = talk;
 		}
 		
 		public function userLeft(userID:Number):void {
 			trace("userLeft() [" + userID + "]");
-			var user:User = userSession.userlist.getUserByVoiceUserId(userID);
+			var user:User = userSession.userList.getUserByVoiceUserId(userID);
 			if(user)
 			{
 				user.voiceJoined = false;

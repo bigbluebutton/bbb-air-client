@@ -11,7 +11,7 @@ package org.bigbluebutton.core
 		
 		[Inject]
 		public var listenersServiceSO: IListenersServiceSO;
-
+		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
@@ -31,11 +31,11 @@ package org.bigbluebutton.core
 		}
 		
 		public function muteMe():void {
-			mute(userSession.userlist.me.userID);
+			mute(userSession.userList.me.userID);
 		}
 		
 		public function unmuteMe():void {
-			unmute(userSession.userlist.me.userID);
+			unmute(userSession.userList.me.userID);
 		}
 		
 		public function mute(userId:String):void {
@@ -47,7 +47,7 @@ package org.bigbluebutton.core
 		}
 		
 		private function muteUnmute(userId:String, mute:Boolean):void {
-			var user:User = userSession.userlist.getUser(userId);
+			var user:User = userSession.userList.getUser(userId);
 			if (user.voiceJoined) {
 				listenersServiceSO.muteUnmuteUser(user.voiceUserId, mute);
 			}

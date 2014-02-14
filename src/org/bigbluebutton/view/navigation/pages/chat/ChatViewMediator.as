@@ -111,7 +111,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			var m:ChatMessageVO = new ChatMessageVO();
 			
 			m.fromUserID = userSession.userId;
-			m.fromUsername = userSession.userlist.getUser(userSession.userId).name;
+			m.fromUsername = userSession.userList.getUser(userSession.userId).name;
 			m.fromColor = "0";
 			m.fromTime = currentDate.time;
 			m.fromTimezoneOffset = currentDate.timezoneOffset;

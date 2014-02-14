@@ -9,6 +9,7 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.model.presentation.PresentationList;
 	import org.hamcrest.core.throws;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
@@ -22,8 +23,9 @@ package org.bigbluebutton.model
 		protected var _voiceConnection:IVoiceConnection;
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
-		protected var _userlist:UserList;
+		protected var _userList:UserList;
 		protected var _publicChat:ChatMessages;
+		protected var _presentationList:PresentationList;
 		protected var _guestSignal:ISignal = new Signal();
 
 		public function get netconnection():NetConnection
@@ -36,14 +38,9 @@ package org.bigbluebutton.model
 			_netconnection = value;
 		}
 		
-		public function get userlist():UserList
+		public function get userList():UserList
 		{
-			return _userlist;
-		}
-		
-		private function set userlist(value:UserList):void
-		{
-			throws("Don't allow manually setting the userlist");
+			return _userList;
 		}
 
 		public function get config():Config
@@ -64,7 +61,7 @@ package org.bigbluebutton.model
 		public function set userId(value:String):void
 		{
 			_userId = value;
-			_userlist.me.userID = value;
+			_userList.me.userID = value;
 		}
 
 		public function get voiceConnection():IVoiceConnection
@@ -109,13 +106,19 @@ package org.bigbluebutton.model
 
 		public function UserSession()
 		{
-			_userlist = new UserList();
+			_userList = new UserList();
 			_publicChat = new ChatMessages();
+			_presentationList = new PresentationList();
 		}
 		
 		public function get publicChat():ChatMessages
 		{
 			return _publicChat;
+		}
+		
+		public function get presentationList():PresentationList
+		{
+			return _presentationList
 		}
 		
 		public function get guestSignal():ISignal

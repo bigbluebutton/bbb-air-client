@@ -30,8 +30,8 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			
 			user = userUISession.currentPageDetails as User;
 
-			userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userlist.userRemovedSignal.add(userRemoved);
+			userSession.userList.userChangeSignal.add(userChanged);
+			userSession.userList.userRemovedSignal.add(userRemoved);
 			
 			user.signal.add(userChanged);
 			
@@ -74,8 +74,8 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			view.showCameraButton.removeEventListener(MouseEvent.CLICK, onShowCameraButton);
 			view.showPrivateChat.removeEventListener(MouseEvent.CLICK, onShowPrivateChatButton);
 			
-			userSession.userlist.userChangeSignal.remove(userChanged);
-			userSession.userlist.userRemovedSignal.remove(userRemoved);
+			userSession.userList.userChangeSignal.remove(userChanged);
+			userSession.userList.userRemovedSignal.remove(userRemoved);
 			
 			user.signal.remove(userChanged);
 			

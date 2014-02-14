@@ -2,6 +2,7 @@ package org.bigbluebutton.core
 {
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetStatusEvent;
+	import flash.events.SyncEvent;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
 	import flash.net.SharedObject;
@@ -19,6 +20,7 @@ package org.bigbluebutton.core
 	{
 		private var _successConnected:ISignal = new Signal();
 		private var _unsuccessConnected:ISignal = new Signal();
+		private var _syncReceived:ISignal = new Signal();
 		private var _disconnected:ISignal = new Signal();
 		
 		private var _sharedObjectName:String;
@@ -34,6 +36,7 @@ package org.bigbluebutton.core
 			_sharedObject = SharedObject.getRemote(_sharedObjectName, uri + "/" + params.room, false);
 			_sharedObject.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 			_sharedObject.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
+			_sharedObject.addEventListener(SyncEvent.SYNC, onSyncEvent);
 			_sharedObject.client = this;
 			_sharedObject.connect(connection);
 		}
@@ -97,6 +100,11 @@ package org.bigbluebutton.core
 			unsuccessConnected.dispatch(reason);
 		}
 		
+		protected function onSyncEvent(e:SyncEvent):void
+		{
+			syncReceived.dispatch();
+		}
+		
 		public function get successConnected():ISignal
 		{
 			return _successConnected;
@@ -115,6 +123,16 @@ package org.bigbluebutton.core
 		public function set unsuccessConnected(value:ISignal):void
 		{
 			_unsuccessConnected = value;
+		}
+		
+		public function get syncReceived():ISignal
+		{
+			return _unsuccessConnected;
+		}
+		
+		public function set syncReceived(value:ISignal):void
+		{
+			_syncReceived = value;
 		}
 
 		public function get disconnected():ISignal

@@ -8,6 +8,7 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.model.presentation.PresentationList;
 	import org.osflash.signals.ISignal;
 	
 
@@ -19,7 +20,7 @@ package org.bigbluebutton.model
 		function set config(value:Config):void;
 		function get userId():String;
 		function set userId(value:String):void;		
-		function get userlist():UserList
+		function get userList():UserList
 		function get voiceConnection():IVoiceConnection
 		function set voiceConnection(value:IVoiceConnection):void
 		function get mainConnection():IBigBlueButtonConnection
@@ -28,8 +29,8 @@ package org.bigbluebutton.model
 		function set voiceStreamManager(value:VoiceStreamManager):void
 		function get videoConnection():IVideoConnection
 		function set videoConnection(value:IVideoConnection):void
-			
 		function get publicChat():ChatMessages
+		function get presentationList():PresentationList
 		function get guestSignal():ISignal
 	}
 }

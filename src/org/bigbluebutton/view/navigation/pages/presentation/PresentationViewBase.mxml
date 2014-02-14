@@ -14,23 +14,7 @@
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
-				var camera:Camera = Camera.getCamera();              
-				if (camera == null)
-				{
-					trace ("No camera is installed.");
-				} 
-				else 
-				{
-					trace("Camera is installed.");
-					camera.setMode( 800, 400, 15, true );
-					
-					var video:Video = new Video(camera.width, camera.height);
-					video.x = 10;
-					video.y = 10;
-					video.attachCamera(camera);
-					
-					content.addChild(video);
-				}
+				
 			}
 			
 		]]>
@@ -59,7 +43,7 @@
 			<s:Group width="100%" height="30">
 				<s:Label horizontalCenter="0" text="IMD1001 Graphic Design" verticalCenter="0"/>
 			</s:Group>	
-			<ui:MicButton id="microfoneBtn" width="30" height="30"/>
+			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
 		</s:Group>
 		
 		<s:Group id="content" width="100%" height="100%">
