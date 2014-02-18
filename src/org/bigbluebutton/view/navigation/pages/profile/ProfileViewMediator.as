@@ -32,7 +32,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 			userSettings.cameraChangeSignal.add(onCameraSettingChange)
 			
-			view.userNameText.text = userSession.userlist.getUser(userSession.userId).name;
+			view.userNameText.text = userSession.userList.getUser(userSession.userId).name;
 			
 			view.cameraOnOFFText.text = ResourceManager.getInstance().getString('resources', userSettings.cameraEnabled? 'profile.settings.camera.on':'profile.settings.camera.off'); 
 						

@@ -75,7 +75,7 @@ package org.bigbluebutton.core
 			trace("New user joined [" + ObjectUtil.toString(user) + "]");
 			trace(ObjectUtil.toString(joinedUser));
 			
-			userSession.userlist.addUser(user);
+			userSession.userList.addUser(user);
 			
 			participantStatusChange(user.userID, "hasStream", joinedUser.status.hasStream);
 			participantStatusChange(user.userID, "presenter", joinedUser.status.presenter);
@@ -85,7 +85,7 @@ package org.bigbluebutton.core
 		public function participantLeft(userID:String):void { 			
 			trace("Notify others that user [" + userID + "] is leaving!!!!");
 			
-			userSession.userlist.removeUser(userID);
+			userSession.userList.removeUser(userID);
 		}
 		
 		/**
@@ -97,17 +97,17 @@ package org.bigbluebutton.core
 			switch (status) {
 				case "presenter":
 					if (Boolean(value) == true)
-						userSession.userlist.assignPresenter(userID);
+						userSession.userList.assignPresenter(userID);
 					break;
 				case "hasStream":
 					var streamInfo:Array = String(value).split(/,/); 
 					
-					userSession.userlist.userStreamChange(userID,
+					userSession.userList.userStreamChange(userID,
 						(String(streamInfo[0]).toUpperCase() == "TRUE" ? true : false),
 						String(streamInfo[1]).split(/=/)[1]);
 					break;
 				case "raiseHand":
-					userSession.userlist.raiseHandChange(userID, value as Boolean);
+					userSession.userList.raiseHandChange(userID, value as Boolean);
 					break;
 			}
 		}
@@ -118,7 +118,7 @@ package org.bigbluebutton.core
 		public function assignPresenterCallback(userID:String, name:String, assignedBy:String):void {
 			trace("**** assignPresenterCallback [" + userID + "," + name + "," + assignedBy + "]");
 			
-			userSession.userlist.assignPresenter(userID);
+			userSession.userList.assignPresenter(userID);
 		}
 		
 		public function kickUserCallback(userid:String):void {

@@ -59,7 +59,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dataProvider = new ArrayCollection();
 			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
-			var users:ArrayCollection = userSession.userlist.users;
+			var users:ArrayCollection = userSession.userList.users;
 			
 			for each(var user:User in users)
 			{
@@ -79,8 +79,9 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 
 			// userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userlist.userAddedSignal.add(addChat);
+			userSession.userList.userAddedSignal.add(addChat);
 			userSession.publicChat.signal.add(RefreshList);
+
 			//userSession.userlist.userRemovedSignal.add(userRemoved);
 		}
 		
@@ -179,7 +180,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 //			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			//userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userlist.userAddedSignal.remove(addChat);
+			userSession.userList.userAddedSignal.remove(addChat);
 			//userSession.userlist.userRemovedSignal.add(userRemoved);
 			
 			list.removeEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);

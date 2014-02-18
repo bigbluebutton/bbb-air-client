@@ -6,6 +6,7 @@ package org.bigbluebutton.command
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IChatMessageService;
+	import org.bigbluebutton.core.IPresentationService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.model.IConferenceParameters;
@@ -45,6 +46,8 @@ package org.bigbluebutton.command
 		[Inject]
 		public var chatService: IChatMessageService;
 
+		[Inject]
+		public var presentationService: IPresentationService;
 
 		override public function execute():void {
 			connection.uri = uri;
@@ -81,6 +84,8 @@ package org.bigbluebutton.command
 			
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PARTICIPANTS);
+			
+			presentationService.connectPresent(uri);
 		}
 		
 		private function unsuccessConnected(reason:String):void {

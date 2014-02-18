@@ -4,6 +4,7 @@ package org.bigbluebutton.core.util
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
@@ -28,7 +29,7 @@ package org.bigbluebutton.core.util
 			return _unsuccessSignal;
 		}
 		
-		public function fetch(url:String, urlRequest:URLRequest = null):void {
+		public function fetch(url:String, urlRequest:URLRequest = null, dataFormat:String = URLLoaderDataFormat.TEXT):void {
 			trace("Fetching " + url);
 			_urlRequest = urlRequest;
 			if (_urlRequest == null) {
@@ -44,6 +45,7 @@ package org.bigbluebutton.core.util
 			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
 			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, ioErrorHandler );
 			urlLoader.addEventListener( HTTPStatusEvent.HTTP_RESPONSE_STATUS, httpResponseStatusHandler );
+			urlLoader.dataFormat = dataFormat;
 			urlLoader.load( _urlRequest );
 		}
 		

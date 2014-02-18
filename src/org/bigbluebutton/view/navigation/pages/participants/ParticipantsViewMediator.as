@@ -50,15 +50,15 @@ package org.bigbluebutton.view.navigation.pages.participants
 			
 			dicUserIdtoUser = new Dictionary();
 			
-			var users:ArrayCollection = userSession.userlist.users;
+			var users:ArrayCollection = userSession.userList.users;
 			for each (var user:User in users) 
 			{				
 				addUser(user)
 			}
 			
-			userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userlist.userAddedSignal.add(addUser);
-			userSession.userlist.userRemovedSignal.add(userRemoved);
+			userSession.userList.userChangeSignal.add(userChanged);
+			userSession.userList.userAddedSignal.add(addUser);
+			userSession.userList.userRemovedSignal.add(userRemoved);
 		}
 		
 		private function addUser(user:User):void
@@ -94,9 +94,9 @@ package org.bigbluebutton.view.navigation.pages.participants
 			view.dispose();
 			view = null;
 			
-			userSession.userlist.userChangeSignal.remove(userChanged);
-			userSession.userlist.userAddedSignal.remove(addUser);
-			userSession.userlist.userRemovedSignal.remove(userRemoved);
+			userSession.userList.userChangeSignal.remove(userChanged);
+			userSession.userList.userAddedSignal.remove(addUser);
+			userSession.userList.userRemovedSignal.remove(userRemoved);
 		}
 	}
 }

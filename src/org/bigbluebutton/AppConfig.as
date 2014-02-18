@@ -1,11 +1,11 @@
 package org.bigbluebutton
 {
+	import org.bigbluebutton.command.CameraEnableCommand;
+	import org.bigbluebutton.command.CameraEnableSignal;
 	import org.bigbluebutton.command.ConnectCommand;
 	import org.bigbluebutton.command.ConnectSignal;
 	import org.bigbluebutton.command.JoinVoiceCommand;
 	import org.bigbluebutton.command.JoinVoiceSignal;
-	import org.bigbluebutton.command.CameraEnableCommand;
-	import org.bigbluebutton.command.CameraEnableSignal;
 	import org.bigbluebutton.core.BigBlueButtonConnection;
 	import org.bigbluebutton.core.ChatMessageReceiver;
 	import org.bigbluebutton.core.ChatMessageSender;
@@ -16,12 +16,18 @@ package org.bigbluebutton
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.core.IListenersServiceSO;
 	import org.bigbluebutton.core.ILoginService;
+	import org.bigbluebutton.core.IPresentMessageReceiver;
+	import org.bigbluebutton.core.IPresentServiceSO;
+	import org.bigbluebutton.core.IPresentationService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IUsersServiceSO;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.ListenersServiceSO;
 	import org.bigbluebutton.core.LoginService;
+	import org.bigbluebutton.core.PresentMessageReceiver;
+	import org.bigbluebutton.core.PresentServiceSO;
+	import org.bigbluebutton.core.PresentationService;
 	import org.bigbluebutton.core.UsersService;
 	import org.bigbluebutton.core.UsersServiceSO;
 	import org.bigbluebutton.core.VideoConnection;
@@ -63,6 +69,9 @@ package org.bigbluebutton
 			injector.map(IChatMessageService).toSingleton(ChatMessageService);
 			injector.map(IChatMessageReceiver).toSingleton(ChatMessageReceiver);
 			injector.map(IChatMessageSender).toSingleton(ChatMessageSender);
+			injector.map(IPresentServiceSO).toType(PresentServiceSO);
+			injector.map(IPresentationService).toSingleton(PresentationService);
+			injector.map(IPresentMessageReceiver).toSingleton(PresentMessageReceiver);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
 			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);
