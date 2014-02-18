@@ -15,20 +15,20 @@
 				super.data = obj;
 				if(obj)
 				{
-                                   if(!obj.hasOwnProperty("button"))
-                                        {
+					if(!obj.hasOwnProperty("button"))
+					{
 						currentState = "NormalState";
 						title.text = obj.name;
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages; 
 						newMesseges.text.text = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)
 							newMesseges.visible = true;
-						
+							
 						else
 							newMesseges.visible = false;
 						
 					}
-					 else
+					else
 					{
 						currentState = "ButtonState";
 					}
@@ -39,11 +39,11 @@
 	</fx:Script>
 	<s:layout>
 		<s:HorizontalLayout gap="0"
-						  paddingBottom="0"
-						  paddingLeft="0"
-						  paddingRight="0"
-						  paddingTop="5"
-						  />
+							paddingBottom="0"
+							paddingLeft="0"
+							paddingRight="0"
+							paddingTop="5"
+							/>
 	</s:layout>
 	<s:states>
 		<s:State name="NormalState"/>
