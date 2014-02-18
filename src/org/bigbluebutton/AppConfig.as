@@ -76,6 +76,7 @@ package org.bigbluebutton
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
 			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);
 			signalCommandMap.map(CameraEnableSignal).toCommand(CameraEnableCommand);
+			signalCommandMap.map(LoadPresentationSignal).toCommand(LoadPresentationCommand);
 		}
 	}
 }

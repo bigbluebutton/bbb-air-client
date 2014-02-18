@@ -40,7 +40,7 @@ package org.bigbluebutton.model.presentation
 			}
 		}
 			
-		public function loadPresentation(presentationName:String):void {
+		public function getPresentation(presentationName:String):Presentation {
 			/*
 			if (_uri == null) _userSession.config.getConfigFor("PresentModule").@uri;
 			
