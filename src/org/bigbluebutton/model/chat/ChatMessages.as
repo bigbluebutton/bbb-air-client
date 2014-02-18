@@ -4,7 +4,8 @@ package org.bigbluebutton.model.chat
 	
 	import org.bigbluebutton.util.ChatUtil;
 	import org.osflash.signals.ISignal;
-
+	import org.osflash.signals.Signal;
+	
 	public class ChatMessages
 	{ 
 		[Bindable]
@@ -13,8 +14,8 @@ package org.bigbluebutton.model.chat
 		private var _newMessages:uint = 0;
 		
 		private var _autoTranslate:Boolean = false;
-
-		private var _changeSignal:ISignal;
+		
+		private var _changeSignal:ISignal = new Signal();
 		
 		public function numMessages():int {
 			return messages.length;
@@ -75,7 +76,7 @@ package org.bigbluebutton.model.chat
 			var msg:ChatMessage = messages.getItemAt(messages.length - 1) as ChatMessage;
 			return msg.time;
 		}
-				
+		
 		public function get signal():ISignal {
 			return _changeSignal;
 		}
@@ -88,10 +89,10 @@ package org.bigbluebutton.model.chat
 		{
 			if(_changeSignal)
 			{
-				_changeSignal.dispatch(this, property);
+				_changeSignal.dispatch();
 			}
 		}		
-
+		
 		public function get newMessages():uint
 		{
 			return _newMessages;

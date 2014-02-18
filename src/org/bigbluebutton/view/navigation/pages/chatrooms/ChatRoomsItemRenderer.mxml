@@ -17,13 +17,16 @@
 				{
 					if(!obj.hasOwnProperty("button"))
 					{
+						currentState = "NormalState";
 						title.text = obj.name;
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages; 
-						newMesseges.text.text = String(chatMessages.newMessages);
+						newMessages.text.text = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)
-							newMesseges.visible = true;
+							newMessages.visible = true;
+							
 						else
-							newMesseges.visible = false;
+							newMessages.visible = false;
+						
 					}
 					else
 					{
@@ -36,11 +39,11 @@
 	</fx:Script>
 	<s:layout>
 		<s:HorizontalLayout gap="0"
-						  paddingBottom="0"
-						  paddingLeft="0"
-						  paddingRight="0"
-						  paddingTop="5"
-						  />
+							paddingBottom="0"
+							paddingLeft="0"
+							paddingRight="0"
+							paddingTop="5"
+							/>
 	</s:layout>
 	<s:states>
 		<s:State name="NormalState"/>
@@ -50,7 +53,7 @@
 			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
 			 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
 	
-	<assets:NewMesseges id="newMesseges" visible.NormalState="true" visible.ButtonState="false"/>
+	<assets:NewMesseges id="newMessages" visible.NormalState="true" visible.ButtonState="false"/>
 	<s:Group width="40" height="100%">
 		<assets:ArrowRight x="7" y="0"/>
 	</s:Group> 
