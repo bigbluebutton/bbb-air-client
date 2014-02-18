@@ -55,7 +55,7 @@ package org.bigbluebutton.model.chat
 			
 			_newMessages++;
 			
-		    change();
+                       change();
 		}
 		
 		public function getAllMessageAsString():String{
@@ -77,21 +77,21 @@ package org.bigbluebutton.model.chat
 			return msg.time;
 		}
 				
-		 public function get signal():ISignal {
+		public function get signal():ISignal {
 			return _changeSignal;
-		 }
+		}
 		
-		 public function set signal(signal:ISignal):void {
+		public function set signal(signal:ISignal):void {
 			_changeSignal = signal;
-		 }
+		}
 		
-		 private function change(property:String = null):void
-		 {
+		private function change(property:String = null):void
+		{
 		    if(_changeSignal)
 			{
 				_changeSignal.dispatch();
 			}
-		 }		
+		}		
 
 		public function get newMessages():uint
 		{

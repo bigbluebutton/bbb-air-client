@@ -15,8 +15,8 @@
 				super.data = obj;
 				if(obj)
 				{
-				    if(!obj.hasOwnProperty("button"))
-					 {
+                                   if(!obj.hasOwnProperty("button"))
+                                        {
 						currentState = "NormalState";
 						title.text = obj.name;
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages; 
