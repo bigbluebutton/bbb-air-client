@@ -8,7 +8,7 @@ package org.bigbluebutton.model
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	
 	import spark.collections.Sort;
-
+	
 	public class UserList
 	{
 		private var _users:ArrayCollection;	
@@ -18,24 +18,24 @@ package org.bigbluebutton.model
 		{
 			return _users;
 		}
-
+		
 		private function set users(value:ArrayCollection):void
 		{
 			_users = value;
 		}
-
+		
 		private var _me:User;
-
+		
 		public function get me():User
 		{
 			return _me;
 		}
-
+		
 		private function set me(value:User):void
 		{
 			_me = value;
 		}
-
+		
 		private var _sort:Sort;
 		
 		public function UserList()
@@ -79,6 +79,27 @@ package org.bigbluebutton.model
 			return _userChangeSignal;
 		}		
 		
+		/**
+		 * Get a user based on a UserId 
+		 * 
+		 * @param UserId
+		 */
+		public function getUserByUserId(UserID:String):User
+		{
+			if (users != null)
+			{
+				for each(var user:User in users)
+				{	
+					if (user.userID == UserID)
+					{
+						return user;
+					}
+				}
+			}
+			
+			return null;		
+		}
+		
 		/** 
 		 * Custom sort function for the users ArrayCollection. Need to put dial-in users at the very bottom.
 		 */ 
@@ -108,10 +129,10 @@ package org.bigbluebutton.model
 				return 1;
 			
 			/** 
-			* Check name (case-insensitive) in the event of a tie up above. If the name 
-			* is the same then use userID which should be unique making the order the same 
-			* across all clients.
-			*/
+			 * Check name (case-insensitive) in the event of a tie up above. If the name 
+			 * is the same then use userID which should be unique making the order the same 
+			 * across all clients.
+			 */
 			if (au.name.toLowerCase() < bu.name.toLowerCase())
 				return -1;
 			else if (au.name.toLowerCase() > bu.name.toLowerCase())
@@ -172,7 +193,7 @@ package org.bigbluebutton.model
 					return aUser;
 				}
 			}				
-
+			
 			return null;
 		}
 		
@@ -286,7 +307,7 @@ package org.bigbluebutton.model
 					return {index:i, participant:aUser};
 				}
 			}				
-
+			
 			return null;
 		}
 	}
