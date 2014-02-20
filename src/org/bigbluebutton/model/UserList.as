@@ -84,13 +84,13 @@ package org.bigbluebutton.model
 		 * 
 		 * @param UserId
 		 */
-		public function getUserByUserId(UserID:String):User
+		public function getUserByUserId(userId:String):User
 		{
 			if (users != null)
 			{
 				for each(var user:User in users)
 				{	
-					if (user.userID == UserID)
+					if (user.userID == userId)
 					{
 						return user;
 					}

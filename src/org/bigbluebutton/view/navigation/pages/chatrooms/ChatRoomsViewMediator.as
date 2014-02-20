@@ -50,7 +50,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		
 		protected var button:Object;
 		
-		private var users:ArrayCollection; 
+		private var _users:ArrayCollection; 
 		
 		override public function initialize():void
 		{
@@ -61,9 +61,9 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dataProvider = new ArrayCollection();
 			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
-			users = userSession.userList.users;
+			_users = userSession.userList.users;
 			
-			for each(var user:User in users)
+			for each(var user:User in _users)
 			{			
 				if(!user.me)
 				{
