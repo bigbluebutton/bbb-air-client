@@ -84,22 +84,45 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 			
 			// userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userList.userAddedSignal.add(addChat);
+			userSession.userList.userAddedSignal.add(newUserAdded);
 			
-			userSession.publicChat.chatMessageChangeSignal.add(populateList);
+			userSession.publicChat.chatMessageChangeSignal.add(refreshList);
 			
 			//userSession.userlist.userRemovedSignal.add(userRemoved);
+		}
+
+		/*
+		When new message is being added to public chat, we only need to refresh data provider
+		*/
+		public function refreshList(UserID:String = null):void
+		{
+			dataProvider.refresh();
+		}
+
+		/*
+		Raised when new user joins the meeting
+		*/
+		public function newUserAdded(user:User):void
+		{
+			if(!user.me)
+			{
+				user.privateChat.chatMessageChangeSignal.add(populateList);
+				if(user.privateChat.messages.length > 0)
+				{
+					addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat, userID: user.userID });	
+				}
+			}
 		}
 		
 		/**
 		 * Populate ArrayCollection after a new message was received 
 		 * 
 		 * @param UserID
-		*/
+		 */
 		public function populateList(UserID:String = null):void
 		{
 			var newUser:User = userSession.userList.getUserByUserId(UserID);
-
+			
 			if((newUser != null) && (!isExist(newUser)))
 			{
 				addChat({name: newUser.name, publicChat:false, user:newUser, chatMessages: newUser.privateChat, userID: newUser.userID}, dataProvider.length-1);

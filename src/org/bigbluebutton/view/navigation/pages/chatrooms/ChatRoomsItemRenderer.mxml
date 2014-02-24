@@ -10,6 +10,11 @@
 			import org.bigbluebutton.model.chat.ChatMessage;
 			import org.bigbluebutton.model.chat.ChatMessages;
 			
+			[Bindable]
+			private var _normalStateVisible:Boolean = true;
+			
+			[Bindable]
+			private var _buttonStateVisible:Boolean = false;
 			
 			override public function set data(obj:Object):void {
 				super.data = obj;
@@ -19,14 +24,13 @@
 					{
 						currentState = "NormalState";
 						title.text = obj.name;
-						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages; 
+						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages;
 						newMessages.text.text = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)
-							newMessages.visible = true;
+							_normalStateVisible = true;
 							
 						else
-							newMessages.visible = false;
-						
+							_normalStateVisible = false;		
 					}
 					else
 					{
@@ -53,7 +57,7 @@
 			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
 			 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
 	
-	<assets:NewMesseges id="newMessages" visible.NormalState="true" visible.ButtonState="false"/>
+	<assets:NewMesseges id="newMessages" visible.NormalState="{_normalStateVisible}" visible.ButtonState="{_buttonStateVisible}" />
 	<s:Group width="40" height="100%">
 		<assets:ArrowRight x="7" y="0"/>
 	</s:Group> 
