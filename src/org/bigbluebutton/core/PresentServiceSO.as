@@ -80,6 +80,14 @@ package org.bigbluebutton.core {
 			successConnected.add(connectionSuccessHandler);
 		}
 		
+		public function whatIsTheSlideInfo(userid:Number):void {
+			
+		}
+		
+		public function whatIsTheSlideInfoReply(userID:String, xOffset:Number, yOffset:Number, widthRatio:Number, heightRatio:Number):void{
+			
+		}
+		
 		/**
 		 * Send an event to the server to update the presenter's cursor view on the client
 		 * @param xPercent
