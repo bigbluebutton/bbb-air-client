@@ -15,7 +15,7 @@ package org.bigbluebutton.model.chat
 		
 		private var _autoTranslate:Boolean = false;
 		
-		private var _changeSignal:ISignal = new Signal();
+		private var _chatMessageChangeSignal:ISignal = new Signal();
 		
 		public function numMessages():int {
 			return messages.length;
@@ -55,7 +55,7 @@ package org.bigbluebutton.model.chat
 			
 			_newMessages++;
 			
-			change();
+			chatMessageChange(cm.senderId);
 		}
 		
 		public function getAllMessageAsString():String{
@@ -77,19 +77,19 @@ package org.bigbluebutton.model.chat
 			return msg.time;
 		}
 		
-		public function get signal():ISignal {
-			return _changeSignal;
+		public function get chatMessageChangeSignal():ISignal {
+			return _chatMessageChangeSignal;
 		}
 		
-		public function set signal(signal:ISignal):void {
-			_changeSignal = signal;
+		public function set chatMessageChangeSignal(signal:ISignal):void {
+			_chatMessageChangeSignal = signal;
 		}
 		
-		private function change(property:String = null):void
+		private function chatMessageChange(UserID:String = null):void
 		{
-			if(_changeSignal)
+			if(_chatMessageChangeSignal)
 			{
-				_changeSignal.dispatch();
+				_chatMessageChangeSignal.dispatch(UserID);
 			}
 		}		
 		
