@@ -23,10 +23,8 @@
 						newMessages.text.text = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)
 							newMessages.visible = true;
-							
 						else
 							newMessages.visible = false;
-						
 					}
 					else
 					{
@@ -53,7 +51,7 @@
 			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
 			 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
 	
-	<assets:NewMesseges id="newMessages" visible.NormalState="true" visible.ButtonState="false"/>
+	<assets:NewMesseges id="newMessages" visible.ButtonState="false"/>
 	<s:Group width="40" height="100%">
 		<assets:ArrowRight x="7" y="0"/>
 	</s:Group> 
