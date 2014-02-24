@@ -83,8 +83,10 @@ package org.bigbluebutton.view.navigation.pages.participants
 		
 		protected function onSelectParticipant(event:IndexChangeEvent):void
 		{
-			var user:User = dataProvider.getItemAt(event.newIndex) as User;
-			userUISession.pushPage(PagesENUM.USER_DETAIS, user);
+			if (event.newIndex >= 0) {
+				var user:User = dataProvider.getItemAt(event.newIndex) as User;
+				userUISession.pushPage(PagesENUM.USER_DETAIS, user);
+			}
 		}
 			
 		override public function destroy():void
