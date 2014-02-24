@@ -4,7 +4,8 @@ package org.bigbluebutton.model.chat
 	
 	import org.bigbluebutton.util.ChatUtil;
 	import org.osflash.signals.ISignal;
-
+	import org.osflash.signals.Signal;
+	
 	public class ChatMessages
 	{ 
 		[Bindable]
@@ -13,8 +14,8 @@ package org.bigbluebutton.model.chat
 		private var _newMessages:uint = 0;
 		
 		private var _autoTranslate:Boolean = false;
-
-		private var _changeSignal:ISignal;
+		
+		private var _chatMessageChangeSignal:ISignal = new Signal();
 		
 		public function numMessages():int {
 			return messages.length;
@@ -54,7 +55,7 @@ package org.bigbluebutton.model.chat
 			
 			_newMessages++;
 			
-			change();
+			chatMessageChange(cm.senderId);
 		}
 		
 		public function getAllMessageAsString():String{
@@ -75,23 +76,23 @@ package org.bigbluebutton.model.chat
 			var msg:ChatMessage = messages.getItemAt(messages.length - 1) as ChatMessage;
 			return msg.time;
 		}
-				
-		public function get signal():ISignal {
-			return _changeSignal;
+		
+		public function get chatMessageChangeSignal():ISignal {
+			return _chatMessageChangeSignal;
 		}
 		
-		public function set signal(signal:ISignal):void {
-			_changeSignal = signal;
+		public function set chatMessageChangeSignal(signal:ISignal):void {
+			_chatMessageChangeSignal = signal;
 		}
 		
-		private function change(property:String = null):void
+		private function chatMessageChange(UserID:String = null):void
 		{
-			if(_changeSignal)
+			if(_chatMessageChangeSignal)
 			{
-				_changeSignal.dispatch(this, property);
+				_chatMessageChangeSignal.dispatch(UserID);
 			}
 		}		
-
+		
 		public function get newMessages():uint
 		{
 			return _newMessages;

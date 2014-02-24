@@ -42,7 +42,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		
 		[Inject]
 		public var userUISession: IUserUISession;
-		
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
 		protected var list:List;
@@ -50,6 +49,8 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		protected var dicUsertoChat:Dictionary;
 		
 		protected var button:Object;
+		
+		private var _users:ArrayCollection; 
 		
 		override public function initialize():void
 		{
@@ -60,16 +61,20 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dataProvider = new ArrayCollection();
 			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: userSession.publicChat});
 			
-			var users:ArrayCollection = userSession.userList.users;
+			_users = userSession.userList.users;
 			
-			for each(var user:User in users)
-			{
-				if(user.privateChat.messages.length > 0 && !user.me)
+			for each(var user:User in _users)
+			{			
+				if(!user.me)
 				{
-					addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat});
+					user.privateChat.chatMessageChangeSignal.add(populateList);
+					if(user.privateChat.messages.length > 0)
+					{
+						addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat, userID: user.userID });	
+					}	
 				}
 			}
-				
+			
 			button = {button:true};
 			dataProvider.addItem(button);
 			
@@ -77,35 +82,105 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			list.dataProvider = dataProvider;
 			
 			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
-
-			//userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userList.userAddedSignal.add(addChat);
+			
+			// userSession.userlist.userChangeSignal.add(userChanged);
+			userSession.userList.userAddedSignal.add(newUserAdded);
+			
+			userSession.publicChat.chatMessageChangeSignal.add(refreshList);
+			
 			//userSession.userlist.userRemovedSignal.add(userRemoved);
 		}
-		
-		private function addChat(chat:Object):void
+
+		/*
+		When new message is being added to public chat, we only need to refresh data provider
+		*/
+		public function refreshList(UserID:String = null):void
 		{
-			dataProvider.addItem(chat);
+			dataProvider.refresh();
+		}
+
+		/*
+		Raised when new user joins the meeting
+		*/
+		public function newUserAdded(user:User):void
+		{
+			if(!user.me)
+			{
+				user.privateChat.chatMessageChangeSignal.add(populateList);
+				if(user.privateChat.messages.length > 0)
+				{
+					addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat, userID: user.userID });	
+				}
+			}
+		}
+		
+		/**
+		 * Populate ArrayCollection after a new message was received 
+		 * 
+		 * @param UserID
+		 */
+		public function populateList(UserID:String = null):void
+		{
+			var newUser:User = userSession.userList.getUserByUserId(UserID);
+			
+			if((newUser != null) && (!isExist(newUser)))
+			{
+				addChat({name: newUser.name, publicChat:false, user:newUser, chatMessages: newUser.privateChat, userID: newUser.userID}, dataProvider.length-1);
+			}
+			
+			dataProvider.refresh();
+		}	
+		
+		/**
+		 * Check if User is already added to the dataProvider 
+		 * 
+		 * @param User
+		 */
+		private function isExist(user:User):Boolean
+		{		
+			for(var i:int = 0; i< dataProvider.length; i++)
+			{
+				if (dataProvider.getItemAt(i).userID == user.userID)
+				{
+					return true;
+				}
+			}
+			return false;	
+		}
+		
+		private function addChat(chat:Object, pos:Number = NaN):void
+		{
+			if(isNaN(pos))
+			{
+				dataProvider.addItem(chat);
+			}
+			else
+			{
+				dataProvider.addItemAt(chat, pos);
+			}
+			
 			//dataProvider.setItemAt(button, dataProvider.length-1);
 			dataProvider.refresh();
 			//dicUsertoChat[chat.user] = chat;		
 		}
-/*		
+		
+		/*		
 		private function userRemoved(userID:String):void
 		{
-			var user:User = dicUsertoChat[userID] as User;
-			var index:uint = dataProvider.getItemIndex(user);
-			dataProvider.removeItemAt(index);
-			dicUsertoChat[user.userID] = null;
+		var user:User = dicUsertoChat[userID] as User;
+		var index:uint = dataProvider.getItemIndex(user);
+		dataProvider.removeItemAt(index);
+		dicUsertoChat[user.userID] = null;
 		}
-		
+		*/		
 		private function userChanged(user:User, property:String = null):void
 		{
 			dataProvider.refresh();
 		}
-*/		
+		
 		protected function onIndexChangeHandler(event:IndexChangeEvent):void
 		{
+			
 			var item:Object = dataProvider.getItemAt(event.newIndex);
 			if(item)
 			{
@@ -124,49 +199,49 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			}
 		}
 		
-/*		
+		/*		
 		private function onSendButtonClick(e:MouseEvent):void
 		{
-			view.inputMessage.enabled = false;
-			view.sendButton.enabled = false;
-			
-			var currentDate:Date = new Date();
-			
-			//TODO get info from the right source
-			var m:ChatMessageVO = new ChatMessageVO();
-			m.chatType = "PUBLIC";
-			m.fromUserID = userSession.userId;
-			m.fromUsername = "XXfromUsernameXX";
-			m.fromColor = "0";
-			m.fromTime = currentDate.time;
-			m.fromTimezoneOffset = currentDate.timezoneOffset;
-			m.fromLang = "en";
-			m.message = view.inputMessage.text;
-			m.toUserID = "FAKE_USERID";
-			m.toUsername = "XXfromUsernameXX";
-			
-			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
-			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
-			chatMessageSender.sendPublicMessage(m);			
+		view.inputMessage.enabled = false;
+		view.sendButton.enabled = false;
+		
+		var currentDate:Date = new Date();
+		
+		//TODO get info from the right source
+		var m:ChatMessageVO = new ChatMessageVO();
+		m.chatType = "PUBLIC";
+		m.fromUserID = userSession.userId;
+		m.fromUsername = "XXfromUsernameXX";
+		m.fromColor = "0";
+		m.fromTime = currentDate.time;
+		m.fromTimezoneOffset = currentDate.timezoneOffset;
+		m.fromLang = "en";
+		m.message = view.inputMessage.text;
+		m.toUserID = "FAKE_USERID";
+		m.toUsername = "XXfromUsernameXX";
+		
+		chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
+		chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
+		chatMessageSender.sendPublicMessage(m);			
 		}
 		
 		private function onSendSucess(result:String):void
 		{
-			view.inputMessage.enabled = true;
-			view.inputMessage.text = "";
+		view.inputMessage.enabled = true;
+		view.inputMessage.text = "";
 		}
 		
 		private function onSendFailure(status:String):void
 		{
-			view.inputMessage.enabled = true;
-			view.sendButton.enabled = true;
+		view.inputMessage.enabled = true;
+		view.sendButton.enabled = true;
 		}
-*/		
+		*/		
 		override public function destroy():void
 		{
 			super.destroy();
 			
-//			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
+			//			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			//userSession.userlist.userChangeSignal.add(userChanged);
 			userSession.userList.userAddedSignal.remove(addChat);
@@ -174,7 +249,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			list.removeEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 			
-//			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
+			//			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			
 			view.dispose();
 			view = null;
