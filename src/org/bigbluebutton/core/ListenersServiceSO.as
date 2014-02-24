@@ -150,11 +150,15 @@ package org.bigbluebutton.core
 			var externUserID:String = result[1] as String;
 			
 			var user:User = userSession.userList.getUser(externUserID);
-			user.voiceUserId = userId;
-			user.voiceJoined = true;
-			user.muted = muted;
-			user.talking = talking;
-			user.locked = locked;
+			if (user != null) {
+				user.voiceUserId = userId;
+				user.voiceJoined = true;
+				user.muted = muted;
+				user.talking = talking;
+				user.locked = locked;
+			} else {
+				trace("user not found");
+			}
 		}
 		
 		public function userMute(userID:Number, mute:Boolean):void {
