@@ -3,10 +3,9 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:top="org.bigbluebutton.top.view.*"
 			   xmlns:ui="org.bigbluebutton.view.navigation.ui.*"
-			   applicationDPI="160"
 			   xmlns:navigation="org.bigbluebutton.view.navigation.*" 
 			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
-			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"  
+			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
 			   preinitialize="preinitializeHandler(event)" 
 			   creationComplete="creationCompleteHandler(event)"
 			   >
@@ -139,7 +138,6 @@
 			{
 				
 			}
-			
 		]]>
 	</fx:Script>
 
