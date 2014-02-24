@@ -112,8 +112,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		}
 		
 		private function userRemovedHandler(userID:String):void {
-			if(user.userID == userID)
-			{
+			if(user == null || user.userID == userID) {
 				stopStream();
 				userUISession.popPage();
 			}
@@ -122,9 +121,12 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		private function userChangeHandler(user:User, property:String = null):void {
 			if(user == user)
 			{
-				if (property == "hasStream" && user.hasStream)
-				{
-					startStream(user.name, user.streamName);
+				if (property == "hasStream") {
+					if (user.hasStream) {
+						startStream(user.name, user.streamName);
+					} else {
+						stopStream();
+					}
 				}
 			}
 		}
