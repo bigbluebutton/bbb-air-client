@@ -6,6 +6,10 @@ package org.bigbluebutton
 	import org.bigbluebutton.command.ConnectSignal;
 	import org.bigbluebutton.command.JoinVoiceCommand;
 	import org.bigbluebutton.command.JoinVoiceSignal;
+	import org.bigbluebutton.command.LoadPresentationCommand;
+	import org.bigbluebutton.command.LoadPresentationSignal;
+	import org.bigbluebutton.command.LoadSlideCommand;
+	import org.bigbluebutton.command.LoadSlideSignal;
 	import org.bigbluebutton.core.BigBlueButtonConnection;
 	import org.bigbluebutton.core.ChatMessageReceiver;
 	import org.bigbluebutton.core.ChatMessageSender;
@@ -77,6 +81,7 @@ package org.bigbluebutton
 			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);
 			signalCommandMap.map(CameraEnableSignal).toCommand(CameraEnableCommand);
 			signalCommandMap.map(LoadPresentationSignal).toCommand(LoadPresentationCommand);
+			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
 		}
 	}
 }

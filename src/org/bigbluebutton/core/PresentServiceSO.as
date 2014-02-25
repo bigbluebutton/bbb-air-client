@@ -24,6 +24,7 @@ package org.bigbluebutton.core {
 	import flash.net.Responder;
 	import flash.net.SharedObject;
 	
+	import org.bigbluebutton.command.LoadPresentationSignal;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	
@@ -48,6 +49,9 @@ package org.bigbluebutton.core {
 		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
+		
+		[Inject]
+		public var loadPresentationSignal: LoadPresentationSignal;
 		
 		private static const SO_NAME:String = "presentationSO";
 		
@@ -241,7 +245,7 @@ package org.bigbluebutton.core {
 						if (result.presentation.sharing) {
 							currentSlide = Number(result.presentation.slide);
 							trace("The presenter has shared slides and showing slide " + currentSlide);
-							userSession.presentationList.loadPresentation(result.presentation.currentPresentation);
+							loadPresentationSignal.dispatch(result.presentation.currentPresentation);
 						}
 					},
 					// status - On error occurred
@@ -299,11 +303,7 @@ package org.bigbluebutton.core {
 		 */		
 		public function gotoSlideCallback(page:Number):void {
 			trace("gotoSlideCallback received");
-			/*
-			var e:NavigationEvent = new NavigationEvent(NavigationEvent.GOTO_PAGE)
-			e.pageNumber = page;
-			dispatcher.dispatchEvent(e);
-			*/
+			userSession.presentationList.currentSlideNum = int(page);
 		}
 		
 		public function getCurrentSlideNumber():void {
@@ -343,7 +343,7 @@ package org.bigbluebutton.core {
 		public function sharePresentationCallback(presentationName:String, share:Boolean):void {
 			trace("sharePresentationCallback " + presentationName + "," + share);
 			if (share) {
-				userSession.presentationList.loadPresentation(presentationName);
+				loadPresentationSignal.dispatch(presentationName);
 			} else {
 				//dispatcher.dispatchEvent(new UploadEvent(UploadEvent.CLEAR_PRESENTATION));
 			}

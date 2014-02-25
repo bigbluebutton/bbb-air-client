@@ -4,63 +4,59 @@ package org.bigbluebutton.model.presentation
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
+	
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 
 	public class Slide
 	{
-		private var _loader:URLLoader;
 		private var _loaded:Boolean = false;
-		private var _slideUri:String;
-		private var _slideHandler:Function;
+		private var _slideURI:String;
 		private var _slideNum:Number;
-		private var _thumbUri:String;
-		private var _txtUri:String;
-		private var _txtLoader:URLLoader;
-		private var _txtLoaded:Boolean = false;
+		private var _thumbURI:String;
+		private var _txtURI:String;
+		private var _data:ByteArray;
 		
-		public function Slide(slideNum:Number, slideUri:String, thumbUri:String,txtUri:String) {
+		private var _slideLoadedSignal:ISignal = new Signal;
+		
+		public function Slide(slideNum:Number, slideURI:String, thumbURI:String,txtURI:String) {
 			_slideNum = slideNum;
-			_slideUri = slideUri;
-			_thumbUri = thumbUri;
-			_txtUri = txtUri;
-			_loader = new URLLoader();
-			_loader.addEventListener(Event.COMPLETE, handleComplete);	
-			_loader.dataFormat = URLLoaderDataFormat.BINARY;
-			
-			_txtLoader = new URLLoader();
-			_txtLoader.addEventListener(Event.COMPLETE, handleTextComplete);	
-			_txtLoader.dataFormat = URLLoaderDataFormat.TEXT;	
-		}
-		
-		public function load(slideLoadedHandler:Function):void {
-			if (_loaded && _txtLoaded) {
-				slideLoadedHandler(_slideNum, _loader.data, _txtLoader.data);
-			} else {
-				_slideHandler = slideLoadedHandler;
-				_loader.load(new URLRequest(_slideUri));
-				_txtLoader.load(new URLRequest(_txtUri));
-			}
-		}
-		
-		private function handleComplete(e:Event):void {
-			_loaded = true;
-			if (_slideHandler != null && _txtLoaded) {
-				_slideHandler(_slideNum, _loader.data, _txtLoader.data);
-			}		
-		}
-		
-		private function handleTextComplete(e:Event):void {
-			_txtLoaded = true;
-			if (_slideHandler != null && _loaded) {
-				_slideHandler(_slideNum, _loader.data, _txtLoader.data);
-			}		
+			_slideURI = slideURI;
+			_thumbURI = thumbURI;
+			_txtURI = txtURI;
 		}
 		
 		public function get thumb():String {
-			return _thumbUri;
+			return _thumbURI;
 		}
 		
 		public function get slideNumber():Number {
 			return _slideNum;
+		}
+		
+		public function get data():ByteArray {
+			return _data;
+		}
+		
+		public function set data(d:ByteArray):void {
+			_data = d;
+			if (_data != null) {
+				_loaded = true;
+				slideLoadedSignal.dispatch();
+			}
+		}
+		
+		public function get slideURI():String {
+			return _thumbURI;
+		}
+		
+		public function get loaded():Boolean {
+			return _loaded;
+		}
+		
+		public function get slideLoadedSignal():ISignal {
+			return _slideLoadedSignal;
 		}
 	}
 }

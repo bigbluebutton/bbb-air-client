@@ -8,6 +8,7 @@
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
 			   preinitialize="preinitializeHandler(event)" 
 			   creationComplete="creationCompleteHandler(event)"
+			   applicationDPI="160"
 			   >
 	<fx:Style source="Default.css"/>
 	

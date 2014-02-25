@@ -6,6 +6,8 @@ package org.bigbluebutton.model.presentation
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.UserSession;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 
 	public class PresentationList
 	{
@@ -15,52 +17,78 @@ package org.bigbluebutton.model.presentation
 		[Inject]
 		public var conferenceParameters:IConferenceParameters;
 		
-		public var presentations:ArrayCollection = new ArrayCollection();
-		private var _uri:String = null;
+		private var _presentations:ArrayCollection = new ArrayCollection();
+		
+		private var _currentPresentation:Presentation;
+		private var _currentSlideNum:int = -1;
+		
+		private var _presentationChangeSignal:ISignal = new Signal();
+		private var _slideChangeSignal:ISignal = new Signal();
 		
 		public function PresentationList() {
 		}
 		
 		public function addPresentation(presentationName:String):void {
 			trace("Adding presentation " + presentationName);
-			for (var i:int=0; i < presentations.length; i++) {
-				var p:Presentation = presentations[i] as Presentation;
+			for (var i:int=0; i < _presentations.length; i++) {
+				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) return;
 			}
-			presentations.addItem(new Presentation(presentationName));
+			_presentations.addItem(new Presentation(presentationName, changeCurrentPresentation));
 		}
 		
 		public function removePresentation(presentationName:String):void {
-			for (var i:int=0; i < presentations.length; i++) {
-				var p:Presentation = presentations[i] as Presentation;
+			for (var i:int=0; i < _presentations.length; i++) {
+				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) {
 					trace("Removing presentation " + presentationName);
-					presentations.removeItemAt(i);
+					_presentations.removeItemAt(i);
 				}
 			}
 		}
 			
 		public function getPresentation(presentationName:String):Presentation {
-			/*
-			if (_uri == null) _userSession.config.getConfigFor("PresentModule").@uri;
-			
-			trace("PresentProxy::loadPresentation: presentationName=" + presentationName);
-			for (var i:int=0; i < presentations.length; i++) {
-				var p:Presentation = presentations[i] as Presentation;
+			trace("PresentProxy::getPresentation: presentationName=" + presentationName);
+			for (var i:int=0; i < _presentations.length; i++) {
+				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) {
-					var fullUri:String = _uri + "/presentation/" + conferenceParameters.conference + "/" + conferenceParameters.room + "/" + presentationName+"/slides";	
-					var slideUri:String = _uri + "/presentation/" + conferenceParameters.conference + "/" + conferenceParameters.room + "/" + presentationName;
-					
-					trace("PresentationApplication::loadPresentation()... " + fullUri);
-					p.load(fullUri, slideUri);
-					trace('number of slides=' + p.slides.length);
-					
-					return;
+					return p;
 				}
 			}
-			
-			trace("loadPresentation failed: " + presentationName + " not found");
-			*/
+			return null;
+		}
+		
+		private function changeCurrentPresentation(p:Presentation):void {
+			currentPresentation = p;
+		}
+		
+		public function get currentPresentation():Presentation {
+			return _currentPresentation;
+		}
+		
+		public function set currentPresentation(p:Presentation):void {
+			trace("PresentationList changing current presentation");
+			_currentPresentation = p
+			currentSlideNum = 0;
+			_presentationChangeSignal.dispatch();
+		}
+		
+		public function get currentSlideNum():int {
+			return _currentSlideNum;
+		}
+		
+		public function set currentSlideNum(n:int):void {
+			trace("PresentationList changing current slide");
+			_currentSlideNum = n;
+			_slideChangeSignal.dispatch();
+		}
+		
+		public function get presentationChangeSignal():ISignal {
+			return _presentationChangeSignal;
+		}
+		
+		public function get slideChangeSignal():ISignal {
+			return _slideChangeSignal;
 		}
 	}
 }

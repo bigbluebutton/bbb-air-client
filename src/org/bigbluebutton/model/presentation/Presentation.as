@@ -11,13 +11,14 @@ package org.bigbluebutton.model.presentation
 	{
 		private var _fileName:String = "";
 		private var _slides:Vector.<Slide> = new Vector.<Slide>();
-		private var _selected:int = -1;
 		
-		private var _slideURI:String;
-		private var _urlLoader:URLLoader;
+		private var _changePresentation:Function;
 		
-		public function Presentation(fileName:String):void {
+		private var _loaded:Boolean = false;
+		
+		public function Presentation(fileName:String, changePresentation:Function):void {
 			_fileName = fileName;
+			_changePresentation = changePresentation;
 		}
 		
 		public function get fileName():String {
@@ -26,14 +27,6 @@ package org.bigbluebutton.model.presentation
 		
 		public function get slides():Vector.<Slide> {
 			return _slides;
-		}
-		
-		public function get selected():int {
-			return _selected;
-		}
-		
-		public function set selected(num:int):void {
-			_selected = num;
 		}
 		
 		public function getSlideAt(num:int):Slide {
@@ -52,7 +45,16 @@ package org.bigbluebutton.model.presentation
 			return _slides.length;
 		}
 		
-		private function clear():void {
+		public function finishedLoading():void {
+			_loaded = true;
+			_changePresentation(this);
+		}
+		
+		public function get loaded():Boolean {
+			return _loaded;
+		}
+		
+		public function clear():void {
 			_slides = new Vector.<Slide>();
 		}
 	}
