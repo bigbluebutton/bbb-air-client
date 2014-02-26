@@ -8,6 +8,7 @@
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
 			   preinitialize="preinitializeHandler(event)" 
 			   creationComplete="creationCompleteHandler(event)"
+			   applicationComplete="applicationCompleteHandler(event)"
 			   applicationDPI="160"
 			   >
 	<fx:Style source="Default.css"/>
@@ -138,6 +139,21 @@
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
 				
+			}
+			
+			protected function applicationCompleteHandler(event:FlexEvent):void
+			{
+				stage.addEventListener(Event.ACTIVATE, fl_Activate);
+				stage.addEventListener(Event.DEACTIVATE, fl_Deactivate);
+				
+			}
+			
+			private function fl_Activate(event:Event=null):void {
+				NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.KEEP_AWAKE;
+			}
+			
+			private function fl_Deactivate(event:Event):void {
+				NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.NORMAL;
 			}
 		]]>
 	</fx:Script>
