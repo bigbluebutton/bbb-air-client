@@ -1,22 +1,22 @@
 package org.bigbluebutton.view.navigation.pages.presentation
 {
+	import flash.display.StageOrientation;
 	import flash.events.MouseEvent;
+	import flash.events.StageOrientationEvent;
 	import flash.system.LoaderContext;
+	
+	import mx.core.FlexGlobals;
 	
 	import org.bigbluebutton.model.presentation.Slide;
 	
+	import spark.components.Image;
+	
 	public class PresentationView extends PresentationViewBase implements IPresentationView
 	{
-		
-		//private var _buttonTestSignal: Signal = new Signal();
-		//public function get buttonTestSignal(): ISignal
-		//{
-		//	return _buttonTestSignal;
-		//}
-		
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
+			rotationHandler(FlexGlobals.topLevelApplication.currentOrientation);
 		}
 		
 		public function onClick(e:MouseEvent):void
@@ -36,6 +36,24 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			}
 		}
 		
+		override public function rotationHandler(rotation:String):void {
+			switch (rotation) {
+				case StageOrientation.ROTATED_LEFT:
+					content.rotation = -90;
+					break;
+				case StageOrientation.ROTATED_RIGHT:
+					content.rotation = 90;
+					break;
+				case StageOrientation.UPSIDE_DOWN:
+					content.rotation = 180;
+					break;
+				case StageOrientation.DEFAULT:
+				case StageOrientation.UNKNOWN:
+				default:
+					content.rotation = 0;
+			}	
+		}
+			
 		public function dispose():void
 		{
 			

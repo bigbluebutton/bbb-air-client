@@ -25,6 +25,8 @@
 			import mx.resources.ResourceManager;
 			
 			import org.bigbluebutton.AppConfig;
+			import org.bigbluebutton.core.util.OrientationCalculator;
+			import org.bigbluebutton.core.view.NoTabView;
 			import org.bigbluebutton.util.BigBlueButtonLoggerFactory;
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
@@ -52,6 +54,9 @@
 			import robotlegs.bender.framework.impl.Context;
 			
 			protected var context: IContext;
+			
+			private var _orientationCalc:OrientationCalculator;
+			public var currentOrientation:String;
 			
 			protected function preinitializeHandler(event:FlexEvent):void
 			{
@@ -146,6 +151,12 @@
 				stage.addEventListener(Event.ACTIVATE, fl_Activate);
 				stage.addEventListener(Event.DEACTIVATE, fl_Deactivate);
 				
+				stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGING, stageOrientationChangingHandler);
+				
+				// setup a custom orientation calculator based on the accelerometer because the default one doesn't work
+				_orientationCalc = new OrientationCalculator(pagesNavigatorView, accelerometerCallback);
+				_orientationCalc.active = true;
+				currentOrientation = _orientationCalc.currentOrientation;
 			}
 			
 			private function fl_Activate(event:Event=null):void {
@@ -154,6 +165,15 @@
 			
 			private function fl_Deactivate(event:Event):void {
 				NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.NORMAL;
+			}
+			
+			private function stageOrientationChangingHandler(e:StageOrientationEvent):void {
+				e.preventDefault();
+			}
+			
+			private function accelerometerCallback():void {
+				currentOrientation = _orientationCalc.currentOrientation;
+				(pagesNavigatorView.activeView as NoTabView).rotationHandler(_orientationCalc.currentOrientation);
 			}
 		]]>
 	</fx:Script>
