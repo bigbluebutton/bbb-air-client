@@ -15,7 +15,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	
 	public class VideoChatView extends VideoChatViewBase implements IVideoChatView
 	{
-		private var webcam:WebcamView;		
+		private var webcam:WebcamView;
 
 		public function VideoChatView():void	
 		{
@@ -29,13 +29,15 @@ package org.bigbluebutton.view.navigation.pages.videochat
 
 		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void 
 		{
+			if (webcam) stopStream();
+			
 			webcam = new WebcamView();
 			webcam.percentWidth = 100;
 			webcam.percentHeight = 100;
 			webcam.startStream(connection, name, streamName, userID, width, height);		
 			this.videoGroup.addElement(webcam);
 			
-			invalidateDisplayList();
+			//invalidateDisplayList();
 		}
 				
 		public function stopStream():void 
@@ -43,6 +45,13 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			if(webcam)
 			{
 				webcam.close();
+				
+				if(this.videoGroup.containsElement(webcam))
+				{
+					this.videoGroup.removeElement(webcam);
+				}
+				
+				webcam = null;
 			}
 		}
 		
@@ -50,23 +59,19 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		public function dispose():void
 		{
 			stopStream();
-			cleanUpVideos();
-		}
-		
-		public function cleanUpVideos():void 
-		{			
-			if(webcam)
-			{
-				if(this.videoGroup.containsElement(webcam))
-				{
-					this.videoGroup.removeElement(webcam);
-				}
-			}
 		}
 		
 		public function get noVideoMessage():Label
 		{
 			return noVideoMessage0;
+		}
+		
+		public function getDisplayedUserID():String {
+			if (webcam != null) {
+				return webcam.userID;
+			} else {
+				return null;
+			}
 		}
 	}
 }

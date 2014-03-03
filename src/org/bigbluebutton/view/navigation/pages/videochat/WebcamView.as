@@ -140,8 +140,13 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			if(ns)
 			{
+				ns.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus);
+				ns.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
 				ns.close();
+				ns = null;
 			}
+			
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}	
 	}
 }
