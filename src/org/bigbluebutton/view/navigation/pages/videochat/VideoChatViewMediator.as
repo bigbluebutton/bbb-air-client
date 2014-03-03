@@ -26,8 +26,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
-		protected var user:User;
-		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -47,27 +45,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			//	}
 			//}
 			
-			user = userUISession.currentPageDetails as User;
-			
-			var presenter:User = userSession.userList.getPresenter();
-			var userWithCamera:User = getUserWithCamera();
-			if(user && user.hasStream)
-			{
-				startStream(user.name, user.streamName);
-				view.noVideoMessage.visible = false;
-			}
-			else if(presenter != null)
-			{
-				startStream(presenter.name, presenter.streamName);
-			}
-			else if(userWithCamera != null)
-			{
-				startStream(userWithCamera.name, userWithCamera.streamName);
-			}
-			else
-			{
-				view.noVideoMessage.visible = true;
-			}
+			checkVideo();
 		}
 		
 		protected function getUserWithCamera():User
@@ -92,42 +70,36 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		
 		override public function destroy():void
 		{
-			view.cleanUpVideos();
-			
 			userSession.userList.userRemovedSignal.remove(userRemovedHandler);
 			userSession.userList.userAddedSignal.remove(userAddedHandler);
 			userSession.userList.userChangeSignal.remove(userChangeHandler);
 			
 			userUISession.pageTransitionStartSignal.remove(onPageTransitionStart);
 			
-			super.destroy();
-			
 			view.dispose();
 			view = null;
+			
+			super.destroy();
 		}
 		
 		private function userAddedHandler(user:User):void {
-			//if (user.hasStream)
-			//	startStream(user.name, user.streamName);
+			if (user.hasStream)
+				checkVideo();
 		}
 		
 		private function userRemovedHandler(userID:String):void {
-			if(user == null || user.userID == userID) {
-				stopStream();
-				userUISession.popPage();
+			if (view.getDisplayedUserID() == userID) {
+				stopStream(userID);
+				checkVideo();
 			}
 		}
 		
 		private function userChangeHandler(user:User, property:String = null):void {
-			if(user == user)
-			{
-				if (property == "hasStream") {
-					if (user.hasStream) {
-						startStream(user.name, user.streamName);
-					} else {
-						stopStream();
-					}
+			if (property == "hasStream") {
+				if (user.userID == view.getDisplayedUserID() && !user.hasStream) {
+					stopStream(user.userID);
 				}
+				checkVideo();
 			}
 		}
 		
@@ -145,9 +117,46 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		private function stopStream():void { //userID:String):void {
+		private function stopStream(userID:String):void {
 			if (view) {
-				view.stopStream();//userID);
+				view.stopStream();
+			}
+		}
+		
+		private function checkVideo():void {
+			var currentUserID:String = view.getDisplayedUserID();
+			
+			var selectedUser:User = userUISession.currentPageDetails as User;
+			var presenter:User = userSession.userList.getPresenter();
+			var userWithCamera:User = getUserWithCamera();
+			var newUser:User;
+			
+			if (selectedUser && selectedUser.hasStream)
+			{
+				newUser = selectedUser;
+			}
+			else if (presenter != null && presenter.hasStream)
+			{
+				newUser = presenter;
+			}
+			else if (currentUserID != null) {
+				return;
+			}
+			else if (userWithCamera != null)
+			{
+				newUser = userWithCamera;
+			}
+			else
+			{
+				view.noVideoMessage.visible = true;
+				return;
+			}
+			
+			view.noVideoMessage.visible = false;
+			if (newUser.userID != currentUserID) {
+				if (view) view.stopStream();
+				
+				startStream(newUser.name, newUser.streamName);
 			}
 		}
 		
