@@ -18,6 +18,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import org.bigbluebutton.model.chat.ChatMessage;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
@@ -39,11 +40,16 @@ package org.bigbluebutton.view.navigation.pages.chat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
+		[Inject]
+		public var chatMessagesSession: IChatMessagesSession;
+		
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
 		protected var list:List;
 		protected var publicChat:Boolean = true;
 		protected var user:User;
+		
+		protected const USER_OFFLINE:String = " [Offline] ";
 		
 		override public function initialize():void
 		{
@@ -59,7 +65,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			{
 				openChat(data);
 			}
-
+			
 			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
 			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
 			
@@ -69,6 +75,35 @@ package org.bigbluebutton.view.navigation.pages.chat
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			view.sendButton.addEventListener(MouseEvent.CLICK, onSendButtonClick);
+			
+			userSession.userList.userRemovedSignal.add(userRemoved);
+			userSession.userList.userAddedSignal.add(userAdded);
+		}
+		
+		/**
+		 * When user left the conference, add '[Offline]' to the username
+		 * and disable text input
+		 */
+		protected function userRemoved(userID:String):void
+		{
+			if (view != null)
+			{
+				view.inputMessage.enabled = false;
+				view.pageTitle.text += USER_OFFLINE
+			}
+		}
+		
+		/**
+		 * When user returned(refreshed the page) to the conference, remove '[Offline]' from the username
+		 * and enable text input
+		 */
+		protected function userAdded(userID:String):void
+		{
+			if (view != null)
+			{
+				view.inputMessage.enabled = true;
+				view.pageTitle.text =  view.pageTitle.text.substring(0, view.pageTitle.text.indexOf("[Offline]"));
+			}
 		}
 		
 		protected function createNewChat(user:User):void
@@ -76,8 +111,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			publicChat = false;
 			this.user = user;
 			view.pageTitle.text = user.name;
+			view.inputMessage.enabled = chatMessagesSession.getPrivateMessagesByUserId(user.userID).userOnline;
 			
-			dataProvider = user.privateChat.messages;
+			dataProvider = chatMessagesSession.getPrivateMessagesByUserId(user.userID).privateChat.messages;
 			list = view.list;
 			list.dataProvider = dataProvider;
 		}
@@ -87,6 +123,14 @@ package org.bigbluebutton.view.navigation.pages.chat
 			publicChat = currentPageDetails.publicChat;
 			user = currentPageDetails.user;
 			view.pageTitle.text = currentPageDetails.name;
+			if (!publicChat)
+			{
+				view.inputMessage.enabled = currentPageDetails.online;
+				if(currentPageDetails.online == false)
+				{
+					view.pageTitle.text += USER_OFFLINE;
+				}
+			}
 			
 			var chatMessages:ChatMessages = currentPageDetails.chatMessages as ChatMessages;
 			chatMessages.resetNewMessages();
@@ -94,7 +138,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			list = view.list;
 			list.dataProvider = dataProvider;
 		}
-				
+		
 		private function scrollUpdate(e:Event):void
 		{		
 			if (list.dataGroup.contentHeight > list.dataGroup.height)
@@ -102,7 +146,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 				list.dataGroup.verticalScrollPosition = list.dataGroup.contentHeight - list.dataGroup.height;
 			}
 		}
-				
+		
 		private function onSendButtonClick(e:MouseEvent):void
 		{
 			view.inputMessage.enabled = false;

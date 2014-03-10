@@ -44,6 +44,8 @@ package org.bigbluebutton
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.UserSettings;
 	import org.bigbluebutton.model.UserUISession;
+	import org.bigbluebutton.model.chat.ChatMessagesSession;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
@@ -76,6 +78,7 @@ package org.bigbluebutton
 			injector.map(IPresentServiceSO).toType(PresentServiceSO);
 			injector.map(IPresentationService).toSingleton(PresentationService);
 			injector.map(IPresentMessageReceiver).toSingleton(PresentMessageReceiver);
+			injector.map(IChatMessagesSession).toSingleton(ChatMessagesSession);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
 			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);

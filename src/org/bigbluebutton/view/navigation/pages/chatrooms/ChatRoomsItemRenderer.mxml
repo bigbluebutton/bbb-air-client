@@ -16,6 +16,8 @@
 			[Bindable]
 			private var _buttonStateVisible:Boolean = false;
 			
+			protected const USER_OFFLINE:String = " [Offline] ";
+			
 			override public function set data(obj:Object):void {
 				super.data = obj;
 				if(obj)
@@ -24,6 +26,12 @@
 					{
 						currentState = "NormalState";
 						title.text = obj.name;
+						
+						if (obj.online == false)
+						{
+							title.text += USER_OFFLINE;
+						}
+
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages;
 						newMessages.text.text = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)

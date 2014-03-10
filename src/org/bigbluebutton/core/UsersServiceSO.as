@@ -11,6 +11,7 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.ConnectionFailedEvent;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.User;
 	import org.osmf.logging.Log;
 
@@ -21,6 +22,9 @@ package org.bigbluebutton.core
 		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
+		
+		[Inject]
+		public var chatMessagesSession: IChatMessagesSession;
 		
 		private static const SO_NAME:String = "participantsSO";
 		
@@ -75,6 +79,7 @@ package org.bigbluebutton.core
 			trace("New user joined [" + ObjectUtil.toString(user) + "]");
 			trace(ObjectUtil.toString(joinedUser));
 			
+			chatMessagesSession.addUserToPrivateMessages(user.userID, user.name);
 			userSession.userList.addUser(user);
 			
 			participantStatusChange(user.userID, "hasStream", joinedUser.status.hasStream);

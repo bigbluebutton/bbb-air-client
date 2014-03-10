@@ -19,6 +19,8 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import org.bigbluebutton.model.chat.ChatMessage;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
+	import org.bigbluebutton.model.chat.PrivateChatMessage;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
@@ -41,6 +43,9 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		public var userSession: IUserSession;
 		
 		[Inject]
+		public var chatMessagesSession: IChatMessagesSession;
+		
+		[Inject]
 		public var userUISession: IUserUISession;
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
@@ -51,6 +56,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		protected var button:Object;
 		
 		private var _users:ArrayCollection; 
+		private var _usersAdded:Array = new Array();
 		
 		override public function initialize():void
 		{
@@ -59,18 +65,19 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dicUsertoChat = new Dictionary();
 			
 			dataProvider = new ArrayCollection();
-			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: userSession.publicChat});
+			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: chatMessagesSession.publicChat});
 			
-			_users = userSession.userList.users;
-			
-			for each(var user:User in _users)
+			for each(var privateChatObject:PrivateChatMessage in chatMessagesSession.privateChats)
 			{			
-				if(!user.me)
+				if(!userSession.userList.isUserMe(privateChatObject.userID))
 				{
-					user.privateChat.chatMessageChangeSignal.add(populateList);
-					if(user.privateChat.messages.length > 0)
+					privateChatObject.privateChat.chatMessageChangeSignal.add(populateList);
+					
+					privateChatObject.userOnline = userSession.userList.hasUser(privateChatObject.userID);
+					
+					if(privateChatObject.privateChat.messages.length > 0)
 					{
-						addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat, userID: user.userID });	
+						addChat({name: privateChatObject.userName, publicChat:false, user: userSession.userList.getUser(privateChatObject.userID), chatMessages: privateChatObject.privateChat, userID: privateChatObject.userID, online: privateChatObject.userOnline });	
 					}	
 				}
 			}
@@ -86,11 +93,55 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			// userSession.userlist.userChangeSignal.add(userChanged);
 			userSession.userList.userAddedSignal.add(newUserAdded);
 			
-			userSession.publicChat.chatMessageChangeSignal.add(refreshList);
+			chatMessagesSession.publicChat.chatMessageChangeSignal.add(refreshList);
 			
-			//userSession.userlist.userRemovedSignal.add(userRemoved);
+			userSession.userList.userRemovedSignal.add(userRemoved);
+			userSession.userList.userAddedSignal.add(userAdded);
 		}
-
+		
+		/**
+		 * if user removed, sets online property to false and updates data provider
+		 **/
+		public function userRemoved(userID:String):void
+		{
+			var userLeft:Object = getItemFromDataProvider(userID);
+			if (userLeft != null)
+			{
+				userLeft.online=false;
+				dataProvider.itemUpdated(userLeft);
+			}
+		}
+		
+		/**
+		 * if user removed, sets online property to true and updates data provider
+		 **/
+		public function userAdded(user:Object):void
+		{
+			chatMessagesSession.addUserToPrivateMessages(user.userID, user.name);
+			var userAdded:Object = getItemFromDataProvider(user.userID);
+			if (userAdded != null)
+			{
+				userAdded.online=true;
+				dataProvider.itemUpdated(userAdded);
+			}
+		}
+		
+		/**
+		 * Get item from data provider based on user id
+		 **/
+		public function getItemFromDataProvider(UserID:String):Object
+		{			
+			for(var i:int = 0; i < dataProvider.length; i++)
+			{
+				if (dataProvider.getItemAt(i).userID == UserID)
+				{
+					return dataProvider.getItemAt(i);
+				}
+			}
+			
+			return null;
+		}
+		
 		/*
 		When new message is being added to public chat, we only need to refresh data provider
 		*/
@@ -98,7 +149,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			dataProvider.refresh();
 		}
-
+		
 		/*
 		Raised when new user joins the meeting
 		*/
@@ -106,10 +157,12 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			if(!user.me)
 			{
-				user.privateChat.chatMessageChangeSignal.add(populateList);
-				if(user.privateChat.messages.length > 0)
+				var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(user.userID); 
+				pcm.privateChat.chatMessageChangeSignal.add(populateList);
+				
+				if(pcm.privateChat.messages.length > 0)
 				{
-					addChat({name: user.name, publicChat:false, user:user, chatMessages: user.privateChat, userID: user.userID });	
+					addChat({name: pcm.userName, publicChat:false, user: user, chatMessages: pcm.privateChat, userID: pcm.userID, online: true });	
 				}
 			}
 		}
@@ -125,7 +178,8 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			if((newUser != null) && (!isExist(newUser)))
 			{
-				addChat({name: newUser.name, publicChat:false, user:newUser, chatMessages: newUser.privateChat, userID: newUser.userID}, dataProvider.length-1);
+				var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(newUser.userID);
+				addChat({name: pcm.userName, publicChat:false, user: newUser, chatMessages: pcm.privateChat, userID: pcm.userID}, dataProvider.length-1);
 			}
 			
 			dataProvider.refresh();
@@ -148,20 +202,44 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			return false;	
 		}
 		
+		/**
+		 * Check if User was already added to the data provider
+		 **/
+		public function userAlreadyAdded(userID:String):Boolean
+		{
+			for each(var str:String in _usersAdded)
+			{
+				if (userID == str)
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * If user wasn't already added, adding to the data provider
+		 **/
 		private function addChat(chat:Object, pos:Number = NaN):void
 		{
-			if(isNaN(pos))
+			if (!userAlreadyAdded(chat.userID))
 			{
-				dataProvider.addItem(chat);
-			}
-			else
-			{
-				dataProvider.addItemAt(chat, pos);
+				_usersAdded.push(chat.userID);
+				
+				if(isNaN(pos))
+				{
+					dataProvider.addItem(chat);
+				}
+				else
+				{
+					dataProvider.addItemAt(chat, pos);
+				}		
 			}
 			
 			//dataProvider.setItemAt(button, dataProvider.length-1);
 			dataProvider.refresh();
-			//dicUsertoChat[chat.user] = chat;		
+			//dicUsertoChat[chat.user] = chat;				
 		}
 		
 		/*		
