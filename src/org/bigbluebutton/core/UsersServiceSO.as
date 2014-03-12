@@ -79,7 +79,6 @@ package org.bigbluebutton.core
 			trace("New user joined [" + ObjectUtil.toString(user) + "]");
 			trace(ObjectUtil.toString(joinedUser));
 			
-			chatMessagesSession.addUserToPrivateMessages(user.userID, user.name);
 			userSession.userList.addUser(user);
 			
 			participantStatusChange(user.userID, "hasStream", joinedUser.status.hasStream);

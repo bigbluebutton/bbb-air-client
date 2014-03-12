@@ -7,6 +7,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.FlexEvent;
+	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.core.IChatMessageReceiver;
 	import org.bigbluebutton.core.IChatMessageSender;
@@ -49,8 +50,6 @@ package org.bigbluebutton.view.navigation.pages.chat
 		protected var publicChat:Boolean = true;
 		protected var user:User;
 		
-		protected const USER_OFFLINE:String = " [Offline] ";
-		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -86,10 +85,10 @@ package org.bigbluebutton.view.navigation.pages.chat
 		 */
 		protected function userRemoved(userID:String):void
 		{
-			if (view != null)
+			if (view != null && user.userID == userID)
 			{
 				view.inputMessage.enabled = false;
-				view.pageTitle.text += USER_OFFLINE
+				view.pageTitle.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 			}
 		}
 		
@@ -97,12 +96,12 @@ package org.bigbluebutton.view.navigation.pages.chat
 		 * When user returned(refreshed the page) to the conference, remove '[Offline]' from the username
 		 * and enable text input
 		 */
-		protected function userAdded(userID:String):void
+		protected function userAdded(newuser:User):void
 		{
-			if (view != null)
+			if (view != null && user.userID == newuser.userID)
 			{
 				view.inputMessage.enabled = true;
-				view.pageTitle.text =  view.pageTitle.text.substring(0, view.pageTitle.text.indexOf("[Offline]"));
+				view.pageTitle.text = user.name;
 			}
 		}
 		
@@ -128,7 +127,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 				view.inputMessage.enabled = currentPageDetails.online;
 				if(currentPageDetails.online == false)
 				{
-					view.pageTitle.text += USER_OFFLINE;
+					view.pageTitle.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 				}
 			}
 			
@@ -204,6 +203,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			chatMessageSender.sendPrivateMessageOnSucessSignal.remove(onSendSucess);
 			chatMessageSender.sendPrivateMessageOnFailureSignal.remove(onSendFailure);
+			
+			userSession.userList.userRemovedSignal.remove(userRemoved);	
+			userSession.userList.userAddedSignal.remove(userAdded);
 			
 			view.dispose();
 			view = null;

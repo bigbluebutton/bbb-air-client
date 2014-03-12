@@ -255,23 +255,7 @@ package org.bigbluebutton.model
 					_me.presenter = true;
 			}
 		}
-		
-		/**
-		 * Check if User is Me based on a user id
-		 **/
-		public function isUserMe(userID:String):Boolean
-		{
-			for each(var user:User in _users)
-			{
-				if (user.userID == userID)
-				{
-					return user.me;
-				}
-			}
-			
-			return false;
-		}
-		
+
 		private function clearPresenter():void
 		{
 			for each(var user:User in _users)

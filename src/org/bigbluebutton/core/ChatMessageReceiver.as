@@ -28,7 +28,7 @@ package org.bigbluebutton.core
 				default:
 					//   LogUtil.warn("Cannot handle message [" + messageName + "]");
 			}
-		}
+ 		}
 		
 		private function handleChatRequestMessageHistoryReply(message:Object):void {
 			var msgCount:Number = message.count as Number;
@@ -68,8 +68,10 @@ package org.bigbluebutton.core
 			msg.toUsername = message.toUsername;
 			msg.message = message.message;
 			
-			var userId:String = (msg.fromUserID == userSession.userId? msg.toUserID: msg.fromUserID);		
-			chatMessagesSession.sendPrivateMessagesByUserId(userId, msg);
+			var userId:String = (msg.fromUserID == userSession.userId? msg.toUserID: msg.fromUserID);
+			var userName:String = (msg.fromUserID == userSession.userId? msg.toUsername: msg.fromUsername);
+			
+			chatMessagesSession.newPrivateMessage(userId, userName,  msg);
 		}
 	}
 }

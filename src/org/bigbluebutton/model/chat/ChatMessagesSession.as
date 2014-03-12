@@ -1,11 +1,14 @@
 package org.bigbluebutton.model.chat
 {
 	import mx.collections.ArrayCollection;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 	
 	public class ChatMessagesSession implements IChatMessagesSession
 	{
 		private var _publicChat:ChatMessages = new ChatMessages();
 		private var _privateChats:ArrayCollection = new ArrayCollection();
+		private var _chatMessageChangeSignal:ISignal = new Signal();
 		
 		public function set publicChat(value:ChatMessages):void
 		{
@@ -26,12 +29,13 @@ package org.bigbluebutton.model.chat
 		 * Create private chat for the new user 
 		 * 
 		 * */
-		public function addUserToPrivateMessages(userId:String, userName:String):void
+		public function addUserToPrivateMessages(userId:String, userName:String):PrivateChatMessage
 		{
 			var pcm:PrivateChatMessage = new PrivateChatMessage();
 			pcm.userID = userId;
 			pcm.userName = userName;
 			_privateChats.addItem(pcm);
+			return pcm;
 		}
 		
 		/**
@@ -40,7 +44,7 @@ package org.bigbluebutton.model.chat
 		 * @param UserId
 		 * @param newMessage
 		 */
-		public function sendPrivateMessagesByUserId(userId:String, newMessage:ChatMessageVO):void
+		public function newPrivateMessage(userId:String, userName:String, newMessage:ChatMessageVO):void
 		{
 			if (_privateChats != null)
 			{
@@ -49,8 +53,15 @@ package org.bigbluebutton.model.chat
 					if (privateMessage.userID == userId)
 					{
 						privateMessage.privateChat.newChatMessage(newMessage);
+						return;
 					}
 				}
+				
+				// if chat wasn't added to _privateChats colletion yet
+				var pcm:PrivateChatMessage = addUserToPrivateMessages(userId, userName);
+				pcm.privateChat.newChatMessage(newMessage);
+				
+				chatMessageDispatchSignal(userId);
 			}
 		}
 		
@@ -73,6 +84,22 @@ package org.bigbluebutton.model.chat
 			}
 			
 			return null;		
+		}
+		
+		public function chatMessageDispatchSignal(UserID:String):void
+		{
+			if(_chatMessageChangeSignal)
+			{
+				_chatMessageChangeSignal.dispatch(UserID);
+			}
+		}
+		
+		public function get chatMessageChangeSignal():ISignal {
+			return _chatMessageChangeSignal;
+		}
+		
+		public function set chatMessageChangeSignal(signal:ISignal):void {
+			_chatMessageChangeSignal = signal;
 		}
 	}
 }

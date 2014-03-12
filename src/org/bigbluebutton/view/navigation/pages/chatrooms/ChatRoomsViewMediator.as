@@ -67,19 +67,16 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dataProvider = new ArrayCollection();
 			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat:true, user:null, chatMessages: chatMessagesSession.publicChat});
 			
-			for each(var privateChatObject:PrivateChatMessage in chatMessagesSession.privateChats)
-			{			
-				if(!userSession.userList.isUserMe(privateChatObject.userID))
+			for each(var chatObject:PrivateChatMessage in chatMessagesSession.privateChats)
+			{
+				chatObject.userOnline = userSession.userList.hasUser(chatObject.userID);
+				chatObject.privateChat.chatMessageChangeSignal.add(populateList);
+				
+				if(chatObject.privateChat.messages.length > 0)
 				{
-					privateChatObject.privateChat.chatMessageChangeSignal.add(populateList);
-					
-					privateChatObject.userOnline = userSession.userList.hasUser(privateChatObject.userID);
-					
-					if(privateChatObject.privateChat.messages.length > 0)
-					{
-						addChat({name: privateChatObject.userName, publicChat:false, user: userSession.userList.getUser(privateChatObject.userID), chatMessages: privateChatObject.privateChat, userID: privateChatObject.userID, online: privateChatObject.userOnline });	
-					}	
+					addChat({name: chatObject.userName, publicChat:false, user: userSession.userList.getUser(chatObject.userID), chatMessages: chatObject.privateChat, userID: chatObject.userID, online: chatObject.userOnline });	
 				}
+				
 			}
 			
 			button = {button:true};
@@ -91,12 +88,31 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			list.addEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 			
 			// userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userList.userAddedSignal.add(newUserAdded);
+			// userSession.userList.userAddedSignal.add(newUserAdded);
 			
 			chatMessagesSession.publicChat.chatMessageChangeSignal.add(refreshList);
 			
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
+			
+			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
+		}
+		
+		/**
+		 * When new message is received, add user to private messages and subscribe to messages update
+		 * */
+		public function newMessageReceived(userID:String):void
+		{
+			var user:User = userSession.userList.getUser(userID);
+			
+			var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(userID);
+			
+			pcm.privateChat.chatMessageChangeSignal.add(populateList);
+			
+			if(pcm.privateChat.messages.length > 0)
+			{
+				addChat({name: pcm.userName, publicChat:false, user: user, chatMessages: pcm.privateChat, userID: pcm.userID, online: true }, dataProvider.length-1);	
+			}
 		}
 		
 		/**
@@ -117,7 +133,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		 **/
 		public function userAdded(user:Object):void
 		{
-			chatMessagesSession.addUserToPrivateMessages(user.userID, user.name);
 			var userAdded:Object = getItemFromDataProvider(user.userID);
 			if (userAdded != null)
 			{
@@ -150,23 +165,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			dataProvider.refresh();
 		}
 		
-		/*
-		Raised when new user joins the meeting
-		*/
-		public function newUserAdded(user:User):void
-		{
-			if(!user.me)
-			{
-				var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(user.userID); 
-				pcm.privateChat.chatMessageChangeSignal.add(populateList);
-				
-				if(pcm.privateChat.messages.length > 0)
-				{
-					addChat({name: pcm.userName, publicChat:false, user: user, chatMessages: pcm.privateChat, userID: pcm.userID, online: true });	
-				}
-			}
-		}
-		
 		/**
 		 * Populate ArrayCollection after a new message was received 
 		 * 
@@ -176,10 +174,10 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			var newUser:User = userSession.userList.getUserByUserId(UserID);
 			
-			if((newUser != null) && (!isExist(newUser)))
-			{
+			if((newUser != null) && (!isExist(newUser)) && (!newUser.me))
+			{	
 				var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(newUser.userID);
-				addChat({name: pcm.userName, publicChat:false, user: newUser, chatMessages: pcm.privateChat, userID: pcm.userID}, dataProvider.length-1);
+				addChat({name: pcm.userName, publicChat:false, user: newUser, chatMessages: pcm.privateChat, userID: pcm.userID, online: true}, dataProvider.length-1);			
 			}
 			
 			dataProvider.refresh();
@@ -205,7 +203,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		/**
 		 * Check if User was already added to the data provider
 		 **/
-		public function userAlreadyAdded(userID:String):Boolean
+		private function userAlreadyAdded(userID:String):Boolean
 		{
 			for each(var str:String in _usersAdded)
 			{
@@ -322,12 +320,17 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			//			list.removeEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			//userSession.userlist.userChangeSignal.add(userChanged);
-			userSession.userList.userAddedSignal.remove(addChat);
+			//userSession.userList.userAddedSignal.remove(addChat);
 			//userSession.userlist.userRemovedSignal.add(userRemoved);
+			
+			chatMessagesSession.publicChat.chatMessageChangeSignal.remove(refreshList);
+			userSession.userList.userRemovedSignal.remove(userRemoved);
+			userSession.userList.userAddedSignal.remove(userAdded);
+			chatMessagesSession.chatMessageChangeSignal.remove(newMessageReceived);
 			
 			list.removeEventListener(IndexChangeEvent.CHANGE, onIndexChangeHandler);
 			
-			//			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
+			//view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			
 			view.dispose();
 			view = null;
