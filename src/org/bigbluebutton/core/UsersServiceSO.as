@@ -11,7 +11,6 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.ConnectionFailedEvent;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
-	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.User;
 	import org.osmf.logging.Log;
 
@@ -22,9 +21,6 @@ package org.bigbluebutton.core
 		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
-		
-		[Inject]
-		public var chatMessagesSession: IChatMessagesSession;
 		
 		private static const SO_NAME:String = "participantsSO";
 		

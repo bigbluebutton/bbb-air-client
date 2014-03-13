@@ -98,7 +98,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		 */
 		protected function userAdded(newuser:User):void
 		{
-			if (view != null && user.userID == newuser.userID)
+			if ((view != null) && (user != null) && (user.userID == newuser.userID))
 			{
 				view.inputMessage.enabled = true;
 				view.pageTitle.text = user.name;
@@ -125,9 +125,10 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if (!publicChat)
 			{
 				view.inputMessage.enabled = currentPageDetails.online;
-				if(currentPageDetails.online == false)
+				// if user went offline, and 'OFFLINE' marker is not already part of the string, add OFFLINE to the username
+				if((currentPageDetails.online == false) && (view.pageTitle.text.indexOf(ResourceManager.getInstance().getString('resources', 'userDetail.userOffline')) == -1))
 				{
-					view.pageTitle.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+					view.pageTitle.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 				}
 			}
 			
