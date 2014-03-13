@@ -255,7 +255,7 @@ package org.bigbluebutton.model
 					_me.presenter = true;
 			}
 		}
-		
+
 		private function clearPresenter():void
 		{
 			for each(var user:User in _users)

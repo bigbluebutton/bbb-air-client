@@ -24,6 +24,12 @@
 					{
 						currentState = "NormalState";
 						title.text = obj.name;
+						
+						if (obj.online == false)
+						{
+							title.text += resourceManager.getString('resources', 'userDetail.userOffline');
+						}
+
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages;
 						newMessages.text.text = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)

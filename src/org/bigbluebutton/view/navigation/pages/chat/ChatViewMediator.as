@@ -7,6 +7,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 	
 	import mx.collections.ArrayCollection;
 	import mx.events.FlexEvent;
+	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.core.IChatMessageReceiver;
 	import org.bigbluebutton.core.IChatMessageSender;
@@ -18,12 +19,15 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import org.bigbluebutton.model.chat.ChatMessage;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	import spark.components.List;
+	import spark.components.View;
+	import spark.events.ViewNavigatorEvent;
 	
 	public class ChatViewMediator extends Mediator
 	{
@@ -39,17 +43,21 @@ package org.bigbluebutton.view.navigation.pages.chat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
+		[Inject]
+		public var chatMessagesSession: IChatMessagesSession;
+		
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
 		protected var list:List;
 		protected var publicChat:Boolean = true;
 		protected var user:User;
+		protected var data:Object;
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			var data:Object = userUISession.currentPageDetails;
+			data = userUISession.currentPageDetails;
 			
 			if(data is User)
 			{
@@ -59,7 +67,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			{
 				openChat(data);
 			}
-
+			
 			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
 			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
 			
@@ -69,6 +77,57 @@ package org.bigbluebutton.view.navigation.pages.chat
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			view.sendButton.addEventListener(MouseEvent.CLICK, onSendButtonClick);
+			
+			userSession.userList.userRemovedSignal.add(userRemoved);
+			userSession.userList.userAddedSignal.add(userAdded);
+			
+			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
+		}
+		
+		/**
+		 * Reset new messages count when user leaves the page
+		 * */
+		protected function viewDeactivateHandler(event:ViewNavigatorEvent):void
+		{
+			var chatMessages:ChatMessages = null;
+			
+			if (data is User)
+			{
+				chatMessages = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat;
+			}
+			else
+			{
+				chatMessages = data.chatMessages as ChatMessages;
+			}
+			
+			chatMessages.resetNewMessages();
+		}
+		
+		
+		/**
+		 * When user left the conference, add '[Offline]' to the username
+		 * and disable text input
+		 */
+		protected function userRemoved(userID:String):void
+		{
+			if (view != null && user.userID == userID)
+			{
+				view.inputMessage.enabled = false;
+				view.pageTitle.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+			}
+		}
+		
+		/**
+		 * When user returned(refreshed the page) to the conference, remove '[Offline]' from the username
+		 * and enable text input
+		 */
+		protected function userAdded(newuser:User):void
+		{
+			if ((view != null) && (user != null) && (user.userID == newuser.userID))
+			{
+				view.inputMessage.enabled = true;
+				view.pageTitle.text = user.name;
+			}
 		}
 		
 		protected function createNewChat(user:User):void
@@ -76,8 +135,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			publicChat = false;
 			this.user = user;
 			view.pageTitle.text = user.name;
+			view.inputMessage.enabled = chatMessagesSession.getPrivateMessages(user.userID, user.name).userOnline;
 			
-			dataProvider = user.privateChat.messages;
+			dataProvider = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat.messages;
 			list = view.list;
 			list.dataProvider = dataProvider;
 		}
@@ -87,6 +147,15 @@ package org.bigbluebutton.view.navigation.pages.chat
 			publicChat = currentPageDetails.publicChat;
 			user = currentPageDetails.user;
 			view.pageTitle.text = currentPageDetails.name;
+			if (!publicChat)
+			{
+				view.inputMessage.enabled = currentPageDetails.online;
+				// if user went offline, and 'OFFLINE' marker is not already part of the string, add OFFLINE to the username
+				if((currentPageDetails.online == false) && (view.pageTitle.text.indexOf(ResourceManager.getInstance().getString('resources', 'userDetail.userOffline')) == -1))
+				{
+					view.pageTitle.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+				}
+			}
 			
 			var chatMessages:ChatMessages = currentPageDetails.chatMessages as ChatMessages;
 			chatMessages.resetNewMessages();
@@ -94,7 +163,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			list = view.list;
 			list.dataProvider = dataProvider;
 		}
-				
+		
 		private function scrollUpdate(e:Event):void
 		{		
 			if (list.dataGroup.contentHeight > list.dataGroup.height)
@@ -102,7 +171,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 				list.dataGroup.verticalScrollPosition = list.dataGroup.contentHeight - list.dataGroup.height;
 			}
 		}
-				
+		
 		private function onSendButtonClick(e:MouseEvent):void
 		{
 			view.inputMessage.enabled = false;
@@ -160,6 +229,11 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			chatMessageSender.sendPrivateMessageOnSucessSignal.remove(onSendSucess);
 			chatMessageSender.sendPrivateMessageOnFailureSignal.remove(onSendFailure);
+			
+			userSession.userList.userRemovedSignal.remove(userRemoved);	
+			userSession.userList.userAddedSignal.remove(userAdded);
+			
+			(view as View).removeEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 			
 			view.dispose();
 			view = null;

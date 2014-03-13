@@ -216,13 +216,6 @@ package org.bigbluebutton.model
 			_changeSignal = signal;
 		}
 		
-		private var _privateChat:ChatMessages = new ChatMessages();
-		
-		public function get privateChat():ChatMessages
-		{
-			return _privateChat;
-		}
-		
 		public function isModerator():Boolean
 		{
 			return role == MODERATOR;

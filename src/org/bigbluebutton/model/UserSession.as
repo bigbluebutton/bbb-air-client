@@ -24,7 +24,6 @@ package org.bigbluebutton.model
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
 		protected var _userList:UserList;
-		protected var _publicChat:ChatMessages;
 		protected var _presentationList:PresentationList;
 		protected var _guestSignal:ISignal = new Signal();
 
@@ -107,13 +106,7 @@ package org.bigbluebutton.model
 		public function UserSession()
 		{
 			_userList = new UserList();
-			_publicChat = new ChatMessages();
 			_presentationList = new PresentationList();
-		}
-		
-		public function get publicChat():ChatMessages
-		{
-			return _publicChat;
 		}
 		
 		public function get presentationList():PresentationList
