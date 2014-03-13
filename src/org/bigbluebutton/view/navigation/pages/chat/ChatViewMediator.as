@@ -81,13 +81,13 @@ package org.bigbluebutton.view.navigation.pages.chat
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
 			
-			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, updateNewMessages);
+			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 		}
 		
 		/**
 		 * Reset new messages count when user leaves the page
 		 * */
-		protected function updateNewMessages(event:ViewNavigatorEvent):void
+		protected function viewDeactivateHandler(event:ViewNavigatorEvent):void
 		{
 			var chatMessages:ChatMessages = null;
 			
@@ -232,6 +232,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			userSession.userList.userRemovedSignal.remove(userRemoved);	
 			userSession.userList.userAddedSignal.remove(userAdded);
+			
+			(view as View).removeEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 			
 			view.dispose();
 			view = null;
