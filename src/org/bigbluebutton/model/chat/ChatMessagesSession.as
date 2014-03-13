@@ -70,7 +70,7 @@ package org.bigbluebutton.model.chat
 		 * 
 		 * @param UserId
 		 */
-		public function getPrivateMessagesByUserId(userId:String):PrivateChatMessage
+		public function getPrivateMessages(userId:String, userName:String):PrivateChatMessage
 		{
 			if (_privateChats != null)
 			{
@@ -83,7 +83,8 @@ package org.bigbluebutton.model.chat
 				}
 			}
 			
-			return null;		
+			// if user is not in private messages yet, add one
+			return addUserToPrivateMessages(userId, userName);	
 		}
 		
 		public function chatMessageDispatchSignal(UserID:String):void

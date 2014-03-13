@@ -105,7 +105,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			var user:User = userSession.userList.getUser(userID);
 			
-			var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(userID);
+			var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessages(user.userID, user.name);
 			
 			pcm.privateChat.chatMessageChangeSignal.add(populateList);
 			
@@ -176,7 +176,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			if((newUser != null) && (!isExist(newUser)) && (!newUser.me))
 			{	
-				var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessagesByUserId(newUser.userID);
+				var pcm:PrivateChatMessage = chatMessagesSession.getPrivateMessages(newUser.userID, newUser.name);
 				addChat({name: pcm.userName, publicChat:false, user: newUser, chatMessages: pcm.privateChat, userID: pcm.userID, online: true}, dataProvider.length-1);			
 			}
 			

@@ -26,6 +26,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	import spark.components.List;
+	import spark.components.View;
+	import spark.events.ViewNavigatorEvent;
 	
 	public class ChatViewMediator extends Mediator
 	{
@@ -49,12 +51,13 @@ package org.bigbluebutton.view.navigation.pages.chat
 		protected var list:List;
 		protected var publicChat:Boolean = true;
 		protected var user:User;
+		protected var data:Object;
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			var data:Object = userUISession.currentPageDetails;
+			data = userUISession.currentPageDetails;
 			
 			if(data is User)
 			{
@@ -77,7 +80,29 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
+			
+			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, updateNewMessages);
 		}
+		
+		/**
+		 * Reset new messages count when user leaves the page
+		 * */
+		protected function updateNewMessages(event:ViewNavigatorEvent):void
+		{
+			var chatMessages:ChatMessages = null;
+			
+			if (data is User)
+			{
+				chatMessages = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat;
+			}
+			else
+			{
+				chatMessages = data.chatMessages as ChatMessages;
+			}
+			
+			chatMessages.resetNewMessages();
+		}
+		
 		
 		/**
 		 * When user left the conference, add '[Offline]' to the username
@@ -110,9 +135,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			publicChat = false;
 			this.user = user;
 			view.pageTitle.text = user.name;
-			view.inputMessage.enabled = chatMessagesSession.getPrivateMessagesByUserId(user.userID).userOnline;
+			view.inputMessage.enabled = chatMessagesSession.getPrivateMessages(user.userID, user.name).userOnline;
 			
-			dataProvider = chatMessagesSession.getPrivateMessagesByUserId(user.userID).privateChat.messages;
+			dataProvider = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat.messages;
 			list = view.list;
 			list.dataProvider = dataProvider;
 		}

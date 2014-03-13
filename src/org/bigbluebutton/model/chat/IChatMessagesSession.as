@@ -5,7 +5,7 @@ package org.bigbluebutton.model.chat
 	
 	public interface IChatMessagesSession
 	{
-		function getPrivateMessagesByUserId(userId:String):PrivateChatMessage;
+		function getPrivateMessages(userId:String, userName:String):PrivateChatMessage;
 		function newPrivateMessage(userId:String, userName:String, newMessage:ChatMessageVO):void;
 		function addUserToPrivateMessages(userId:String, userName:String):PrivateChatMessage;
 		function get publicChat():ChatMessages;
