@@ -51,17 +51,19 @@ package org.bigbluebutton.core.util {
 		}
 		
 		public function set active(val:Boolean):void {
-			if (val==true) {
-				if (!_accl.hasEventListener(AccelerometerEvent.UPDATE)){
-					_accl.addEventListener(AccelerometerEvent.UPDATE, getAcceleromOrientation);
+			if (_accl != null) {
+				if (val==true) {
+					if (!_accl.hasEventListener(AccelerometerEvent.UPDATE)){
+						_accl.addEventListener(AccelerometerEvent.UPDATE, getAcceleromOrientation);
+					}
+					_checkTimer.start();
+					currentOrientation = _recentOrientation;
+				} else {
+					if (_accl.hasEventListener(AccelerometerEvent.UPDATE)){
+						_accl.removeEventListener(AccelerometerEvent.UPDATE, getAcceleromOrientation);
+					}
+					_checkTimer.stop();
 				}
-				_checkTimer.start();
-				currentOrientation = _recentOrientation;
-			} else {
-				if (_accl.hasEventListener(AccelerometerEvent.UPDATE)){
-					_accl.removeEventListener(AccelerometerEvent.UPDATE, getAcceleromOrientation);
-				}
-				_checkTimer.stop();
 			}
 		}
 		
