@@ -7,10 +7,10 @@ package org.bigbluebutton.command
 		public function RaiseHandSignal()
 		{
 			/**
-			 * @1 handRaised
-			 * @2 userId
+			 * @1 userId 
+			 * @2 handRaised
 			 */
-			super(Boolean, String);
+			super(String, Boolean);
 		}
 	}
 }
