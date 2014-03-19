@@ -41,7 +41,7 @@ package org.bigbluebutton.view.ui
 		 */
 		override public function destroy():void
 		{
-			(view as MicButton).addEventListener(MouseEvent.CLICK, mouseEventClickHandler);
+			(view as MicButton).removeEventListener(MouseEvent.CLICK, mouseEventClickHandler);
 			userSession.userList.userChangeSignal.remove(userChangeHandler);
 			
 			super.destroy();

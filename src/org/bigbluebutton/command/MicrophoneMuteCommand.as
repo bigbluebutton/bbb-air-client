@@ -22,9 +22,9 @@ package org.bigbluebutton.command
 			trace("MicrophoneMuteCommand.execute() - user.muted = " + user.muted);
 			if (user != null) {
 				if (user.muted) {
-					userService.mute(user);
-				} else {
 					userService.unmute(user);
+				} else {
+					userService.mute(user);
 				}
 			}
 		}
