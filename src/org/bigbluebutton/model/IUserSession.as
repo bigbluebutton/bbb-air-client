@@ -29,7 +29,6 @@ package org.bigbluebutton.model
 		function set voiceStreamManager(value:VoiceStreamManager):void
 		function get videoConnection():IVideoConnection
 		function set videoConnection(value:IVideoConnection):void
-		function get publicChat():ChatMessages
 		function get presentationList():PresentationList
 		function get guestSignal():ISignal
 	}

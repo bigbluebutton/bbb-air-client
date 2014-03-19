@@ -185,13 +185,6 @@ package org.bigbluebutton.model
 			
 		}
 		
-		private var _privateChat:ChatMessages = new ChatMessages();
-		
-		public function get privateChat():ChatMessages
-		{
-			return _privateChat;
-		}
-		
 		public function isModerator():Boolean
 		{
 			return role == MODERATOR;
