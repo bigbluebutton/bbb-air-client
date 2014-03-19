@@ -64,5 +64,10 @@ package org.bigbluebutton.core
 			usersServiceSO.disconnect();
 			listenersServiceSO.disconnect();
 		}
+		
+		public function raiseHand(userID:String, raise:Boolean):void
+		{
+			usersServiceSO.raiseHand(userID, raise);
+		}
 	}
 }

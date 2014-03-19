@@ -13,7 +13,7 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.osmf.logging.Log;
-
+	
 	public class UsersServiceSO extends BaseServiceSO implements IUsersServiceSO
 	{
 		[Inject]
@@ -155,6 +155,17 @@ package org.bigbluebutton.core
 				"hasStream",
 				Boolean(streamName.length > 0).toString() + ",stream=" + streamName
 			);
+		}
+		
+		public function raiseHand(userID:String, raise:Boolean):void {
+			var nc:NetConnection = userSession.mainConnection.connection;			
+			nc.call(
+				"participants.setParticipantStatus", // Remote function name
+				responder,
+				userID,
+				"raiseHand",
+				raise
+			); // _netConnection.call
 		}
 		
 		private var responder:Responder = new Responder(
