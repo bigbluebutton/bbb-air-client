@@ -10,7 +10,7 @@ package org.bigbluebutton.command
 		public var userService: IUsersService;
 		
 		[Inject]
-		public var userIds: String;
+		public var userId: String;
 		
 		[Inject]
 		public var raised: Boolean;
@@ -18,7 +18,7 @@ package org.bigbluebutton.command
 		override public function execute():void
 		{
 		    trace("RaiseHandCommand.execute() - handRaised = " + raised);
-			userService.raiseHand(userIds, raised);
+			userService.raiseHand(userId, raised);
 		}
 	}
 }

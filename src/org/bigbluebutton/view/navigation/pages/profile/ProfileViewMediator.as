@@ -91,14 +91,6 @@ package org.bigbluebutton.view.navigation.pages.profile
 			}
 		}
 		
-		private function userChanged(user0:User, property:String = null):void
-		{
-			if (user0.userID == userSession.userId)
-			{
-				
-			}
-		}
-		
 		override public function destroy():void
 		{
 			super.destroy();
