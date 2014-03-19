@@ -42,5 +42,15 @@ package org.bigbluebutton.view.navigation.pages.profile
 		{
 			return micOnOffTxt0;
 		}
+		
+		public function get raiseHandText():Label
+		{
+			return raiseHandLabel0;
+		}
+		
+		public function get raiseHandButton():Button
+		{
+			return raiseHandButton0;
+		}
 	}
 }

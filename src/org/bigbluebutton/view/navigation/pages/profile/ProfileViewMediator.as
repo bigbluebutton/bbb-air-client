@@ -6,10 +6,12 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.command.ShareCameraSignal;
+	import org.bigbluebutton.command.RaiseHandSignal;
 	import org.bigbluebutton.command.ShareMicrophoneSignal;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
+	
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -27,7 +29,11 @@ package org.bigbluebutton.view.navigation.pages.profile
 		
 		[Inject]
 		public var shareMicrophoneSignal: ShareMicrophoneSignal;
-
+		
+		[Inject] 
+		public var raiseHandSignal: RaiseHandSignal;
+		
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -38,9 +44,11 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 			view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
 			view.micOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.voiceJoined? 'profile.settings.mic.on':'profile.settings.mic.off');
+			view.raiseHandText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 			
 			view.shareCameraButton.addEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
+			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
@@ -50,9 +58,12 @@ package org.bigbluebutton.view.navigation.pages.profile
 					view.micOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
 				} else if (type == UserList.HAS_STREAM) {
 					view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.hasStream ? 'profile.settings.camera.on' : 'profile.settings.camera.off');
+				} else if (type == UserList.RAISE_HAND) { 
+					view.raiseHandText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 				}
 			}
 		}
+		
 		
 		protected function onShareCameraClick(event:MouseEvent):void
 		{
@@ -64,6 +75,30 @@ package org.bigbluebutton.view.navigation.pages.profile
 			shareMicrophoneSignal.dispatch(!userSession.userList.me.voiceJoined);
 		}
 		
+		protected function onRaiseHandClick(event:MouseEvent):void
+		{
+			if (!userSession.userList.me.raiseHand)
+			{
+				userSession.userList.me.raiseHand = true;
+				view.raiseHandText.text = ResourceManager.getInstance().getString('resources', 'profile.settings.handLower');
+				raiseHandSignal.dispatch(true, userSession.userId);
+			}
+			else
+			{
+				userSession.userList.me.raiseHand = false;
+				view.raiseHandText.text = ResourceManager.getInstance().getString('resources', 'profile.settings.handRaise');
+				raiseHandSignal.dispatch(false, userSession.userId);
+			}
+		}
+		
+		private function userChanged(user0:User, property:String = null):void
+		{
+			if (user0.userID == userSession.userId)
+			{
+				
+			}
+		}
+		
 		override public function destroy():void
 		{
 			super.destroy();
@@ -72,6 +107,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 			view.shareCameraButton.removeEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.shareMicButton.removeEventListener(MouseEvent.CLICK, onShareMicClick);
+			view.raiseHandButton.removeEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			
 			view.dispose();
 			view = null;

@@ -13,5 +13,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 		function get cameraOnOffText():Label
 		function get shareMicButton():Button;
 		function get micOnOffText():Label
+		function get raiseHandText():Label;
+		function get raiseHandButton():Button;
 	}
 }

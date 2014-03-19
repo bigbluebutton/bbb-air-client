@@ -12,5 +12,6 @@ package org.bigbluebutton.core
 		function unmute(user:User):void
 		function addStream(userId:String, streamName:String):void
 		function removeStream(userId:String, streamName:String):void
+		function raiseHand(userID:String, raise:Boolean):void;
 	}
 }

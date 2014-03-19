@@ -5,6 +5,9 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
 	import robotlegs.bender.framework.api.IInjector;
+	
+	import org.bigbluebutton.command.RaiseHandCommand;
+	import org.bigbluebutton.command.RaiseHandSignal;
 
 
 	public class ProfileConfig implements IConfig
@@ -48,6 +51,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 		 */
 		private function signals(): void
 		{
+			signalCommandMap.map(RaiseHandSignal).toCommand(RaiseHandCommand);  
 			//signalCommandMap.map(ButtonTestSignal).toCommand(ButtonTestCommand);
 		}	
 	}
