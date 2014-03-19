@@ -62,7 +62,7 @@
 				<s:Label id="userName" x="1" y="44" width="299" fontFamily="Georgia" fontSize="18" textAlign="center"/>
 				<s:Label x="11" y="5" width="279" color="#BEBEBE" text="{resourceManager.getString('resources', 'profile.participant')}"/>
 			</s:Group>
-			<s:Group width="300" height="100">
+			<s:Group width="300" height="150">
 				<s:layout>
 					<s:VerticalLayout gap="5"
 									  paddingBottom="10"

@@ -63,8 +63,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 				}
 			}
 		}
-		
-		
+			
 		protected function onShareCameraClick(event:MouseEvent):void
 		{
 			shareCameraSignal.dispatch(!userSession.userList.me.hasStream);
@@ -76,19 +75,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 		}
 		
 		protected function onRaiseHandClick(event:MouseEvent):void
-		{
-			if (!userSession.userList.me.raiseHand)
-			{
-				userSession.userList.me.raiseHand = true;
-				view.raiseHandText.text = ResourceManager.getInstance().getString('resources', 'profile.settings.handLower');
-				raiseHandSignal.dispatch(true, userSession.userId);
-			}
-			else
-			{
-				userSession.userList.me.raiseHand = false;
-				view.raiseHandText.text = ResourceManager.getInstance().getString('resources', 'profile.settings.handRaise');
-				raiseHandSignal.dispatch(false, userSession.userId);
-			}
+		{			
+			raiseHandSignal.dispatch(!userSession.userList.me.raiseHand, userSession.userId);
 		}
 		
 		override public function destroy():void
