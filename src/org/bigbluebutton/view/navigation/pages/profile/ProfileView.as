@@ -23,19 +23,24 @@ package org.bigbluebutton.view.navigation.pages.profile
 			return userName;
 		}
 
-		public function get cameraButton():Button
+		public function get shareCameraButton():Button
 		{
-			return cameraButton0;
+			return shareCameraBtn0;
 		}
 
-		public function get cameraOnOFFText():Label
+		public function get cameraOnOffText():Label
 		{
-			return cameraOnOFFText0;
+			return cameraOnOffTxt0;
 		}
 		
-		public function get cameraStatus():Group
+		public function get shareMicButton():Button
 		{
-			return cameraStatus0;
+			return shareMicBtn0;
+		}
+		
+		public function get micOnOffText():Label
+		{
+			return micOnOffTxt0;
 		}
 	}
 }

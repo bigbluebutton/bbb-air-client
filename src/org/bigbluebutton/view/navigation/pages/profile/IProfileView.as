@@ -9,8 +9,9 @@ package org.bigbluebutton.view.navigation.pages.profile
 	public interface IProfileView extends IView
 	{
 		function get userNameText():Label;
-		function get cameraButton():Button;
-		function get cameraOnOFFText():Label
-		function get cameraStatus():Group
+		function get shareCameraButton():Button;
+		function get cameraOnOffText():Label
+		function get shareMicButton():Button;
+		function get micOnOffText():Label
 	}
 }

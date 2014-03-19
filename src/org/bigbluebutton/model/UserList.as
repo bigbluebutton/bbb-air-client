@@ -11,6 +11,13 @@ package org.bigbluebutton.model
 	
 	public class UserList
 	{
+		public static const HAS_STREAM:int = 1;
+		public static const PRESENTER:int = 2;
+		public static const JOIN_AUDIO:int = 3;
+		public static const MUTE:int = 4;
+		public static const RAISE_HAND:int = 5;
+		public static const LOCKED:int = 6;
+		
 		private var _users:ArrayCollection;	
 		
 		[Bindable]
@@ -157,7 +164,6 @@ package org.bigbluebutton.model
 					_me = newuser;
 				}						
 				
-				newuser.signal = _userChangeSignal;
 				_users.addItem(newuser);
 				_users.refresh();
 				
@@ -232,7 +238,7 @@ package org.bigbluebutton.model
 			if (u.presenter) {
 				u.presenter = false;
 				
-				userChangeSignal.dispatch(u);
+				userChangeSignal.dispatch(u, PRESENTER);
 				
 				if (u.me)
 					_me.presenter = false;
@@ -249,7 +255,7 @@ package org.bigbluebutton.model
 				
 				user.presenter = true;
 				
-				userChangeSignal.dispatch(user);
+				userChangeSignal.dispatch(user, PRESENTER);
 				
 				if (user.me)
 					_me.presenter = true;
@@ -268,13 +274,12 @@ package org.bigbluebutton.model
 			var p:Object = getUserIndex(userID);
 			
 			if (p) {
-				p.participant.hasStream = hasStream;
-				p.participant.streamName = streamName;
+				var user:User = p.participant as User;
 				
-				if (p.participant.me)
-					_me.hasStream = hasStream;
+				user.hasStream = hasStream;
+				user.streamName = streamName;
 				
-				userChangeSignal.dispatch(p.participant, "hasStream");
+				userChangeSignal.dispatch(user, HAS_STREAM);
 			}
 		}
 		
@@ -282,19 +287,79 @@ package org.bigbluebutton.model
 			var p:Object = getUserIndex(userID);
 			
 			if (p) {
+				var user:User = p.participant as User;
+				
 				p.participant.raiseHand = value;
 				
-				userChangeSignal.dispatch(p.participant);
+				userChangeSignal.dispatch(p.participant, RAISE_HAND);
+			}
+		}
+		
+		public function userJoinAudio(userID:String, voiceUserID:Number, muted:Boolean, talking:Boolean, locked:Boolean):void {
+			var p:Object = getUserIndex(userID);
+			
+			if (p != null) {
+				var user:User = p.participant as User;
 				
-				if (p.participant.me)
-					_me.raiseHand = value;
+				user.voiceUserId = voiceUserID;
+				user.voiceJoined = true;
+				user.muted = muted;
+				user.talking = talking;
+				user.locked = locked;
+				
+				userChangeSignal.dispatch(user, JOIN_AUDIO);
+			} else {
+				trace("UserList: User join audio failed - user not found");
+			}
+		}
+		
+		public function userLeaveAudio(voiceUserID:Number):void {
+			var user:User = getUserByVoiceUserId(voiceUserID);
+			if(user != null) {
+				user.voiceJoined = false;
+				
+				userChangeSignal.dispatch(user, JOIN_AUDIO);
+			} else {
+				trace("UserList: User leave audio failed - user not found");
+			}
+		}
+		
+		public function userMuteChange(voiceUserID:Number, mute:Boolean):void {
+			var user:User = getUserByVoiceUserId(voiceUserID);
+			
+			if (user != null) {
+				user.muted = mute;
+				
+				if (mute) {
+					user.talking = false;
+				}
+				
+				userChangeSignal.dispatch(user, MUTE);
+			}
+		}
+		
+		public function userLockedChange(voiceUserID:Number, locked:Boolean):void {
+			var user:User = getUserByVoiceUserId(voiceUserID);
+			
+			if (user != null) {
+				user.locked = locked;
+				
+				userChangeSignal.dispatch(user, LOCKED);
+			}
+		}
+		
+		public function userTalkingChange(voiceUserID:Number, talking:Boolean):void {
+			var user:User = getUserByVoiceUserId(voiceUserID);
+			
+			if (user != null) {
+				user.talking = talking;
 			}
 		}
 		
 		/**
-		 * Get the index number of the participant with the specific userid 
-		 * @param userid
-		 * @return -1 if participant not found
+		 * Get the an object containing the index and User object for a specific userid 
+		 * @param userID
+		 * @return null if userID id not found
 		 * 
 		 */		
 		private function getUserIndex(userID:String):Object {

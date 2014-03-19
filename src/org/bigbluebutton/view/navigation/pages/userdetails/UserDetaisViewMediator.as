@@ -22,20 +22,18 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		[Inject]
 		public var userUISession: IUserUISession;
 		
-		protected var user:User;
+		protected var _user:User;
 		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			user = userUISession.currentPageDetails as User;
+			_user = userUISession.currentPageDetails as User;
 
 			userSession.userList.userChangeSignal.add(userChanged);
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			
-			user.signal.add(userChanged);
-			
-			view.user = user;	
+			view.user = _user;	
 			
 			view.showCameraButton.addEventListener(MouseEvent.CLICK, onShowCameraButton);
 			view.showPrivateChat.addEventListener(MouseEvent.CLICK, onShowPrivateChatButton);
@@ -43,25 +41,25 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		
 		protected function onShowCameraButton(event:MouseEvent):void
 		{
-			userUISession.pushPage(PagesENUM.VIDEO_CHAT, user);
+			userUISession.pushPage(PagesENUM.VIDEO_CHAT, _user);
 		}
 		
 		protected function onShowPrivateChatButton(event:MouseEvent):void
 		{
-			userUISession.pushPage(PagesENUM.CHAT, user);
+			userUISession.pushPage(PagesENUM.CHAT, _user);
 		}
 		
 		private function userRemoved(userID:String):void
 		{
-			if(user.userID == userID)
+			if(_user.userID == userID)
 			{
 				userUISession.popPage();
 			}
 		}
 		
-		private function userChanged(user0:User, property:String = null):void
+		private function userChanged(user:User, type:int):void
 		{
-			if(user.userID == user0.userID)
+			if(_user.userID == user.userID)
 			{
 				view.update();
 			}
@@ -76,8 +74,6 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			
 			userSession.userList.userChangeSignal.remove(userChanged);
 			userSession.userList.userRemovedSignal.remove(userRemoved);
-			
-			user.signal.remove(userChanged);
 			
 			view.dispose();
 			view = null;

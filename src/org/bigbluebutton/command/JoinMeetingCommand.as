@@ -6,7 +6,6 @@ package org.bigbluebutton.command
 	import org.bigbluebutton.model.Config;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
-	import org.bigbluebutton.model.IUserSettings;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.ui.ILoginButton;
 	import org.osmf.logging.Log;

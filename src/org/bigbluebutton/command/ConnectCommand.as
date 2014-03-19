@@ -32,9 +32,6 @@ package org.bigbluebutton.command
 		public var connection: IBigBlueButtonConnection;
 		
 		[Inject]
-		public var joinVoiceSignal: JoinVoiceSignal;
-		
-		[Inject]
 		public var videoConnection: IVideoConnection;
 		
 		[Inject]
@@ -79,8 +76,6 @@ package org.bigbluebutton.command
 			usersService.connectListeners(uri);
 			
 			chatService.getPublicChatMessages();
-			
-			joinVoiceSignal.dispatch();
 			
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PARTICIPANTS);

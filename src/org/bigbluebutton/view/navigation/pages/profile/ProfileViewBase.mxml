@@ -59,8 +59,7 @@
 						<s:SolidColorStroke color="0x000000" weight="2"/>
 					</s:stroke>
 				</s:Line>
-				<s:Label id="userName" x="1" y="44" width="299" fontFamily="Georgia" fontSize="18"
-						 text="Lucas Herbert Jones" textAlign="center"/>
+				<s:Label id="userName" x="1" y="44" width="299" fontFamily="Georgia" fontSize="18" textAlign="center"/>
 				<s:Label x="11" y="5" width="279" color="#BEBEBE" text="{resourceManager.getString('resources', 'profile.participant')}"/>
 			</s:Group>
 			<s:Group width="300" height="183">
@@ -74,8 +73,8 @@
 									  />
 				</s:layout>
 				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="{resourceManager.getString('resources', 'profile.settings')}"/>
-				<s:Group id="cameraStatus0" x="0" y="10" width="300">
-					<s:Rect x="2" y="1" width="296" height="36" radiusX="5" radiusY="5">
+				<s:Group x="0" y="10" width="300">
+					<s:Rect x="0" y="0" width="100%" height="81" radiusX="5" radiusY="5">
 						<s:stroke>
 							<s:SolidColorStroke color="0x000000" weight="2"/>
 						</s:stroke>
@@ -83,35 +82,20 @@
 							<s:SolidColor color="0xFFFFFF" />
 						</s:fill>
 					</s:Rect>
-					<s:Label id="userName0" x="13" y="13" width="172" fontSize="14"
-							 text="{resourceManager.getString('resources', 'profile.settings.camera')}" textAlign="left"/>					
-					<s:Label id="cameraOnOFFText0" x="222" y="13" width="63" fontSize="14" text="OFF"
-							 textAlign="right" verticalAlign="top"/>
-					<s:Button id="cameraButton0" y="0" width="300" height="39" alpha="0" buttonMode="true"
+					<s:Line x="0" y="40" height="0" width="100%">
+						<s:stroke>
+							<s:SolidColorStroke color="0x000000" weight="2"/>
+						</s:stroke>
+					</s:Line>				
+					<s:Label id="cameraOnOffTxt0" y="13" width="100%" fontSize="14" text="OFF"
+							 textAlign="center" verticalAlign="top"/>
+					<s:Button id="shareCameraBtn0" y="0" width="300" height="39" alpha="0" buttonMode="true"
+							  horizontalCenter="0" useHandCursor="true"/>					
+					<s:Label id="micOnOffTxt0" y="56" width="100%" fontSize="14" text="OFF"
+							 textAlign="center" verticalAlign="top"/>
+					<s:Button id="shareMicBtn0" x="0" y="43" width="100%" height="39" alpha="0" buttonMode="true"
 							  horizontalCenter="0" useHandCursor="true"/>
 				</s:Group>
-				<!--
-				<s:Group x="0" y="93" width="300">
-					<assets:ArrowRight x="268" y="0"/>
-					<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
-						<s:stroke>
-							<s:SolidColorStroke color="0x000000" weight="2"/>
-						</s:stroke>
-					</s:Rect>					
-					<s:Label id="userName1" x="13" y="7" width="247" fontSize="14"
-							 text="Item" textAlign="left"/>
-				</s:Group>
-				<s:Group x="0" y="42" width="300">
-					<assets:ArrowRight x="268" y="0"/>
-					<s:Rect x="2" y="0" width="296" height="26" radiusX="5" radiusY="5">
-						<s:stroke>
-							<s:SolidColorStroke color="0x000000" weight="2"/>
-						</s:stroke>
-					</s:Rect>					
-					<s:Label id="userName2" x="13" y="7" width="247" fontSize="14"
-							 text="About" textAlign="left"/>
-				</s:Group>
-				-->
 			</s:Group>
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>

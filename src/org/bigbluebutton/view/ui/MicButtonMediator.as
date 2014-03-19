@@ -1,7 +1,11 @@
 package org.bigbluebutton.view.ui
 {
-	import org.bigbluebutton.command.MicrophoneOnSignal;
-	import org.bigbluebutton.model.IUserSettings;
+	import flash.events.MouseEvent;
+	
+	import org.bigbluebutton.command.MicrophoneMuteSignal;
+	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.User;
+	import org.bigbluebutton.model.UserList;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -9,10 +13,10 @@ package org.bigbluebutton.view.ui
 	public class MicButtonMediator extends Mediator
 	{
 		[Inject]
-		public var userSettings: IUserSettings;
+		public var userSession: IUserSession;
 		
 		[Inject]
-		public var microphoneEnableSignal: MicrophoneOnSignal;
+		public var microphoneMuteSignal: MicrophoneMuteSignal;
 				
 		[Inject]
 		public var view: IMicButton;
@@ -24,12 +28,12 @@ package org.bigbluebutton.view.ui
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			view.turnOnMicSignal.add(turnOn);
-			view.turnOffMicSignal.add(turnOff);
+			(view as MicButton).addEventListener(MouseEvent.CLICK, mouseEventClickHandler);
 			
-			userSettings.changedSignal.add(update);
+			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
-			view.selected = userSettings.microphoneEnabled;
+			view.setVisibility(userSession.userList.me.voiceJoined);  
+			view.selected = userSession.userList.me.muted;
 		}
 		
 		/**
@@ -37,37 +41,36 @@ package org.bigbluebutton.view.ui
 		 */
 		override public function destroy():void
 		{
+			(view as MicButton).addEventListener(MouseEvent.CLICK, mouseEventClickHandler);
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
+			
 			super.destroy();
 			
 			view.dispose();
 			
 			view = null;
-			
-			userSettings.changedSignal.remove(update);
 		}
 		
 		/**
 		 * Handle events to turnOn microphone
 		 */
-		private function turnOn(): void
+		private function mouseEventClickHandler(e:MouseEvent):void
 		{
-			microphoneEnableSignal.dispatch(true, true);
-		}
-
-		/**
-		 * Handle events to turnOff microphone
-		 */
-		private function turnOff(): void
-		{
-			microphoneEnableSignal.dispatch(false, true);
+			microphoneMuteSignal.dispatch(userSession.userList.me);
 		}
 		
 		/**
 		 * Update the view when there is a chenge in the model
 		 */ 
-		private function update(value:Boolean):void
+		private function userChangeHandler(user:User, type:int):void
 		{
-			view.selected = value;
+			if (user.me) {
+				if (type == UserList.JOIN_AUDIO) {
+					view.setVisibility(user.voiceJoined);
+				} else if (type == UserList.MUTE) {
+					view.selected = user.muted;
+				}
+			}
 		}
 	}
 }

@@ -1,9 +1,7 @@
 package org.bigbluebutton.view.ui
 {
-	import org.bigbluebutton.command.MicrophoneEnableCommand;
-	import org.bigbluebutton.command.MicrophoneEnableSignal;
-	import org.bigbluebutton.command.MicrophoneOnCommand;
-	import org.bigbluebutton.command.MicrophoneOnSignal;
+	import org.bigbluebutton.command.MicrophoneMuteCommand;
+	import org.bigbluebutton.command.MicrophoneMuteSignal;
 	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
@@ -52,8 +50,7 @@ package org.bigbluebutton.view.ui
 		 */
 		private function signals(): void
 		{
-			signalCommandMap.map(MicrophoneOnSignal).toCommand(MicrophoneOnCommand);
-			signalCommandMap.map(MicrophoneEnableSignal).toCommand(MicrophoneEnableCommand);
+			signalCommandMap.map(MicrophoneMuteSignal).toCommand(MicrophoneMuteCommand);
 		}	
 	}
 }

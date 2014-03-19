@@ -40,7 +40,6 @@
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
 			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
-			import org.bigbluebutton.view.ui.MicStatusConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
 			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
@@ -111,7 +110,6 @@
 										.configure(SelectParticipantConfig)	
 									
 									.configure(MicButtonConfig)
-									.configure(MicStatusConfig)
 									.configure(LoginButtonConfig)
 									.configure(NavigationButtonConfig)
 					
