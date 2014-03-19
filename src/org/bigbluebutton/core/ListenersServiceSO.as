@@ -12,8 +12,6 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
-	import org.osflash.signals.ISignal;
-	import org.osflash.signals.Signal;
 
 	public class ListenersServiceSO extends BaseServiceSO implements IListenersServiceSO
 	{
@@ -21,7 +19,6 @@ package org.bigbluebutton.core
 		public var userSession: IUserSession;
 		
 		private static const SO_NAME:String = "meetMeUsersSO";
-		private var _muteStateSignal:ISignal = new Signal();
 		
 		public function ListenersServiceSO() {
 			super(SO_NAME);
@@ -72,7 +69,7 @@ package org.bigbluebutton.core
 
 		private function getRoomMuteStateOnSucess(result:Object):void
 		{
-			_muteStateSignal.dispatch(result as Boolean);
+			trace("getRoomMuteState success: is room muted? " + (result as Boolean));
 		}
 		
 		private function getRoomMuteStateOnUnsucess(status:Object):void
@@ -92,16 +89,6 @@ package org.bigbluebutton.core
 			var locked:Boolean = joinedUser.locked;
 			
 			userJoin(userId, cidName, cidNum, muted, talking, locked);
-		}
-
-		public function get muteStateSignal():ISignal
-		{
-			return _muteStateSignal;
-		}
-
-		public function set muteStateSignal(value:ISignal):void
-		{
-			_muteStateSignal = value;
 		}
 
 		public function muteUnmuteUser(userId:Number, mute:Boolean):void {
@@ -149,64 +136,30 @@ package org.bigbluebutton.core
 			var result:Object = pattern.exec(cidName);
 			var externUserID:String = result[1] as String;
 			
-			var user:User = userSession.userList.getUser(externUserID);
-			if (user != null) {
-				user.voiceUserId = userId;
-				user.voiceJoined = true;
-				user.muted = muted;
-				user.talking = talking;
-				user.locked = locked;
-			} else {
-				trace("user not found");
-			}
+			userSession.userList.userJoinAudio(externUserID, userId, muted, talking, locked);
 		}
 		
 		public function userMute(userID:Number, mute:Boolean):void {
 			trace("userMuted() [" + userID + "," + mute + "]");
-			var user:User = userSession.userList.getUserByVoiceUserId(userID);
-			if (user != null) {
-				user.muted = mute;
-				if (mute) {
-					user.talking = false;
-				}
-			} else {
-				trace("user not found in ListenerServiceSO");
-			}
+			
+			userSession.userList.userMuteChange(userID, mute);
 		}
 		
 		public function userLockedMute(userID:Number, locked:Boolean):void {
 			trace("userLockedMute() [" + userID + "," + locked + "]");
-			var user:User = userSession.userList.getUserByVoiceUserId(userID);
-			if (user != null) {
-				user.locked = locked;
-			} else {
-				trace("user not found in ListenerServiceSO");
-			}
+			
+			userSession.userList.userLockedChange(userID, locked);
 		}
 
 		public function userTalk(userID:Number, talk:Boolean):void {
-//			trace("userTalk() [" + userID + "," + talk + "]");
-			var user:User = userSession.userList.getUserByVoiceUserId(userID);
-			if (user != null) {
-				user.talking = talk;
-			} else {
-				trace("user not found in ListenerServiceSO");
-			}
+			trace("userTalk() [" + userID + "," + talk + "]");
+			userSession.userList.userTalkingChange(userID, talk);
 		}
 		
 		public function userLeft(userID:Number):void {
-			trace("userLeft() [" + userID + "]");
-			var user:User = userSession.userList.getUserByVoiceUserId(userID);
-			if(user)
-			{
-				user.voiceJoined = false;
-			}
-			else
-			{
-				trace("--------------------------------------------------------------------------------");
-				trace("WARNING - ListenersServiceSO.userLeft(userID: "+userID+") - userID not found");
-				trace("--------------------------------------------------------------------------------");
-			}
+			trace("userLeft Audio() [" + userID + "]");
+			
+			userSession.userList.userLeaveAudio(userID);
 		}
 		
 		public function ping(message:String):void {

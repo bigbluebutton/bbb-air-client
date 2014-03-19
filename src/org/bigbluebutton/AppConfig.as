@@ -1,11 +1,11 @@
 package org.bigbluebutton
 {
-	import org.bigbluebutton.command.CameraEnableCommand;
-	import org.bigbluebutton.command.CameraEnableSignal;
+	import org.bigbluebutton.command.ShareCameraCommand;
+	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.command.ConnectCommand;
 	import org.bigbluebutton.command.ConnectSignal;
-	import org.bigbluebutton.command.JoinVoiceCommand;
-	import org.bigbluebutton.command.JoinVoiceSignal;
+	import org.bigbluebutton.command.ShareMicrophoneCommand;
+	import org.bigbluebutton.command.ShareMicrophoneSignal;
 	import org.bigbluebutton.command.LoadPresentationCommand;
 	import org.bigbluebutton.command.LoadPresentationSignal;
 	import org.bigbluebutton.command.LoadSlideCommand;
@@ -39,10 +39,8 @@ package org.bigbluebutton
 	import org.bigbluebutton.model.ConferenceParameters;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
-	import org.bigbluebutton.model.IUserSettings;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.UserSession;
-	import org.bigbluebutton.model.UserSettings;
 	import org.bigbluebutton.model.UserUISession;
 	import org.bigbluebutton.model.chat.ChatMessagesSession;
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
@@ -61,7 +59,6 @@ package org.bigbluebutton
 		
 		public function configure(): void
 		{
-			injector.map(IUserSettings).toSingleton(UserSettings);
 			injector.map(IUserUISession).toSingleton(UserUISession);
 			injector.map(IUserSession).toSingleton(UserSession);
 			injector.map(IConferenceParameters).toSingleton(ConferenceParameters);
@@ -81,8 +78,8 @@ package org.bigbluebutton
 			injector.map(IChatMessagesSession).toSingleton(ChatMessagesSession);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
-			signalCommandMap.map(JoinVoiceSignal).toCommand(JoinVoiceCommand);
-			signalCommandMap.map(CameraEnableSignal).toCommand(CameraEnableCommand);
+			signalCommandMap.map(ShareMicrophoneSignal).toCommand(ShareMicrophoneCommand);
+			signalCommandMap.map(ShareCameraSignal).toCommand(ShareCameraCommand);
 			signalCommandMap.map(LoadPresentationSignal).toCommand(LoadPresentationCommand);
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
 		}

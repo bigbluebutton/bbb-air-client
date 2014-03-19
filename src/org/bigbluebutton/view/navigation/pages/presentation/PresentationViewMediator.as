@@ -44,14 +44,14 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			if (_currentPresentation != null && _currentSlideNum >= 0) {
 				_currentSlide = _currentPresentation.getSlideAt(_currentSlideNum);
 				if (_currentSlide != null) {
-					if (_currentSlide.loaded) {
+					if (_currentSlide.loaded && view != null) {
 						view.setSlide(_currentSlide);
 					} else {
 						_currentSlide.slideLoadedSignal.add(slideLoadedHandler);
 						loadSlideSignal.dispatch(_currentSlide);
 					}
 				}
-			} else {
+			} else if (view != null) {
 				view.setSlide(null);
 			}
 		}

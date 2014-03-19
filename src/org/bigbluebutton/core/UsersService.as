@@ -31,23 +31,22 @@ package org.bigbluebutton.core
 		}
 		
 		public function muteMe():void {
-			mute(userSession.userList.me.userID);
+			mute(userSession.userList.me);
 		}
 		
 		public function unmuteMe():void {
-			unmute(userSession.userList.me.userID);
+			unmute(userSession.userList.me);
 		}
 		
-		public function mute(userId:String):void {
-			muteUnmute(userId, true);
+		public function mute(user:User):void {
+			muteUnmute(user, true);
 		}
 		
-		public function unmute(userId:String):void {
-			muteUnmute(userId, false);
+		public function unmute(user:User):void {
+			muteUnmute(user, false);
 		}
 		
-		private function muteUnmute(userId:String, mute:Boolean):void {
-			var user:User = userSession.userList.getUser(userId);
+		private function muteUnmute(user:User, mute:Boolean):void {
 			if (user.voiceJoined) {
 				listenersServiceSO.muteUnmuteUser(user.voiceUserId, mute);
 			}

@@ -107,10 +107,8 @@ package org.bigbluebutton.core
 
 		public function call(webvoiceconf:String):void
 		{
-			var restoreFunctionName:String = "voiceconf.call";
-			
 			_baseConnection.connection.call(
-				restoreFunctionName,
+				"voiceconf.call",
 				new Responder(callOnSucess, callUnsucess),
 				"default",
 				_username,
@@ -130,17 +128,16 @@ package org.bigbluebutton.core
 		}
 		
 		public function hangUp():void {
-			var restoreFunctionName:String = "voiceconf.hangup";
-			
 			_baseConnection.connection.call(
-				restoreFunctionName,
-				new Responder(hangUpOnSucess, hangUpUnsucess),
+				"voiceconf.hangup",
+				null,
 				"default"
 			);
 		}
 		
 		private function hangUpOnSucess(result:Object):void
 		{
+			disconnect(false);
 			trace("call success: " + ObjectUtil.toString(result));
 		}
 		

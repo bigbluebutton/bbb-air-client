@@ -16,32 +16,44 @@ package org.bigbluebutton.command
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
-	public class JoinVoiceCommand extends Command
+	public class ShareMicrophoneCommand extends Command
 	{		
 		[Inject]
 		public var userSession: IUserSession;
-		
-		[Inject]
-		public var userUISession: IUserUISession;
-		
+
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
 		public var voiceConnection: IVoiceConnection;
-		
+
 		[Inject]
-		public var mainConnection: IBigBlueButtonConnection;
-		
-		[Inject]
-		public var usersService: IUsersService;
+		public var enabled: Boolean;
 
 		override public function execute():void
 		{
+			if (enabled) {
+				enableMic();
+			} else {
+				disableMic();
+			}
+		}
+		
+		private function enableMic():void {
 			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
 			voiceConnection.successConnected.add(mediaSuccessConnected);
 			voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
 			voiceConnection.connect(conferenceParameters);
+		}
+		
+		private function disableMic():void {
+			var manager:VoiceStreamManager = userSession.voiceStreamManager;
+			
+			if (manager != null) {
+				manager.close();
+			}
+			
+			voiceConnection.hangUp();
 		}
 		
 		private function mediaSuccessConnected(publishName:String, playName:String, codec:String):void {
@@ -53,10 +65,15 @@ package org.bigbluebutton.command
 			manager.play(voiceConnection.connection, playName);
 			manager.publish(voiceConnection.connection, publishName, codec);			
 			userSession.voiceStreamManager = manager;
+			
+			voiceConnection.successConnected.remove(mediaSuccessConnected);
+			voiceConnection.unsuccessConnected.remove(mediaUnsuccessConnected);
 		}
 		
 		private function mediaUnsuccessConnected(reason:String):void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":mediaUnsuccessConnected()");
+			voiceConnection.successConnected.remove(mediaSuccessConnected);
+			voiceConnection.unsuccessConnected.remove(mediaUnsuccessConnected);
 		}
 	}
 }

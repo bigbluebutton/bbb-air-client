@@ -1,6 +1,5 @@
 package org.bigbluebutton.model
 {
-	import org.bigbluebutton.command.MicrophoneOnSignal;
 	import org.bigbluebutton.model.chat.ChatMessages;
 	import org.osflash.signals.ISignal;
 
@@ -28,7 +27,6 @@ package org.bigbluebutton.model
 		public function set userID(value:String):void
 		{
 			_userID = value;
-			change();
 		}
 
 		private var _name:String;
@@ -41,7 +39,6 @@ package org.bigbluebutton.model
 		public function set name(value:String):void
 		{
 			_name = value;
-			change();
 		}
 
 		
@@ -55,7 +52,6 @@ package org.bigbluebutton.model
 		public function set phoneUser(value:Boolean):void
 		{
 			_phoneUser = value;
-			change();
 		}
 
 		
@@ -69,7 +65,6 @@ package org.bigbluebutton.model
 		public function set me(value:Boolean):void
 		{
 			_me = value;
-			change();
 		}
 
 		
@@ -83,7 +78,6 @@ package org.bigbluebutton.model
 		public function set presenter(value:Boolean):void
 		{
 			_presenter = value;
-			change();
 		}
 
 		
@@ -96,7 +90,6 @@ package org.bigbluebutton.model
 		public function set role(role:String):void {
 			_role = role;
 			verifyUserStatus();
-			change();
 		}
 		
 		private var _raiseHand:Boolean = false;
@@ -107,7 +100,6 @@ package org.bigbluebutton.model
 		public function set raiseHand(r:Boolean):void {
 			_raiseHand = r;
 			verifyUserStatus();
-			change();
 		}
 		
 		private var _hasStream:Boolean = false;
@@ -118,7 +110,6 @@ package org.bigbluebutton.model
 		public function set hasStream(s:Boolean):void {
 			_hasStream = s;
 			verifyMedia();
-			change();
 		}
 		
 		private var _voiceUserId:Number;
@@ -143,7 +134,6 @@ package org.bigbluebutton.model
 		{
 			_voiceJoined = value;
 			verifyUserStatus();
-			change();
 		}
 		
 		private var _muted:Boolean;
@@ -156,8 +146,7 @@ package org.bigbluebutton.model
 		{
 			_muted = value;
 			
-			verifyUserStatus();		
-			change("muted");
+			verifyUserStatus();
 		}
 		
 		private var _talking:Boolean;
@@ -170,7 +159,6 @@ package org.bigbluebutton.model
 		{
 			_talking = value;
 			verifyUserStatus();
-			change();
 		}
 		
 		private var _locked:Boolean;
@@ -179,19 +167,10 @@ package org.bigbluebutton.model
 		{
 			return _locked;
 			verifyUserStatus();
-			change();
 		}
 		public function set locked(value:Boolean):void
 		{
 			_locked = value;
-		}
-		
-		private function change(property:String = null):void
-		{
-			if(_changeSignal)
-			{
-				_changeSignal.dispatch(this, property);
-			}
 		}
 		
 		public var streamName:String = "";
@@ -204,16 +183,6 @@ package org.bigbluebutton.model
 		// This used to only be used for accessibility and doesn't need to be filled in yet. - Chad
 		private function verifyMedia():void {
 			
-		}
-		
-		private var _changeSignal:ISignal;
-
-		public function get signal():ISignal {
-			return _changeSignal;
-		}
-		
-		public function set signal(signal:ISignal):void {
-			_changeSignal = signal;
 		}
 		
 		public function isModerator():Boolean

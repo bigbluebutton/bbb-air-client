@@ -149,12 +149,19 @@ package org.bigbluebutton.core
 		
 		public function close():void {
 			if (_incomingStream) {
+				_incomingStream.removeEventListener(NetDataEvent.MEDIA_TYPE_DATA, onNetDataEvent);
+				_incomingStream.removeEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
+				_incomingStream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
 				_incomingStream.close();
+				//_incomingStream = null;
 			}
 			
 			if (_outgoingStream) {
+				_outgoingStream.removeEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
+				_outgoingStream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
 				_outgoingStream.attachAudio(null);
 				_outgoingStream.close();
+				//_outgoingStream = null;
 			}
 		}
 

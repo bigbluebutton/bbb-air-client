@@ -5,9 +5,11 @@ package org.bigbluebutton.view.navigation.pages.profile
 	
 	import mx.resources.ResourceManager;
 	
-	import org.bigbluebutton.command.CameraEnableSignal;
+	import org.bigbluebutton.command.ShareCameraSignal;
+	import org.bigbluebutton.command.ShareMicrophoneSignal;
 	import org.bigbluebutton.model.IUserSession;
-	import org.bigbluebutton.model.IUserSettings;
+	import org.bigbluebutton.model.User;
+	import org.bigbluebutton.model.UserList;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -21,41 +23,55 @@ package org.bigbluebutton.view.navigation.pages.profile
 		public var userSession: IUserSession;
 		
 		[Inject]
-		public var userSettings: IUserSettings;
+		public var shareCameraSignal: ShareCameraSignal;
 		
 		[Inject]
-		public var cameraEnabledSignal: CameraEnableSignal;
+		public var shareMicrophoneSignal: ShareMicrophoneSignal;
 
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
-			userSettings.cameraChangeSignal.add(onCameraSettingChange)
+			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
-			view.userNameText.text = userSession.userList.getUser(userSession.userId).name;
+			view.userNameText.text = userSession.userList.me.name;
 			
-			view.cameraOnOFFText.text = ResourceManager.getInstance().getString('resources', userSettings.cameraEnabled? 'profile.settings.camera.on':'profile.settings.camera.off'); 
-						
-			view.cameraButton.addEventListener(MouseEvent.CLICK, onCameraClick);
+			view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
+			view.micOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.voiceJoined? 'profile.settings.mic.on':'profile.settings.mic.off');
+			
+			view.shareCameraButton.addEventListener(MouseEvent.CLICK, onShareCameraClick);
+			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
 		}
 		
-		private function onCameraSettingChange(cameraEnabled:Boolean):void
+		private function userChangeHandler(user:User, type:int):void
 		{
-			view.cameraOnOFFText.text = ResourceManager.getInstance().getString('resources', cameraEnabled? 'profile.settings.camera.on':'profile.settings.camera.off'); 
+			if (user.me) {
+				if (type == UserList.JOIN_AUDIO) {
+					view.micOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
+				} else if (type == UserList.HAS_STREAM) {
+					view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userSession.userList.me.hasStream ? 'profile.settings.camera.on' : 'profile.settings.camera.off');
+				}
+			}
 		}
 		
-		protected function onCameraClick(event:MouseEvent):void
+		protected function onShareCameraClick(event:MouseEvent):void
 		{
-			cameraEnabledSignal.dispatch(!userSettings.cameraEnabled);
+			shareCameraSignal.dispatch(!userSession.userList.me.hasStream);
+		}
+		
+		protected function onShareMicClick(event:MouseEvent):void
+		{
+			shareMicrophoneSignal.dispatch(!userSession.userList.me.voiceJoined);
 		}
 		
 		override public function destroy():void
 		{
 			super.destroy();
 			
-			userSettings.cameraChangeSignal.remove(onCameraSettingChange)
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
 			
-			view.cameraButton.removeEventListener(MouseEvent.CLICK, onCameraClick);
+			view.shareCameraButton.removeEventListener(MouseEvent.CLICK, onShareCameraClick);
+			view.shareMicButton.removeEventListener(MouseEvent.CLICK, onShareMicClick);
 			
 			view.dispose();
 			view = null;
