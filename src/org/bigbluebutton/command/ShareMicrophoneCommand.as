@@ -20,9 +20,6 @@ package org.bigbluebutton.command
 	{		
 		[Inject]
 		public var userSession: IUserSession;
-
-		[Inject]
-		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
 		public var voiceConnection: IVoiceConnection;
@@ -43,7 +40,7 @@ package org.bigbluebutton.command
 			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
 			voiceConnection.successConnected.add(mediaSuccessConnected);
 			voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
-			voiceConnection.connect(conferenceParameters);
+			voiceConnection.connect();
 		}
 		
 		private function disableMic():void {
@@ -52,8 +49,6 @@ package org.bigbluebutton.command
 			if (manager != null) {
 				manager.close();
 			}
-			
-			voiceConnection.hangUp();
 		}
 		
 		private function mediaSuccessConnected(publishName:String, playName:String, codec:String):void {

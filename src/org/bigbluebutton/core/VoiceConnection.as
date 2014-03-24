@@ -12,6 +12,9 @@ package org.bigbluebutton.core
 	
 	public class VoiceConnection extends DefaultConnectionCallback implements IVoiceConnection
 	{
+		[Inject]
+		public var conferenceParameters: IConferenceParameters;
+		
 		public static const NAME:String = "VoiceConnection";
 		
 		protected var _successConnected:ISignal = new Signal();
@@ -19,7 +22,6 @@ package org.bigbluebutton.core
 		
 		protected var _baseConnection:BaseConnection;
 		protected var _applicationURI:String;
-		protected var _conferenceParameters:IConferenceParameters;
 		protected var _username:String;
 		
 		public function VoiceConnection() {
@@ -37,7 +39,7 @@ package org.bigbluebutton.core
 		
 		private function onConnectionSuccess():void
 		{
-			call(_conferenceParameters.webvoiceconf);
+			call();
 		}
 		
 		public function get unsuccessConnected():ISignal
@@ -63,15 +65,12 @@ package org.bigbluebutton.core
 			return _baseConnection.connection;
 		}
 		
-		public function connect(params:IConferenceParameters):void {
+		public function connect():void {
 			// we don't use scope in the voice communication (many hours lost on it)
 			var uri:String = _applicationURI;
-			_conferenceParameters = params;
-			_username = encodeURIComponent(params.externUserID + "-bbbID-" + params.username);
+			_username = encodeURIComponent(conferenceParameters.externUserID + "-bbbID-" + conferenceParameters.username);
 				
-			_baseConnection.connect(uri, 
-					params.externUserID,
-					_username);
+			_baseConnection.connect(uri, conferenceParameters.externUserID, _username);
 		}
 		
 		public function disconnect(onUserCommand:Boolean):void {
@@ -92,10 +91,12 @@ package org.bigbluebutton.core
 		public function disconnectedFromJoinVoiceConferenceCallback(msg:String):* {
 			trace(NAME + "::disconnectedFromJoinVoiceConferenceCallback(): " + msg);
 			unsuccessConnected.dispatch("Failed on disconnectedFromJoinVoiceConferenceCallback()");
+			hangUp();
 		}	
 		
 		public function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):* {
 			trace(NAME + "::successfullyJoinedVoiceConferenceCallback()");
+			
 			successConnected.dispatch(publishName, playName, codec);
 		}
 		
@@ -105,14 +106,14 @@ package org.bigbluebutton.core
 		//												//
 		//**********************************************//
 
-		public function call(webvoiceconf:String):void
+		public function call():void
 		{
 			_baseConnection.connection.call(
 				"voiceconf.call",
 				new Responder(callOnSucess, callUnsucess),
 				"default",
 				_username,
-				webvoiceconf
+				conferenceParameters.webvoiceconf
 			);
 		}
 		
@@ -137,7 +138,6 @@ package org.bigbluebutton.core
 		
 		private function hangUpOnSucess(result:Object):void
 		{
-			disconnect(false);
 			trace("call success: " + ObjectUtil.toString(result));
 		}
 		

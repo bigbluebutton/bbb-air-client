@@ -12,12 +12,12 @@ package org.bigbluebutton.core
 		function set uri(uri:String):void
 		function get uri():String
 		function get connection():NetConnection
-		function connect(params:IConferenceParameters):void 
+		function connect():void 
 		function disconnect(onUserCommand:Boolean):void
 		function failedToJoinVoiceConferenceCallback(msg:String):*
 		function disconnectedFromJoinVoiceConferenceCallback(msg:String):*
 		function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):*
-		function call(webvoiceconf:String):void
+		function call():void
 		function hangUp():void
 	}
 }
