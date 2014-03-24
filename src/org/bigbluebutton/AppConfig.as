@@ -26,7 +26,6 @@ package org.bigbluebutton
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IUsersServiceSO;
 	import org.bigbluebutton.core.IVideoConnection;
-	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.ListenersServiceSO;
 	import org.bigbluebutton.core.LoginService;
 	import org.bigbluebutton.core.PresentMessageReceiver;
@@ -67,7 +66,6 @@ package org.bigbluebutton
 			injector.map(IListenersServiceSO).toType(ListenersServiceSO);
 			injector.map(IUsersService).toSingleton(UsersService);
 			injector.map(IBigBlueButtonConnection).toType(BigBlueButtonConnection);
-			injector.map(IVoiceConnection).toType(VoiceConnection);
 			injector.map(IVideoConnection).toType(VideoConnection);
 			injector.map(IChatMessageService).toSingleton(ChatMessageService);
 			injector.map(IChatMessageReceiver).toSingleton(ChatMessageReceiver);
