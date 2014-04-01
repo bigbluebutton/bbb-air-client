@@ -56,21 +56,19 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			for each(var u:User in users) 
 			{
-				if (u.hasStream && u.me) {
-					userMe = u;
-				}
-				if (u.hasStream && !u.me)
-				{
-					return u;
+				if (u.hasStream) {
+					if (u.me)
+					{
+						userMe = u;
+					}
+					else
+					{
+						return u;
+					}
 				}
 			}
 			
-			if (userMe != null)
-			{
-				return userMe;
-			}
-			
-			return null;
+			return userMe;
 		}
 		
 		private function onPageTransitionStart(lastPage:String):void
@@ -150,42 +148,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			var userWithCamera:User = getUserWithCamera();
 			
 			var newUser:User;
-			
-			// Priority state machine
-			
-			// if user was directly selected, show this user as a first priority
-			if (selectedUser && selectedUser.hasStream)
-			{
-				newUser = selectedUser;
-			}
-			// if presenter is transmitting a video - put them in second priority
-			else if (presenter != null && presenter.hasStream)
-			{
-				newUser = presenter;
-			}
-			// current user is the third priority
-			else if (currentUserID != null) {
-				if (changedUser != null && currentUserID == changedUser.userID)
-				{
-					newUser = changedUser;
-				}
-			}
-			// any user with camera is the last priority
-			else if (userWithCamera != null)
-			{
-				newUser = userWithCamera;
-			}
-			// otherwise, nobody transmitts video at this moment
-			else
-			{
-				view.noVideoMessage.visible = true;
-				return;
-			}
-			
-			view.noVideoMessage.visible = false;
-			
+					
 			if (changedUser)
 			{
+				// Priority state machine
+				
 				if (selectedUser && selectedUser.hasStream && changedUser.userID == selectedUser.userID)
 				{
 					if (view) view.stopStream();	
@@ -215,11 +182,47 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					}
 				}
 			}
-			else if (newUser)
-			{
-				if (view) view.stopStream();	
-				startStream(newUser.name, newUser.streamName);
-			}	
+			else
+			{	
+				// Priority state machine
+				
+				// if user was directly selected, show this user as a first priority
+				if (selectedUser && selectedUser.hasStream)
+				{
+					newUser = selectedUser;
+				}
+					// if presenter is transmitting a video - put them in second priority
+				else if (presenter != null && presenter.hasStream)
+				{
+					newUser = presenter;
+				}
+					// current user is the third priority
+				else if (currentUserID != null) {
+					if (changedUser != null && currentUserID == changedUser.userID)
+					{
+						newUser = changedUser;
+					}
+				}
+					// any user with camera is the last priority
+				else if (userWithCamera != null)
+				{
+					newUser = userWithCamera;
+				}
+					// otherwise, nobody transmitts video at this moment
+				else
+				{
+					view.noVideoMessage.visible = true;
+					return;
+				}
+				
+				view.noVideoMessage.visible = false;		
+				
+				if (newUser)
+				{
+					if (view) view.stopStream();	
+					startStream(newUser.name, newUser.streamName);
+				}	
+			}
 		}
 		
 		protected function getVideoResolution(stream:String):Object {

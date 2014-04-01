@@ -91,11 +91,6 @@ package org.bigbluebutton.command
 		// return the device's default camera.
 		private function getCamera(position:String):Camera
 		{
-			if (position == "")
-			{
-				position = CameraPosition.FRONT;
-			}
-			
 			for (var i:uint = 0; i < Camera.names.length; ++i)
 			{
 				var cam:Camera = Camera.getCamera(String(i));
