@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" height="30" width="30"
+		 xmlns:s="library://ns.adobe.com/flex/spark"  >
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:Button id="swapCameraButton" visible="false" styleName="swapCameraButtonStyle" height="30" width="30"  />
+</s:Group>

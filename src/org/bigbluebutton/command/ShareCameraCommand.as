@@ -24,14 +24,19 @@ package org.bigbluebutton.command
 
 		[Inject]
 		public var enabled: Boolean;
+		
+		[Inject]
+		public var position: String;
 
 		[Inject]
 		public var usersService: IUsersService;
 		
 		override public function execute():void {
 			if (enabled) {
-				enableCamera();
+				userSession.videoConnection.cameraPosition = position;
+				enableCamera(position);
 			} else {
+				
 				disableCamera();
 			}
 		}
@@ -44,9 +49,9 @@ package org.bigbluebutton.command
 			return res.concat("-" + uid) + "-" + curTime;
 		}
 		
-		private function setupCamera():Camera 
+		private function setupCamera(position:String):Camera 
 		{
-			return findCamera(CameraPosition.FRONT);
+			return findCamera(position);
 			/*
 			var camera:Camera = Camera.getCamera();
 			if(camera)
@@ -94,8 +99,8 @@ package org.bigbluebutton.command
 			return Camera.getCamera();
 		}
 		
-		private function enableCamera():void {
-			var camera:Camera = setupCamera();
+		private function enableCamera(position:String):void {
+			var camera:Camera = setupCamera(position);
 			var userId:String = userSession.userId;
 			if(camera)
 			{

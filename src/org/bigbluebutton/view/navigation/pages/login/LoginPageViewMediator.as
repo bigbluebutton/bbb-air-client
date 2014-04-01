@@ -107,7 +107,8 @@ package org.bigbluebutton.view.navigation.pages.login
 		{
 			super.destroy();
 			
-			loginService.unsuccessJoinedSignal.remove(onUnsucess);
+			//loginService.unsuccessJoinedSignal.remove(onUnsucess);
+			userUISession.unsuccessJoined.remove(onUnsucess);
 			
 			NativeApplication.nativeApplication.removeEventListener(InvokeEvent.INVOKE, onInvokeEvent);
 			

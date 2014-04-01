@@ -40,6 +40,7 @@
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
 			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
+			import org.bigbluebutton.view.ui.SwapCameraConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
 			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
@@ -112,6 +113,7 @@
 									.configure(MicButtonConfig)
 									.configure(LoginButtonConfig)
 									.configure(NavigationButtonConfig)
+									.configure(SwapCameraConfig)
 					
 					.configure(new ContextView(this));
 				

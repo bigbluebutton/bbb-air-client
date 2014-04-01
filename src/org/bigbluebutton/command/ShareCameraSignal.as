@@ -8,8 +8,9 @@ package org.bigbluebutton.command
 		{
 			/**
 			 * @1 camera enabled
+			 * @2 camera position
 			 */
-			super(Boolean);
+			super(Boolean, String);
 		}
 	}
 }
