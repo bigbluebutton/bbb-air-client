@@ -2,6 +2,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 {
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
+	import flash.media.CameraPosition;
 	
 	import mx.resources.ResourceManager;
 	
@@ -67,7 +68,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 		protected function onShareCameraClick(event:MouseEvent):void
 		{
-			shareCameraSignal.dispatch(!userSession.userList.me.hasStream);
+			shareCameraSignal.dispatch(!userSession.userList.me.hasStream, CameraPosition.FRONT);
 		}
 		
 		protected function onShareMicClick(event:MouseEvent):void

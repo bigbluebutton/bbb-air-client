@@ -17,6 +17,7 @@ package org.bigbluebutton.core
 	public class VideoConnection extends DefaultConnectionCallback implements IVideoConnection
 	{
 		private var _ns:NetStream;
+		private var _cameraPosition:String;
 		
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
@@ -68,6 +69,16 @@ package org.bigbluebutton.core
 		
 		public function connect():void {
 			_baseConnection.connect(uri);
+		}
+		
+		public function get cameraPosition():String
+		{
+			return _cameraPosition;
+		}
+		
+		public function set cameraPosition(position:String):void
+		{
+			_cameraPosition = position;
 		}
 		
 		public function startPublishing(camera:Camera, streamName:String):void {

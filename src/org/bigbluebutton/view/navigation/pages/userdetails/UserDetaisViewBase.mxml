@@ -30,7 +30,8 @@
 			<ui:BackButton id="backBtn" width="30" height="30"/>                
 			<s:Group width="100%" height="30">
 				<s:Label horizontalCenter="0" text="{resourceManager.getString('resources', 'userDetail.title')}" verticalCenter="0"/>
-			</s:Group>				
+			</s:Group>		
+			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
 			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
 		</s:Group>
 		<s:Group width="100%" height="100%">

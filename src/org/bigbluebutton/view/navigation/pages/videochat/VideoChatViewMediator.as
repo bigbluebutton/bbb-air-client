@@ -8,6 +8,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
+	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.mockito.integrations.currentMockito;
@@ -51,15 +52,27 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		protected function getUserWithCamera():User
 		{
 			var users:ArrayCollection = userSession.userList.users;
+			var userMe:User = null;
+			
 			for each(var u:User in users) 
 			{
-				if (u.hasStream) {
+				if (u.hasStream && u.me) {
+					userMe = u;
+				}
+				if (u.hasStream && !u.me)
+				{
 					return u;
 				}
 			}
+			
+			if (userMe != null)
+			{
+				return userMe;
+			}
+			
 			return null;
 		}
-				
+		
 		private function onPageTransitionStart(lastPage:String):void
 		{
 			if(lastPage == PagesENUM.VIDEO_CHAT)
@@ -94,12 +107,12 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		private function userChangeHandler(user:User, property:String = null):void {
-			if (property == "hasStream") {
+		private function userChangeHandler(user:User, property:int):void {
+			if (property == UserList.HAS_STREAM) {
 				if (user.userID == view.getDisplayedUserID() && !user.hasStream) {
 					stopStream(user.userID);
 				}
-				checkVideo();
+				checkVideo(user);
 			}
 		}
 		
@@ -123,29 +136,46 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		private function checkVideo():void {
+		private function checkVideo(changedUser:User = null):void {
+			// get id of the user that is currently displayed
 			var currentUserID:String = view.getDisplayedUserID();
 			
+			// get user that was selected 
 			var selectedUser:User = userUISession.currentPageDetails as User;
+			
+			// get presenter user
 			var presenter:User = userSession.userList.getPresenter();
+			
+			// get any user that has video stream
 			var userWithCamera:User = getUserWithCamera();
+			
 			var newUser:User;
 			
+			// Priority state machine
+			
+			// if user was directly selected, show this user as a first priority
 			if (selectedUser && selectedUser.hasStream)
 			{
 				newUser = selectedUser;
 			}
+			// if presenter is transmitting a video - put them in second priority
 			else if (presenter != null && presenter.hasStream)
 			{
 				newUser = presenter;
 			}
+			// current user is the third priority
 			else if (currentUserID != null) {
-				return;
+				if (changedUser != null && currentUserID == changedUser.userID)
+				{
+					newUser = changedUser;
+				}
 			}
+			// any user with camera is the last priority
 			else if (userWithCamera != null)
 			{
 				newUser = userWithCamera;
 			}
+			// otherwise, nobody transmitts video at this moment
 			else
 			{
 				view.noVideoMessage.visible = true;
@@ -153,11 +183,43 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 			
 			view.noVideoMessage.visible = false;
-			if (newUser.userID != currentUserID) {
-				if (view) view.stopStream();
-				
-				startStream(newUser.name, newUser.streamName);
+			
+			if (changedUser)
+			{
+				if (selectedUser && selectedUser.hasStream && changedUser.userID == selectedUser.userID)
+				{
+					if (view) view.stopStream();	
+					startStream(changedUser.name, changedUser.streamName);
+				}
+				else if (changedUser.presenter && changedUser.hasStream)
+				{
+					if (view) view.stopStream();	
+					startStream(changedUser.name, changedUser.streamName);
+				}
+				else if (currentUserID && changedUser.userID == currentUserID)
+				{
+					if (view) view.stopStream();	
+					startStream(changedUser.name, changedUser.streamName);
+				}
+				else if (userWithCamera)
+				{
+					if (userWithCamera.userID == changedUser.userID)
+					{
+						if (view) view.stopStream();	
+						startStream(changedUser.name, changedUser.streamName);
+					}
+					else if (!changedUser.hasStream && userWithCamera.me)
+					{
+						if (view) view.stopStream();	
+						startStream(userWithCamera.name, userWithCamera.streamName);
+					}
+				}
 			}
+			else if (newUser)
+			{
+				if (view) view.stopStream();	
+				startStream(newUser.name, newUser.streamName);
+			}	
 		}
 		
 		protected function getVideoResolution(stream:String):Object {

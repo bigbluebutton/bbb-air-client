@@ -29,6 +29,7 @@
 				<s:Label horizontalCenter="0" verticalCenter="0"
 						 text="Selecione um participante"/>
 			</s:Group>	
+			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
 			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
 		</s:Group>
 		<selectparticipant:SelectParticipantList id="participantslist" width="100%" height="100%" />
