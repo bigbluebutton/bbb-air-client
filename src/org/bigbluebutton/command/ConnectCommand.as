@@ -42,19 +42,19 @@ package org.bigbluebutton.command
 		
 		[Inject]
 		public var chatService: IChatMessageService;
-
+		
 		[Inject]
 		public var presentationService: IPresentationService;
-
+		
 		override public function execute():void {
 			connection.uri = uri;
 			
-			connection.successConnected.add(successConnected)
-			connection.unsuccessConnected.add(unsuccessConnected)
-
+			connection.successConnected.add(successConnected);
+			connection.unsuccessConnected.add(unsuccessConnected);
+			
 			connection.connect(conferenceParameters);
 		}
-
+		
 		private function successConnected():void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":successConnected()");
 			
@@ -80,6 +80,9 @@ package org.bigbluebutton.command
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			
 			presentationService.connectPresent(uri);
+			
+			connection.successConnected.remove(successConnected);
+			connection.unsuccessConnected.remove(unsuccessConnected);
 		}
 		
 		/**
@@ -90,6 +93,8 @@ package org.bigbluebutton.command
 		{
 			userUISession.loading = false;
 			userUISession.pushPage(PagesENUM.PARTICIPANTS);
+			
+			userSession.userList.allUsersAddedSignal.remove(successUsersAdded);
 		}
 		
 		private function unsuccessConnected(reason:String):void {
@@ -97,14 +102,23 @@ package org.bigbluebutton.command
 			
 			userUISession.loading = false;
 			userUISession.unsuccessJoined.dispatch("connectionFailed");
+			
+			connection.successConnected.remove(successConnected);
+			connection.unsuccessConnected.remove(unsuccessConnected);
 		}
 		
 		private function successVideoConnected():void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":successVideoConnected()");
+			
+			videoConnection.successConnected.remove(successVideoConnected);
+			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 		}
 		
 		private function unsuccessVideoConnected(reason:String):void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessVideoConnected()");
+			
+			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
+			videoConnection.successConnected.remove(successVideoConnected);
 		}
 	}
 }
