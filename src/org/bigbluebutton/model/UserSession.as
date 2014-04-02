@@ -6,7 +6,7 @@ package org.bigbluebutton.model
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IVideoConnection;
-	import org.bigbluebutton.core.IVoiceConnection;
+	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
 	import org.bigbluebutton.model.presentation.PresentationList;
@@ -20,7 +20,7 @@ package org.bigbluebutton.model
 		protected var _config:Config;
 		protected var _userId:String;
 		protected var _mainConnection:IBigBlueButtonConnection;
-		protected var _voiceConnection:IVoiceConnection;
+		protected var _voiceConnection:VoiceConnection;
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
 		protected var _userList:UserList;
@@ -63,12 +63,12 @@ package org.bigbluebutton.model
 			_userList.me.userID = value;
 		}
 
-		public function get voiceConnection():IVoiceConnection
+		public function get voiceConnection():VoiceConnection
 		{
 			return _voiceConnection;
 		}
 
-		public function set voiceConnection(value:IVoiceConnection):void
+		public function set voiceConnection(value:VoiceConnection):void
 		{
 			_voiceConnection = value;
 		}

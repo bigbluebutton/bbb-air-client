@@ -6,7 +6,7 @@ package org.bigbluebutton.command
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IUsersService;
-	import org.bigbluebutton.core.IVoiceConnection;
+	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
@@ -20,16 +20,15 @@ package org.bigbluebutton.command
 	{		
 		[Inject]
 		public var userSession: IUserSession;
-
+		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
-		public var voiceConnection: IVoiceConnection;
-
-		[Inject]
 		public var enabled: Boolean;
 
+		private var voiceConnection:VoiceConnection;
+		
 		override public function execute():void
 		{
 			if (enabled) {
@@ -40,10 +39,24 @@ package org.bigbluebutton.command
 		}
 		
 		private function enableMic():void {
-			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
-			voiceConnection.successConnected.add(mediaSuccessConnected);
-			voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
-			voiceConnection.connect(conferenceParameters);
+			voiceConnection = userSession.voiceConnection;
+			
+			if (voiceConnection == null) {
+				voiceConnection = userSession.voiceConnection = new VoiceConnection();
+				
+				voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
+				voiceConnection.successConnected.add(mediaSuccessConnected);
+				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
+				voiceConnection.connect(conferenceParameters);
+			} else if (!voiceConnection.connection.connected) {
+				voiceConnection.connect(conferenceParameters);
+				voiceConnection.successConnected.add(mediaSuccessConnected);
+				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
+			} else if (!voiceConnection.callActive) {
+				voiceConnection.call();
+				voiceConnection.successConnected.add(mediaSuccessConnected);
+				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
+			}
 		}
 		
 		private function disableMic():void {
@@ -52,14 +65,10 @@ package org.bigbluebutton.command
 			if (manager != null) {
 				manager.close();
 			}
-			
-			voiceConnection.hangUp();
 		}
 		
 		private function mediaSuccessConnected(publishName:String, playName:String, codec:String):void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":mediaSuccessConnected()");
-			
-			userSession.voiceConnection = voiceConnection;
 			
 			var manager:VoiceStreamManager = new VoiceStreamManager();
 			manager.play(voiceConnection.connection, playName);
