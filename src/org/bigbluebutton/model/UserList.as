@@ -54,7 +54,16 @@ package org.bigbluebutton.model
 			_users.sort = _sort;
 		}
 		
+		/**
+		 * Dispatched when all participants are added
+		 */
+		private var _allUsersAddedSignal: Signal = new Signal();
 		
+		public function get allUsersAddedSignal(): ISignal
+		{
+			return _allUsersAddedSignal;
+		}
+				
 		/**
 		 * Dispatched when a participant is added
 		 */
