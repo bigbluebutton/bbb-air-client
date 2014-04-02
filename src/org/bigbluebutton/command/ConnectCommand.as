@@ -77,10 +77,19 @@ package org.bigbluebutton.command
 			
 			chatService.getPublicChatMessages();
 			
-			userUISession.loading = false;
-			userUISession.pushPage(PagesENUM.PARTICIPANTS);
+			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			
 			presentationService.connectPresent(uri);
+		}
+		
+		/**
+		 * Raised when we receive signal from UserServiceSO.as that all participants were added. 
+		 * Now we can switch from loading screen to participants screen
+		 */
+		private function successUsersAdded():void
+		{
+			userUISession.loading = false;
+			userUISession.pushPage(PagesENUM.PARTICIPANTS);
 		}
 		
 		private function unsuccessConnected(reason:String):void {

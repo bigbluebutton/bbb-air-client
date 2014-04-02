@@ -52,6 +52,9 @@ package org.bigbluebutton.core
 					participantJoined(result.participants[p]);
 				}
 			}	
+			
+			userSession.userList.allUsersAddedSignal.dispatch();
+			
 			//becomePresenterIfLoneModerator();
 		}
 		
