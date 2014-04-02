@@ -82,6 +82,7 @@ package org.bigbluebutton.command
 			presentationService.connectPresent(uri);
 			
 			connection.successConnected.remove(successConnected);
+			connection.unsuccessConnected.remove(unsuccessConnected);
 		}
 		
 		/**
@@ -102,6 +103,7 @@ package org.bigbluebutton.command
 			userUISession.loading = false;
 			userUISession.unsuccessJoined.dispatch("connectionFailed");
 			
+			connection.successConnected.remove(successConnected);
 			connection.unsuccessConnected.remove(unsuccessConnected);
 		}
 		
@@ -109,12 +111,14 @@ package org.bigbluebutton.command
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":successVideoConnected()");
 			
 			videoConnection.successConnected.remove(successVideoConnected);
+			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 		}
 		
 		private function unsuccessVideoConnected(reason:String):void {
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessVideoConnected()");
 			
 			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
+			videoConnection.successConnected.remove(successVideoConnected);
 		}
 	}
 }
