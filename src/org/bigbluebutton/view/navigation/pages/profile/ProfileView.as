@@ -5,6 +5,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import spark.components.Button;
 	import spark.components.Group;
 	import spark.components.Label;
+	import spark.components.RadioButtonGroup;
 	
 	public class ProfileView extends ProfileViewBase implements IProfileView
 	{
@@ -52,5 +53,16 @@ package org.bigbluebutton.view.navigation.pages.profile
 		{
 			return raiseHandButton0;
 		}
+		
+		public function get cameraQualityRadioGroup():RadioButtonGroup
+		{
+			return cameraQualityTypeRadioButtonGroup;
+		}
+		
+		public function setCameraQualityGroupVisibility(hasStream:Boolean):void
+		{
+			cameraQualityGroup.visible = hasStream;
+			cameraQualityGroup.includeInLayout = hasStream;
+		}	
 	}
 }

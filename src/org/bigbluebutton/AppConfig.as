@@ -10,6 +10,8 @@ package org.bigbluebutton
 	import org.bigbluebutton.command.LoadPresentationSignal;
 	import org.bigbluebutton.command.LoadSlideCommand;
 	import org.bigbluebutton.command.LoadSlideSignal;
+	import org.bigbluebutton.command.CameraQualityCommand;
+	import org.bigbluebutton.command.CameraQualitySignal;
 	import org.bigbluebutton.core.BigBlueButtonConnection;
 	import org.bigbluebutton.core.ChatMessageReceiver;
 	import org.bigbluebutton.core.ChatMessageSender;
@@ -82,6 +84,7 @@ package org.bigbluebutton
 			signalCommandMap.map(ShareCameraSignal).toCommand(ShareCameraCommand);
 			signalCommandMap.map(LoadPresentationSignal).toCommand(LoadPresentationCommand);
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
+			signalCommandMap.map(CameraQualitySignal).toCommand(CameraQualityCommand);
 		}
 	}
 }

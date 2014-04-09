@@ -36,7 +36,6 @@ package org.bigbluebutton.command
 				userSession.videoConnection.cameraPosition = position;
 				enableCamera(position);
 			} else {
-				
 				disableCamera();
 			}
 		}
@@ -70,6 +69,8 @@ package org.bigbluebutton.command
 			}
 			
 			var cam:Camera = this.getCamera(position);
+			
+			
 			/*
 			cam.setMode(160, 120, 5, false);
 			cam.setMotionLevel(0);
@@ -100,14 +101,16 @@ package org.bigbluebutton.command
 		}
 		
 		private function enableCamera(position:String):void {
-			var camera:Camera = setupCamera(position);
+			userSession.videoConnection.camera = setupCamera(position);
+			userSession.videoConnection.selectCameraQuality(userSession.videoConnection.selectedCameraQuality);	
 			var userId:String = userSession.userId;
-			if(camera)
-			{
-				var streamName:String = buildStreamName(camera.width, camera.height, userId);
 			
+			if(userSession.videoConnection.camera)
+			{
+				var streamName:String = buildStreamName(userSession.videoConnection.camera.width, userSession.videoConnection.camera.height, userId);
+				
 				usersService.addStream(userId, streamName);
-				userSession.videoConnection.startPublishing(camera, streamName);
+				userSession.videoConnection.startPublishing(userSession.videoConnection.camera, streamName);
 			}
 		}
 		
