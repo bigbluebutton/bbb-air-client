@@ -143,17 +143,17 @@
 							</s:stroke>
 						</s:Line>
 						
-						<s:Label id="cameraQualityLowLabel" y="13" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.low')}"
+						<s:Label id="cameraQualityLowLabel" y="13" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.low') + ' (160x120)'} "
 								 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="4"  id="lowQuality"
+							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="4"  id="lowQuality" value="low"
 										   width="299" />	
-							<s:Label id="cameraQualityMediumLabel" y="56" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.medium')}"
+							<s:Label id="cameraQualityMediumLabel" y="56" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.medium') + ' (320x240)'}"
 									 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="45"  id="mediumQuality" selected="true"
+							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="45"  id="mediumQuality" selected="true" value="medium"
 										   width="299" />
-							<s:Label id="cameraQualityHighLabel" y="95" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.high')}"
+							<s:Label id="cameraQualityHighLabel" y="95" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.high') + ' (640x480)'}"
 									 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="84" id="highQuality" 
+							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="84" id="highQuality" value="high"
 										   width="299" />	
 						
 					</s:Group>

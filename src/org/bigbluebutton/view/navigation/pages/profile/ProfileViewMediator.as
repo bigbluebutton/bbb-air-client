@@ -11,10 +11,10 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import org.bigbluebutton.command.RaiseHandSignal;
 	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.command.ShareMicrophoneSignal;
+	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
-	import org.bigbluebutton.core.VideoConnection;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -58,9 +58,9 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			view.cameraQualityRadioGroup.addEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
-			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);
+			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);		
 		}
-
+		
 		private function userChangeHandler(user:User, type:int):void
 		{
 			if (user.me) {
@@ -77,6 +77,21 @@ package org.bigbluebutton.view.navigation.pages.profile
 		
 		protected function onShareCameraClick(event:MouseEvent):void
 		{
+			switch(view.cameraQualityRadioGroup.selection.value)
+			{
+				case "low":
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_LOW;	
+					break;
+				case "medium":
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;
+					break;
+				case "high":
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_HIGH;	
+					break;
+				default:
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;	
+			}
+			
 			shareCameraSignal.dispatch(!userSession.userList.me.hasStream, CameraPosition.FRONT);
 		}
 		
@@ -107,7 +122,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 					changeQualitySignal.dispatch(VideoConnection.CAMERA_QUALITY_MEDIUM);	
 			}
 		}
-
+		
 		override public function destroy():void
 		{
 			super.destroy();
