@@ -4,11 +4,14 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import flash.events.MouseEvent;
 	import flash.media.CameraPosition;
 	
+	import mx.events.ItemClickEvent;
 	import mx.resources.ResourceManager;
 	
+	import org.bigbluebutton.command.CameraQualitySignal;
 	import org.bigbluebutton.command.RaiseHandSignal;
 	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.command.ShareMicrophoneSignal;
+	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
@@ -33,6 +36,9 @@ package org.bigbluebutton.view.navigation.pages.profile
 		[Inject] 
 		public var raiseHandSignal: RaiseHandSignal;
 		
+		[Inject]
+		public var changeQualitySignal : CameraQualitySignal;
+		
 		
 		override public function initialize():void
 		{
@@ -51,6 +57,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.shareCameraButton.addEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
+			view.cameraQualityRadioGroup.addEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
+			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);		
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
@@ -60,14 +68,30 @@ package org.bigbluebutton.view.navigation.pages.profile
 					view.micOnOffText.text = ResourceManager.getInstance().getString('resources', user.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
 				} else if (type == UserList.HAS_STREAM) {
 					view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', user.hasStream ? 'profile.settings.camera.on' : 'profile.settings.camera.off');
+					view.setCameraQualityGroupVisibility(user.hasStream);
 				} else if (type == UserList.RAISE_HAND) { 
 					view.raiseHandText.text = ResourceManager.getInstance().getString('resources', user.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 				}
 			}
 		}
-			
+		
 		protected function onShareCameraClick(event:MouseEvent):void
 		{
+			switch(view.cameraQualityRadioGroup.selection.value)
+			{
+				case "low":
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_LOW;	
+					break;
+				case "medium":
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;
+					break;
+				case "high":
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_HIGH;	
+					break;
+				default:
+					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;	
+			}
+			
 			shareCameraSignal.dispatch(!userSession.userList.me.hasStream, CameraPosition.FRONT);
 		}
 		
@@ -81,6 +105,24 @@ package org.bigbluebutton.view.navigation.pages.profile
 			raiseHandSignal.dispatch(userSession.userId, !userSession.userList.me.raiseHand);
 		}
 		
+		protected function onCameraQualityRadioGroupClick(event:ItemClickEvent):void
+		{
+			switch(event.index)
+			{
+				case 0:
+					changeQualitySignal.dispatch(VideoConnection.CAMERA_QUALITY_LOW);	
+					break;
+				case 1:
+					changeQualitySignal.dispatch(VideoConnection.CAMERA_QUALITY_MEDIUM);
+					break;
+				case 2:
+					changeQualitySignal.dispatch(VideoConnection.CAMERA_QUALITY_HIGH);	
+					break;
+				default:
+					changeQualitySignal.dispatch(VideoConnection.CAMERA_QUALITY_MEDIUM);	
+			}
+		}
+		
 		override public function destroy():void
 		{
 			super.destroy();
@@ -90,6 +132,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.shareCameraButton.removeEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.shareMicButton.removeEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.raiseHandButton.removeEventListener(MouseEvent.CLICK, onRaiseHandClick);
+			view.cameraQualityRadioGroup.removeEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
 			
 			view.dispose();
 			view = null;
