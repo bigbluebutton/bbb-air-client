@@ -1,5 +1,6 @@
 package org.bigbluebutton.model.presentation
 {
+	import flash.display.Bitmap;
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
@@ -8,6 +9,7 @@ package org.bigbluebutton.model.presentation
 	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import flash.display.BitmapData;
 
 	public class Slide
 	{
@@ -17,6 +19,7 @@ package org.bigbluebutton.model.presentation
 		private var _thumbURI:String;
 		private var _txtURI:String;
 		private var _data:ByteArray;
+		private var _bitmap:BitmapData;
 		
 		private var _slideLoadedSignal:ISignal = new Signal;
 		
@@ -47,8 +50,20 @@ package org.bigbluebutton.model.presentation
 			}
 		}
 		
+		public function set bitmap(d:BitmapData):void {
+			_bitmap = d;
+			if (_bitmap != null) {
+				_loaded = true;
+				slideLoadedSignal.dispatch();
+			}
+		}
+		
+		public function get bitmap():BitmapData {
+			return _bitmap;
+		}
+		
 		public function get slideURI():String {
-			return _thumbURI;
+			return _slideURI;
 		}
 		
 		public function get loaded():Boolean {

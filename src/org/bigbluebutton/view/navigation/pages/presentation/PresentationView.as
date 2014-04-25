@@ -1,9 +1,15 @@
 package org.bigbluebutton.view.navigation.pages.presentation
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.StageOrientation;
+	import flash.events.ErrorEvent;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.events.StageOrientationEvent;
 	import flash.system.LoaderContext;
+	import flash.utils.ByteArray;
 	
 	import mx.core.FlexGlobals;
 	
@@ -11,8 +17,9 @@ package org.bigbluebutton.view.navigation.pages.presentation
 	
 	import spark.components.Image;
 	
+	
 	public class PresentationView extends PresentationViewBase implements IPresentationView
-	{
+	{		
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
@@ -23,17 +30,23 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		{
 			//buttonTestSignal.dispatch();
 		}
-
+		
 		public function setPresentationName(name:String):void {
 			presentationName.text = name;
 		}
 		
 		public function setSlide(s:Slide):void {
 			if (s != null) {
-				slide.source = s.data;
+				slide.source = new Bitmap(s.bitmap);
+				slide.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityError);
 			} else {
 				slide.source = null;
 			}
+		}
+		
+		public function securityError(e:Event):void
+		{
+			trace("PresentationView.as Security error : " + e.toString());	
 		}
 		
 		override public function rotationHandler(rotation:String):void {
@@ -53,11 +66,11 @@ package org.bigbluebutton.view.navigation.pages.presentation
 					content.rotation = 0;
 			}	
 		}
-			
+		
 		public function dispose():void
 		{
 			
 		}
-
+		
 	}
 }
