@@ -8,6 +8,7 @@ package org.bigbluebutton.view.navigation.pages.presentation
 	import flash.events.MouseEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.events.StageOrientationEvent;
+	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
@@ -36,9 +37,11 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		}
 		
 		public function setSlide(s:Slide):void {
-			if (s != null) {
-				slide.source = new Bitmap(s.bitmap);
-				slide.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityError);
+			if (s != null) {	
+				var context:LoaderContext = new LoaderContext();			
+				context.allowCodeImport = true;
+				slide.loaderContext = context;
+				slide.source = s.SWFFile.source;
 			} else {
 				slide.source = null;
 			}

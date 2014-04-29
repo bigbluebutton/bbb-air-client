@@ -56,7 +56,7 @@
 									paddingTop="0"
 									/>
 			</s:layout>
-			<s:Image id="slide" width="100%" height="100%" />
+			<s:SWFLoader id="slide" width="100%" height="100%" />
 		</s:Group>
 		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
