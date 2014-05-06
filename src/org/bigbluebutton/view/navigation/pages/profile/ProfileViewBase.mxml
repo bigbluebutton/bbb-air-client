@@ -149,7 +149,7 @@
 										   width="299" />	
 							<s:Label id="cameraQualityMediumLabel" y="56" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.medium') + ' (320x240)'}"
 									 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="45"  id="mediumQuality" selected="true" value="medium"
+							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="45"  id="mediumQuality" value="medium"
 										   width="299" />
 							<s:Label id="cameraQualityHighLabel" y="95" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.high') + ' (640x480)'}"
 									 textAlign="center" verticalAlign="top"/>

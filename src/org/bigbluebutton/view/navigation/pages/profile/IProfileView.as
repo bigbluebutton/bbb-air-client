@@ -17,6 +17,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 		function get raiseHandText():Label;
 		function get raiseHandButton():Button;
 		function get cameraQualityRadioGroup():RadioButtonGroup;
+		function setCameraQuality(value:int):void;
 		function setCameraQualityGroupVisibility(hasStream:Boolean):void
 	}
 }

@@ -58,7 +58,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			view.cameraQualityRadioGroup.addEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
-			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);		
+			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);
+			view.setCameraQuality(userSession.videoConnection.selectedCameraQuality);
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
@@ -77,21 +78,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 		
 		protected function onShareCameraClick(event:MouseEvent):void
 		{
-			switch(view.cameraQualityRadioGroup.selection.value)
-			{
-				case "low":
-					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_LOW;	
-					break;
-				case "medium":
-					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;
-					break;
-				case "high":
-					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_HIGH;	
-					break;
-				default:
-					userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;	
-			}
-			
+			view.setCameraQuality(VideoConnection.CAMERA_QUALITY_MEDIUM);
+			userSession.videoConnection.selectedCameraQuality = VideoConnection.CAMERA_QUALITY_MEDIUM;	
 			shareCameraSignal.dispatch(!userSession.userList.me.hasStream, CameraPosition.FRONT);
 		}
 		
