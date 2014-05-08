@@ -7,5 +7,6 @@ package org.bigbluebutton.core
 		function getPublicChatMessages():void
 		function sendPublicMessage(message:ChatMessageVO):void
 		function sendPrivateMessage(message:ChatMessageVO):void
+		function sendWelcomeMessage():void
 	}
 }
