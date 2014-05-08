@@ -75,8 +75,9 @@ package org.bigbluebutton.command
 			
 			usersService.connectListeners(uri);
 			
+			chatService.sendWelcomeMessage();
 			chatService.getPublicChatMessages();
-			
+
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			
 			presentationService.connectPresent(uri);
