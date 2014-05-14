@@ -26,6 +26,7 @@ package org.bigbluebutton.command
 			if (p != null) {
 				if (p.loaded) {
 					trace("LoadPresentationCommand: presentation " + presentationName + " is already loaded");
+					p.finishedLoading();
 					return;
 				}
 				
