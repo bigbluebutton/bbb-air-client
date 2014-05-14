@@ -124,8 +124,16 @@ package org.bigbluebutton.core
 			userSession.userList.assignPresenter(userID);
 		}
 		
+		/**
+		 * Dispatched when user is been kicked by the presenter
+		 **/
 		public function kickUserCallback(userid:String):void {
 			trace("The user " + userid + " has been kicked by someone");
+			
+			if (userid == userSession.userId)
+			{
+				userSession.userList.kickUser();
+			}
 		}
 		
 		/**
