@@ -4,6 +4,7 @@ package org.bigbluebutton.view.ui
 	
 	import org.bigbluebutton.command.NavigateToSignal;
 	import org.bigbluebutton.model.IUserUISession;
+	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -64,8 +65,19 @@ package org.bigbluebutton.view.ui
 			else
 			{
 				if(containState(view, "unselected"))
-				{
-					view.currentState = "unselected";
+				{				
+					if ((page == PagesENUM.CHAT || page == PagesENUM.CHATROOMS || page == PagesENUM.SELECT_PARTICIPANT ) && view is MenuChatButton)
+					{
+						view.currentState = "selected";
+
+					}else if((page == PagesENUM.USER_DETAIS || page == PagesENUM.PARTICIPANTS ) && view is MenuParticipantsButton)
+					{
+						view.currentState = "selected";
+					}
+					else
+					{
+						view.currentState = "unselected";
+					}		
 				}
 			}
 		}
