@@ -13,6 +13,7 @@ package org.bigbluebutton.model
 	import org.hamcrest.core.throws;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class UserSession implements IUserSession
 	{
@@ -20,23 +21,18 @@ package org.bigbluebutton.model
 		protected var _config:Config;
 		protected var _userId:String;
 		protected var _mainConnection:IBigBlueButtonConnection;
-		protected var _voiceConnection:VoiceConnection;
+		protected var _voiceConnection:IVoiceConnection;
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
 		protected var _guestSignal:ISignal = new Signal();
+		
+		public static const CONNECTION_STATUS_MEETING_ENDED:int = 1;
+		public static const CONNECTION_STATUS_CONNECTION_DROPPED:int = 2;
+		public static const CONNECTION_STATUS_USER_LOGGED_OUT:int = 3;
+		public static const CONNECTION_STATUS_USER_KICKED_OUT:int = 4;
 
-		public function get netconnection():NetConnection
-		{
-			return _netconnection;
-		}
-		
-		public function set netconnection(value:NetConnection):void
-		{
-			_netconnection = value;
-		}
-		
 		public function get userList():UserList
 		{
 			return _userList;
@@ -63,12 +59,12 @@ package org.bigbluebutton.model
 			_userList.me.userID = value;
 		}
 
-		public function get voiceConnection():VoiceConnection
+		public function get voiceConnection():IVoiceConnection
 		{
 			return _voiceConnection;
 		}
 
-		public function set voiceConnection(value:VoiceConnection):void
+		public function set voiceConnection(value:IVoiceConnection):void
 		{
 			_voiceConnection = value;
 		}
@@ -80,7 +76,7 @@ package org.bigbluebutton.model
 
 		public function set mainConnection(value:IBigBlueButtonConnection):void
 		{
-			_mainConnection = value;
+			_mainConnection = value;  
 		}
 
 		public function get voiceStreamManager():VoiceStreamManager

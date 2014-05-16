@@ -8,9 +8,11 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.model.ConnectionFailedEvent;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.User;
 	import org.osmf.logging.Log;
 	
@@ -21,6 +23,9 @@ package org.bigbluebutton.core
 		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
+		
+		[Inject]
+		public var disconnectUserSignal : DisconnectUserSignal;
 		
 		private static const SO_NAME:String = "participantsSO";
 		
@@ -130,9 +135,9 @@ package org.bigbluebutton.core
 		public function kickUserCallback(userid:String):void {
 			trace("The user " + userid + " has been kicked by someone");
 			
-			if (userid == userSession.userId)
+			if (userSession.userId == userid)
 			{
-				userSession.userList.kickUser();
+				disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_USER_KICKED_OUT);
 			}
 		}
 		
@@ -141,6 +146,7 @@ package org.bigbluebutton.core
 		 */
 		public function logout():void {
 			trace("The meeting has ended and a logout should be initiated");
+			disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_MEETING_ENDED);
 		}
 		
 		override protected function onConnectionFailed(reason:String):void {

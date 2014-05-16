@@ -4,6 +4,7 @@ package org.bigbluebutton.view.navigation.pages
 	
 	import org.bigbluebutton.view.navigation.pages.chat.ChatView;
 	import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsView;
+	import org.bigbluebutton.view.navigation.pages.disconnect.DisconnectPageView;
 	import org.bigbluebutton.view.navigation.pages.login.LoginPageView;
 	import org.bigbluebutton.view.navigation.pages.participants.ParticipantsView;
 	import org.bigbluebutton.view.navigation.pages.presentation.PresentationView;
@@ -23,6 +24,7 @@ package org.bigbluebutton.view.navigation.pages
 		public static const CHAT:String = "chat";
 		public static const PARTICIPANTS:String = "participants";
 		public static const SELECT_PARTICIPANT:String = "selectparticipant";
+		public static const DISCONNECT:String = "Disconnect"
 		
 		/**
 		 * Especials
@@ -42,6 +44,7 @@ package org.bigbluebutton.view.navigation.pages
 				dic[CHAT] = ChatView;
 				dic[PARTICIPANTS] = ParticipantsView;
 				dic[SELECT_PARTICIPANT] = SelectParticipantView;
+				dic[DISCONNECT] = DisconnectPageView;
 				
 				dicInitiated = true;
 			}

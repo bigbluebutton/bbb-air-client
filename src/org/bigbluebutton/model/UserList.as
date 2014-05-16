@@ -9,8 +9,6 @@ package org.bigbluebutton.model
 	
 	import spark.collections.Sort;
 	
-	import flash.desktop.NativeApplication;
-	
 	public class UserList
 	{
 		public static const HAS_STREAM:int = 1;
@@ -366,14 +364,6 @@ package org.bigbluebutton.model
 				user.talking = talking;
 			}
 		}
-		
-		/**
-		 * When user is been kicked out by the presenter - terminate this application
-		 **/
-		public function kickUser():void
-		{
-			NativeApplication.nativeApplication.exit();
-		}	
 		
 		/**
 		 * Get the an object containing the index and User object for a specific userid 

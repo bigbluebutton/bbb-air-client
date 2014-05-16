@@ -8,10 +8,12 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.command.CameraQualitySignal;
+	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.command.RaiseHandSignal;
 	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.command.ShareMicrophoneSignal;
 	import org.bigbluebutton.core.VideoConnection;
+	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
@@ -39,7 +41,9 @@ package org.bigbluebutton.view.navigation.pages.profile
 		[Inject]
 		public var changeQualitySignal : CameraQualitySignal;
 		
-		
+		[Inject]
+		public var disconnectUserSignal: DisconnectUserSignal;
+			
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -60,6 +64,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.cameraQualityRadioGroup.addEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
 			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);
 			view.setCameraQuality(userSession.videoConnection.selectedCameraQuality);
+			view.logoutButton.addEventListener(MouseEvent.CLICK, logoutClick);
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
@@ -111,6 +116,14 @@ package org.bigbluebutton.view.navigation.pages.profile
 			}
 		}
 		
+		/**
+		 * User pressed log out button
+		 */ 
+		public function logoutClick(event:MouseEvent):void
+		{
+			disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_USER_LOGGED_OUT);
+		}
+		
 		override public function destroy():void
 		{
 			super.destroy();
@@ -121,6 +134,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.shareMicButton.removeEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.raiseHandButton.removeEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			view.cameraQualityRadioGroup.removeEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
+			view.logoutButton.removeEventListener(MouseEvent.CLICK, logoutClick);
 			
 			view.dispose();
 			view = null;

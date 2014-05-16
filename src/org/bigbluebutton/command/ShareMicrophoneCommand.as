@@ -15,6 +15,7 @@ package org.bigbluebutton.command
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
+	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class ShareMicrophoneCommand extends Command
 	{		
@@ -26,8 +27,8 @@ package org.bigbluebutton.command
 		
 		[Inject]
 		public var enabled: Boolean;
-
-		private var voiceConnection:VoiceConnection;
+		
+		private var voiceConnection:IVoiceConnection;
 		
 		override public function execute():void
 		{
@@ -41,18 +42,12 @@ package org.bigbluebutton.command
 		private function enableMic():void {
 			voiceConnection = userSession.voiceConnection;
 			
-			if (voiceConnection == null) {
-				voiceConnection = userSession.voiceConnection = new VoiceConnection();
-				
-				voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
-				voiceConnection.successConnected.add(mediaSuccessConnected);
-				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
-				voiceConnection.connect(conferenceParameters);
-			} else if (!voiceConnection.connection.connected) {
+			if (!voiceConnection.connection.connected) {
 				voiceConnection.connect(conferenceParameters);
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
-			} else if (!voiceConnection.callActive) {
+			} 
+			else if (!voiceConnection.callActive) {
 				voiceConnection.call();
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);

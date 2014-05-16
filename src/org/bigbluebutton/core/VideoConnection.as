@@ -16,13 +16,15 @@ package org.bigbluebutton.core
 	
 	public class VideoConnection extends DefaultConnectionCallback implements IVideoConnection
 	{
+		[Inject]
+		public var baseConnection:IBaseConnection;
+		
 		private var _ns:NetStream;
 		private var _cameraPosition:String;
 		
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
 		
-		protected var _baseConnection:BaseConnection;
 		protected var _applicationURI:String;
 		
 		private var _camera:Camera;
@@ -36,10 +38,14 @@ package org.bigbluebutton.core
 		public function VideoConnection()
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
-			_baseConnection = new BaseConnection(this);
-			_baseConnection.successConnected.add(onConnectionSuccess);
-			_baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
+		}
+		
+		[PostConstruct]
+		public function init():void
+		{
+			baseConnection.init(this);
+			baseConnection.successConnected.add(onConnectionSuccess);
+			baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
 		}
 		
 		private function onConnectionUnsuccess(reason:String):void
@@ -49,7 +55,7 @@ package org.bigbluebutton.core
 		
 		private function onConnectionSuccess():void
 		{
-			_ns = new NetStream(_baseConnection.connection);
+			_ns = new NetStream(baseConnection.connection);
 			successConnected.dispatch();
 		}
 		
@@ -72,11 +78,11 @@ package org.bigbluebutton.core
 		}
 		
 		public function get connection():NetConnection {
-			return _baseConnection.connection;
+			return baseConnection.connection;
 		}
 		
 		public function connect():void {
-			_baseConnection.connect(uri);
+			baseConnection.connect(uri);
 		}
 		
 		public function get cameraPosition():String
@@ -164,7 +170,7 @@ package org.bigbluebutton.core
 				_ns.attachCamera(null);
 				_ns.close();
 				_ns = null;
-				_ns = new NetStream(_baseConnection.connection);
+				_ns = new NetStream(baseConnection.connection);
 			}
 		}
 	}

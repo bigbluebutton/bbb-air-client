@@ -9,14 +9,19 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.model.ConnectionFailedEvent;
 	import org.bigbluebutton.model.IMessageListener;
+	import org.bigbluebutton.model.UserSession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
 	
 	public class BaseConnection implements IBaseConnection
-	{
+	{	
+		[Inject]
+		public var disconnectUserSignal:DisconnectUserSignal;
+		
 		public static const NAME:String = "BaseConnection";
 		
 		protected var _successConnected:ISignal = new Signal();
@@ -26,9 +31,12 @@ package org.bigbluebutton.core
 		protected var _uri:String;
 		protected var _onUserCommand:Boolean;
 		
-		public function BaseConnection(callback:IDefaultConnectionCallback) {
+		public function BaseConnection() {
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
+		}
+		
+		public function init(callback:IDefaultConnectionCallback):void
+		{
 			_netConnection = new NetConnection();
 			_netConnection.client = callback;
 			_netConnection.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
@@ -131,7 +139,8 @@ package org.bigbluebutton.core
 		
 		protected function sendConnectionFailedEvent(reason:String):void 
 		{
-			unsuccessConnected.dispatch(reason);
+			//unsuccessConnected.dispatch(reason);
+			disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_CONNECTION_DROPPED);
 		}
 		
 		protected function netSecurityError( event : SecurityErrorEvent ) : void 
