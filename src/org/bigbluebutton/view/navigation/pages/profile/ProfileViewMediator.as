@@ -2,6 +2,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 {
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
+	import flash.media.Camera;
 	import flash.media.CameraPosition;
 	
 	import mx.events.ItemClickEvent;
@@ -46,13 +47,22 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
-			var userMe:User = userSession.userList.me;
+			var userMe:User = userSession.userList.me;		
 			
-			view.userNameText.text = userMe.name;
-			
-			view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userMe.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
+			view.userNameText.text = userMe.name;		
 			view.micOnOffText.text = ResourceManager.getInstance().getString('resources', userMe.voiceJoined? 'profile.settings.mic.on':'profile.settings.mic.off');
 			view.raiseHandText.text = ResourceManager.getInstance().getString('resources', userMe.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
+			
+			if (Camera.getCamera() == null)
+			{
+				view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
+				view.shareCameraButton.enabled = false;
+			}
+			else
+			{
+				view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userMe.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
+				view.shareCameraButton.enabled = true;
+			}
 			
 			view.shareCameraButton.addEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
