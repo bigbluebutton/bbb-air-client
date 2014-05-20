@@ -9,8 +9,8 @@ package org.bigbluebutton.view.ui
 	{
 		function get navigationSignal(): ISignal
 			
-		function get navigateTo():String
-		function set navigateTo(value:String):void
+		function get navigateTo():Array
+		function set navigateTo(value:Array):void
 			
 		function get pageDetails():String
 		function set pageDetails(value:String):void

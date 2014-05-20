@@ -48,14 +48,14 @@ package org.bigbluebutton.view.ui
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 		}
 		
-		protected var _navigateTo:String = "";
+		protected var _navigateTo:Array = new Array();
 
-		public function get navigateTo():String
+		public function get navigateTo():Array
 		{
 			return _navigateTo;
 		}
 
-		public function set navigateTo(value:String):void
+		public function set navigateTo(value:Array):void
 		{
 			_navigateTo = value;
 		}

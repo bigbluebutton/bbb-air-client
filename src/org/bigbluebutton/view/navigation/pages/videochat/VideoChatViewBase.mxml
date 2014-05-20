@@ -80,7 +80,7 @@
 									paddingTop="10"
 									/>
 			</s:layout>
-			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="{PagesENUM.PROFILE}"/>                
+			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="{[PagesENUM.PROFILE]}"/>                
 			<s:Group width="100%" height="30">
 				<s:Label horizontalCenter="0" verticalCenter="0" text="{resourceManager.getString('resources', 'video.title')}" />
 			</s:Group>	
