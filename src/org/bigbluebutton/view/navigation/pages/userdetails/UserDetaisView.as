@@ -31,8 +31,15 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		public function update():void
 		{
 			if(user != null && mainshell != null)
-			{
-				userNameText.text = _user.name;
+			{			
+				if(_user.me)
+				{
+					userNameText.text = _user.name + " " +resourceManager.getString('resources', 'userDetail.you');
+				}
+				else
+				{
+					userNameText.text = _user.name;
+				}
 				statusText.text = _user.role;
 				cameraIcon.visible = _user.hasStream;
 				micIcon.visible = (_user.voiceJoined && !_user.muted);
