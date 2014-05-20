@@ -47,37 +47,30 @@ package org.bigbluebutton.view.ui
 		 */
 		private function navigate(): void
 		{
-			navigateToPageSignal.dispatch(view.navigateTo, view.pageDetails);
+			navigateToPageSignal.dispatch(view.navigateTo[0], view.pageDetails);
 		}
 		
 		/**
-		 * Update the view when there is a chenge in the model
+		 * Update the view when there is a change in the model
 		 */ 
 		private function update(page:String, action:Boolean = false):void
-		{
-			if(view.navigateTo == page)
+		{			
+	    	if(view.navigateTo.indexOf(page) == 0)
 			{
 				if(containState(view, "selected")) 
 				{
 					view.currentState = "selected";
 				}
 			}
-			else
-			{
+			else if(view.navigateTo.indexOf(page)>0)
+			{				
 				if(containState(view, "unselected"))
-				{				
-					if ((page == PagesENUM.CHAT || page == PagesENUM.CHATROOMS || page == PagesENUM.SELECT_PARTICIPANT ) && view is MenuChatButton)
-					{
-						view.currentState = "selected";
-
-					}else if((page == PagesENUM.USER_DETAIS || page == PagesENUM.PARTICIPANTS ) && view is MenuParticipantsButton)
-					{
-						view.currentState = "selected";
-					}
-					else
-					{
-						view.currentState = "unselected";
-					}		
+				{
+					view.currentState = "selected";																	
+				}
+				else
+				{
+					view.currentState = "unselected";
 				}
 			}
 		}

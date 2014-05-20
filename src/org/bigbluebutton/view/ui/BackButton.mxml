@@ -6,7 +6,7 @@
 					 width="30" height="30" 
 					 buttonMode="true"
 					 mouseEnabled="true"
-					 navigateTo="{PagesENUM.LAST}">
+					 navigateTo="{[PagesENUM.LAST]}">
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
