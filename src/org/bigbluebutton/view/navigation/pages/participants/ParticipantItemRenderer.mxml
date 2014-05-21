@@ -26,7 +26,7 @@
 					
 					soundIcon.visible = user.talking;
 					if(user.me){
-			            labelDisplay.text = user.name + " " + resourceManager.getString('resources', 'userDetail.you');
+						labelDisplay.text = user.name + " " + resourceManager.getString('resources', 'userDetail.you');
 					}
 					else
 					{
