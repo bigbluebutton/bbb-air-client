@@ -6,7 +6,7 @@
 					 width="30" height="30" 
 					 buttonMode="true"
 					 mouseEnabled="true"
-					 navigateTo="{PagesENUM.PROFILE}">
+					 navigateTo="{[PagesENUM.PROFILE]}">
 	<ui:states>
 		<s:State name="unselected"/>
 		<s:State name="selected"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:ui="org.bigbluebutton.view.ui.*">
 	<fx:Script>
 		<![CDATA[
@@ -19,8 +19,8 @@
 							paddingTop="0"
 							/>
 	</s:layout>
-	<ui:MenuPresentationButton id="presentationBtn" navigateTo="{PagesENUM.PRESENTATION}"/>
-	<ui:MenuVideoChatButton id="videochatBtn" navigateTo="{PagesENUM.VIDEO_CHAT}"/>
-	<ui:MenuChatButton id="chatBtn" navigateTo="{PagesENUM.CHATROOMS}"/>
-	<ui:MenuParticipantsButton id="participantsBtn" navigateTo="{PagesENUM.PARTICIPANTS}"/>
+	<ui:MenuPresentationButton id="presentationBtn" navigateTo="{[PagesENUM.PRESENTATION]}"/>
+	<ui:MenuVideoChatButton id="videochatBtn" navigateTo="{[PagesENUM.VIDEO_CHAT]}"/>
+	<ui:MenuChatButton id="chatBtn" navigateTo="{[PagesENUM.CHATROOMS,PagesENUM.CHAT,PagesENUM.SELECT_PARTICIPANT]}"/>
+	<ui:MenuParticipantsButton id="participantsBtn" navigateTo="{[PagesENUM.PARTICIPANTS,PagesENUM.USER_DETAIS]}"/>
 </s:Group>
