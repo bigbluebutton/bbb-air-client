@@ -16,6 +16,7 @@ package org.bigbluebutton.command
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
+	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class ConnectCommand extends Command
 	{		
@@ -33,6 +34,9 @@ package org.bigbluebutton.command
 		
 		[Inject]
 		public var videoConnection: IVideoConnection;
+		
+		[Inject]
+		public var voiceConnection: IVoiceConnection;
 		
 		[Inject]
 		public var uri: String;
@@ -72,6 +76,9 @@ package org.bigbluebutton.command
 			
 			videoConnection.connect();
 			userSession.videoConnection = videoConnection;
+			
+			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
+			userSession.voiceConnection = voiceConnection;
 			
 			usersService.connectListeners(uri);
 			
