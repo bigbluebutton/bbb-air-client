@@ -55,7 +55,7 @@ package org.bigbluebutton.view.ui
 		 */ 
 		private function update(page:String, action:Boolean = false):void
 		{			
-	    	if(view.navigateTo.indexOf(page) == 0)
+			if(view.navigateTo.indexOf(page) == 0)
 			{
 				if(containState(view, "selected")) 
 				{
