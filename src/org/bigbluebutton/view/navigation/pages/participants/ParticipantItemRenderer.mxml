@@ -25,7 +25,8 @@
 					micOffIcon.visible = (user.voiceJoined && user.muted);
 					
 					soundIcon.visible = user.talking;
-					if(user.me){
+					if(user.me)
+					{
 						labelDisplay.text = user.name + " " + resourceManager.getString('resources', 'userDetail.you');
 					}
 					else
