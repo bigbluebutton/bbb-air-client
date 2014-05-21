@@ -26,11 +26,11 @@
 					
 					soundIcon.visible = user.talking;
 					if(user.me){
-						labelDisplay.text = user.name + " " + resourceManager.getString('resources', 'userDetail.you');
+			            labelDisplay.text = user.name + " " + resourceManager.getString('resources', 'userDetail.you');
 					}
 					else
 					{
-						labelDisplay.text = user.name;
+					    labelDisplay.text = user.name;
 					}
 				}
 			}

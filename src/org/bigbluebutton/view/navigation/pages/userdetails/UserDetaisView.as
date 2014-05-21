@@ -32,9 +32,9 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		{
 			if(user != null && mainshell != null)
 			{			
-				if(_user.me)
+			    if(_user.me)
 				{
-					userNameText.text = _user.name + " " +resourceManager.getString('resources', 'userDetail.you');
+				    userNameText.text = _user.name + " " +resourceManager.getString('resources', 'userDetail.you');
 				}
 				else
 				{
