@@ -30,7 +30,7 @@
 					}
 					else
 					{
-					    labelDisplay.text = user.name;
+						labelDisplay.text = user.name;
 					}
 				}
 			}
