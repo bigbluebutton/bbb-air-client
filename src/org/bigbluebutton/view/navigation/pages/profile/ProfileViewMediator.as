@@ -1,6 +1,5 @@
 package org.bigbluebutton.view.navigation.pages.profile
 {
-	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.media.CameraPosition;
 	
@@ -13,10 +12,10 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.command.ShareMicrophoneSignal;
 	import org.bigbluebutton.core.VideoConnection;
-	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
+	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -121,7 +120,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 		 */ 
 		public function logoutClick(event:MouseEvent):void
 		{
-			disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_USER_LOGGED_OUT);
+			disconnectUserSignal.dispatch(DisconnectEnum.CONNECTION_STATUS_USER_LOGGED_OUT);
 		}
 		
 		override public function destroy():void

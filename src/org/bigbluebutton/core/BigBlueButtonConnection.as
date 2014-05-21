@@ -5,17 +5,10 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
-	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.model.IConferenceParameters;
-	import org.bigbluebutton.model.IUserUISession;
-	import org.bigbluebutton.model.User;
-	import org.bigbluebutton.model.UserSession;
-	import org.bigbluebutton.model.UserUISession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
-	
-	import robotlegs.bender.framework.api.IInjector;
 	
 	public class BigBlueButtonConnection extends DefaultConnectionCallback implements IBigBlueButtonConnection
 	{

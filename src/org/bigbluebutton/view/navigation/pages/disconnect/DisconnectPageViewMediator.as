@@ -4,9 +4,9 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
-	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
-	import org.bigbluebutton.model.UserSession;
+	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
+	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectType;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -14,9 +14,6 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 	{	
 		[Inject]
 		public var view:IDisconnectPageView;
-		
-		[Inject] 
-		public var userSession:IUserSession;
 		
 		[Inject]
 		public var userUISession:IUserUISession;
@@ -34,17 +31,17 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 		{
 			switch(disconnectionStatusCode)
 			{
-				case UserSession.CONNECTION_STATUS_MEETING_ENDED:
-					view.currentState = DisconnectPageViewBase.CONNECTION_STATUS_MEETING_ENDED;
+				case DisconnectEnum.CONNECTION_STATUS_MEETING_ENDED:
+					view.currentState = DisconnectType.CONNECTION_STATUS_MEETING_ENDED_STRING;
 					break;
-				case UserSession.CONNECTION_STATUS_CONNECTION_DROPPED:
-					view.currentState = DisconnectPageViewBase.CONNECTION_STATUS_CONNECTION_DROPPED;
+				case DisconnectEnum.CONNECTION_STATUS_CONNECTION_DROPPED:
+					view.currentState = DisconnectType.CONNECTION_STATUS_CONNECTION_DROPPED_STRING;
 					break;
-				case UserSession.CONNECTION_STATUS_USER_KICKED_OUT:
-					view.currentState = DisconnectPageViewBase.CONNECTION_STATUS_USER_KICKED_OUT;
+				case DisconnectEnum.CONNECTION_STATUS_USER_KICKED_OUT:
+					view.currentState = DisconnectType.CONNECTION_STATUS_USER_KICKED_OUT_STRING;
 					break;
-				case UserSession.CONNECTION_STATUS_USER_LOGGED_OUT:
-					view.currentState = DisconnectPageViewBase.CONNECTION_STATUS_USER_LOGGED_OUT;
+				case DisconnectEnum.CONNECTION_STATUS_USER_LOGGED_OUT:
+					view.currentState = DisconnectType.CONNECTION_STATUS_USER_LOGGED_OUT_STRING;
 					break;
 			}	
 		}

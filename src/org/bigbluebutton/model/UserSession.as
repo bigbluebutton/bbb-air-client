@@ -27,11 +27,6 @@ package org.bigbluebutton.model
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
 		protected var _guestSignal:ISignal = new Signal();
-		
-		public static const CONNECTION_STATUS_MEETING_ENDED:int = 1;
-		public static const CONNECTION_STATUS_CONNECTION_DROPPED:int = 2;
-		public static const CONNECTION_STATUS_USER_LOGGED_OUT:int = 3;
-		public static const CONNECTION_STATUS_USER_KICKED_OUT:int = 4;
 
 		public function get userList():UserList
 		{

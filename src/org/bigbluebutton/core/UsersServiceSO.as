@@ -1,10 +1,7 @@
 package org.bigbluebutton.core
 {
-	import flash.events.AsyncErrorEvent;
-	import flash.events.NetStatusEvent;
 	import flash.net.NetConnection;
 	import flash.net.Responder;
-	import flash.net.SharedObject;
 	
 	import mx.utils.ObjectUtil;
 	
@@ -12,9 +9,8 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.ConnectionFailedEvent;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
-	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.User;
-	import org.osmf.logging.Log;
+	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
 	
 	public class UsersServiceSO extends BaseServiceSO implements IUsersServiceSO
 	{
@@ -137,7 +133,7 @@ package org.bigbluebutton.core
 			
 			if (userSession.userId == userid)
 			{
-				disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_USER_KICKED_OUT);
+				disconnectUserSignal.dispatch(DisconnectEnum.CONNECTION_STATUS_USER_KICKED_OUT);
 			}
 		}
 		
@@ -146,7 +142,7 @@ package org.bigbluebutton.core
 		 */
 		public function logout():void {
 			trace("The meeting has ended and a logout should be initiated");
-			disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_MEETING_ENDED);
+			disconnectUserSignal.dispatch(DisconnectEnum.CONNECTION_STATUS_MEETING_ENDED);
 		}
 		
 		override protected function onConnectionFailed(reason:String):void {

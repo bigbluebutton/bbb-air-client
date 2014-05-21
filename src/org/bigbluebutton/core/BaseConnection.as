@@ -11,8 +11,7 @@ package org.bigbluebutton.core
 	
 	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.model.ConnectionFailedEvent;
-	import org.bigbluebutton.model.IMessageListener;
-	import org.bigbluebutton.model.UserSession;
+	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
@@ -140,7 +139,7 @@ package org.bigbluebutton.core
 		protected function sendConnectionFailedEvent(reason:String):void 
 		{
 			//unsuccessConnected.dispatch(reason);
-			disconnectUserSignal.dispatch(UserSession.CONNECTION_STATUS_CONNECTION_DROPPED);
+			disconnectUserSignal.dispatch(DisconnectEnum.CONNECTION_STATUS_CONNECTION_DROPPED);
 		}
 		
 		protected function netSecurityError( event : SecurityErrorEvent ) : void 

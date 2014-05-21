@@ -9,15 +9,6 @@
 				xmlns:pages="org.bigbluebutton.view.navigation.pages.*" 
 				xmlns:view="org.bigbluebutton.core.view.*">
 	
-	<fx:Script>
-		<![CDATA[
-			public static const CONNECTION_STATUS_MEETING_ENDED:String = "MEETING_ENDED";
-			public static const CONNECTION_STATUS_CONNECTION_DROPPED:String = "CONNECTION_DROPPED";
-			public static const CONNECTION_STATUS_USER_LOGGED_OUT:String = "USER_LOGGED_OUT";
-			public static const CONNECTION_STATUS_USER_KICKED_OUT:String = "USER_KICKED_OUT";
-		]]>
-	</fx:Script>
-	
 	<view:states>
 		<s:State name="MEETING_ENDED"/>
 		<s:State name="CONNECTION_DROPPED"/>
