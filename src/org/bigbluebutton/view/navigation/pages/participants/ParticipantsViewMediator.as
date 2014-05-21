@@ -13,6 +13,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
@@ -85,7 +86,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 		{
 			if (event.newIndex >= 0) {
 				var user:User = dataProvider.getItemAt(event.newIndex) as User;
-				userUISession.pushPage(PagesENUM.USER_DETAIS, user);
+				userUISession.pushPage(PagesENUM.USER_DETAIS, user, TransitionAnimationENUM.SLIDE_LEFT);
 			}
 		}
 			

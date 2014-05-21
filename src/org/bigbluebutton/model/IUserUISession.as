@@ -1,5 +1,6 @@
 package org.bigbluebutton.model
 {
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 
 	public interface IUserUISession
@@ -11,8 +12,8 @@ package org.bigbluebutton.model
 		
 		function get currentPage():String;
 		function get lastPage():String;
-		function popPage():void	;
-		function pushPage(value:String, details:Object = null):void;
+		function popPage(animation:int = TransitionAnimationENUM.APPEAR):void;
+		function pushPage(value:String, details:Object = null, animation:int = TransitionAnimationENUM.APPEAR):void;
 		function get currentPageDetails():Object;
 		function get loading():Boolean;
 		function set loading(value:Boolean):void;		
