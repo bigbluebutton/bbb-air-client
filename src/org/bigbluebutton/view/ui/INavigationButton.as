@@ -8,6 +8,9 @@ package org.bigbluebutton.view.ui
 	public interface INavigationButton extends IView
 	{
 		function get navigationSignal(): ISignal
+
+		function get transitionAnimation():int
+		function set transitionAnimation(value:int):void
 			
 		function get navigateTo():Array
 		function set navigateTo(value:Array):void

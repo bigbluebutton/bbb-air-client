@@ -6,7 +6,8 @@
 					 width="30" height="30" 
 					 buttonMode="true"
 					 mouseEnabled="true"
-					 navigateTo="{[PagesENUM.PROFILE]}">
+					 navigateTo="{[PagesENUM.PROFILE]}"
+					 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}">
 	<ui:states>
 		<s:State name="unselected"/>
 		<s:State name="selected"/>
@@ -14,6 +15,7 @@
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
+			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 		]]>
 	</fx:Script>
 	<fx:Declarations>

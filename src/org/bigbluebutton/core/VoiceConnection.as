@@ -11,8 +11,11 @@ package org.bigbluebutton.core
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
 	
-	public class VoiceConnection extends DefaultConnectionCallback
+	public class VoiceConnection extends DefaultConnectionCallback implements IVoiceConnection
 	{
+		[Inject]
+		public var baseConnection:IBaseConnection;
+		
 		public static const NAME:String = "VoiceConnection";
 		
 		public var _callActive:Boolean = false; 
@@ -20,17 +23,20 @@ package org.bigbluebutton.core
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
 		
-		protected var _baseConnection:BaseConnection;
 		protected var _applicationURI:String;
 		protected var _username:String;
 		protected var _conferenceParameters:IConferenceParameters;
 		
 		public function VoiceConnection() {
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
-			_baseConnection = new BaseConnection(this);
-			_baseConnection.successConnected.add(onConnectionSuccess);
-			_baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
+		}
+		
+		[PostConstruct]
+		public function init():void
+		{
+			baseConnection.init(this);
+			baseConnection.successConnected.add(onConnectionSuccess);
+			baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
 		}
 		
 		private function onConnectionUnsuccess(reason:String):void
@@ -62,7 +68,7 @@ package org.bigbluebutton.core
 		}
 		
 		public function get connection():NetConnection {
-			return _baseConnection.connection;
+			return baseConnection.connection;
 		}
 		
 		public function get callActive():Boolean {
@@ -75,11 +81,11 @@ package org.bigbluebutton.core
 			_conferenceParameters = confParams;
 			_username = encodeURIComponent(confParams.externUserID + "-bbbID-" + confParams.username);
 				
-			_baseConnection.connect(_applicationURI, confParams.externUserID, _username);
+			baseConnection.connect(_applicationURI, confParams.externUserID, _username);
 		}
 		
 		public function disconnect(onUserCommand:Boolean):void {
-			_baseConnection.disconnect(onUserCommand);
+			baseConnection.disconnect(onUserCommand);
 		}
 		
 		//**********************************************//
@@ -115,7 +121,7 @@ package org.bigbluebutton.core
 		{
 			if (!callActive) {
 				trace(NAME + "::call(): starting voice call");
-				_baseConnection.connection.call(
+				baseConnection.connection.call(
 					"voiceconf.call",
 					new Responder(callOnSucess, callUnsucess),
 					"default",
@@ -143,7 +149,7 @@ package org.bigbluebutton.core
 		public function hangUp():void {
 			if (callActive) {
 				trace(NAME + "::hangUp(): hanging up the voice call");
-				_baseConnection.connection.call(
+				baseConnection.connection.call(
 					"voiceconf.hangup",
 					new Responder(hangUpOnSucess, hangUpUnsucess),
 					"default"

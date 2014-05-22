@@ -22,6 +22,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.chat.PrivateChatMessage;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
@@ -262,11 +263,11 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			{
 				if(item.hasOwnProperty("button"))
 				{
-					userUISession.pushPage(PagesENUM.SELECT_PARTICIPANT, item)
+					userUISession.pushPage(PagesENUM.SELECT_PARTICIPANT, item, TransitionAnimationENUM.SLIDE_LEFT)
 				}
 				else
 				{
-					userUISession.pushPage(PagesENUM.CHAT, item)
+					userUISession.pushPage(PagesENUM.CHAT, item, TransitionAnimationENUM.SLIDE_LEFT)
 				}
 			}
 			else
