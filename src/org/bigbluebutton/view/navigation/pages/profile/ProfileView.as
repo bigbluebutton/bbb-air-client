@@ -80,6 +80,11 @@ package org.bigbluebutton.view.navigation.pages.profile
 		{
 			cameraQualityGroup.visible = hasStream;
 			cameraQualityGroup.includeInLayout = hasStream;
-		}	
+		}
+		
+		public function get logoutButton():Button
+		{
+			return logoutButton0;
+		}			
 	}
 }

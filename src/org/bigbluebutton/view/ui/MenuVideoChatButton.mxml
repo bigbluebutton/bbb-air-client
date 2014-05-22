@@ -6,11 +6,17 @@
 					 width="80" height="42"
 					 buttonMode="true"
 					 mouseEnabled="true" 
+					 transitionAnimation="{TransitionAnimationENUM.APPEAR}"
 					 >
 	<ui:states>
 		<s:State name="unselected"/>
 		<s:State name="selected"/>
 	</ui:states>
+	<fx:Script>
+		<![CDATA[
+			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>

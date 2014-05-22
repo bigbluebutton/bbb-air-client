@@ -5,6 +5,8 @@ package org.bigbluebutton.view.ui
 	import org.bigbluebutton.command.NavigateToSignal;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -47,15 +49,15 @@ package org.bigbluebutton.view.ui
 		 */
 		private function navigate(): void
 		{
-			navigateToPageSignal.dispatch(view.navigateTo[0], view.pageDetails);
+			navigateToPageSignal.dispatch(view.navigateTo[0], view.pageDetails, view.transitionAnimation);
 		}
 		
 		/**
 		 * Update the view when there is a change in the model
 		 */ 
-		private function update(page:String, action:Boolean = false):void
-		{			
-	    	if(view.navigateTo.indexOf(page) == 0)
+		private function update(page:String, action:Boolean = false, animation:int = TransitionAnimationENUM.APPEAR):void
+		{
+			if(view.navigateTo.indexOf(page) == 0)
 			{
 				if(containState(view, "selected")) 
 				{

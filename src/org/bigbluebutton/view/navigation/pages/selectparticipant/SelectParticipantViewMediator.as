@@ -11,6 +11,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
@@ -85,7 +86,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 		protected function onSelectUser(event:IndexChangeEvent):void
 		{
 			var user:User = dataProvider.getItemAt(event.newIndex) as User;
-			userUISession.pushPage(PagesENUM.CHAT, user);
+			userUISession.pushPage(PagesENUM.CHAT, user, TransitionAnimationENUM.SLIDE_LEFT);
 		}
 		
 		override public function destroy():void

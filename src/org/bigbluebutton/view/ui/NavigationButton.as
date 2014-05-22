@@ -9,6 +9,18 @@ package org.bigbluebutton.view.ui
 	
 	public class NavigationButton extends Group implements INavigationButton
 	{		
+		private var _transitionAnimation:int;
+			
+		public function get transitionAnimation():int
+		{
+			return _transitionAnimation;	
+		}
+		
+		public function set transitionAnimation(value:int):void
+		{
+			_transitionAnimation = value;
+		}
+		
 		private var _navigationSignal: Signal = new Signal();
 		
 		/**
