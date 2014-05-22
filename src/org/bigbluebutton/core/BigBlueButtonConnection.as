@@ -16,7 +16,9 @@ package org.bigbluebutton.core
 		
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
-		protected var _baseConnection:BaseConnection;
+		
+		[Inject]
+		public var baseConnection:IBaseConnection;
 		
 		private var _applicationURI:String;
 		private var _conferenceParameters:IConferenceParameters;
@@ -26,12 +28,16 @@ package org.bigbluebutton.core
 		
 		public function BigBlueButtonConnection() {
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
-			_baseConnection = new BaseConnection(this);
-			_baseConnection.successConnected.add(onConnectionSuccess);
-			_baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
 		}
 		
+		[PostConstruct]
+		public function init():void
+		{
+			baseConnection.init(this);
+			baseConnection.successConnected.add(onConnectionSuccess);
+			baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
+		}
+			
 		private function onConnectionUnsuccess(reason:String):void
 		{
 			unsuccessConnected.dispatch(reason);
@@ -43,7 +49,7 @@ package org.bigbluebutton.core
 		}
 		
 		private function getMyUserId():void {
-			_baseConnection.connection.call(
+			baseConnection.connection.call(
 				"getMyUserId",// Remote function name
 				new Responder(
 					// result - On successful result
@@ -81,7 +87,7 @@ package org.bigbluebutton.core
 
 		
 		public function get connection():NetConnection {
-			return _baseConnection.connection;
+			return baseConnection.connection;
 		}
 		
 		/**
@@ -117,11 +123,11 @@ package org.bigbluebutton.core
 					_conferenceParameters.externUserID,
 					_conferenceParameters.internalUserID);
 			*/
-			_baseConnection.connect.apply(null, new Array(uri).concat(connectParams));
+			baseConnection.connect.apply(null, new Array(uri).concat(connectParams));
 		}
 		
 		public function disconnect(onUserCommand:Boolean):void {
-			_baseConnection.disconnect(onUserCommand);
+			baseConnection.disconnect(onUserCommand);
 		}
 		
 		public function get userId():String
@@ -130,7 +136,7 @@ package org.bigbluebutton.core
 		}
 
 		public function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void {
-			_baseConnection.sendMessage(service, onSuccess, onFailure, message);
+			baseConnection.sendMessage(service, onSuccess, onFailure, message);
 		}
 	}
 }

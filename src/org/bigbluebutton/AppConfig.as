@@ -1,21 +1,25 @@
 package org.bigbluebutton
 {
-	import org.bigbluebutton.command.ShareCameraCommand;
-	import org.bigbluebutton.command.ShareCameraSignal;
+	import org.bigbluebutton.command.CameraQualityCommand;
+	import org.bigbluebutton.command.CameraQualitySignal;
 	import org.bigbluebutton.command.ConnectCommand;
 	import org.bigbluebutton.command.ConnectSignal;
-	import org.bigbluebutton.command.ShareMicrophoneCommand;
-	import org.bigbluebutton.command.ShareMicrophoneSignal;
+	import org.bigbluebutton.command.DisconnectUserCommand;
+	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.command.LoadPresentationCommand;
 	import org.bigbluebutton.command.LoadPresentationSignal;
 	import org.bigbluebutton.command.LoadSlideCommand;
 	import org.bigbluebutton.command.LoadSlideSignal;
-	import org.bigbluebutton.command.CameraQualityCommand;
-	import org.bigbluebutton.command.CameraQualitySignal;
+	import org.bigbluebutton.command.ShareCameraCommand;
+	import org.bigbluebutton.command.ShareCameraSignal;
+	import org.bigbluebutton.command.ShareMicrophoneCommand;
+	import org.bigbluebutton.command.ShareMicrophoneSignal;
+	import org.bigbluebutton.core.BaseConnection;
 	import org.bigbluebutton.core.BigBlueButtonConnection;
 	import org.bigbluebutton.core.ChatMessageReceiver;
 	import org.bigbluebutton.core.ChatMessageSender;
 	import org.bigbluebutton.core.ChatMessageService;
+	import org.bigbluebutton.core.IBaseConnection;
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IChatMessageReceiver;
 	import org.bigbluebutton.core.IChatMessageSender;
@@ -27,6 +31,7 @@ package org.bigbluebutton
 	import org.bigbluebutton.core.IPresentationService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IUsersServiceSO;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.core.ListenersServiceSO;
 	import org.bigbluebutton.core.LoginService;
@@ -54,7 +59,7 @@ package org.bigbluebutton
 	{
 		[Inject]
 		public var injector: IInjector;
-				
+		
 		[Inject]
 		public var signalCommandMap: ISignalCommandMap;
 		
@@ -76,6 +81,8 @@ package org.bigbluebutton
 			injector.map(IPresentationService).toSingleton(PresentationService);
 			injector.map(IPresentMessageReceiver).toSingleton(PresentMessageReceiver);
 			injector.map(IChatMessagesSession).toSingleton(ChatMessagesSession);
+			injector.map(IBaseConnection).toType(BaseConnection);	
+			injector.map(IVoiceConnection).toType(VoiceConnection);
 			
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
 			signalCommandMap.map(ShareMicrophoneSignal).toCommand(ShareMicrophoneCommand);
@@ -83,6 +90,7 @@ package org.bigbluebutton
 			signalCommandMap.map(LoadPresentationSignal).toCommand(LoadPresentationCommand);
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
 			signalCommandMap.map(CameraQualitySignal).toCommand(CameraQualityCommand);
+			signalCommandMap.map(DisconnectUserSignal).toCommand(DisconnectUserCommand);		
 		}
 	}
 }

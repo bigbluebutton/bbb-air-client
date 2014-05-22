@@ -31,6 +31,7 @@
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
+			import org.bigbluebutton.view.navigation.pages.disconnect.DisconnectPageConfig;
 			import org.bigbluebutton.view.navigation.pages.login.LoginPageConfig;
 			import org.bigbluebutton.view.navigation.pages.participants.ParticipantsConfig;
 			import org.bigbluebutton.view.navigation.pages.presentation.PresentationConfig;
@@ -40,8 +41,8 @@
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
 			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
-			import org.bigbluebutton.view.ui.SwapCameraConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
+			import org.bigbluebutton.view.ui.SwapCameraConfig;
 			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
 			import org.osmf.logging.Logger;
@@ -114,6 +115,7 @@
 									.configure(LoginButtonConfig)
 									.configure(NavigationButtonConfig)
 									.configure(SwapCameraConfig)
+									.configure(DisconnectPageConfig)
 					
 					.configure(new ContextView(this));
 				

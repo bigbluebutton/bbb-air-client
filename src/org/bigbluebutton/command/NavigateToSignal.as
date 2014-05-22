@@ -6,7 +6,7 @@ package org.bigbluebutton.command
 	{
 		public function NavigateToSignal()
 		{
-			super(String, Object);
+			super(String, Object, int);
 		}
 	}
 }
