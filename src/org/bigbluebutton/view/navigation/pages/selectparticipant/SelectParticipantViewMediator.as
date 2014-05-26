@@ -6,7 +6,6 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 	import mx.events.CollectionEvent;
 	import mx.events.IndexChangedEvent;
 	
-	import org.bigbluebutton.core.IUsersServiceSO;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
@@ -30,10 +29,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 		
 		[Inject]
 		public var userUISession: IUserUISession;
-		
-		[Inject]
-		public var usersServiceSO: IUsersServiceSO;
-		
+
 		protected var dataProvider:ArrayCollection;
 		protected var dicUserIdtoUser:Dictionary
 		protected var usersSignal:ISignal; 

@@ -16,7 +16,7 @@ package org.bigbluebutton.core
 		
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
-		
+
 		[Inject]
 		public var baseConnection:IBaseConnection;
 		
@@ -49,22 +49,20 @@ package org.bigbluebutton.core
 		}
 		
 		private function getMyUserId():void {
-			baseConnection.connection.call(
-				"getMyUserId",// Remote function name
-				new Responder(
-					// result - On successful result
-					function(result:Object):void {
+			baseConnection.connection.call("participants.getMyUserId",
+				new Responder (
+					function(result:String):void {
+						trace("Success connected: My user ID is [" + result + "]");
 						_userId = result as String;
 						successConnected.dispatch();
-					},	
-					// status - On error occurred
+					},
 					function(status:Object):void { 
 						trace("Error occurred");
 						trace(ObjectUtil.toString(status));
 						unsuccessConnected.dispatch("Failed to get the userId");
 					}
-				)//new Responder
-			); //_netConnection.call
+				)
+			);
 		}
 		
 		public function get unsuccessConnected():ISignal
@@ -113,16 +111,7 @@ package org.bigbluebutton.core
 				_conferenceParameters.externUserID,
 				_conferenceParameters.internalUserID
 			];
-			/*
-			_baseConnection.connect(uri, 
-					_conferenceParameters.username, 
-					_conferenceParameters.role,
-					_conferenceParameters.room, 
-					_conferenceParameters.voicebridge, 
-					_conferenceParameters.record, 
-					_conferenceParameters.externUserID,
-					_conferenceParameters.internalUserID);
-			*/
+			
 			baseConnection.connect.apply(null, new Array(uri).concat(connectParams));
 		}
 		

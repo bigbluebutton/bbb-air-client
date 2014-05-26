@@ -20,8 +20,11 @@ package org.bigbluebutton.core
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
-		public function getPublicChatMessages():void {
+		public function setupMessageReceiver():void {
 			userSession.mainConnection.addMessageListener(chatMessageReceiver as IMessageListener);
+		}
+		
+		public function getPublicChatMessages():void {
 			chatMessageSender.getPublicChatMessages();
 		}
 		

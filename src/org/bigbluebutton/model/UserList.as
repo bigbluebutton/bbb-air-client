@@ -198,7 +198,7 @@ package org.bigbluebutton.model
 			return null;				
 		}
 		
-		public function getUserByVoiceUserId(voiceUserId:Number):User {
+		public function getUserByVoiceUserId(voiceUserId:String):User {
 			var aUser:User;
 			
 			for (var i:int = 0; i < _users.length; i++) {
@@ -304,7 +304,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userJoinAudio(userID:String, voiceUserID:Number, muted:Boolean, talking:Boolean, locked:Boolean):void {
+		public function userJoinAudio(userID:String, voiceUserID:String, muted:Boolean, talking:Boolean, locked:Boolean):void {
 			var p:Object = getUserIndex(userID);
 			
 			if (p != null) {
@@ -322,8 +322,8 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userLeaveAudio(voiceUserID:Number):void {
-			var user:User = getUserByVoiceUserId(voiceUserID);
+		public function userLeaveAudio(userID:String):void {
+			var user:User = getUser(userID);
 			if(user != null) {
 				user.voiceJoined = false;
 				
@@ -333,7 +333,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userMuteChange(voiceUserID:Number, mute:Boolean):void {
+		public function userMuteChange(voiceUserID:String, mute:Boolean):void {
 			var user:User = getUserByVoiceUserId(voiceUserID);
 			
 			if (user != null) {
@@ -347,7 +347,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userLockedChange(voiceUserID:Number, locked:Boolean):void {
+		public function userLockedChange(voiceUserID:String, locked:Boolean):void {
 			var user:User = getUserByVoiceUserId(voiceUserID);
 			
 			if (user != null) {
@@ -357,7 +357,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userTalkingChange(voiceUserID:Number, talking:Boolean):void {
+		public function userTalkingChange(voiceUserID:String, talking:Boolean):void {
 			var user:User = getUserByVoiceUserId(voiceUserID);
 			
 			if (user != null) {

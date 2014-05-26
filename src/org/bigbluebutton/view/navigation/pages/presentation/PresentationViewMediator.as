@@ -30,10 +30,8 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
 			userSession.presentationList.presentationChangeSignal.add(presentationChangeHandler);
-			userSession.presentationList.slideChangeSignal.add(slideChangeHandler);
 			
 			setPresentation(userSession.presentationList.currentPresentation);
-			setCurrentSlideNum(userSession.presentationList.currentSlideNum);
 		}
 		
 		private function displaySlide():void {
@@ -61,20 +59,25 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		}
 		
 		private function slideChangeHandler():void {
-			setCurrentSlideNum(userSession.presentationList.currentSlideNum);
+			setCurrentSlideNum(_currentPresentation.currentSlideNum);
 		}
 		
 		private function setPresentation(p:Presentation):void {
+			if(_currentPresentation != null) {
+				_currentPresentation.slideChangeSignal.remove(slideChangeHandler);
+			}
 			_currentPresentation = p;
 			if (_currentPresentation != null) {
 				view.setPresentationName(_currentPresentation.fileName);
+				_currentPresentation.slideChangeSignal.add(slideChangeHandler);
+				setCurrentSlideNum(p.currentSlideNum);
 			} else {
 				view.setPresentationName("");
 			}
 		}
 		
 		private function setCurrentSlideNum(n:int):void {
-			_currentSlideNum = userSession.presentationList.currentSlideNum;
+			_currentSlideNum = n;
 			displaySlide();
 		}
 		
@@ -85,7 +88,7 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		override public function destroy():void
 		{
 			userSession.presentationList.presentationChangeSignal.remove(presentationChangeHandler);
-			userSession.presentationList.slideChangeSignal.remove(slideChangeHandler);
+			_currentPresentation.slideChangeSignal.remove(slideChangeHandler);
 			
 			super.destroy();
 			

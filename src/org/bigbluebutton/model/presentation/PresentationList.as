@@ -20,21 +20,20 @@ package org.bigbluebutton.model.presentation
 		private var _presentations:ArrayCollection = new ArrayCollection();
 		
 		private var _currentPresentation:Presentation;
-		private var _currentSlideNum:int = -1;
 		
 		private var _presentationChangeSignal:ISignal = new Signal();
-		private var _slideChangeSignal:ISignal = new Signal();
 		
 		public function PresentationList() {
+			
 		}
 		
-		public function addPresentation(presentationName:String):void {
+		public function addPresentation(presentationName:String, numberOfSlides:int, current:Boolean):void {
 			trace("Adding presentation " + presentationName);
 			for (var i:int=0; i < _presentations.length; i++) {
 				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) return;
 			}
-			_presentations.addItem(new Presentation(presentationName, changeCurrentPresentation));
+			_presentations.addItem(new Presentation(presentationName, changeCurrentPresentation, numberOfSlides, current));
 		}
 		
 		public function removePresentation(presentationName:String):void {
@@ -68,27 +67,17 @@ package org.bigbluebutton.model.presentation
 		
 		public function set currentPresentation(p:Presentation):void {
 			trace("PresentationList changing current presentation");
-			_currentPresentation = p
-			currentSlideNum = 0;
+			if(_currentPresentation != null) {
+				_currentPresentation.current = false;
+			}
+			_currentPresentation = p;
+			_currentPresentation.current = true;
 			_presentationChangeSignal.dispatch();
-		}
-		
-		public function get currentSlideNum():int {
-			return _currentSlideNum;
-		}
-		
-		public function set currentSlideNum(n:int):void {
-			trace("PresentationList changing current slide");
-			_currentSlideNum = n;
-			_slideChangeSignal.dispatch();
 		}
 		
 		public function get presentationChangeSignal():ISignal {
 			return _presentationChangeSignal;
 		}
-		
-		public function get slideChangeSignal():ISignal {
-			return _slideChangeSignal;
-		}
+
 	}
 }

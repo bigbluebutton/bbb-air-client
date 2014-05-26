@@ -4,6 +4,7 @@ package org.bigbluebutton.model
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
@@ -11,7 +12,6 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.model.presentation.PresentationList;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.bigbluebutton.core.IVoiceConnection;
 	
 
 	public interface IUserSession
@@ -31,5 +31,9 @@ package org.bigbluebutton.model
 		function set videoConnection(value:IVideoConnection):void
 		function get presentationList():PresentationList
 		function get guestSignal():ISignal
+		function get successJoiningMeetingSignal():ISignal
+		function get unsuccessJoiningMeetingSignal():ISignal
+		function get logoutSignal():Signal
+		function joinMeetingResponse(msg:Object):void
 	}
 }

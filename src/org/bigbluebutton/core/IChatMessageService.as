@@ -4,9 +4,10 @@ package org.bigbluebutton.core
 
 	public interface IChatMessageService
 	{
-		function getPublicChatMessages():void
-		function sendPublicMessage(message:ChatMessageVO):void
-		function sendPrivateMessage(message:ChatMessageVO):void
-		function sendWelcomeMessage():void
+		function setupMessageReceiver():void;
+		function getPublicChatMessages():void;
+		function sendPublicMessage(message:ChatMessageVO):void;
+		function sendPrivateMessage(message:ChatMessageVO):void;
+		function sendWelcomeMessage():void;
 	}
 }

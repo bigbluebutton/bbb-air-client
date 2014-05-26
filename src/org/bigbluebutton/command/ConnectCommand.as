@@ -9,6 +9,7 @@ package org.bigbluebutton.command
 	import org.bigbluebutton.core.IPresentationService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -16,7 +17,6 @@ package org.bigbluebutton.command
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
-	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class ConnectCommand extends Command
 	{		
@@ -59,38 +59,60 @@ package org.bigbluebutton.command
 			connection.connect(conferenceParameters);
 		}
 		
-		private function successConnected():void {
+		private function successConnected():void {			
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":successConnected()");
 			
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
 			
-			usersService.connectUsers(uri);
+			// Setup all the message receivers for the services that use the BigBlueButtonConnection:
+			usersService.setupMessageReceiver();
+			chatService.setupMessageReceiver();
+			presentationService.setupMessageReceiver();
 			
+			// Send the join meeting message, then wait for the reponse
+			userSession.successJoiningMeetingSignal.add(successJoiningMeeting);
+			userSession.unsuccessJoiningMeetingSignal.add(unsuccessJoiningMeeting);
+			
+			usersService.sendJoinMeetingMessage();
+			
+			connection.successConnected.remove(successConnected);
+			connection.unsuccessConnected.remove(unsuccessConnected);
+		}
+		
+		private function successJoiningMeeting():void {
+			// set up the remaining connections
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
 			
-			//TODO use proper callbacks
 			//TODO see if videoConnection.successConnected is dispatched when it's connected properly
 			videoConnection.successConnected.add(successVideoConnected);
 			videoConnection.unsuccessConnected.add(unsuccessVideoConnected);
 			
 			videoConnection.connect();
+			
 			userSession.videoConnection = videoConnection;
 			
 			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
 			userSession.voiceConnection = voiceConnection;
-			
-			usersService.connectListeners(uri);
-			
+
+			// Query the server for chat, users, and presentation info
 			chatService.sendWelcomeMessage();
 			chatService.getPublicChatMessages();
+			
+			presentationService.getPresentationInfo();
 
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
+			usersService.queryForParticipants();
 			
-			presentationService.connectPresent(uri);
+			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
+			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
+		}
+		
+		private function unsuccessJoiningMeeting():void {
+			trace("ConnectCommand::unsuccessJoiningMeeting() -- Failed to join the meeting!!!");
 			
-			connection.successConnected.remove(successConnected);
-			connection.unsuccessConnected.remove(unsuccessConnected);
+			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
+			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
 		}
 		
 		/**

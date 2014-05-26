@@ -6,6 +6,9 @@ package org.bigbluebutton.model.presentation
 	import flash.net.URLRequest;
 	
 	import mx.collections.ArrayCollection;
+	
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 
 	public class Presentation
 	{
@@ -14,11 +17,16 @@ package org.bigbluebutton.model.presentation
 		
 		private var _changePresentation:Function;
 		
-		private var _loaded:Boolean = false;
+		private var _currentSlideNum:int = -1;
+		private var _current:Boolean = false;
 		
-		public function Presentation(fileName:String, changePresentation:Function):void {
+		private var _slideChangeSignal:ISignal = new Signal();
+		
+		public function Presentation(fileName:String, changePresentation:Function, numOfSlides:int, isCurrent:Boolean):void {
 			_fileName = fileName;
+			_slides = new Vector.<Slide>(numOfSlides + 1);
 			_changePresentation = changePresentation;
+			_current = isCurrent;
 		}
 		
 		public function get fileName():String {
@@ -38,20 +46,42 @@ package org.bigbluebutton.model.presentation
 		}
 		
 		public function add(slide:Slide):void {
-			_slides.push(slide);
+			_slides[slide.slideNumber] = slide;
+			if(slide.current == true) {
+				_currentSlideNum = slide.slideNumber;
+			}
 		}
 		
 		public function size():uint {
 			return _slides.length;
 		}
 		
-		public function finishedLoading():void {
-			_loaded = true;
+		public function show():void {
 			_changePresentation(this);
+			_slideChangeSignal.dispatch();
 		}
 		
-		public function get loaded():Boolean {
-			return _loaded;
+		public function set currentSlideNum(n:int):void {
+			_slides[_currentSlideNum].current = false;
+			_currentSlideNum = n;
+			_slides[_currentSlideNum].current = true;
+			_slideChangeSignal.dispatch();
+		}
+		
+		public function get currentSlideNum():int {
+			return _currentSlideNum;
+		}
+		
+		public function set current(b:Boolean):void {
+			_current = b;
+		}
+		
+		public function get current():Boolean {
+			return _current;
+		}
+		
+		public function get slideChangeSignal():ISignal {
+			return _slideChangeSignal;
 		}
 		
 		public function clear():void {
