@@ -161,7 +161,7 @@
 				
 			</s:Group>
 		</s:Group>
-		<common:MenuButtons width="100%" height="42"/>
+		<common:MenuButtonsView width="100%" height="42"/>
 	</s:Group>
 	<s:Label y="154" fontWeight="bold" horizontalCenter="0" text="{resourceManager.getString('resources', 'profile.logout')}"/>
 	<s:Button id="logoutButton0" y="135" width="300" height="53" alpha="0" buttonMode="true" useHandCursor="true"

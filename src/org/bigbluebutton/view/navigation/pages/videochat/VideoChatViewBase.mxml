@@ -93,6 +93,6 @@
 					 visible="false" text="{resourceManager.getString('resources', 'video.noVideo')}"
 					 textAlign="center" verticalCenter="0"/>
 		</s:Group>
-		<common:MenuButtons width="100%" height="42"/>
+		<common:MenuButtonsView width="100%" height="42"/>
 	</s:Group>
 </view:NoTabView>

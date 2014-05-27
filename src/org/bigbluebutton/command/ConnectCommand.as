@@ -2,13 +2,17 @@ package org.bigbluebutton.command
 {
 	import flash.media.Camera;
 	
+	import mx.messaging.management.Attribute;
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IChatMessageService;
+	import org.bigbluebutton.core.IDeskshareConnection;
+	import org.bigbluebutton.core.IDeskshareService;
 	import org.bigbluebutton.core.IPresentationService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -16,7 +20,6 @@ package org.bigbluebutton.command
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
-	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class ConnectCommand extends Command
 	{		
@@ -39,6 +42,9 @@ package org.bigbluebutton.command
 		public var voiceConnection: IVoiceConnection;
 		
 		[Inject]
+		public var deskshareConnection : IDeskshareConnection;
+		
+		[Inject]
 		public var uri: String;
 		
 		[Inject]
@@ -49,6 +55,9 @@ package org.bigbluebutton.command
 		
 		[Inject]
 		public var presentationService: IPresentationService;
+		
+		[Inject]
+		public var deskshareService: IDeskshareService;
 		
 		override public function execute():void {
 			connection.uri = uri;
@@ -79,8 +88,14 @@ package org.bigbluebutton.command
 			
 			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
 			userSession.voiceConnection = voiceConnection;
-			
+					
 			usersService.connectListeners(uri);
+			
+			deskshareConnection.applicationURI = userSession.config.getConfigFor("DeskShareModule").@uri;
+			deskshareConnection.connect();
+	
+			userSession.deskshareConnection = deskshareConnection;
+			deskshareService.connectDeskshareSO();
 			
 			chatService.sendWelcomeMessage();
 			chatService.getPublicChatMessages();

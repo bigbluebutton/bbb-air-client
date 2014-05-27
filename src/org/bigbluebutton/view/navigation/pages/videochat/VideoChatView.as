@@ -12,10 +12,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	
 	import spark.components.Label;
 	import spark.primitives.Rect;
+	import org.bigbluebutton.view.navigation.pages.common.VideoView;
 	
 	public class VideoChatView extends VideoChatViewBase implements IVideoChatView
 	{
-		private var webcam:WebcamView;
+		private var webcam:VideoView;
 
 		public function VideoChatView():void	
 		{
@@ -31,7 +32,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		{
 			if (webcam) stopStream();
 			
-			webcam = new WebcamView();
+			webcam = new VideoView();
 			webcam.percentWidth = 100;
 			webcam.percentHeight = 100;
 			webcam.startStream(connection, name, streamName, userID, width, height);		

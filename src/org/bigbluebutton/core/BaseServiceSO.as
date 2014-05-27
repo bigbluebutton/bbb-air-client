@@ -18,6 +18,9 @@ package org.bigbluebutton.core
 
 	public class BaseServiceSO
 	{
+		[Inject]
+		public var conferenceParameters:IConferenceParameters;
+		
 		private var _successConnected:ISignal = new Signal();
 		private var _unsuccessConnected:ISignal = new Signal();
 		private var _syncReceived:ISignal = new Signal();
@@ -33,7 +36,17 @@ package org.bigbluebutton.core
 		
 		public function connect(connection:NetConnection, uri:String, params:IConferenceParameters):void {
 			_disconnectRequested = false;
-			_sharedObject = SharedObject.getRemote(_sharedObjectName, uri + "/" + params.room, false);
+			
+			// In DeskshareServiceSO room name is attached to SO name - not uri
+			if (this is DeskshareServiceSO)
+			{
+				_sharedObject = SharedObject.getRemote(conferenceParameters.room + _sharedObjectName, uri, false);
+			}
+			else
+			{
+				_sharedObject = SharedObject.getRemote(_sharedObjectName, uri + "/" + params.room, false);
+			}
+			
 			_sharedObject.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 			_sharedObject.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
 			_sharedObject.addEventListener(SyncEvent.SYNC, onSyncEvent);

@@ -48,9 +48,6 @@ package org.bigbluebutton.core {
 		public var userSession: IUserSession;
 		
 		[Inject]
-		public var conferenceParameters: IConferenceParameters;
-		
-		[Inject]
 		public var loadPresentationSignal: LoadPresentationSignal;
 		
 		private static const SO_NAME:String = "presentationSO";

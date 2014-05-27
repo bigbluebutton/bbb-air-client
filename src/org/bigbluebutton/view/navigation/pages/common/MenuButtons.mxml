@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:ui="org.bigbluebutton.view.ui.*">
+<view:NoTabView  xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				 xmlns:s="library://ns.adobe.com/flex/spark"
+				 xmlns:view="org.bigbluebutton.core.view.*"
+				 xmlns:ui="org.bigbluebutton.view.ui.*"
+				 xmlns:assets="assets.*" 
+				 xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
+				>
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
 		]]>
 	</fx:Script>
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
-	<s:layout>
-		<s:HorizontalLayout gap="0"
-							horizontalAlign="center"
-							paddingBottom="0"
-							paddingLeft="0"
-							paddingRight="0"
-							paddingTop="0"
-							/>
-	</s:layout>
-	<ui:MenuPresentationButton id="presentationBtn" navigateTo="{[PagesENUM.PRESENTATION]}"/>
-	<ui:MenuVideoChatButton id="videochatBtn" navigateTo="{[PagesENUM.VIDEO_CHAT]}"/>
-	<ui:MenuChatButton id="chatBtn" navigateTo="{[PagesENUM.CHATROOMS,PagesENUM.CHAT,PagesENUM.SELECT_PARTICIPANT]}"/>
-	<ui:MenuParticipantsButton id="participantsBtn" navigateTo="{[PagesENUM.PARTICIPANTS,PagesENUM.USER_DETAIS]}"/>
-</s:Group>
+	<s:Group>
+		<s:layout>
+			<s:HorizontalLayout gap="0"
+								horizontalAlign="center"
+								paddingBottom="0"
+								paddingLeft="0"
+								paddingRight="0"
+								paddingTop="0"
+								/>
+		</s:layout>
+		
+		
+		
+		<ui:MenuDeskshareButton id="deskshareBtn0" navigateTo="{[PagesENUM.DESKSHARE]}" visible="false" includeInLayout="false"/>
+		<ui:MenuPresentationButton id="presentationBtn0" navigateTo="{[PagesENUM.PRESENTATION]}"/>
+		<ui:MenuVideoChatButton id="videochatBtn0" navigateTo="{[PagesENUM.VIDEO_CHAT]}"/>
+		<ui:MenuChatButton id="chatBtn0" navigateTo="{[PagesENUM.CHATROOMS,PagesENUM.CHAT,PagesENUM.SELECT_PARTICIPANT]}"/>
+		<ui:MenuParticipantsButton id="participantsBtn0" navigateTo="{[PagesENUM.PARTICIPANTS,PagesENUM.USER_DETAIS]}"/>
+		
+	</s:Group>
+</view:NoTabView>
