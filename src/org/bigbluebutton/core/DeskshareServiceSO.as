@@ -43,6 +43,8 @@ package org.bigbluebutton.core
 		public function startViewing(videoWidth:Number, videoHeight:Number):void
 		{
 			trace("DeskShare-startViewing.");
+			userSession.deskshareConnection.streamWidth = videoWidth;
+			userSession.deskshareConnection.streamHeight = videoHeight;
 			userSession.deskshareConnection.isStreaming = true;
 			userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);
 			

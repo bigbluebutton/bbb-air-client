@@ -1,5 +1,6 @@
 package org.bigbluebutton.view.navigation.pages.deskshare
 {
+	import flash.display.StageOrientation;
 	import flash.net.NetConnection;
 	
 	import org.bigbluebutton.view.navigation.pages.common.VideoView;
@@ -9,7 +10,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 	
 	public class DeskshareView extends DeskshareViewBase implements IDeskshareView
 	{
-		private var deskshareCam:VideoView;
+		private var deskshareVideoView:VideoView;
 		
 		/**
 		 * Provide access to the group containing video
@@ -24,30 +25,30 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		 */ 
 		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void 
 		{
-			if (deskshareCam) stopStream();
+			if (deskshareVideoView) stopStream();
 			
-			deskshareCam = new VideoView();
-			deskshareCam.percentWidth = 100;
-			deskshareCam.percentHeight = 100;
-			deskshareCam.startStream(connection, name, streamName, userID, width, height);		
-			this.deskshareGroup.addElement(deskshareCam);
-		}
+			deskshareVideoView = new VideoView();
+			deskshareVideoView.percentWidth = 100;
+			deskshareVideoView.percentHeight = 100;
+			this.addElement(deskshareVideoView);
+			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width);					
+		}		
 		
 		/**
 		 * Close the video stream and remove video from layout
 		 */ 
 		public function stopStream():void 
 		{
-			if(deskshareCam)
+			if(deskshareVideoView)
 			{
-				deskshareCam.close();
+				deskshareVideoView.close();
 				
-				if(this.deskshareGroup.containsElement(deskshareCam))
+				if(this.deskshareGroup.containsElement(deskshareVideoView))
 				{
-					this.deskshareGroup.removeElement(deskshareCam);
+					this.deskshareGroup.removeElement(deskshareVideoView);
 				}
 				
-				deskshareCam = null;
+				deskshareVideoView = null;
 			}
 		}
 		
@@ -58,5 +59,26 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		{
 			return noDeskshareMessage0;
 		}	
+		
+		override public function rotationHandler(rotation:String):void {
+			if (deskshareVideoView != null)
+			{
+				switch (rotation) {
+					case StageOrientation.ROTATED_LEFT:
+						deskshareVideoView.rotateVideoLeft(-90, this.deskshareGroup.height, this.deskshareGroup.width);
+						break;
+					case StageOrientation.ROTATED_RIGHT:
+						deskshareVideoView.rotateVideoRight(90, this.deskshareGroup.height, this.deskshareGroup.width);
+						break;
+					case StageOrientation.UPSIDE_DOWN:
+						deskshareVideoView.rotateVideoUpsideDown(180, this.deskshareGroup.height, this.deskshareGroup.width);
+						break;
+					case StageOrientation.DEFAULT:
+					case StageOrientation.UNKNOWN:
+					default:
+						deskshareVideoView.rotateVideo(0,this.deskshareGroup.height, this.deskshareGroup.width);
+				}	
+			}
+		}
 	}
 }

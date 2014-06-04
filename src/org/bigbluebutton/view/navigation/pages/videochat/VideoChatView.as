@@ -10,9 +10,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import mx.graphics.SolidColor;
 	import mx.graphics.SolidColorStroke;
 	
+	import org.bigbluebutton.view.navigation.pages.common.VideoView;
+	
+	import spark.components.Group;
 	import spark.components.Label;
 	import spark.primitives.Rect;
-	import org.bigbluebutton.view.navigation.pages.common.VideoView;
 	
 	public class VideoChatView extends VideoChatViewBase implements IVideoChatView
 	{
@@ -28,15 +30,15 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			super.childrenCreated();
 		}
 
-		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void 
+		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number, screenHeight:Number, screenWidth:Number):void 
 		{
 			if (webcam) stopStream();
 			
 			webcam = new VideoView();
 			webcam.percentWidth = 100;
 			webcam.percentHeight = 100;
-			webcam.startStream(connection, name, streamName, userID, width, height);		
 			this.videoGroup.addElement(webcam);
+			webcam.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth);		
 			
 			//invalidateDisplayList();
 		}
@@ -56,7 +58,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		
+		public function get videoGroup():Group
+		{
+			return videoGroup0;
+		}
+			
 		public function dispose():void
 		{
 			stopStream();

@@ -6,7 +6,6 @@
 				xmlns:assets="assets.*" 
 				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
 				>
-	
 	<fx:Script>
 		<![CDATA[
 			
@@ -42,16 +41,23 @@
 			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
 			<ui:MicButton id="microphoneBtn" width="30" height="30" />	
 			
-		</s:Group>
-		
-		<s:Group id="deskshareGroup0" width="100%" height="100%">
+		</s:Group> 
+	
+		<s:Group id="deskshareGroup0" width="100%" height="100%" >
+			<s:layout>
+				<s:VerticalLayout gap="0"
+								  paddingBottom="0"
+								  paddingLeft="0"
+								  paddingRight="0"
+								  paddingTop="0"
+								  />			
+			</s:layout>
 			<s:Label id="noDeskshareMessage0" width="90%" height="100"
-					 fontSize="20" horizontalCenter="0"
-					 visible="false" text="{resourceManager.getString('resources', 'deskshare.noDeskshare')}"
-					 textAlign="center" verticalCenter="0"/>
-			
+			fontSize="20" horizontalCenter="0"
+			visible="true" text="{resourceManager.getString('resources', 'deskshare.noDeskshare')}"
+			textAlign="center" verticalCenter="0"/>
 		</s:Group>
-		
+
 		<common:MenuButtonsView width="100%" height="42" />
 	</s:Group>
 	

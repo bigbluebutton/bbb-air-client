@@ -2,64 +2,50 @@ package org.bigbluebutton.view.navigation.pages.common
 {
 	import flash.events.AsyncErrorEvent;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
-	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
-	import flash.utils.Timer;
-	
-	import mx.events.FlexEvent;
-	import mx.graphics.SolidColor;
-	import mx.graphics.SolidColorStroke;
-	import mx.utils.ObjectUtil;
 	
 	import spark.components.Group;
-	import spark.primitives.Rect;
-
+	
 	public class VideoView extends Group
 	{
 		private var ns:NetStream;
 		private var _video:Video;
 		private var streamName:String;
 		private var _aspectRatio:Number = 0;
-
+		
+		private var _originalVideoWidth:Number;
+		private var _originalVideoHeight:Number;
+		
+		private var _connection:NetConnection;
+		private var _userID:String;
+		
+		private var userName:String;
+		
 		public function get aspectRatio():Number
 		{
 			return _aspectRatio;
 		}
-
-		private var _userID:String;
-
+		
 		public function get userID():String
 		{
 			return _userID;
 		}
-
-		private var userName:String;
-
+		
 		public function VideoView() 
 		{
 			_video = new Video();
-			this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		}
+		}	
 		
-		protected function onAddedToStage(event:Event):void
-		{
-			this.stage.addChild(_video);
-			var point:Point = this.localToGlobal(new Point(0,0));
-			_video.x = point.x;
-			_video.y = point.y	
-			setSizeRespectingAspectRationBasedOnWidth(stage.stageWidth);
-		}
-		
-		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void
+		public function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number, screenHeight:Number=0, screenWidth:Number=0):void
 		{
 			this.userName = name;
 			this._userID = userID;
 			this.streamName = streamName;
+			this._connection = connection;
 			
 			ns = new NetStream(connection);
 			ns.addEventListener( NetStatusEvent.NET_STATUS, onNetStatus);
@@ -71,41 +57,185 @@ package org.bigbluebutton.view.navigation.pages.common
 			
 			_video.smoothing = true;
 			_video.attachNetStream(ns);
-			setAspectRatio(width, height);
+			
+			_originalVideoWidth = width;
+			_originalVideoHeight = height;
+			
+			rotateVideo(0, screenHeight, screenWidth);
 			
 			ns.play(streamName);
 		}
 		
-		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void
+		public function rotateVideoLeft(rotation:Number, screenHeight:Number, screenWidth:Number):void
+		{	
+			this.stage.removeChild(_video);
+			
+			_video = null;		
+			_video = new Video();
+			_video.attachNetStream(ns);
+			
+			if (screenHeight < screenWidth) 
+			{		
+				_video.height = screenWidth;
+				_video.width = ((_originalVideoWidth * _video.height)/_originalVideoHeight);
+				_video.y = (screenHeight/2) + (_video.width/2)+50;
+				_video.x = 0;
+				
+				if (screenWidth < _video.width) 
+				{
+					_video.width = screenHeight;
+					_video.height = (_video.width/_originalVideoWidth) * _originalVideoHeight;
+					_video.y = screenHeight;
+					_video.x = (screenWidth/2) - (_video.height/2);
+				}		
+			} 
+			else {
+				
+				_video.width = screenHeight;
+				_video.height = (_video.width/_originalVideoWidth) * _originalVideoHeight;
+				_video.y = screenHeight + 50;
+				_video.x = (screenWidth/2) - (_video.height/2);
+				
+				if (screenHeight < _video.height) {
+					_video.height = screenWidth;
+					_video.width = ((_originalVideoWidth * _video.height)/_originalVideoHeight);
+					_video.y = (screenHeight/2) + (_video.width/2);
+					_video.x = 0;
+				}	
+			}	
+			
+			_video.rotation = rotation;	
+			this.stage.addChild(_video);
+		}
+		
+		public function rotateVideoRight(rotation:Number, screenHeight:Number, screenWidth:Number):void
 		{
-			//setSizeRespectingAspectRationBasedOnWidth(unscaledWidth);
-			//_video.width = unscaledWidth;
-			//_video.height = unscaledHeight;
+			this.stage.removeChild(_video);
+			
+			_video = null;			
+			_video = new Video();
+			_video.attachNetStream(ns);	
+			
+			if (screenHeight < screenWidth) {	
+				_video.height = screenWidth;
+				_video.width = ((_originalVideoWidth * _video.height)/_originalVideoHeight);
+				_video.x = screenWidth;
+				_video.y = (screenHeight/2) - (_video.width/2)+50;
+				
+				if (screenWidth < _video.width) {
+					_video.width = screenHeight;
+					_video.height = (screenHeight/_originalVideoWidth) * _originalVideoHeight;
+					_video.x = (screenWidth/2) + (_video.height/2);
+					_video.y = 50;
+				}					
+			} 
+			else 
+			{	
+				_video.width = screenHeight;
+				_video.height = (screenHeight/_originalVideoWidth) * _originalVideoHeight;
+				_video.x = (screenWidth/2) + (_video.height/2);
+				_video.y = 50;
+				
+				if (screenHeight < _video.height) {
+					_video.height = screenWidth;
+					_video.width = ((_originalVideoWidth * _video.height)/_originalVideoHeight);
+					_video.x = screenWidth;
+					_video.y = (screenHeight/2) - (_video.width/2);
+				}		
+			}		
+			
+			_video.rotation = rotation;
+			this.stage.addChild(_video);
 		}
 		
-		protected function setAspectRatio(width:int,height:int):void {
-			_aspectRatio = (width/height);
-		}
-		
-		public function setSizeRespectingAspectRationBasedOnWidth(width0:Number):void {
-			if(aspectRatio!=0)
+		public function rotateVideo(rotation:Number, screenHeight:Number, screenWidth:Number):void
+		{	
+			if (this.stage.contains(_video))
 			{
-				_video.width = width0;
-				_video.height = width0 / aspectRatio;
+				this.stage.removeChild(_video);
 			}
+			
+			_video = null;		
+			_video = new Video();
+			_video.attachNetStream(ns);
+			
+			if (screenWidth < screenHeight) {
+				
+				_video.width = screenWidth;
+				_video.height = (_video.width/_originalVideoWidth) * _originalVideoHeight;
+				
+				_video.x = 0;  
+				_video.y = screenHeight/2 - _video.height/2;
+				
+				if (screenHeight < _video.height) {			
+					_video.height = screenHeight;
+					_video.width = ((_originalVideoWidth  * _video.height)/_originalVideoHeight);	
+					_video.x =  screenWidth/2 - _video.width/2;
+					_video.y = 50;	
+				}				
+			} else {
+				
+				_video.height = screenHeight;
+				_video.width = ((_originalVideoWidth  * _video.height)/_originalVideoHeight);
+				
+				_video.x = (screenWidth/2) - (_video.width/2);
+				_video.y = 50;
+				
+				if (screenWidth < _video.width) {
+					_video.width = screenWidth;
+					_video.height = (_video.width/_originalVideoWidth) * _originalVideoHeight;
+					_video.x = 0;
+					_video.y = (screenHeight/2) - (_video.height/2) +50;
+				}			
+			}
+			
+			_video.rotation = rotation;
+			this.stage.addChild(_video);
 		}
 		
-		public function setSizeRespectingAspectRationBasedOnHeight(height0:Number):void {
-			if(aspectRatio!=0)
-			{
-				_video.width = height0;
-				_video.height = height0 * aspectRatio;
+		public function rotateVideoUpsideDown(rotation:Number, screenHeight:Number, screenWidth:Number):void
+		{
+			this.stage.removeChild(_video);
+			
+			_video = null;		
+			_video = new Video();
+			_video.attachNetStream(ns);
+			
+			if (screenHeight < screenWidth) {	
+				
+				_video.height = screenHeight;
+				_video.width = ((_originalVideoWidth  * _video.height)/_originalVideoHeight);
+				_video.x = screenWidth/2 + _video.width/2;
+				_video.y = screenHeight+50;
+				
+				if (screenWidth < _video.width) {
+					_video.width = screenWidth;
+					_video.height = (_video.width/_originalVideoWidth) * _originalVideoHeight;
+					
+					_video.x = screenWidth;	
+					_video.y = screenHeight/2 + _video.height/2 + 50; 
+				}
+				
 			}
-		}
-		
-		public function setSize(width0:Number, height0:Number):void {
-			_video.width = width0;
-			_video.height = height0;
+			else 
+			{						
+				_video.width = screenWidth;
+				_video.height = (_video.width/_originalVideoWidth) * _originalVideoHeight;
+				
+				_video.x = screenWidth;
+				_video.y = (screenHeight/2) + (_video.height/2)  +50;	
+				
+				if (screenHeight< _video.height) {
+					_video.height = screenHeight;
+					_video.width = ((_originalVideoWidth  * _video.height)/_originalVideoHeight);
+					
+					_video.x = screenWidth/2 + _video.width/2;
+					_video.y = screenHeight+50;	
+				}	
+			}	
+			
+			_video.rotation = rotation;		
+			this.stage.addChild(_video);
 		}
 		
 		private function onNetStatus(e:NetStatusEvent):void{
@@ -141,6 +271,11 @@ package org.bigbluebutton.view.navigation.pages.common
 			}
 		}
 		
+		public function get video():Video
+		{
+			return _video;
+		}
+		
 		public function close():void{
 			if(_video && _video.stage)
 			{
@@ -154,8 +289,6 @@ package org.bigbluebutton.view.navigation.pages.common
 				ns.close();
 				ns = null;
 			}
-			
-			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 		}	
 	}
 }

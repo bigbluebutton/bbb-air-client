@@ -18,6 +18,8 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 
 		public override function initialize():void
 		{
+			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = false;
+			
 			showDeskshare(userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
 			userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
 		}
@@ -35,7 +37,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		 */  
 		public function onDeskshareStreamChange(isDeskshareStreaming:Boolean):void
 		{
-			view.noDeskshareMessage.visible = !isDeskshareStreaming;
+			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = !isDeskshareStreaming;
 			
 			if (!isDeskshareStreaming)
 			{
