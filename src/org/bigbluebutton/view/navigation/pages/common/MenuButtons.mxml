@@ -5,9 +5,7 @@
 		 width="100%"
 		 >
 	<fx:Script>
-		<![CDATA[
-			import mx.events.FlexEvent;
-			import mx.events.StateChangeEvent;			
+		<![CDATA[	
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;		
 					
 		]]>
