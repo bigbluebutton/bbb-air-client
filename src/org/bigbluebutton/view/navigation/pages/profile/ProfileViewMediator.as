@@ -53,17 +53,17 @@ package org.bigbluebutton.view.navigation.pages.profile
 			var userMe:User = userSession.userList.me;		
 			
 			view.userNameText.text = userMe.name;		
-			view.micOnOffText.text = ResourceManager.getInstance().getString('resources', userMe.voiceJoined? 'profile.settings.mic.on':'profile.settings.mic.off');
-			view.raiseHandText.text = ResourceManager.getInstance().getString('resources', userMe.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
+			view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userMe.voiceJoined? 'profile.settings.mic.on':'profile.settings.mic.off');
+			view.raiseHandButton.label = ResourceManager.getInstance().getString('resources', userMe.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 			
 			if (Camera.getCamera() == null)
 			{
-				view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
+				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
 				view.shareCameraButton.enabled = false;
 			}
 			else
 			{
-				view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', userMe.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
+				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', userMe.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
 				view.shareCameraButton.enabled = true;
 			}
 			
@@ -80,12 +80,12 @@ package org.bigbluebutton.view.navigation.pages.profile
 		{
 			if (user.me) {
 				if (type == UserList.JOIN_AUDIO) {
-					view.micOnOffText.text = ResourceManager.getInstance().getString('resources', user.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
+					view.shareMicButton.label = ResourceManager.getInstance().getString('resources', user.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
 				} else if (type == UserList.HAS_STREAM) {
-					view.cameraOnOffText.text = ResourceManager.getInstance().getString('resources', user.hasStream ? 'profile.settings.camera.on' : 'profile.settings.camera.off');
+					view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', user.hasStream ? 'profile.settings.camera.on' : 'profile.settings.camera.off');
 					view.setCameraQualityGroupVisibility(user.hasStream);
 				} else if (type == UserList.RAISE_HAND) { 
-					view.raiseHandText.text = ResourceManager.getInstance().getString('resources', user.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
+					view.raiseHandButton.label = ResourceManager.getInstance().getString('resources', user.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 				}
 			}
 		}

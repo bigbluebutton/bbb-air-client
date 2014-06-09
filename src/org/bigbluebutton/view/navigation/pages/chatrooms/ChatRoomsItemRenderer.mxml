@@ -2,8 +2,8 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				xmlns:assets="assets.*"
-				width="100%">
+				width="100%"
+				>
 	
 	<fx:Script>
 		<![CDATA[
@@ -31,7 +31,7 @@
 						}
 
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages;
-						newMessages.text.text = String(chatMessages.newMessages);
+						newMessages.label = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)
 							_normalStateVisible = true;
 							
@@ -59,12 +59,18 @@
 		<s:State name="NormalState"/>
 		<s:State name="ButtonState"/>
 	</s:states>
-	<s:Label id="title" y="0" left="0" right="0" width="100%" height="100%" color="#000000"
-			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
-			 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
-	
-	<assets:NewMesseges id="newMessages" visible.NormalState="{_normalStateVisible}" visible.ButtonState="{_buttonStateVisible}" />
-	<s:Group width="40" height="100%">
-		<assets:ArrowRight x="7" y="0"/>
-	</s:Group> 
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0"/>
+		</s:layout>
+		<s:Label id="title" left="0" right="0" width="100%" height="100%" color="#000000" 
+				 paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
+				 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
+		<s:Button id="newMessages" buttonMode="false" horizontalCenter="0"
+				  styleName="newMessagesButtonStyle" verticalCenter="0"
+				  visible.ButtonState="{_buttonStateVisible}" 
+				  visible.NormalState="{_normalStateVisible}"/>
+		<s:Button styleName="arrowRightStyle" horizontalCenter="0"  verticalCenter="0" height="100%"/>
+	</s:Group>
+
 </s:ItemRenderer>

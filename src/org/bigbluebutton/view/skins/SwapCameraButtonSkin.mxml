@@ -18,13 +18,20 @@
 		<s:State name="disabled" />
 	</s:states>
 	
-	<s:Group width="30" height="30">
-		<s:Rect width="30" height="30" radiusX="2" radiusY="2">
+	<s:Group>
+		<s:Rect width="{getStyle('width')}" 
+				height="{getStyle('height')}" 
+				radiusX="{getStyle('radiusX')}" 
+				radiusY="{getStyle('radiusY')}" >
 			<s:stroke>
 				<s:SolidColorStroke color="0x000000" weight="1" />
 			</s:stroke>
 		</s:Rect>
-		<s:BitmapImage source="@Embed('assets/res/drawable-hdpi/SwapCamera_up.png')" source.down="@Embed('assets/res/drawable-hdpi/SwapCamera_down.png')" left="0" right="0" bottom="0" top="0"  />
+		<s:BitmapImage source="{getStyle('backgroundImage')}" 
+					   source.down="{getStyle('backgroundImageDown')}" 
+					   left="0" right="0" bottom="0" top="0"  
+					   scaleX="{getStyle('imageScaleX')}"
+					   scaleY="{getStyle('imageScaleY')}" />
 	</s:Group>
 	
 </s:SparkSkin>

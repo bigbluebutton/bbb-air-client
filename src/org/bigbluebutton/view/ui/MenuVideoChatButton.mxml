@@ -2,11 +2,8 @@
 <ui:NavigationButton xmlns:fx="http://ns.adobe.com/mxml/2009" 
 					 xmlns:s="library://ns.adobe.com/flex/spark"
 					 xmlns:ui="org.bigbluebutton.view.ui.*"
-					 xmlns:assets="assets.*"
-					 width="80" height="42"
-					 buttonMode="true"
-					 mouseEnabled="true" 
-					 transitionAnimation="{TransitionAnimationENUM.APPEAR}"
+					 transitionAnimation="{TransitionAnimationENUM.APPEAR}"		
+					 styleName="videochatBtnStyle"
 					 >
 	<ui:states>
 		<s:State name="unselected"/>
@@ -20,6 +17,4 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<assets:VideosButtonSelectedSp visible="false" visible.selected="true"/>
-	<assets:VideosButtonSp visible="true" visible.selected="false"/>
 </ui:NavigationButton>

@@ -11,10 +11,10 @@ package org.bigbluebutton.view.navigation.pages.profile
 	{
 		function get userNameText():Label;
 		function get shareCameraButton():Button;
-		function get cameraOnOffText():Label
+		function get shareCameraBtnLabel():String;
 		function get shareMicButton():Button;
-		function get micOnOffText():Label
-		function get raiseHandText():Label;
+		function get shareMicBtnLabel():String;
+		function get raiseHandBtnLabel():String;
 		function get raiseHandButton():Button;
 		function get cameraQualityRadioGroup():RadioButtonGroup;
 		function get logoutButton():Button;

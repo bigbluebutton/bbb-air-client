@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
-		  xmlns:s="library://ns.adobe.com/flex/spark"
-		  xmlns:assets="assets.*"
-		  buttonMode="true"
-		  mouseEnabled="true"
-		  >
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 mouseEnabled="true"
+		 >
 	<s:states>
 		<s:State name="unselected"/>
 		<s:State name="selected"/>
@@ -12,6 +10,5 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<assets:MicButtonSelectedSp visible="false" visible.selected="true"/>
-	<assets:MicButtonSp visible="true" visible.selected="false"/>
+	<s:Button  styleName.selected="selectedMicBtnStyle" styleName.unselected="unselectedMicBtnStyle"/>
 </s:Group>

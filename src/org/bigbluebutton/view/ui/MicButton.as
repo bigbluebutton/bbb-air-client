@@ -1,6 +1,8 @@
 package org.bigbluebutton.view.ui
 {
 	import flash.events.MouseEvent;
+	import mx.states.State;
+	import mx.states.SetStyle;
 	
 	public class MicButton extends MicButtonBase implements IMicButton
 	{
@@ -28,7 +30,9 @@ package org.bigbluebutton.view.ui
 		public function set selected(b:Boolean):void
 		{
 			_selected = b;
-			if(_selected) currentState = "selected";
+			if(_selected){
+				currentState = "selected";
+			}
 			else currentState = "unselected";
 		}
 		

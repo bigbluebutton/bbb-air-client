@@ -3,7 +3,10 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				xmlns:ui="org.bigbluebutton.view.ui.*"
-				xmlns:view="org.bigbluebutton.core.view.*" xmlns:assets="assets.*" xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" xmlns:chat="org.bigbluebutton.view.navigation.pages.chat.*" xmlns:chatrooms="org.bigbluebutton.view.navigation.pages.chatrooms.*"
+				xmlns:view="org.bigbluebutton.core.view.*" 
+				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
+				xmlns:chat="org.bigbluebutton.view.navigation.pages.chat.*" 
+				xmlns:chatrooms="org.bigbluebutton.view.navigation.pages.chatrooms.*"
 				>
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
 		<s:layout>
@@ -15,7 +18,7 @@
 							  />
 		</s:layout>
 		
-		<s:Group width="100%" height="50">
+		<s:Group width="100%" >
 			<s:layout>
 				<s:HorizontalLayout gap="5"
 									paddingBottom="10"
@@ -24,16 +27,14 @@
 									paddingTop="10"
 									/>
 			</s:layout>
-			<ui:ProfileButton id="profileBtn" width="30" height="30" />                
-			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" text="{resourceManager.getString('resources', 'chat.title')}" verticalCenter="0"/>
-			</s:Group>	
-			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
-			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
+			<ui:ProfileButton id="profileBtn"  />                
+			<s:Label width="100%" styleName="pageNameStyle" text="{resourceManager.getString('resources', 'chat.title')}" />
+			<ui:SwapCameraButton id="swapCameraBtn" />
+			<ui:MicButton id="microphoneBtn" />
 		</s:Group>
 		
 		<chatrooms:ChatRoomsList id="chatroomslist" width="100%" height="100%" />
 
-		<common:MenuButtons width="100%" height="42"/>
+		<common:MenuButtons />
 	</s:Group>
 </view:NoTabView>

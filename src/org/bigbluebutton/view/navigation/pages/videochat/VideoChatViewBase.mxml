@@ -4,7 +4,6 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				xmlns:ui="org.bigbluebutton.view.ui.*"
 				xmlns:view="org.bigbluebutton.core.view.*" 
-				xmlns:assets="assets.*" 
 				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
 				addedToStage="addedToStage()"
 				creationComplete="creationCompleteHandler(event)"
@@ -71,7 +70,7 @@
 							  />
 		</s:layout>
 		
-		<s:Group width="100%" height="50">
+		<s:Group width="100%" >
 			<s:layout>
 				<s:HorizontalLayout gap="5"
 									paddingBottom="10"
@@ -80,19 +79,17 @@
 									paddingTop="10"
 									/>
 			</s:layout>
-			<ui:ProfileButton id="profileBtn" width="30" height="30" navigateTo="{[PagesENUM.PROFILE]}"/>                
-			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" verticalCenter="0" text="{resourceManager.getString('resources', 'video.title')}" />
-			</s:Group>	
-			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
-			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
+			<ui:ProfileButton id="profileBtn"  navigateTo="{[PagesENUM.PROFILE]}"/>                
+			<s:Label styleName="pageNameStyle" text="{resourceManager.getString('resources', 'video.title')}" width="100%"/>	
+			<ui:SwapCameraButton id="swapCameraBtn" />
+			<ui:MicButton id="microphoneBtn" />
 		</s:Group>
 		<s:Group id="videoGroup" width="100%" height="100%">
-			<s:Label id="noVideoMessage0" width="90%" height="100"
-					 fontSize="20" horizontalCenter="0"
+			<s:Label id="noVideoMessage0" width="90%" height="100%"
+					 horizontalCenter="0"
 					 visible="false" text="{resourceManager.getString('resources', 'video.noVideo')}"
 					 textAlign="center" verticalCenter="0"/>
 		</s:Group>
-		<common:MenuButtons width="100%" height="42"/>
+		<common:MenuButtons/>
 	</s:Group>
 </view:NoTabView>
