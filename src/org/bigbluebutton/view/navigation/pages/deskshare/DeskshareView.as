@@ -3,14 +3,15 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 	import flash.display.StageOrientation;
 	import flash.net.NetConnection;
 	
-	import org.bigbluebutton.view.navigation.pages.common.VideoView;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 	
 	import spark.components.Group;
 	import spark.components.Label;
 	
 	public class DeskshareView extends DeskshareViewBase implements IDeskshareView
 	{
-		private var deskshareVideoView:VideoView;
+		private var deskshareVideoView:DeskshareVideoView;
 		
 		/**
 		 * Provide access to the group containing video
@@ -27,12 +28,22 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		{
 			if (deskshareVideoView) stopStream();
 			
-			deskshareVideoView = new VideoView();
+			deskshareVideoView = new DeskshareVideoView();
 			deskshareVideoView.percentWidth = 100;
 			deskshareVideoView.percentHeight = 100;
 			this.addElement(deskshareVideoView);
-			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width);					
+			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width);
 		}		
+		
+		public function changeMouseLocation(x:Number, y:Number):void
+		{
+			deskshareVideoView.moveMouse(x, y);
+		}
+		
+		public function addMouseToStage():void
+		{
+			deskshareVideoView.addMouseToStage();
+		}
 		
 		/**
 		 * Close the video stream and remove video from layout
@@ -65,13 +76,13 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			{
 				switch (rotation) {
 					case StageOrientation.ROTATED_LEFT:
-						deskshareVideoView.rotateVideoLeft(-90, this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(-90, this.deskshareGroup.height, this.deskshareGroup.width);
 						break;
 					case StageOrientation.ROTATED_RIGHT:
-						deskshareVideoView.rotateVideoRight(90, this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(90, this.deskshareGroup.height, this.deskshareGroup.width);
 						break;
 					case StageOrientation.UPSIDE_DOWN:
-						deskshareVideoView.rotateVideoUpsideDown(180, this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(180, this.deskshareGroup.height, this.deskshareGroup.width);
 						break;
 					case StageOrientation.DEFAULT:
 					case StageOrientation.UNKNOWN:

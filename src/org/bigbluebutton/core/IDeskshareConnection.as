@@ -23,5 +23,6 @@ package org.bigbluebutton.core
 		function set streamHeight(value:Number):void
 		function get connection():NetConnection
 		function connect():void
+		function get mouseLocationChangedSignal():ISignal;
 	}
 }

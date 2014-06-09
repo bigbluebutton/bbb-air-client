@@ -1,7 +1,8 @@
 package org.bigbluebutton.view.navigation.pages.deskshare
 {
-	import spark.components.Group;
 	import flash.net.NetConnection;
+	
+	import spark.components.Group;
 	import spark.components.Label;
 
 	public interface IDeskshareView
@@ -10,5 +11,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		function stopStream():void;
 		function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number):void;
 		function get noDeskshareMessage():Label;
+		function changeMouseLocation(x:Number, y:Number):void;
+		function addMouseToStage():void;
 	}
 }

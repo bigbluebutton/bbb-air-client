@@ -19,6 +19,7 @@ package org.bigbluebutton.core
 		private var _successConnected:ISignal = new Signal();
 		private var _unsuccessConnected:ISignal = new Signal();
 		private var _isStreamingSignal:ISignal = new Signal();
+		private var _cursorLocationChangedSignal:ISignal = new Signal();
 		private var _isStreaming:Boolean;
 		private var _streamCheckedOnStartup:Boolean;
 		private var _streamWidth:Number;
@@ -101,6 +102,11 @@ package org.bigbluebutton.core
 		public function get isStreamingSignal():ISignal
 		{
 			return _isStreamingSignal;
+		}
+		
+		public function get mouseLocationChangedSignal():ISignal
+		{
+			return _cursorLocationChangedSignal;
 		}
 		
 		public function get streamCheckedOnStartup():Boolean

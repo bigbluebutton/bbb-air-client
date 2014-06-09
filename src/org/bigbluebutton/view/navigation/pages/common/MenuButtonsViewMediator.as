@@ -18,7 +18,7 @@ package org.bigbluebutton.view.navigation.pages.common
 		
 		public override function initialize():void
 		{			
-			//  On application startup check if somebody sharing their desktop  
+			//  On application startup check if presenter is sharing their desktop  
 			if (!userSession.deskshareConnection.streamCheckedOnStartup)
 			{
 				checkDeskshareSignal.dispatch();

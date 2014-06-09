@@ -17,12 +17,7 @@ package org.bigbluebutton.core
 		[Inject]
 		public var conferenceParams:IConferenceParameters;
 		
-		[Inject]
-		public var presentMessageReceiver : IPresentMessageReceiver;
-		
 		private var responder:Responder;
-		private var width:Number;
-		private var height:Number;
 		private var room:String;
 		
 		public function DeskshareService()
@@ -31,14 +26,13 @@ package org.bigbluebutton.core
 				function(result:Object):void
 				{
 					if(result != null && (result.publishing as Boolean))
-					{
-						this.width = result.width as Number;
-						this.height = result.height as Number;
-						trace("Desk Share stream is streaming [" + this.width + "," + this.height + "]"); 
+					{	
+						userSession.deskshareConnection.streamHeight = result.height as Number;
+						userSession.deskshareConnection.streamWidth = result.width as Number;
+						 
+						trace("Desk Share stream is streaming [" + userSession.deskshareConnection.streamWidth + "," + userSession.deskshareConnection.streamHeight + "]"); 
 						
-						// if we receive result from the server, then somebody is sharing their desktop, get the stream width and height and dispatch the notification signal
-						userSession.deskshareConnection.streamHeight = this.height;
-						userSession.deskshareConnection.streamWidth = this.width;
+						// if we receive result from the server, then somebody is sharing their desktop - dispatch the notification signal
 						userSession.deskshareConnection.isStreaming = true;
 						userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);
 					}

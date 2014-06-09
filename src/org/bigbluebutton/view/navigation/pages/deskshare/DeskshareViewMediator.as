@@ -18,10 +18,10 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 
 		public override function initialize():void
 		{
-			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = false;
-			
 			showDeskshare(userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
+
 			userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
+			userSession.deskshareConnection.mouseLocationChangedSignal.add(onMouseLocationChanged);
 		}
 		
 		/**
@@ -29,11 +29,14 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		 */  
 		private function showDeskshare(width:Number, height:Number):void
 		{
+			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = false;
 			view.startStream(userSession.deskshareConnection.connection, null, params.room, null, userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
+			view.addMouseToStage();
 		}
 		
 		/**
 		 * If desktop sharing stream dropped - show notification message, remove video
+		 * else show the desktop sharing stream and cursor
 		 */  
 		public function onDeskshareStreamChange(isDeskshareStreaming:Boolean):void
 		{
@@ -42,7 +45,21 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			if (!isDeskshareStreaming)
 			{
 				 view.stopStream();
+				 userSession.deskshareConnection.mouseLocationChangedSignal.remove(onMouseLocationChanged);
 			}
+			else
+			{
+				userSession.deskshareConnection.mouseLocationChangedSignal.add(onMouseLocationChanged);
+				showDeskshare(userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
+			}
+		}
+		
+		/**
+		 * Notify view that mouse location was changed
+		 */  
+		public function onMouseLocationChanged(x:Number, y:Number):void
+		{
+			view.changeMouseLocation(x, y);
 		}
 		
 		/**
@@ -52,6 +69,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		override public function destroy():void
 		{
 			userSession.deskshareConnection.isStreamingSignal.remove(onDeskshareStreamChange);
+			userSession.deskshareConnection.mouseLocationChangedSignal.remove(onMouseLocationChanged);
 			view.stopStream();
 		}
 	}	

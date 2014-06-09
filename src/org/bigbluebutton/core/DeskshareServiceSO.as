@@ -10,7 +10,7 @@ package org.bigbluebutton.core
 		[Inject]
 		public var userSession:IUserSession;
 		
-		private static const SO_NAME:String =  "-deskSO";
+		private static const SO_NAME:String = "-deskSO";
 		
 		public function DeskshareServiceSO()
 		{
@@ -31,12 +31,11 @@ package org.bigbluebutton.core
 		 */		
 		public function appletStarted(videoWidth:Number, videoHeight:Number):void
 		{
-			trace("Deskshare Applet started sharing.");
-			
+			trace("Deskshare Applet started sharing.");		
 		}
 		
 		/**
-		 * Called by the server when a notification is received to start viewing the broadcast stream .
+		 * Called by the server when a notification is received to start viewing the broadcast stream.
 		 * This method is called on successful execution of sendStartViewingNotification()
 		 * 
 		 */		
@@ -51,14 +50,13 @@ package org.bigbluebutton.core
 		}
 		
 		/**
-		 * Called by the server to notify clients that the deskshare stream has stooped.
+		 * Called by the server to notify clients that the deskshare stream has stopped.
 		 */
 		public function deskshareStreamStopped():void 
 		{
 			trace("DeskShare-deskshareStreamStopped.");
 			userSession.deskshareConnection.isStreaming = false;
-			userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);
-			
+			userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);	
 		}
 		
 		/**
@@ -66,7 +64,7 @@ package org.bigbluebutton.core
 		 */
 		public function mouseLocationCallback(x:Number, y:Number):void 
 		{	
-			
+			userSession.deskshareConnection.mouseLocationChangedSignal.dispatch(x, y);
 		}
 	}
 }
