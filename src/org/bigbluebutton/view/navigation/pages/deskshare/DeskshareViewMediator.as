@@ -31,7 +31,6 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		{
 			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = false;
 			view.startStream(userSession.deskshareConnection.connection, null, params.room, null, userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
-			view.addMouseToStage();
 		}
 		
 		/**

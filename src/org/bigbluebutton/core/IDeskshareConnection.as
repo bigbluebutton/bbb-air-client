@@ -9,8 +9,6 @@ package org.bigbluebutton.core
 		function get unsuccessConnected():ISignal
 		function get successConnected():ISignal
 		function get isStreamingSignal():ISignal
-		function get streamCheckedOnStartup():Boolean
-		function set streamCheckedOnStartup(value:Boolean):void
 		function get isStreaming():Boolean
 		function set isStreaming(value:Boolean):void
 		function onConnectionUnsuccess(reason:String):void
@@ -24,5 +22,6 @@ package org.bigbluebutton.core
 		function get connection():NetConnection
 		function connect():void
 		function get mouseLocationChangedSignal():ISignal;
+		function setMouseCoordinates(x:Number, y:Number):void;
 	}
 }

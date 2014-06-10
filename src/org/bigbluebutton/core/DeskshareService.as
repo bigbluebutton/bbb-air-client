@@ -34,7 +34,6 @@ package org.bigbluebutton.core
 						
 						// if we receive result from the server, then somebody is sharing their desktop - dispatch the notification signal
 						userSession.deskshareConnection.isStreaming = true;
-						userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);
 					}
 					else
 					{

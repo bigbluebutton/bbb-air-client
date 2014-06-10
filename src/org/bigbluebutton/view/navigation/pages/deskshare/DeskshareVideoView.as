@@ -10,45 +10,25 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 	import flash.net.NetStream;
 	import flash.net.URLRequest;
 	
+	import org.bigbluebutton.view.navigation.pages.common.VideoView;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
 	import spark.components.Group;
-	import org.bigbluebutton.view.navigation.pages.common.VideoView;
 	
 	public class DeskshareVideoView extends VideoView
 	{
-		private var _mouse:Bitmap;	
+		private var _mouse:Bitmap;
 		
 		public function DeskshareVideoView()
 		{
 			super();
 		}
 		
-		public override function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number, screenHeight:Number=0, screenWidth:Number=0):void
+		public override function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number, screenHeight:Number=0, screenWidth:Number=0, topMenuBarHeight:Number=0, bottomMenuBarHeight:Number=0):void
 		{
-			super.streamName = streamName;
-			
-			super.ns = new NetStream(connection);
-			super.ns.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
-			super.ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
-			super.ns.client = this;
-			super.ns.bufferTime = 0;
-			super.ns.receiveVideo(true);
-			super.ns.receiveAudio(false);
-			
-			super.video.smoothing = true;
-			super.video.attachNetStream(super.ns);
-			
-			super.originalVideoWidth = width;
-			super.originalVideoHeight = height;
-			
-			super.screenHeight = screenHeight;
-			super.screenWidth = screenWidth;
-			
-			rotateVideo(0, screenHeight, screenWidth);
-			
-			super.ns.play(streamName);
+			super.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth, topMenuBarHeight, bottomMenuBarHeight);
+			rotateVideo(0);
 		}
 		
 		/**
@@ -82,250 +62,189 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			// need to wait until mouse bitmap is loaded and added to the stage
 			if(_mouse)
 			{
-				switch(super.video.rotation)
+				switch(video.rotation)
 				{	
 					// straight
 					case 0:	
 						
-						if(super.video.height == super.screenHeight)
+						if(video.height == screenHeight)
 						{
-							reducedScreenPercentage = super.originalVideoHeight / super.screenHeight;
+							reducedScreenPercentage = originalVideoHeight / video.height;
 						}
 						else
 						{
-							reducedScreenPercentage = super.originalVideoWidth / super.screenWidth;
+							reducedScreenPercentage = originalVideoWidth / video.width;
 						}
 						
 						if (originalY <= 0)
 						{
-							_mouse.y = super.video.y;
+							_mouse.y = video.y;
 						}
-						else if (originalY/reducedScreenPercentage > super.video.height)
+						else if (originalY/reducedScreenPercentage > video.height)
 						{
-							_mouse.y = super.video.y + super.video.height;
+							_mouse.y = video.y + video.height;
 						}
 						else
 						{
-							_mouse.y = super.video.y + originalY/reducedScreenPercentage;
+							_mouse.y = video.y + originalY/reducedScreenPercentage;
 						}
 						
 						if (originalX <= 0)
 						{
-							_mouse.x = super.video.x;
+							_mouse.x = video.x;
 						}
-						else if (originalX/reducedScreenPercentage > super.video.width)
+						else if (originalX/reducedScreenPercentage > video.width)
 						{
-							_mouse.x = super.video.x + super.video.width;
+							_mouse.x = video.x + video.width;
 						}
 						else
 						{
-							_mouse.x = super.video.x + originalX/reducedScreenPercentage;
+							_mouse.x = video.x + originalX/reducedScreenPercentage;
 						}
 						
 						break;
 					// left
 					case -90:
 						
-						if(super.video.height == super.screenHeight)
+						if(video.height == screenHeight)
 						{
-							reducedScreenPercentage = super.originalVideoHeight/super.video.width;
+							reducedScreenPercentage = originalVideoHeight/video.width;
 						}
 						else
 						{
-							reducedScreenPercentage = super.originalVideoWidth/super.video.height;
+							reducedScreenPercentage = originalVideoWidth/video.height;
 						}
 						
 						if (originalY <= 0)
 						{
-							_mouse.x = super.video.x;
+							_mouse.x = video.x;
 						}
-						else if (originalY/reducedScreenPercentage > super.video.width)
+						else if (originalY/reducedScreenPercentage > video.width)
 						{
-							_mouse.x = super.video.x +super.video.width;
+							_mouse.x = video.x + video.width;
 						}
 						else
 						{
-							_mouse.x = super.video.x + (originalY/reducedScreenPercentage);
+							_mouse.x = video.x + (originalY/reducedScreenPercentage);
 						}
 						
 						if (originalX <= 0)
 						{
-							_mouse.y = super.video.y;
+							_mouse.y = video.y;
 						}
-						else if (originalX/reducedScreenPercentage > super.video.height)
+						else if (originalX/reducedScreenPercentage > video.height)
 						{
-							_mouse.y = super.video.y - super.video.height;
+							_mouse.y = video.y - video.height;
 						}
 						else 
 						{
-							_mouse.y = super.video.y - (originalX/reducedScreenPercentage);
+							_mouse.y = video.y - (originalX/reducedScreenPercentage);
 						}
 						
 						break;
 					// right
 					case 90:
-						if(video.height == super.screenHeight)
+						if(video.height == screenHeight)
 						{
-							reducedScreenPercentage = super.originalVideoHeight/super.video.width;
+							reducedScreenPercentage = originalVideoHeight/video.width;
 						}
 						else
 						{
-							reducedScreenPercentage = super.originalVideoWidth/super.video.height;
+							reducedScreenPercentage = originalVideoWidth/video.height;
 						}
 						
 						if (originalY <= 0)
 						{
-							_mouse.x = super.video.x;
+							_mouse.x = video.x;
 						}
-						else if (originalY/reducedScreenPercentage > super.video.width)
+						else if (originalY/reducedScreenPercentage > video.width)
 						{
-							_mouse.x = super.video.x - super.video.width;
+							_mouse.x = video.x - video.width;
 						}
 						else
 						{
-							_mouse.x = super.video.x - (originalY/reducedScreenPercentage);
+							_mouse.x = video.x - (originalY/reducedScreenPercentage);
 						}
 						
 						if (originalX <= 0)
 						{
-							_mouse.y = super.video.y;
+							_mouse.y = video.y;
 						}
-						else if (originalX/reducedScreenPercentage > super.video.height)
+						else if (originalX/reducedScreenPercentage > video.height)
 						{
-							_mouse.y = super.video.y + super.video.height;
+							_mouse.y = video.y + video.height;
 						}
 						else 
 						{
-							_mouse.y = super.video.y + (originalX/reducedScreenPercentage);
+							_mouse.y = video.y + (originalX/reducedScreenPercentage);
 						}
 						
 						break;
 					// upside down
 					case 180:
 						
-						if(super.video.height == super.screenHeight)
+						if(video.height == screenHeight)
 						{
-							reducedScreenPercentage  = super.originalVideoHeight / super.screenHeight;
+							reducedScreenPercentage = originalVideoHeight / video.height;
 						}
 						else
 						{
-							reducedScreenPercentage  = super.originalVideoWidth / super.screenWidth;
+							reducedScreenPercentage = originalVideoWidth / video.width;
 						}
 						
 						if (originalY <= 0)
 						{
-							_mouse.y = super.video.y;
+							_mouse.y = video.y;
 						}
-						else if (originalY/reducedScreenPercentage > super.video.height)
+						else if (originalY/reducedScreenPercentage > video.height)
 						{
-							_mouse.y = super.video.y - super.video.height;
+							_mouse.y = video.y - video.height;
 						}
 						else
 						{
-							_mouse.y = super.video.y - originalY/reducedScreenPercentage;
+							_mouse.y = video.y - originalY/reducedScreenPercentage;
 						}
 						
 						if (originalX <= 0)
 						{
-							_mouse.x = super.video.x;
+							_mouse.x = video.x;
 						}
-						else if (originalX/reducedScreenPercentage > super.video.width)
+						else if (originalX/reducedScreenPercentage >video.width)
 						{
-							_mouse.x = super.video.x - super.video.width;
+							_mouse.x = video.x - video.width;
 						}
 						else
 						{
-							_mouse.x = super.video.x - originalX/reducedScreenPercentage;
+							_mouse.x = video.x - originalX/reducedScreenPercentage;
 						}
 						break;					
 				}
 				
-				_mouse.rotation = super.video.rotation;	
+				_mouse.rotation = video.rotation;	
 			}
 		}
 		
-		public override function rotateVideo(rotation:Number, screenHeight:Number, screenWidth:Number):void
+		public override function rotateVideo(rotation:Number):void
 		{
 			if (_mouse && stage.contains(_mouse))
 			{
 				stage.removeChild(_mouse);
 			}
 			
-			if (super.video && stage.contains(super.video))
-			{
-				stage.removeChild(super.video);
-			}
-			
-			super.video = new Video();
-			super.video.attachNetStream(ns);
-			
-			switch(rotation)
-			{
-				case 0:
-					resizeVideoRotatedStraight(screenHeight, screenWidth);
-					break;
-				case -90:
-					resizeVideoRotatedLeft(screenHeight, screenWidth);
-					break;
-				case 90:
-					resizeVideoRotatedRight(screenHeight, screenWidth);
-					break;
-				case 180:
-					resizeVideoRotatedUpsideDown(screenHeight, screenWidth);
-					break;	
-			}
-			
-			super.video.rotation = rotation;
-			this.stage.addChild(super.video);
+			super.rotateVideo(rotation);
 			
 			if (_mouse)
 			{
-				this.stage.addChild(_mouse);
+				stage.addChild(_mouse);
 			}
-		}
-		
-		private function onNetStatus(e:NetStatusEvent):void{
-			switch(e.info.code){
-				case "NetStream.Publish.Start":
-					trace("NetStream.Publish.Start for broadcast stream " + super.streamName);
-					break;
-				case "NetStream.Play.UnpublishNotify":
-					this.close();
-					break;
-				case "NetStream.Play.Start":
-					trace("Netstatus: " + e.info.code);
-					break;
-				case "NetStream.Play.FileStructureInvalid":
-					trace("The MP4's file structure is invalid.");
-					break;
-				case "NetStream.Play.NoSupportedTrackFound":
-					trace("The MP4 doesn't contain any supported tracks");
-					break;
-			}
-		}
-		
-		private function onAsyncError(e:AsyncErrorEvent):void{
-			trace("VideoWindow::asyncerror " + e.toString());
 		}
 		
 		public override function close():void{
-			if(super.video && this.stage.contains(super.video) )
-			{
-				this.stage.removeChild(video);
-				super.video = null;
-			}
-			
-			if(super.ns)
-			{
-				super.ns.removeEventListener( NetStatusEvent.NET_STATUS, onNetStatus);
-				super.ns.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
-				super.ns.close();
-				super.ns = null;
-			}
+			super.close();
 			
 			if(_mouse && this.stage.contains(_mouse))
 			{
-				this.stage.removeChild(_mouse);
+				stage.removeChild(_mouse);
 				_mouse = null;
 			}
 		}	

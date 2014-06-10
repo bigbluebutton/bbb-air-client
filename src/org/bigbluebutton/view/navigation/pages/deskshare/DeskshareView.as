@@ -3,9 +3,6 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 	import flash.display.StageOrientation;
 	import flash.net.NetConnection;
 	
-	import org.osflash.signals.ISignal;
-	import org.osflash.signals.Signal;
-	
 	import spark.components.Group;
 	import spark.components.Label;
 	
@@ -32,7 +29,8 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			deskshareVideoView.percentWidth = 100;
 			deskshareVideoView.percentHeight = 100;
 			this.addElement(deskshareVideoView);
-			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width);
+			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, topMenuBar0.height, bottomMenuBar0.height);
+			deskshareVideoView.addMouseToStage();
 		}		
 		
 		public function changeMouseLocation(x:Number, y:Number):void
@@ -40,7 +38,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			deskshareVideoView.moveMouse(x, y);
 		}
 		
-		public function addMouseToStage():void
+		private function addMouseToStage():void
 		{
 			deskshareVideoView.addMouseToStage();
 		}
@@ -69,25 +67,25 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		public function get noDeskshareMessage():Label
 		{
 			return noDeskshareMessage0;
-		}	
+		}
 		
 		override public function rotationHandler(rotation:String):void {
 			if (deskshareVideoView != null)
-			{
+			{			
 				switch (rotation) {
 					case StageOrientation.ROTATED_LEFT:
-						deskshareVideoView.rotateVideo(-90, this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(-90);
 						break;
 					case StageOrientation.ROTATED_RIGHT:
-						deskshareVideoView.rotateVideo(90, this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(90);
 						break;
 					case StageOrientation.UPSIDE_DOWN:
-						deskshareVideoView.rotateVideo(180, this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(180);
 						break;
 					case StageOrientation.DEFAULT:
 					case StageOrientation.UNKNOWN:
 					default:
-						deskshareVideoView.rotateVideo(0,this.deskshareGroup.height, this.deskshareGroup.width);
+						deskshareVideoView.rotateVideo(0);
 				}	
 			}
 		}

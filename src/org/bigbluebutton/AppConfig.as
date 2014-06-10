@@ -2,8 +2,6 @@ package org.bigbluebutton
 {
 	import org.bigbluebutton.command.CameraQualityCommand;
 	import org.bigbluebutton.command.CameraQualitySignal;
-	import org.bigbluebutton.command.CheckDeskshareStreamCommand;
-	import org.bigbluebutton.command.CheckDeskshareStreamSignal;
 	import org.bigbluebutton.command.ConnectCommand;
 	import org.bigbluebutton.command.ConnectSignal;
 	import org.bigbluebutton.command.DisconnectUserCommand;
@@ -106,7 +104,6 @@ package org.bigbluebutton
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
 			signalCommandMap.map(CameraQualitySignal).toCommand(CameraQualityCommand);
 			signalCommandMap.map(DisconnectUserSignal).toCommand(DisconnectUserCommand);
-			signalCommandMap.map(CheckDeskshareStreamSignal).toCommand(CheckDeskshareStreamCommand);
 		}
 	}
 }

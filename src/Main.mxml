@@ -156,7 +156,6 @@
 				stage.addEventListener(Event.DEACTIVATE, fl_Deactivate);
 				
 				stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGING, stageOrientationChangingHandler);
-				stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 				
 				// setup a custom orientation calculator based on the accelerometer because the default one doesn't work
 				_orientationCalc = new OrientationCalculator(pagesNavigatorView, accelerometerCallback);

@@ -1,6 +1,5 @@
 package org.bigbluebutton.view.navigation.pages.common
 {	
-	import org.bigbluebutton.command.CheckDeskshareStreamSignal;
 	import org.bigbluebutton.model.IUserSession;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -13,20 +12,10 @@ package org.bigbluebutton.view.navigation.pages.common
 		[Inject]
 		public var view:MenuButtonsView;
 		
-		[Inject] 
-		public var checkDeskshareSignal:CheckDeskshareStreamSignal;
-		
 		public override function initialize():void
-		{			
-			//  On application startup check if presenter is sharing their desktop  
-			if (!userSession.deskshareConnection.streamCheckedOnStartup)
-			{
-				checkDeskshareSignal.dispatch();
-				userSession.deskshareConnection.streamCheckedOnStartup = true;
-			}
-			
+		{					
+			view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = userSession.deskshareConnection.isStreaming;
 			userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
-			onDeskshareStreamChange(userSession.deskshareConnection.isStreaming);
 		}
 		
 		/**

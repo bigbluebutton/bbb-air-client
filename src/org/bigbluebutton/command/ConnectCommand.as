@@ -96,6 +96,7 @@ package org.bigbluebutton.command
 	
 			userSession.deskshareConnection = deskshareConnection;
 			deskshareService.connectDeskshareSO();
+			deskshareService.checkIfStreamIsPublishing(conferenceParameters.room);
 			
 			chatService.sendWelcomeMessage();
 			chatService.getPublicChatMessages();

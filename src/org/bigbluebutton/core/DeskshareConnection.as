@@ -19,7 +19,7 @@ package org.bigbluebutton.core
 		private var _successConnected:ISignal = new Signal();
 		private var _unsuccessConnected:ISignal = new Signal();
 		private var _isStreamingSignal:ISignal = new Signal();
-		private var _cursorLocationChangedSignal:ISignal = new Signal();
+		private var _mouseLocationChangedSignal:ISignal = new Signal();
 		private var _isStreaming:Boolean;
 		private var _streamCheckedOnStartup:Boolean;
 		private var _streamWidth:Number;
@@ -97,6 +97,7 @@ package org.bigbluebutton.core
 		public function set isStreaming(value:Boolean):void
 		{
 			 _isStreaming = value;
+			 isStreamingSignal.dispatch(_isStreaming);	
 		}
 		
 		public function get isStreamingSignal():ISignal
@@ -106,17 +107,7 @@ package org.bigbluebutton.core
 		
 		public function get mouseLocationChangedSignal():ISignal
 		{
-			return _cursorLocationChangedSignal;
-		}
-		
-		public function get streamCheckedOnStartup():Boolean
-		{
-			return _streamCheckedOnStartup;
-		}
-		
-		public function set streamCheckedOnStartup(value:Boolean):void
-		{
-			_streamCheckedOnStartup = value;
+			return _mouseLocationChangedSignal;
 		}
 
 		public function get unsuccessConnected():ISignal
@@ -127,6 +118,11 @@ package org.bigbluebutton.core
 		public function get successConnected():ISignal
 		{
 			return _successConnected;
+		}
+		
+		public function setMouseCoordinates(x:Number, y:Number):void
+		{
+			_mouseLocationChangedSignal.dispatch(x, y);
 		}
 	}
 }

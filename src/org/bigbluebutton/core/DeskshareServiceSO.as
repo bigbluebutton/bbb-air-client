@@ -45,8 +45,6 @@ package org.bigbluebutton.core
 			userSession.deskshareConnection.streamWidth = videoWidth;
 			userSession.deskshareConnection.streamHeight = videoHeight;
 			userSession.deskshareConnection.isStreaming = true;
-			userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);
-			
 		}
 		
 		/**
@@ -56,7 +54,6 @@ package org.bigbluebutton.core
 		{
 			trace("DeskShare-deskshareStreamStopped.");
 			userSession.deskshareConnection.isStreaming = false;
-			userSession.deskshareConnection.isStreamingSignal.dispatch(userSession.deskshareConnection.isStreaming);	
 		}
 		
 		/**
@@ -64,7 +61,7 @@ package org.bigbluebutton.core
 		 */
 		public function mouseLocationCallback(x:Number, y:Number):void 
 		{	
-			userSession.deskshareConnection.mouseLocationChangedSignal.dispatch(x, y);
+			userSession.deskshareConnection.setMouseCoordinates(x, y);
 		}
 	}
 }
