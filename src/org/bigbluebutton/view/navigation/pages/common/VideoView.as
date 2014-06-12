@@ -67,7 +67,7 @@ package org.bigbluebutton.view.navigation.pages.common
 			this.originalVideoHeight = originalVideoHeight0;
 		}
 		
-		public function resizeVideoRotatedStraight(rotation:Number):void
+		public function resizeForPortrait():void
 		{
 			// if we have device where screen width less than screen height e.g. phone
 			if (screenWidth < screenHeight) {
@@ -77,40 +77,12 @@ package org.bigbluebutton.view.navigation.pages.common
 				// calculate height based on a video width, it order to keep the same aspect ratio
 				video.height = (video.width/originalVideoWidth) * originalVideoHeight;
 				
-				switch(rotation)
-				{
-					case 0:
-						// align to video to the left side of the screen
-						video.x = 0;  
-						// place the video at the middle of the screen based on height
-						video.y = screenHeight/2 - video.height/2;
-						break;
-					case 180:
-						video.x = screenWidth;
-						video.y = (screenHeight/2) + (video.height/2) + bottomMenuBarHeight;	
-						break;
-				}
-				
 				// if calculated height appeared to be bigger than screen height, recalculuate the video size based on width
 				if (screenHeight < video.height) {	
 					// make the video height full height of the screen
 					video.height = screenHeight;
 					// calculate width based on a video height, it order to keep the same aspect ratio
 					video.width = ((originalVideoWidth  * video.height) / originalVideoHeight);	
-					
-					switch(rotation)
-					{
-						case 0:
-							// place the video at the middle of the screen based on width
-							video.x = screenWidth/2 - video.width/2;
-							// place video lower in order to keep space for menu bar
-							video.y = topMenuBarHeight;	
-							break;
-						case 180:
-							video.x = screenWidth/2 + video.width/2;
-							video.y = screenHeight + bottomMenuBarHeight;	
-							break;
-					}
 				}				
 			} 
 				// if we have device where screen height less than screen width e.g. tablet
@@ -118,21 +90,7 @@ package org.bigbluebutton.view.navigation.pages.common
 				// make the video height full height of the screen
 				video.height = screenHeight;
 				// calculate width based on a video height, it order to keep the same aspect ratio
-				video.width = ((originalVideoWidth  * video.height)/originalVideoHeight);
-				
-				switch(rotation)
-				{
-					case 0:
-						// place the video at the middle of the screen based on width
-						video.x = (screenWidth/2) - (video.width/2);
-						// place video lower in order to keep space for menu bar
-						video.y = bottomMenuBarHeight;
-						break;
-					case 180:
-						video.x = screenWidth/2 + video.width/2;
-						video.y = screenHeight+bottomMenuBarHeight;
-						break;
-				}			
+				video.width = ((originalVideoWidth  * video.height)/originalVideoHeight);		
 				
 				// if calculated width appeared to be bigger than screen width, recalculuate the video size based on height
 				if (screenWidth < video.width) {
@@ -140,92 +98,30 @@ package org.bigbluebutton.view.navigation.pages.common
 					video.width = screenWidth;
 					// calculate height based on a video width, it order to keep the same aspect ratio
 					video.height = (video.width/originalVideoWidth) * originalVideoHeight;
-					
-					switch(rotation)
-					{
-						case 0:
-							// align to video to the left side of the screen
-							video.x = 0;  
-							// place the video at the middle of the screen based on height
-							video.y = screenHeight/2 - video.height/2 + topMenuBarHeight;
-							break;
-						case 180:
-							video.x = screenWidth;	
-							video.y = screenHeight/2 + video.height/2 + bottomMenuBarHeight; 
-							break;
-					}
 				}			
 			}
 		}
 		
-		public function resizeVideoRotatedSide(rotation:Number):void
+		public function resizeForLandscape():void
 		{
 			if (screenHeight < screenWidth) 
 			{		
 				video.height = screenWidth;
 				video.width = ((originalVideoWidth * video.height)/originalVideoHeight);
-				
-				switch(rotation)
-				{
-					case -90:
-						video.y = (screenHeight/2) + (video.width/2) + bottomMenuBarHeight;
-						video.x = 0;
-						break;
-					case 90:
-						video.x = screenWidth;
-						video.y = (screenHeight/2) - (video.width/2) + topMenuBarHeight;
-						break;
-				}
-				
+
 				if (screenWidth < video.width) 
 				{
 					video.width = screenHeight;
 					video.height = (video.width/originalVideoWidth) * originalVideoHeight;
-					
-					switch(rotation)
-					{
-						case -90:
-							video.y = screenHeight+bottomMenuBarHeight;
-							video.x = (screenWidth/2) - (video.height/2);
-							break;
-						case 90:
-							video.x = (screenWidth/2) + (video.height/2);
-							video.y = topMenuBarHeight;
-							break;
-					}
 				}		
 			} 
 			else {			
 				video.width = screenHeight;
 				video.height = (video.width/originalVideoWidth) * originalVideoHeight;
 				
-				switch(rotation)
-				{
-					case -90:
-						video.y = screenHeight + bottomMenuBarHeight;
-						video.x = (screenWidth/2) - (video.height/2);
-						break;
-					case 90:
-						video.x = (screenWidth/2) + (video.height/2);
-						video.y = topMenuBarHeight;
-						break;
-				}
-				
 				if (screenHeight < video.height) {
 					video.height = screenWidth;
-					video.width = ((originalVideoWidth * video.height)/originalVideoHeight);
-					
-					switch(rotation)
-					{
-						case -90:
-							video.y = (screenHeight/2) + (video.width/2);
-							video.x = 0;
-							break;
-						case 90:
-							video.x = screenWidth;
-							video.y = (screenHeight/2) - (video.width/2);
-							break;
-					}
+					video.width = ((originalVideoWidth * video.height)/originalVideoHeight);		
 				}	
 			}	
 		}
@@ -243,17 +139,25 @@ package org.bigbluebutton.view.navigation.pages.common
 			switch(rotation)
 			{
 				case 0:
-					resizeVideoRotatedStraight(rotation);
+					resizeForPortrait();
+					video.x = screenWidth/2 - video.width/2;
+					video.y = screenHeight/2 - video.height/2 + topMenuBarHeight;
 					break;
 				case -90:
-					resizeVideoRotatedSide(rotation);
+					resizeForLandscape();
+					video.x = (screenWidth/2) - (video.height/2);
+					video.y = (screenHeight/2) + (video.width/2) + bottomMenuBarHeight;
 					break;
 				case 90:
-					resizeVideoRotatedSide(rotation);
+					resizeForLandscape();
+					video.x = (screenWidth/2) + (video.height/2);
+					video.y = (screenHeight/2) - (video.width/2) + topMenuBarHeight;
 					break;
 				case 180:
-					resizeVideoRotatedStraight(rotation);
-					break;	
+					resizeForPortrait();
+					video.x = screenWidth/2 + video.width/2;
+					video.y = (screenHeight/2) + (video.height/2) + bottomMenuBarHeight
+					break; 
 			}
 			
 			video.rotation = rotation;

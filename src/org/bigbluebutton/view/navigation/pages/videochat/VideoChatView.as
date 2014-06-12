@@ -22,7 +22,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			webcam.percentWidth = 100;
 			webcam.percentHeight = 100;
 			this.videoGroup.addElement(webcam);
-			webcam.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth);
+			webcam.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth, topMenuBar0.height, bottomMenuBar0.height);
+			webcam.rotateVideo(0);
 		}
 		
 		public function stopStream():void 

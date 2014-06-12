@@ -25,12 +25,6 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			super();
 		}
 		
-		public override function startStream(connection:NetConnection, name:String, streamName:String, userID:String, width:Number, height:Number, screenHeight:Number=0, screenWidth:Number=0, topMenuBarHeight:Number=0, bottomMenuBarHeight:Number=0):void
-		{
-			super.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth, topMenuBarHeight, bottomMenuBarHeight);
-			rotateVideo(0);
-		}
-		
 		/**
 		 * We can't add image to the stage, need to load the image as a bitmap
 		 */  

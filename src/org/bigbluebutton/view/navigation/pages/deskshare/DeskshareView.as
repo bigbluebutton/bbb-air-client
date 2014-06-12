@@ -6,6 +6,8 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 	import spark.components.Group;
 	import spark.components.Label;
 	
+	import mx.core.FlexGlobals;
+	
 	public class DeskshareView extends DeskshareViewBase implements IDeskshareView
 	{
 		private var deskshareVideoView:DeskshareVideoView;
@@ -16,7 +18,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		public function get deskshareGroup():Group
 		{		
 			return deskshareGroup0;
-		}
+		}		
 		
 		/**
 		 *  Create VideoView with the desktop sharing stream and add it to the layout 
@@ -31,6 +33,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			this.addElement(deskshareVideoView);
 			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, topMenuBar0.height, bottomMenuBar0.height);
 			deskshareVideoView.addMouseToStage();
+			rotationHandler(FlexGlobals.topLevelApplication.currentOrientation);
 		}		
 		
 		public function changeMouseLocation(x:Number, y:Number):void
