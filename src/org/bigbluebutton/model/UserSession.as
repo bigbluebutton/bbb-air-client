@@ -5,7 +5,9 @@ package org.bigbluebutton.model
 	import mx.collections.ArrayList;
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
+	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
@@ -13,7 +15,6 @@ package org.bigbluebutton.model
 	import org.hamcrest.core.throws;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class UserSession implements IUserSession
 	{
@@ -24,6 +25,7 @@ package org.bigbluebutton.model
 		protected var _voiceConnection:IVoiceConnection;
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
+		protected var _deskshareConnection:IDeskshareConnection;
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
 		protected var _guestSignal:ISignal = new Signal();
@@ -92,6 +94,16 @@ package org.bigbluebutton.model
 		public function set videoConnection(value:IVideoConnection):void
 		{
 			_videoConnection = value;
+		}
+		
+		public function get deskshareConnection():IDeskshareConnection
+		{
+			return _deskshareConnection;
+		}
+		
+		public function set deskshareConnection(value:IDeskshareConnection):void
+		{
+			_deskshareConnection = value;
 		}
 
 		public function UserSession()
