@@ -12,6 +12,7 @@ package org.bigbluebutton.view.navigation.pages
 	import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantView;
 	import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisView;
 	import org.bigbluebutton.view.navigation.pages.videochat.VideoChatView;
+	import org.bigbluebutton.view.navigation.pages.deskshare.DeskshareView;
 
 	public class PagesENUM
 	{
@@ -24,7 +25,8 @@ package org.bigbluebutton.view.navigation.pages
 		public static const CHAT:String = "chat";
 		public static const PARTICIPANTS:String = "participants";
 		public static const SELECT_PARTICIPANT:String = "selectparticipant";
-		public static const DISCONNECT:String = "Disconnect"
+		public static const DISCONNECT:String = "Disconnect";
+		public static const DESKSHARE:String = "Deskshare";
 		
 		/**
 		 * Especials
@@ -45,6 +47,7 @@ package org.bigbluebutton.view.navigation.pages
 				dic[PARTICIPANTS] = ParticipantsView;
 				dic[SELECT_PARTICIPANT] = SelectParticipantView;
 				dic[DISCONNECT] = DisconnectPageView;
+				dic[DESKSHARE] = DeskshareView;
 				
 				dicInitiated = true;
 			}

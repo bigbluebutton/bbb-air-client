@@ -47,8 +47,7 @@
 			</s:layout>
 			<s:TextInput id="inputMessage0" width="80%" height="100%"/>
 			<s:Button id="sendButton0" width="20%" height="100%" label="{resourceManager.getString('resources', 'chat.sendBtn.text')}" enabled="{inputMessage0.text!=''}"/>
-		</s:Group>
-		
-		<common:MenuButtons width="100%" />
+		</s:Group>		
+		<common:MenuButtonsView width="100%" />
 	</s:Group>
 </view:NoTabView>

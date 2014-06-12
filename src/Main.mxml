@@ -32,6 +32,8 @@
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
+			import org.bigbluebutton.view.navigation.pages.common.MenuButtonsConfig;
+			import org.bigbluebutton.view.navigation.pages.deskshare.DeskshareConfig;
 			import org.bigbluebutton.view.navigation.pages.disconnect.DisconnectPageConfig;
 			import org.bigbluebutton.view.navigation.pages.login.LoginPageConfig;
 			import org.bigbluebutton.view.navigation.pages.participants.ParticipantsConfig;
@@ -73,21 +75,21 @@
 			/*
 			public function onInvokeEvent(invocation:InvokeEvent):void 
 			{
-				var traceString:String = "";
-				
-				var arguments:Array = invocation.arguments;
-				var currentDir:File = invocation.currentDirectory;
-				var reason:String = invocation.reason;
-				traceString += "-----InvokeEvent.INVOKE----\n";
-				traceString += "arguments: "+arguments.toString()+"\n\n";
-				traceString += "currentDir: "+currentDir+"\n\n";
-				traceString += "reason: "+reason+"\n\n";
-				
-				var url:String = arguments.toString().replace('bigbluebutton://', 'http://');
-				
-				traceString += "url: "+url+"\n\n";
-				
-				traceText.text += traceString;
+			var traceString:String = "";
+			
+			var arguments:Array = invocation.arguments;
+			var currentDir:File = invocation.currentDirectory;
+			var reason:String = invocation.reason;
+			traceString += "-----InvokeEvent.INVOKE----\n";
+			traceString += "arguments: "+arguments.toString()+"\n\n";
+			traceString += "currentDir: "+currentDir+"\n\n";
+			traceString += "reason: "+reason+"\n\n";
+			
+			var url:String = arguments.toString().replace('bigbluebutton://', 'http://');
+			
+			traceString += "url: "+url+"\n\n";
+			
+			traceText.text += traceString;
 			}
 			*/
 			/**
@@ -97,25 +99,26 @@
 			{
 				context = new Context()
 					.install(MVCSBundle, SignalCommandMapExtension)
-									.configure(AppConfig)
-									.configure(LoadingScreenConfig)
-									
-									.configure(PagesNavigatorConfig)
-										.configure(PresentationConfig)
-										.configure(LoginPageConfig)
-										.configure(ChatConfig)
-										.configure(ChatRoomsConfig)
-										.configure(VideoChatConfig)
-										.configure(ProfileConfig)
-										.configure(UserDetaisConfig)
-										.configure(ParticipantsConfig)
-										.configure(SelectParticipantConfig)	
-									
-									.configure(MicButtonConfig)
-									.configure(LoginButtonConfig)
-									.configure(NavigationButtonConfig)
-									.configure(SwapCameraConfig)
-									.configure(DisconnectPageConfig)
+					.configure(AppConfig)
+					
+					.configure(LoadingScreenConfig)
+					.configure(PagesNavigatorConfig)
+					.configure(PresentationConfig)
+					.configure(LoginPageConfig)
+					.configure(ChatConfig)
+					.configure(ChatRoomsConfig)
+					.configure(VideoChatConfig)
+					.configure(ProfileConfig)
+					.configure(UserDetaisConfig)
+					.configure(ParticipantsConfig)
+					.configure(SelectParticipantConfig)		
+					.configure(MicButtonConfig)
+					.configure(LoginButtonConfig)
+					.configure(NavigationButtonConfig)
+					.configure(SwapCameraConfig)
+					.configure(DisconnectPageConfig)
+					.configure(DeskshareConfig)
+					.configure(MenuButtonsConfig)
 					
 					.configure(new ContextView(this));
 				
@@ -180,11 +183,11 @@
 			
 		]]>
 	</fx:Script>
-
+	
 	<fx:Metadata>
 		[ResourceBundle("resources")]
 	</fx:Metadata> 
-
+	
 	<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
 	<loading:LoadingScreen width="100%" height="100%" />
 	<!--<s:TextArea id="traceText" x="10" y="10" height="488"/>-->

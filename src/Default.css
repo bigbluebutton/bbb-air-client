@@ -57,6 +57,17 @@ global
 		verticalCenter: 0;		
 	}
 	
+	s|Label#noDeskshareMessage0
+	{
+		fontSize: 16;
+		paddingLeft: 15;
+		paddingRight: 15;
+		paddingTop: 100;
+		textAlign: center;
+		verticalCenter: 0;	
+		horizontalCenter: 0;
+	}
+	
 	s|Label#labelDisplay
 	{
 		fontSize: 16;
@@ -108,8 +119,13 @@ global
 	ui|NavigationButton.participantsBtnStyle
 	{
 		height:44;
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/participants.png");
-		
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/participants.png");	
+	}
+	
+	ui|NavigationButton.deskshareBtnStyle
+	{
+		height:44;
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/deskshare.png");
 	}
 	
 	s|Button.logoutButtonStyle
@@ -127,7 +143,7 @@ global
 	
 	s|Label.pageNameStyle
 	{
-		fontSize: 24;
+		fontSize: 18;
 		verticalCenter: 0;
 		textAlign: center;
 		horizontalCenter: 0;
@@ -309,6 +325,10 @@ global
 	{
 		height: 50;
 		width: 50;
+		eclipseLeft: 10;
+		eclipseRight: 10;
+		eclipseTop: 10;
+		eclipseBottom: 10;
 		skinClass: ClassReference("org.bigbluebutton.view.skins.RadioButtonSkin");
 	}
 	
@@ -354,6 +374,17 @@ global
 		paddingRight: 22;
 		textAlign: left;
 		verticalCenter: 0;		
+	}
+	
+	s|Label#noDeskshareMessage0
+	{
+		fontSize: 24;
+		paddingLeft: 22;
+		paddingRight: 22;
+		paddingTop: 150;
+		textAlign: center;
+		verticalCenter: 0;	
+		horizontalCenter: 0;
 	}
 	
 	s|Label#labelDisplay
@@ -413,7 +444,7 @@ global
 	
 	s|Label.pageNameStyle
 	{
-		fontSize: 36;
+		fontSize: 28;
 		verticalCenter: 0;
 		textAlign: center;
 		horizontalCenter: 0;
@@ -441,6 +472,12 @@ global
 	{
 		height:66;
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/participants.png");	
+	}
+	
+	ui|NavigationButton.deskshareBtnStyle
+	{
+		height:66;
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/deskshare.png");
 	}
 	
 	ui|NavigationButton
@@ -609,6 +646,10 @@ global
 	{
 		height: 75;
 		width: 75;
+		eclipseLeft: 15;
+		eclipseRight: 15;
+		eclipseTop: 15;
+		eclipseBottom: 15;
 		skinClass: ClassReference("org.bigbluebutton.view.skins.RadioButtonSkin");
 	}
 	
@@ -653,6 +694,17 @@ global
 		paddingRight: 34;
 		textAlign: left;
 		verticalCenter: 0;	
+	}
+	
+	s|Label#noDeskshareMessage0
+	{
+		fontSize: 36;
+		paddingLeft: 34;
+		paddingRight: 34;
+		paddingTop: 200;
+		textAlign: center;
+		verticalCenter: 0;	
+		horizontalCenter: 0;
 	}
 	
 	s|Label#labelDisplay
@@ -712,7 +764,7 @@ global
 	
 	s|Label.pageNameStyle
 	{
-		fontSize: 54;
+		fontSize: 36;
 		verticalCenter: 0;
 		textAlign: center;
 		horizontalCenter: 0;
@@ -739,9 +791,15 @@ global
 	ui|NavigationButton.participantsBtnStyle
 	{
 		height:88;
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/participants.png");
-		
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/participants.png");	
 	}
+	
+	ui|NavigationButton.deskshareBtnStyle
+	{
+		height:88;
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/deskshare.png");
+	}
+	
 	ui|NavigationButton
 	{
 		imageScaleX: 0.4;
@@ -908,6 +966,10 @@ global
 	{
 		height: 112;
 		width: 112;
+		eclipseLeft: 20;
+		eclipseRight: 20;
+		eclipseTop: 20;
+		eclipseBottom: 20;
 		skinClass: ClassReference("org.bigbluebutton.view.skins.RadioButtonSkin");
 	}
 	
@@ -952,6 +1014,17 @@ global
 		paddingRight: 45;
 		textAlign: left;
 		verticalCenter: 0;		
+	}
+	
+	s|Label#noDeskshareMessage0
+	{
+		fontSize: 48;
+		paddingLeft: 45;
+		paddingRight: 45;
+		paddingTop: 300;
+		textAlign: center;
+		verticalCenter: 0;	
+		horizontalCenter: 0;
 	}
 	
 	s|Label#labelDisplay
@@ -1005,8 +1078,13 @@ global
 	ui|NavigationButton.participantsBtnStyle
 	{
 		height:132;
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/participants.png");
-		
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/participants.png");		
+	}
+	
+	ui|NavigationButton.deskshareBtnStyle
+	{
+		height:132;
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/deskshare.png");
 	}
 	
 	s|Button.logoutButtonStyle
@@ -1034,7 +1112,7 @@ global
 	
 	s|Label.pageNameStyle
 	{
-		fontSize: 72;
+		fontSize: 54;
 		verticalCenter: 0;
 		textAlign: center;
 		horizontalCenter: 0;
@@ -1212,6 +1290,10 @@ global
 	{
 		height: 150;
 		width: 150;
+		eclipseLeft: 30;
+		eclipseRight: 30;
+		eclipseTop: 30;
+		eclipseBottom: 30;
 		skinClass: ClassReference("org.bigbluebutton.view.skins.RadioButtonSkin");
 	}
 	

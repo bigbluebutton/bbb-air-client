@@ -99,6 +99,6 @@
 				<s:Button id="showCameraButton0" y="161" width="200" label="Kick User" horizontalCenter="0"/>-->				
 			</s:Group>
 		</s:Group>
-		<common:MenuButtons />
+		<common:MenuButtonsView />
 	</s:Group>
 </view:NoTabView>

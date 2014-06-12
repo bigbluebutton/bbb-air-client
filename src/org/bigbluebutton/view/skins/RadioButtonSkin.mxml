@@ -115,7 +115,9 @@ in accordance with the terms of the license agreement accompanying it.
 		
 		<!-- dot -->
 		<!--- Defines the appearance of the RadioButton's dot. To customize the appearance of the dot, create a custom RadioButtonSkin class. -->
-		<s:Ellipse left="8" top="8" right="8" bottom="8" includeIn="selectedStates" id="dot" itemCreationPolicy="immediate">
+		<s:Ellipse left="{hostComponent.getStyle('eclipseLeft')}" top="{hostComponent.getStyle('eclipseTop')}" 
+				   right="{hostComponent.getStyle('eclipseRight')}" bottom="{hostComponent.getStyle('eclipseBottom')}" 
+				   includeIn="selectedStates" id="dot" itemCreationPolicy="immediate">
 			<s:stroke>
 				<s:SolidColorStroke weight="1" color="0x000000" />
 			</s:stroke>

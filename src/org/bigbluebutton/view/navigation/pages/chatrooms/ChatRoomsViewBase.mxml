@@ -34,7 +34,6 @@
 		</s:Group>
 		
 		<chatrooms:ChatRoomsList id="chatroomslist" width="100%" height="100%" />
-
-		<common:MenuButtons />
+		<common:MenuButtonsView />
 	</s:Group>
 </view:NoTabView>

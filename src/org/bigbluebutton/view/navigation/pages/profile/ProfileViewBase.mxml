@@ -98,6 +98,6 @@
 			</s:VGroup>	
 		</s:Scroller>
 		
-		<common:MenuButtons/>
+		<common:MenuButtonsView/>
 	</s:Group>
 </view:NoTabView>

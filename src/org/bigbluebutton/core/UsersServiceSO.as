@@ -18,9 +18,6 @@ package org.bigbluebutton.core
 		public var userSession: IUserSession;
 		
 		[Inject]
-		public var conferenceParameters: IConferenceParameters;
-		
-		[Inject]
 		public var disconnectUserSignal : DisconnectUserSignal;
 		
 		private static const SO_NAME:String = "participantsSO";

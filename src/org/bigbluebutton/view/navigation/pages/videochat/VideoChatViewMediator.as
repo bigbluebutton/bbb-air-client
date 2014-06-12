@@ -123,7 +123,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				var length:Number = Number(String(resolution.dimensions[1]));
 				if (view) 
 				{
-					view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length);
+					view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length, view.videoGroup.height, view.videoGroup.width);
 				}
 			}
 		}
