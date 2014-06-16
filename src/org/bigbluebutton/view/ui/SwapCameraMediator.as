@@ -32,7 +32,7 @@ package org.bigbluebutton.view.ui
 		 * Raised on button click, will send signal to swap camera source  
 		 **/
 		private function mouseClickHandler(e:MouseEvent):void
-		{		
+		{
 			if (String(userSession.videoConnection.cameraPosition) == CameraPosition.FRONT)
 			{
 				shareCameraSignal.dispatch(userSession.userList.me.hasStream, CameraPosition.BACK);

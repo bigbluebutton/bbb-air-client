@@ -134,6 +134,6 @@ in accordance with the terms of the license agreement accompanying it.
 			 verticalAlign="middle"
 			 maxDisplayedLines="1"
 			 width="100%"
-			 textAlign="center" verticalCenter="2" fontWeight="normal"/>
+			 textAlign="center" verticalCenter="2" fontWeight="normal" />
 	
 </s:SparkSkin>

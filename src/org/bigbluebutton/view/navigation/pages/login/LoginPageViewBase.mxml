@@ -29,9 +29,9 @@
 	</view:states>
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
 		<s:layout>
-			<s:VerticalLayout paddingTop="15" paddingBottom="15" horizontalAlign="center" verticalAlign="middle"/>
+			<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
 		</s:layout>
-		<s:Image  styleName="bbbLogoStyle" verticalCenter="0" horizontalCenter="0"/>
+		<s:Image  styleName="bbbLogoStyle" />
 		<s:Label id="messageText0" width="90%" 
 				 includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect"			 
 				 text.ChecksumError="{resourceManager.getString('resources', 'login.error.checksumError')}"

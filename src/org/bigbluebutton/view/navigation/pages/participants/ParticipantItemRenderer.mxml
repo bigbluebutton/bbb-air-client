@@ -39,22 +39,22 @@
 	</fx:Script>
 	<s:Group left="0" width="100%">
 		<s:layout>
-			<s:HorizontalLayout gap="0" paddingBottom="5" paddingLeft="0" paddingRight="0" paddingTop="5" verticalAlign="middle" />
+			<s:HorizontalLayout  verticalAlign="middle" />
 		</s:layout>
-		<s:Group left="0" width="5%" >
-			<s:Button id="profileIcon" left="0" styleName="profileIconStyle" />
-			<s:Button id="presentationIcon" left="0" styleName="presentationIconStyle" />
+		<s:Group left="0"  >
+			<s:Image id="profileIcon" left="0" styleName="iconStyle profileIconStyle" />
+			<s:Image id="presentationIcon" left="0" styleName="iconStyle presentationIconStyle" />
 		</s:Group>
-		<s:Button id="handIcon" width="5%" styleName="handIconStyle" />
+		<s:Image id="handIcon"  styleName="iconStyle handIconStyle" />
 		<s:Label id="labelDisplay" width="70%"  horizontalCenter="0"
 				 text="Lucas Jones&#xd;" textAlign="left" verticalAlign="middle"/>
-		<s:Button id="cameraIcon" width="5%" styleName="cameraIconStyle" />
-		<s:Group left="0" width="5%">
-			<s:Button id="micIcon"    styleName="micIconStyle" />
-			<s:Button id="micOffIcon" styleName="micOffIconStyle" visible="false" />
+		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
+		<s:Group left="0" >
+			<s:Image id="micIcon"    styleName="iconStyle micIconStyle" />
+			<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false" />
 		</s:Group>
-		<s:Button id="soundIcon" width="5%" styleName="soundIconStyle" />
-		<s:Button styleName="arrowRightStyle" width="5%" />
+		<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" />
+		<s:Image styleName="iconStyle arrowRightStyle"  />
 	</s:Group>
 
 </s:ItemRenderer>

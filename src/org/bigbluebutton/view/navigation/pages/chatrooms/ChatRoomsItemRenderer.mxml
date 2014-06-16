@@ -48,12 +48,7 @@
 		]]>
 	</fx:Script>
 	<s:layout>
-		<s:HorizontalLayout gap="0"
-							paddingBottom="0"
-							paddingLeft="0"
-							paddingRight="0"
-							paddingTop="5"
-							/>
+		<s:HorizontalLayout />
 	</s:layout>
 	<s:states>
 		<s:State name="NormalState"/>
@@ -61,16 +56,15 @@
 	</s:states>
 	<s:Group width="100%">
 		<s:layout>
-			<s:HorizontalLayout paddingLeft="0" paddingRight="0" paddingBottom="0" paddingTop="0"/>
+			<s:HorizontalLayout />
 		</s:layout>
-		<s:Label id="title" left="0" right="0" width="100%" height="100%" color="#000000" 
-				 paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
+		<s:Label id="title" left="0" right="0" width="100%" height="100%" color="#000000"  textAlign="left" verticalAlign="middle"
 				 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
 		<s:Button id="newMessages" buttonMode="false" horizontalCenter="0"
 				  styleName="newMessagesButtonStyle" verticalCenter="0"
 				  visible.ButtonState="{_buttonStateVisible}" 
 				  visible.NormalState="{_normalStateVisible}"/>
-		<s:Button styleName="arrowRightStyle" horizontalCenter="0"  verticalCenter="0" height="100%"/>
+		<s:Image styleName="iconStyle arrowRightStyle" horizontalCenter="0"  verticalCenter="0" height="100%"/>
 	</s:Group>
 
 </s:ItemRenderer>

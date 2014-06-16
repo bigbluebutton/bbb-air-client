@@ -1,6 +1,8 @@
 package org.bigbluebutton.view.ui
 {
-	public class SwapCameraButton extends SwapCameraBase implements ISwapCameraButton 
+	import spark.components.Button;
+
+	public class SwapCameraButton extends Button implements ISwapCameraButton 
 	{
 		public function SwapCameraButton()
 		{
@@ -9,7 +11,7 @@ package org.bigbluebutton.view.ui
 		
 		public function setVisibility(val:Boolean):void
 		{
-			swapCameraButton.visible = val;
+			super.visible = val;
 		}
 		
 		public function dispose():void

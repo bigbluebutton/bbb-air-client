@@ -16,25 +16,24 @@
 	</s:states>
 	
 	<!-- Define a Rect to fill the area of the skin. -->
-	<s:Rect x="0" y="0"
-			radiusX="4" radiusY="4"
+	<s:Rect radiusX="{getStyle('radiusX')}" radiusY="{getStyle('radiusY')}"
 			height="100%" width="100%">
 		<s:stroke>
-			<s:LinearGradientStroke weight="2"/>
+			<s:LinearGradientStroke weight="{getStyle('weight')}"/>
 		</s:stroke>
 		<s:fill>
 			<s:LinearGradient>
 				<s:entries>
-					<mx:GradientEntry color="#FFFFFF"/>
+					<mx:GradientEntry color="{getStyle('fillColor')}"/>
 				</s:entries>
 			</s:LinearGradient>
 		</s:fill>            
 	</s:Rect>
 	
 	<!-- Define the content area of the container. -->
-	<s:Group id="contentGroup" left="1" right="1" top="0" bottom="0">
+	<s:Group id="contentGroup" left="0" right="0" top="{getStyle('top')}" bottom="{getStyle('bottom')}">
 		<s:layout>
-			<s:VerticalLayout/>
+			<s:VerticalLayout />
 		</s:layout>
 	</s:Group>        
 </s:Skin>

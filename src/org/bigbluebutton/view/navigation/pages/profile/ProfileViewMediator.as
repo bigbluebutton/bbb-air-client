@@ -53,9 +53,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			var userMe:User = userSession.userList.me;		
 			
 			view.userNameText.text = userMe.name;		
-			view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userMe.voiceJoined? 'profile.settings.mic.on':'profile.settings.mic.off');
-			view.raiseHandButton.label = ResourceManager.getInstance().getString('resources', userMe.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
-			
+
 			if (Camera.getCamera() == null)
 			{
 				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');

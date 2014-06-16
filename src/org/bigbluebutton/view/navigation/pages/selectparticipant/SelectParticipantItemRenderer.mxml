@@ -22,12 +22,7 @@
 		]]>
 	</fx:Script>
 	<s:layout>
-		<s:HorizontalLayout gap="0"
-						  paddingBottom="0"
-						  paddingLeft="0"
-						  paddingRight="0"
-						  paddingTop="0"
-						  />
+		<s:HorizontalLayout />
 	</s:layout>
 	<s:Label id="labelDisplay" width="100%" text="" />
 

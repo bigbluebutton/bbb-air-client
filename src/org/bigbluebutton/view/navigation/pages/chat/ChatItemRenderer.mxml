@@ -69,12 +69,7 @@
 		]]>
 	</fx:Script>
 	<s:layout>
-		<s:VerticalLayout gap="0"
-						  paddingBottom="0"
-						  paddingLeft="0"
-						  paddingRight="0"
-						  paddingTop="5"
-						  />
+		<s:VerticalLayout />
 	</s:layout>
 	<s:states>
 		<s:State name="others_state"/>
@@ -82,12 +77,11 @@
 	</s:states>
 	<s:Group id="nameTimeGroup" width="100%">
 		<s:Label id="username"  left="0" width="50%"  color="#9E9E9E" 
-				 paddingLeft="5" paddingRight="5" textAlign="left" left.me_state="" right.me_state="0" textAlign.me_state="right"/>
+				 textAlign="left" left.me_state="" right.me_state="0" textAlign.me_state="right"/>
 		<s:Label id="time"  right="0" width="50%" color="#9E9E9E" 
-				 paddingLeft="5" paddingRight="5" textAlign="right" left.me_state="0" right.me_state="" textAlign.me_state="left"/>
+				  textAlign="right" left.me_state="0" right.me_state="" textAlign.me_state="left"/>
 	</s:Group>
 	<s:Group width="100%">
-		<s:RichEditableText editable="false" selectable="false" id="message" width="100%" paddingLeft="5" paddingRight="5" 
-							textAlign="left"/>
+		<s:RichEditableText editable="false" selectable="false" id="message" width="100%" textAlign="left"/>
 	</s:Group>
 </s:ItemRenderer>

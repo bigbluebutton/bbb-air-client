@@ -15,13 +15,17 @@
 	</s:states>
 	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}">
 		<s:stroke>
-			<s:SolidColorStroke color="0x000000" weight="1" />
+			<s:SolidColorStroke color="{getStyle('strokeColor')}" weight="{getStyle('strokeWeight')}" />
 		</s:stroke>
 		<s:fill >
 			<s:SolidColor color="{getStyle('backgroundColor')}" />
 		</s:fill>
 	</s:Rect>
-	<s:BitmapImage left="0" right="0" top="0" bottom="0" scaleMode="letterbox" scaleX="{hostComponent.getStyle('imageScaleX')}"
-				   scaleY="{hostComponent.getStyle('imageScaleY')}" source="{getStyle('backgroundImage')}"/>
+	<s:BitmapImage scaleMode="letterbox" scaleX="{hostComponent.getStyle('imageScaleX')}"
+				   scaleY="{hostComponent.getStyle('imageScaleY')}" 
+				   source="{getStyle('backgroundImage')}" 
+				   source.down="{getStyle('backgroundImageDown')}"
+				   horizontalCenter="0" horizontalAlign="center"
+				   verticalAlign="middle" verticalCenter="0"/>
 	
 </s:Skin>

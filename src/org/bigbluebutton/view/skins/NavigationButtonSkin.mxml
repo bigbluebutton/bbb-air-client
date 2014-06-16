@@ -16,7 +16,7 @@
 	
 	<s:Rect width="100%" height="{hostComponent.getStyle('height')}">
 		<s:stroke>
-			<s:SolidColorStroke color="0x000000" weight="1" />
+			<s:SolidColorStroke color="{hostComponent.getStyle('strokeColor')}" weight="{hostComponent.getStyle('strokeWeight')}" />
 		</s:stroke>
 		<s:fill >
 			<s:SolidColor color="{hostComponent.getStyle('backgroundColor')}" />

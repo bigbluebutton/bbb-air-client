@@ -32,7 +32,7 @@
 				 text.USER_KICKED_OUT="{resourceManager.getString('resources', 'disconnect.reason.userKickedOut')}"
 				 text.USER_LOGGED_OUT="{resourceManager.getString('resources', 'disconnect.reason.userLoggedOut')}">
 		</s:Label>
-		<s:Button id="exitButton0" width="50%" content="Exit" />
+		<s:Button id="exitButton0" width="50%" content="{resourceManager.getString('resources', 'disconnect.reason.userExit')}"/>
 	</s:Group>
 	
 </view:NoTabView>
