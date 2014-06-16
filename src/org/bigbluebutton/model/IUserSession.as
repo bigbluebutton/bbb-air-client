@@ -12,6 +12,8 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.model.presentation.PresentationList;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
+	import org.bigbluebutton.core.IVoiceConnection;
+	import org.bigbluebutton.core.IDeskshareConnection;
 	
 
 	public interface IUserSession
@@ -29,6 +31,8 @@ package org.bigbluebutton.model
 		function set voiceStreamManager(value:VoiceStreamManager):void
 		function get videoConnection():IVideoConnection
 		function set videoConnection(value:IVideoConnection):void
+		function get deskshareConnection():IDeskshareConnection
+		function set deskshareConnection(value:IDeskshareConnection):void
 		function get presentationList():PresentationList
 		function get guestSignal():ISignal
 		function get successJoiningMeetingSignal():ISignal

@@ -61,6 +61,7 @@ package org.bigbluebutton.core
 			} else {
 				trace("Message name is undefined");
 			}
-		}   
+		}
+
 	}
 }

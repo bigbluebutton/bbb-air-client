@@ -41,6 +41,9 @@ package org.bigbluebutton.core
 				case "user_listening_only":
 					handleUserListeningOnly(message);
 					break;
+				case "assignPresenterCallback":
+					handleAssignPresenterCallback(message);
+					break;
 				case "voiceUserMuted":
 					handleVoiceUserMuted(message);
 					break;

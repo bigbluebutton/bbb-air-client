@@ -77,7 +77,8 @@ package org.bigbluebutton.view.navigation.pages.login
 			
 			if(Capabilities.isDebugger)
 			{
-				url = "bigbluebutton://test-install.blindsidenetworks.com/bigbluebutton/api/join?fullName=Air&meetingID=Demo+Meeting&password=ap&checksum=512620179852dadd6fe0665a48bcb852a3c0afac";
+				url = "bigbluebutton://192.168.208.142/bigbluebutton/api/join?fullName=Adam-AIR&meetingID=Demo+Meeting&password=ap&checksum=3982b21e0fbb67664753f5165d9803bb1d1d26b4";
+				//url = "bigbluebutton://test-install.blindsidenetworks.com/bigbluebutton/api/join?fullName=Air&meetingID=Demo+Meeting&password=ap&checksum=512620179852dadd6fe0665a48bcb852a3c0afac";
 				//url = "bigbluebutton://lab1.mconf.org/bigbluebutton/api/join?fullName=Air+client&meetingID=Test+room+4&password=prof123&checksum=5805753edd08fbf9af50f9c28bb676c7e5241349"
 			}
 			

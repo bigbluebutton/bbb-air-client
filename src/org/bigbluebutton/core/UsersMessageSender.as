@@ -141,6 +141,8 @@ package org.bigbluebutton.core
 		
 		public function getLockSettings():void {
 			trace("UsersMessageSender::getLockSettings() -- Sending [getLockSettings] message to server");
+			
+			userSession.mainConnection.sendMessage("lock.getLockSettings", defaultSuccessResponse, defaultFailureResponse);
 		}
 		
 		public function saveLockSettings(newLockSettings:Object):void {

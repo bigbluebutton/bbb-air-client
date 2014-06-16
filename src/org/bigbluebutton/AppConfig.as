@@ -17,11 +17,13 @@ package org.bigbluebutton
 	import org.bigbluebutton.core.ChatMessageReceiver;
 	import org.bigbluebutton.core.ChatMessageSender;
 	import org.bigbluebutton.core.ChatMessageService;
+	import org.bigbluebutton.core.DeskshareConnection;
 	import org.bigbluebutton.core.IBaseConnection;
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IChatMessageReceiver;
 	import org.bigbluebutton.core.IChatMessageSender;
 	import org.bigbluebutton.core.IChatMessageService;
+	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.ILoginService;
 	import org.bigbluebutton.core.IPresentMessageSender;
 	import org.bigbluebutton.core.IPresentMessageReceiver;
@@ -65,15 +67,13 @@ package org.bigbluebutton
 		
 		public function configure(): void
 		{
+			// Singleton mapping
 			injector.map(IUserUISession).toSingleton(UserUISession);
 			injector.map(IUserSession).toSingleton(UserSession);
 			injector.map(IConferenceParameters).toSingleton(ConferenceParameters);
-			injector.map(ILoginService).toType(LoginService);
 			injector.map(IUsersMessageReceiver).toSingleton(UsersMessageReceiver);
 			injector.map(IUsersService).toSingleton(UsersService);
 			injector.map(IUsersMessageSender).toSingleton(UsersMessageSender);
-			injector.map(IBigBlueButtonConnection).toType(BigBlueButtonConnection);
-			injector.map(IVideoConnection).toType(VideoConnection);
 			injector.map(IChatMessageService).toSingleton(ChatMessageService);
 			injector.map(IChatMessageReceiver).toSingleton(ChatMessageReceiver);
 			injector.map(IChatMessageSender).toSingleton(ChatMessageSender);
@@ -81,15 +81,22 @@ package org.bigbluebutton
 			injector.map(IPresentMessageSender).toSingleton(PresentMessageSender);
 			injector.map(IPresentMessageReceiver).toSingleton(PresentMessageReceiver);
 			injector.map(IChatMessagesSession).toSingleton(ChatMessagesSession);
+			injector.map(IDeskshareConnection).toSingleton(DeskshareConnection);
+			
+			// Type mapping
 			injector.map(IBaseConnection).toType(BaseConnection);	
 			injector.map(IVoiceConnection).toType(VoiceConnection);
+			injector.map(ILoginService).toType(LoginService);
+			injector.map(IBigBlueButtonConnection).toType(BigBlueButtonConnection);
+			injector.map(IVideoConnection).toType(VideoConnection);
 			
+			// Signal to Command mapping
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
 			signalCommandMap.map(ShareMicrophoneSignal).toCommand(ShareMicrophoneCommand);
 			signalCommandMap.map(ShareCameraSignal).toCommand(ShareCameraCommand);
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
 			signalCommandMap.map(CameraQualitySignal).toCommand(CameraQualityCommand);
-			signalCommandMap.map(DisconnectUserSignal).toCommand(DisconnectUserCommand);		
+			signalCommandMap.map(DisconnectUserSignal).toCommand(DisconnectUserCommand);
 		}
 	}
 }
