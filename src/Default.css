@@ -378,6 +378,8 @@ global
 	{
 		top: 3;
 		bottom: 0;
+		left: 3;
+		right: 3;
 	}
 	
 	global
@@ -615,6 +617,8 @@ global
 	{
 		top: 5;
 		bottom: 0;
+		left: 5;
+		right: 5;
 	}
 	
 	global
@@ -851,6 +855,8 @@ global
 	{
 		top: 7;
 		bottom: 0;
+		left: 7;
+		right: 7;
 	}
 	
 	global
@@ -1087,6 +1093,8 @@ global
 	{
 		top: 10;
 		bottom: 0;
+		left: 10;
+		right: 10;
 	}
 	
 	global
