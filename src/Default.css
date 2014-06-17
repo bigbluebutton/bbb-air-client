@@ -102,6 +102,8 @@ s|Button#showCameraButton0, s|Button#showPrivateChat0, s|Button#exitButton0
 s|Button.newMessagesButtonStyle
 {
 	fillColor: #3F403F;
+	horizontalCenter: 0;
+	verticalCenter: 0;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.CommonButtonSkin");
 }
 
