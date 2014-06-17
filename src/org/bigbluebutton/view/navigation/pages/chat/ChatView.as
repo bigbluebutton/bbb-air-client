@@ -1,7 +1,7 @@
 package org.bigbluebutton.view.navigation.pages.chat
 {
 	import flash.events.MouseEvent;
-	
+
 	import spark.components.Button;
 	import spark.components.Label;
 	import spark.components.List;
@@ -34,7 +34,6 @@ package org.bigbluebutton.view.navigation.pages.chat
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
-			
 			//this.addEventListener(MouseEvent.CLICK, onClick);
 		}
 		
@@ -47,6 +46,6 @@ package org.bigbluebutton.view.navigation.pages.chat
 		{
 			
 		}
-
+		
 	}
 }

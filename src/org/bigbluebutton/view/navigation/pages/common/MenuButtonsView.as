@@ -1,34 +1,30 @@
 package org.bigbluebutton.view.navigation.pages.common
 {
-	import org.bigbluebutton.view.ui.MenuChatButton;
-	import org.bigbluebutton.view.ui.MenuDeskshareButton;
-	import org.bigbluebutton.view.ui.MenuParticipantsButton;
-	import org.bigbluebutton.view.ui.MenuPresentationButton;
-	import org.bigbluebutton.view.ui.MenuVideoChatButton;
+	import org.bigbluebutton.view.ui.NavigationButton;
 		
 	public class MenuButtonsView extends MenuButtons implements IMenuButtonsView
 	{
-		public function get menuDeskshareButton():MenuDeskshareButton
+		public function get menuDeskshareButton():NavigationButton
 		{
 			return deskshareBtn0;
 		}
 		
-		public function get menuVideoChatButton():MenuVideoChatButton
+		public function get menuVideoChatButton():NavigationButton
 		{
 			return videochatBtn0;
 		}
 		
-		public function get menuPresentationButton():MenuPresentationButton
+		public function get menuPresentationButton():NavigationButton
 		{
 			return presentationBtn0;
 		}
 		
-		public function get menuChatButton():MenuChatButton
+		public function get menuChatButton():NavigationButton
 		{
 			return chatBtn0;
 		}
 		
-		public function get menuParticipantsButton():MenuParticipantsButton
+		public function get menuParticipantsButton():NavigationButton
 		{
 			return participantsBtn0;
 		}

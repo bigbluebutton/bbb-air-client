@@ -1,63 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
-						 xmlns:s="library://ns.adobe.com/flex/spark" 
-						 xmlns:mx="library://ns.adobe.com/flex/mx" 
-						 xmlns:ui="org.bigbluebutton.view.ui.*"
-						 xmlns:view="org.bigbluebutton.core.view.*" 
-						 xmlns:assets="assets.*" 
-						 xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
-						 creationComplete="creationCompleteHandler(event)"
-						 >
-	<fx:Script>
-		<![CDATA[
-			import mx.events.FlexEvent;
-			
-			protected function creationCompleteHandler(event:FlexEvent):void
-			{
-				
-			}
-			
-		]]>
-	</fx:Script>
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:ui="org.bigbluebutton.view.ui.*"
+				xmlns:view="org.bigbluebutton.core.view.*" 
+				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
+				>
 	
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
 		<s:layout>
-			<s:VerticalLayout gap="0"
-							  paddingBottom="0"
-							  paddingLeft="0"
-							  paddingRight="0"
-							  paddingTop="0"
-							  />
+			<s:VerticalLayout />
 		</s:layout>
 
-		<s:Group width="100%" height="50">
+		<s:Group width="100%" >
 			<s:layout>
-				<s:HorizontalLayout gap="5"
-									paddingBottom="10"
-									paddingLeft="10"
-									paddingRight="10"
-									paddingTop="10"
-									/>
+				<s:HorizontalLayout />
 			</s:layout>
-			<ui:ProfileButton id="profileBtn" width="30" height="30" />                
-			<s:Group width="100%" height="30">
-				<s:Label id="presentationName" horizontalCenter="0" text="" verticalCenter="0"/>
-			</s:Group>	
-			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
-			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
+			<ui:ProfileButton id="profileBtn" />                
+			<s:Label id="presentationName" width="100%" styleName="pageNameStyle" text="" />
+			<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle"/>
+			<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
 		</s:Group>
 		
 		<s:Group id="content" width="100%" height="100%">
 			<s:layout>
-				<s:VerticalLayout gap="0"
-									paddingBottom="0"
-									paddingLeft="0"
-									paddingRight="0"
-									paddingTop="0"
-									/>
+				<s:VerticalLayout />
 			</s:layout>
 			<s:Image id="slide" width="100%" height="100%" />
 		</s:Group>
-		<common:MenuButtonsView width="100%" height="42"/>
+		<common:MenuButtonsView />
 	</s:Group>
 </view:NoTabView>

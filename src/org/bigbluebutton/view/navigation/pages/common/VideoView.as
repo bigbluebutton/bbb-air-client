@@ -146,7 +146,7 @@ package org.bigbluebutton.view.navigation.pages.common
 				case -90:
 					resizeForLandscape();
 					video.x = (screenWidth/2) - (video.height/2);
-					video.y = (screenHeight/2) + (video.width/2) + bottomMenuBarHeight;
+					video.y = (screenHeight/2) + (video.width/2) + topMenuBarHeight;
 					break;
 				case 90:
 					resizeForLandscape();
@@ -156,7 +156,7 @@ package org.bigbluebutton.view.navigation.pages.common
 				case 180:
 					resizeForPortrait();
 					video.x = screenWidth/2 + video.width/2;
-					video.y = (screenHeight/2) + (video.height/2) + bottomMenuBarHeight
+					video.y = (screenHeight/2) + (video.height/2) + topMenuBarHeight
 					break; 
 			}
 			

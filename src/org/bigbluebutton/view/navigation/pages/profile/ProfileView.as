@@ -28,25 +28,25 @@ package org.bigbluebutton.view.navigation.pages.profile
 		{
 			return shareCameraBtn0;
 		}
-		
-		public function get cameraOnOffText():Label
+				
+		public function get shareCameraBtnLabel():String
 		{
-			return cameraOnOffTxt0;
+			return shareCameraBtn0.label;
 		}
 		
 		public function get shareMicButton():Button
 		{
 			return shareMicBtn0;
 		}
-		
-		public function get micOnOffText():Label
+
+		public function get shareMicBtnLabel():String
 		{
-			return micOnOffTxt0;
+			return shareMicBtn0.label;
 		}
 		
-		public function get raiseHandText():Label
+		public function get raiseHandBtnLabel():String
 		{
-			return raiseHandLabel0;
+			return raiseHandButton0.label;
 		}
 		
 		public function get raiseHandButton():Button

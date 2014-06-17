@@ -17,28 +17,22 @@
 	</view:states>
 	
 	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
-		<s:Image horizontalCenter="0" source="@Embed('assets/res/drawable-xxhdpi/ic_launcher.png')"
-				 verticalCenter="0"
-				 verticalCenter.CONNECTION_DROPPED="-83"
-				 verticalCenter.MEETING_ENDED="-83"
-				 verticalCenter.USER_KICKED_OUT="-83"
-				 verticalCenter.USER_LOGGED_OUT="-83">
-		</s:Image>
-		<s:Label id="messageText0"
-				 width="90%" height="168" fontSize="20" horizontalCenter="0"
-				 textAlign="center"
-				 verticalCenter="51"
+		<s:layout>
+			<s:VerticalLayout horizontalAlign="center"/>
+		</s:layout>
+		<s:Group height="50%"  >
+			<s:layout>
+				<s:VerticalLayout  verticalAlign="bottom"/>
+			</s:layout>
+			<s:Image  styleName="bbbLogoStyle" />
+		</s:Group>
+		<s:Label id="messageText0" width="90%" 
 				 text.CONNECTION_DROPPED="{resourceManager.getString('resources', 'disconnect.reason.connectionDropped')}"
 				 text.MEETING_ENDED="{resourceManager.getString('resources', 'disconnect.reason.meetingEnded')}"
 				 text.USER_KICKED_OUT="{resourceManager.getString('resources', 'disconnect.reason.userKickedOut')}"
 				 text.USER_LOGGED_OUT="{resourceManager.getString('resources', 'disconnect.reason.userLoggedOut')}">
 		</s:Label>
-		<s:Button id="exitButton0" width="200" height="50" content="Exit" fontSize="20"
-				  horizontalCenter="30%" verticalCenter="350"
-				  horizontalCenter.MEETING_ENDED="0" verticalCenter.MEETING_ENDED="200"
-				  horizontalCenter.CONNECTION_DROPPED="0" verticalCenter.CONNECTION_DROPPED="200"
-				  horizontalCenter.USER_KICKED_OUT="0" verticalCenter.USER_KICKED_OUT="200"
-				  horizontalCenter.USER_LOGGED_OUT="0" verticalCenter.USER_LOGGED_OUT="200"/>
+		<s:Button id="exitButton0" width="50%" content="{resourceManager.getString('resources', 'disconnect.reason.userExit')}"/>
 	</s:Group>
 	
 </view:NoTabView>

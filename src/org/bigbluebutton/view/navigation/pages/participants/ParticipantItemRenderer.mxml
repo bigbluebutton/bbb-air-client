@@ -2,8 +2,7 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				xmlns:assets="assets.*"
-				width="500" height="50">
+				>
 	
 	<fx:Script>
 		<![CDATA[
@@ -38,45 +37,24 @@
 			
 		]]>
 	</fx:Script>
-	<s:layout>
-		<s:HorizontalLayout gap="0"
-						  paddingBottom="0"
-						  paddingLeft="0"
-						  paddingRight="0"
-						  paddingTop="0"
-						  />
-	</s:layout>
-	<s:Group y="0" left="0" width="90" height="50">
+	<s:Group left="0" width="100%">
 		<s:layout>
-			<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" />
+			<s:HorizontalLayout  verticalAlign="middle" />
 		</s:layout>
-		<s:Group y="0" left="0" width="50%" height="100%">
-			<assets:ProfileIcon id="profileIcon" horizontalCenter="0" verticalCenter="0"/>
-			<assets:PresentationIcon id="presentationIcon" horizontalCenter="0" verticalCenter="0"/>
+		<s:Group left="0"  >
+			<s:Image id="profileIcon" left="0" styleName="iconStyle profileIconStyle" />
+			<s:Image id="presentationIcon" left="0" styleName="iconStyle presentationIconStyle" />
 		</s:Group>
-		<s:Group y="0" left="0" width="50%" height="100%">
-			<assets:HandSp id="handIcon" horizontalCenter="0" verticalCenter="0"/>
+		<s:Image id="handIcon"  styleName="iconStyle handIconStyle" />
+		<s:Label id="labelDisplay" width="70%"  horizontalCenter="0"
+				 text="Lucas Jones&#xd;" textAlign="left" verticalAlign="middle"/>
+		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
+		<s:Group left="0" >
+			<s:Image id="micIcon"    styleName="iconStyle micIconStyle" />
+			<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false" />
 		</s:Group>
-	</s:Group>
-	<s:Label id="labelDisplay" x="79" width="60%" height="51" fontWeight="bold"
-			 text="Lucas Jones&#xd;" textAlign="left" verticalCenter="0"/>
-	<s:Group y="0" right="0" width="30%" height="49">
-		<s:layout>
-			<s:HorizontalLayout gap="0" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" />
-		</s:layout>
-		<s:Group y="0" left="0" width="34%" height="100%">
-			<assets:CameraIcon id="cameraIcon" x="23" y="12" horizontalCenter="0"/>	
-		</s:Group>
-		<s:Group y="0" left="0" width="33%" height="100%">
-			<assets:MicIcon id="micIcon" y="12" horizontalCenter="0"/>
-			<assets:MicOffIcon id="micOffIcon" visible="false" y="12" horizontalCenter="0"/>
-		</s:Group>
-		<s:Group x="0" y="0" width="33%" height="100%">
-			<assets:SoundIcon id="soundIcon" y="12" horizontalCenter="0"/>
-		</s:Group>
-		<s:Group x="0" y="0" width="33%" height="100%">
-			<assets:ArrowRight y="12" horizontalCenter="0"/>
-		</s:Group>
+		<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" />
+		<s:Image styleName="iconStyle arrowRightStyle"  />
 	</s:Group>
 
 </s:ItemRenderer>
