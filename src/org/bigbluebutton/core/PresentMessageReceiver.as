@@ -5,9 +5,27 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.presentation.Presentation;
 	import org.bigbluebutton.model.presentation.Slide;
 
-	public class PresentMessageReceiver implements IPresentMessageReceiver, IMessageListener
+	public class PresentMessageReceiver implements IMessageListener
 	{
-		[Inject]
+		
+		private static const SO_NAME:String = "presentationSO";
+		
+		private static const PRESENTER:String = "presenter";
+		private static const SHARING:String = "sharing";
+		private static const UPDATE_MESSAGE:String = "updateMessage";
+		private static const CURRENT_PAGE:String = "currentPage";
+		
+		private static const OFFICE_DOC_CONVERSION_SUCCESS_KEY:String = "OFFICE_DOC_CONVERSION_SUCCESS";
+		private static const OFFICE_DOC_CONVERSION_FAILED_KEY:String = "OFFICE_DOC_CONVERSION_FAILED";
+		private static const SUPPORTED_DOCUMENT_KEY:String = "SUPPORTED_DOCUMENT";
+		private static const UNSUPPORTED_DOCUMENT_KEY:String = "UNSUPPORTED_DOCUMENT";
+		private static const PAGE_COUNT_FAILED_KEY:String = "PAGE_COUNT_FAILED";
+		private static const PAGE_COUNT_EXCEEDED_KEY:String = "PAGE_COUNT_EXCEEDED";    	
+		private static const GENERATED_SLIDE_KEY:String = "GENERATED_SLIDE";
+		private static const GENERATING_THUMBNAIL_KEY:String = "GENERATING_THUMBNAIL";
+		private static const GENERATED_THUMBNAIL_KEY:String = "GENERATED_THUMBNAIL";
+		private static const CONVERSION_COMPLETED_KEY:String = "CONVERSION_COMPLETED";
+		
 		public var userSession: IUserSession;
 		
 		public function PresentMessageReceiver() {
@@ -55,24 +73,7 @@ package org.bigbluebutton.core
 			
 			if(msg.presentations) {
 				for(var i:int = 0; i < msg.presentations.length; i++) {
-					var p:Object = msg.presentations[i];
-
-					// Add the presentations to the presentation list:
-					trace("PresentMessageReceiver::handleGetPresentationInfoReply() -- adding presentation [" + p.name + "] to the presentation list");
-					userSession.presentationList.addPresentation(p.name, p.pages.length, p.current);
-					
-					var pres:Presentation = userSession.presentationList.getPresentation(p.name);
-
-					// Add each slide to the presentation:
-					for(var j:int = 0; j < p.pages.length; j++) {
-						var s:Object = p.pages[j];
-						pres.add(new Slide(s.num, s.swfUri, s.thumbUri, s.txtUri, s.current));
-					}
-					
-					// Check to see if pres is the current presentation, and if it is, show it:
-					if(pres.current == true) {
-						pres.show();
-					}
+					addPresentation(msg.presentations[i]);
 				}
 			}
 		}
@@ -137,7 +138,12 @@ package org.bigbluebutton.core
 		private function handleSharePresentationCallback(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("PresentMessageReceiver::handleSharePresentationCallback() -- now showing presentation [" + msg.presentation.name + "]");
-			userSession.presentationList.getPresentation(msg.presentation.name).show();
+			
+			var presentation:Presentation = userSession.presentationList.getPresentation(msg.presentation.name);
+			
+			if(presentation != null) {
+				userSession.presentationList.getPresentation(msg.presentation.name).show();
+			}
 		}
 		
 		public function handlePageCountExceededUpdateMessageCallback(m:Object):void {
@@ -160,41 +166,28 @@ package org.bigbluebutton.core
 		}
 		
 		public function handleConversionCompletedUpdateMessageCallback(m:Object):void {
-			var msg:Object = JSON.parse(m.msg);
-			var presentation:Object = msg.presentation;
-			var length:int = presentation.pages.length;
-			
+			var msg:Object = JSON.parse(m.msg);			
 			trace("PresentMessageReceiver::handleConversionCompletedUpdateMessageCallback() -- new presentation [" + msg.presentation.name + "] uploaded");
-			
-			userSession.presentationList.addPresentation(presentation.name, length, presentation.current);
-
-			var pres:Presentation = userSession.presentationList.getPresentation(presentation.name);
-			
-			// Add all the slides to the presentation:
-			for(var i:int = 0; i < length; i++) {
-				var s:Object = presentation.pages[i];
-				pres.add(new Slide(s.num, s.swfUri, s.thumbUri, s.txtUri, s.current));
-			}
+			addPresentation(msg.presentation);
 		}
 		
-		private static const SO_NAME:String = "presentationSO";
-		
-		private static const PRESENTER:String = "presenter";
-		private static const SHARING:String = "sharing";
-		private static const UPDATE_MESSAGE:String = "updateMessage";
-		private static const CURRENT_PAGE:String = "currentPage";
-		
-		private static const OFFICE_DOC_CONVERSION_SUCCESS_KEY:String = "OFFICE_DOC_CONVERSION_SUCCESS";
-		private static const OFFICE_DOC_CONVERSION_FAILED_KEY:String = "OFFICE_DOC_CONVERSION_FAILED";
-		private static const SUPPORTED_DOCUMENT_KEY:String = "SUPPORTED_DOCUMENT";
-		private static const UNSUPPORTED_DOCUMENT_KEY:String = "UNSUPPORTED_DOCUMENT";
-		private static const PAGE_COUNT_FAILED_KEY:String = "PAGE_COUNT_FAILED";
-		private static const PAGE_COUNT_EXCEEDED_KEY:String = "PAGE_COUNT_EXCEEDED";    	
-		private static const GENERATED_SLIDE_KEY:String = "GENERATED_SLIDE";
-		private static const GENERATING_THUMBNAIL_KEY:String = "GENERATING_THUMBNAIL";
-		private static const GENERATED_THUMBNAIL_KEY:String = "GENERATED_THUMBNAIL";
-		private static const CONVERSION_COMPLETED_KEY:String = "CONVERSION_COMPLETED";
-		
+		private function addPresentation(presentationObject:Object):void {
+			var length:int = presentationObject.pages.length;
+
+			trace("PresentMessageReceiver::handleGetPresentationInfoReply() -- adding presentation [" + presentationObject.name + "] to the presentation list");
+			var presentation:Presentation = userSession.presentationList.addPresentation(presentationObject.name, length, presentationObject.current);
+
+			// Add all the slides to the presentation:
+			for(var i:int = 0; i < length; i++) {
+				var s:Object = presentationObject.pages[i];
+				presentation.add(new Slide(s.num, s.swfUri, s.thumbUri, s.txtUri, s.current));
+			}
+			
+			if(presentation.current) {
+				presentation.show();
+			}
+		}
+
 		public function handleConversionUpdateMessageCallback(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("PresentMessageReceiver::handleConversionUpdateMessageCallback()");

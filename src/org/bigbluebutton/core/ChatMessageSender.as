@@ -4,12 +4,16 @@ package org.bigbluebutton.core
 	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.osflash.signals.Signal;
 
-	public class ChatMessageSender implements IChatMessageSender
+	public class ChatMessageSender
 	{
-		[Inject]
 		public var userSession: IUserSession;
+		
+		public var chatMessagesSession:IChatMessagesSession;
+		
+		public var chatMessageService:IChatMessageService;
 
 		public function getPublicChatMessages():void
 		{  
@@ -29,10 +33,10 @@ package org.bigbluebutton.core
 			trace("Sending [chat.sendPublicMessage] to server. [" + message.message + "]");
 			userSession.mainConnection.sendMessage("chat.sendPublicMessage", 
 				function(result:String):void { // On successful result
-					sendPublicMessageOnSucessSignal.dispatch(result);
+					chatMessageService.sendPrivateMessageOnSucessSignal.dispatch(result);
 				},	                   
 				function(status:String):void { // status - On error occurred
-					sendPublicMessageOnFailureSignal.dispatch(status); 
+					chatMessageService.sendPublicMessageOnFailureSignal.dispatch(status);
 				},
 				message.toObj()
 			);
@@ -44,10 +48,10 @@ package org.bigbluebutton.core
 			trace("Sending fromUserID [" + message.fromUserID + "] to toUserID [" + message.toUserID + "]");
 			userSession.mainConnection.sendMessage("chat.sendPrivateMessage", 
 				function(result:String):void { // On successful result
-					sendPrivateMessageOnSucessSignal.dispatch(result);
+					chatMessageService.sendPrivateMessageOnSucessSignal.dispatch(result);
 				},	                   
 				function(status:String):void { // status - On error occurred
-					sendPrivateMessageOnFailureSignal.dispatch(status);
+					chatMessageService.sendPrivateMessageOnFailureSignal.dispatch(status);
 				},
 				message.toObj()
 			);

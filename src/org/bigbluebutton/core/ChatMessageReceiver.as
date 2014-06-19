@@ -5,13 +5,11 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
 	
-	public class ChatMessageReceiver implements IChatMessageReceiver, IMessageListener
-	{
-		[Inject]
-		public var chatMessagesSession: IChatMessagesSession;
-		
-		[Inject]
+	public class ChatMessageReceiver implements IMessageListener
+	{		
 		public var userSession: IUserSession;
+		
+		public var chatMessagesSession: IChatMessagesSession;
 		
 		public function onMessage(messageName:String, message:Object):void
 		{

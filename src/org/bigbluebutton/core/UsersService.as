@@ -1,31 +1,30 @@
 package org.bigbluebutton.core
 {
-	import org.bigbluebutton.core.IUsersMessageReceiver;
-	import org.bigbluebutton.core.IUsersMessageSender;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 
 	public class UsersService implements IUsersService
-	{
-		[Inject]
-		public var usersMessageSender:IUsersMessageSender;
-		
-		[Inject]
-		public var usersMessageReceiver:IUsersMessageReceiver;
-			
+	{	
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
 		public var userSession: IUserSession;
+		
+		public var usersMessageSender:UsersMessageSender;
+		public var usersMessageReceiver:UsersMessageReceiver;
 
-		public function UsersService()
-		{
+		public function UsersService() {
+			usersMessageSender = new UsersMessageSender;
+			usersMessageReceiver = new UsersMessageReceiver;
 		}
 		
-		public function setupMessageReceiver():void {
+		public function setupMessageSenderReceiver():void {
+			usersMessageReceiver.userSession = userSession;
+			usersMessageSender.userSession = userSession;
+			
 			userSession.mainConnection.addMessageListener(usersMessageReceiver as IMessageListener);
 			userSession.logoutSignal.add(logout);
 		}
@@ -69,9 +68,14 @@ package org.bigbluebutton.core
 			userSession.mainConnection.disconnect(onUserAction);
 		}
 		
-		public function raiseHand(userID:String, raise:Boolean):void
+		public function raiseHand():void
 		{
-			usersMessageSender.raiseHand(userID, raise);
+			usersMessageSender.raiseHand();
+		}
+		
+		public function lowerHand(userID:String, loweredBy:String):void
+		{
+			usersMessageSender.lowerHand(userID, loweredBy);
 		}
 		
 		public function kickUser(userID:String):void {
@@ -82,7 +86,7 @@ package org.bigbluebutton.core
 			usersMessageSender.queryForParticipants();
 		}
 		
-		public function assignPresenter(userid:String, name:String, assignedBy:Number):void {
+		public function assignPresenter(userid:String, name:String, assignedBy:String):void {
 			usersMessageSender.assignPresenter(userid, name, assignedBy);
 		}
 		

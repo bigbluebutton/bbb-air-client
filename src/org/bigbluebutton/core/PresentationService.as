@@ -7,22 +7,22 @@ package org.bigbluebutton.core
 	public class PresentationService implements IPresentationService
 	{
 		[Inject]
-		public var presentMessageSender:IPresentMessageSender;
-		
-		[Inject]
-		public var presentMessageReceiver : IPresentMessageReceiver;
-		
-		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
 		public var userSession: IUserSession;
 		
+		public var presentMessageSender:PresentMessageSender;
+		public var presentMessageReceiver:PresentMessageReceiver;
+		
 		public function PresentationService() {
-			
+			presentMessageSender = new PresentMessageSender;
+			presentMessageReceiver = new PresentMessageReceiver;
 		}
 		
-		public function setupMessageReceiver():void {
+		public function setupMessageSenderReceiver():void {
+			presentMessageSender.userSession = userSession;
+			presentMessageReceiver.userSession = userSession;
 			userSession.mainConnection.addMessageListener(presentMessageReceiver as IMessageListener);
 		}
 		

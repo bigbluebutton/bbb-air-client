@@ -17,6 +17,7 @@ package org.bigbluebutton.model
 		public static const MUTE:int = 4;
 		public static const RAISE_HAND:int = 5;
 		public static const LOCKED:int = 6;
+		public static const LISTEN_ONLY:int = 7;
 		
 		private var _users:ArrayCollection;	
 		
@@ -171,10 +172,35 @@ package org.bigbluebutton.model
 					// if we don't set _me to the just added user, _me won't get any update ever, it wouldn't be
 					// possible to use me.isModerator(), for instance
 					_me = newuser;
-				}						
-				
+				}
+
 				_users.addItem(newuser);
 				_users.refresh();
+
+				if(newuser.hasStream) {
+					userChangeSignal.dispatch(newuser, HAS_STREAM);
+				}				
+				if(newuser.presenter) {
+					userChangeSignal.dispatch(newuser, PRESENTER);
+				}
+				if(newuser.raiseHand) {
+					userChangeSignal.dispatch(newuser, RAISE_HAND);
+				}
+				if(newuser.listenOnly) {
+					userChangeSignal.dispatch(newuser, LISTEN_ONLY);
+				}
+				
+/*				if(newuser.hasStream) {
+					userStreamChange(newuser.userID, newuser.hasStream, newuser.streamName);
+				}				
+				if(newuser.presenter) {
+					assignPresenter(newuser.userID);
+				}
+				if(newuser.raiseHand) {
+					raiseHandChange(newuser.userID, newuser.raiseHand);
+				}
+				_users.addItem(newuser);
+				_users.refresh();*/
 				
 				userAddedSignal.dispatch(newuser);
 			}					
@@ -383,6 +409,16 @@ package org.bigbluebutton.model
 			}				
 			
 			return null;
+		}
+		
+		public function listenOnlyChange(userID:String, listenOnly:Boolean):void {
+			var user:User = getUser(userID);
+			
+			if(user != null) {
+				user.listenOnly = listenOnly;
+				// Doesn't do anything at the moment... waiting for css changes - Adam
+				userChangeSignal.dispatch(user, LISTEN_ONLY);
+			}
 		}
 	}
 }

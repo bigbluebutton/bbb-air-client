@@ -27,13 +27,17 @@ package org.bigbluebutton.model.presentation
 			
 		}
 		
-		public function addPresentation(presentationName:String, numberOfSlides:int, current:Boolean):void {
+		public function addPresentation(presentationName:String, numberOfSlides:int, current:Boolean):Presentation {
 			trace("Adding presentation " + presentationName);
 			for (var i:int=0; i < _presentations.length; i++) {
 				var p:Presentation = _presentations[i] as Presentation;
-				if (p.fileName == presentationName) return;
+				if (p.fileName == presentationName) {
+					return p;
+				}
 			}
-			_presentations.addItem(new Presentation(presentationName, changeCurrentPresentation, numberOfSlides, current));
+			var presentation:Presentation = new Presentation(presentationName, changeCurrentPresentation, numberOfSlides, current);
+			_presentations.addItem(presentation);
+			return presentation
 		}
 		
 		public function removePresentation(presentationName:String):void {

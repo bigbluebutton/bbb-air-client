@@ -24,7 +24,7 @@ package org.bigbluebutton.model.presentation
 		
 		public function Presentation(fileName:String, changePresentation:Function, numOfSlides:int, isCurrent:Boolean):void {
 			_fileName = fileName;
-			_slides = new Vector.<Slide>(numOfSlides + 1);
+			_slides = new Vector.<Slide>(numOfSlides);
 			_changePresentation = changePresentation;
 			_current = isCurrent;
 		}
@@ -46,9 +46,9 @@ package org.bigbluebutton.model.presentation
 		}
 		
 		public function add(slide:Slide):void {
-			_slides[slide.slideNumber] = slide;
+			_slides[slide.slideNumber - 1] = slide;
 			if(slide.current == true) {
-				_currentSlideNum = slide.slideNumber;
+				_currentSlideNum = slide.slideNumber - 1;
 			}
 		}
 		
@@ -63,7 +63,7 @@ package org.bigbluebutton.model.presentation
 		
 		public function set currentSlideNum(n:int):void {
 			_slides[_currentSlideNum].current = false;
-			_currentSlideNum = n;
+			_currentSlideNum = n - 1;
 			_slides[_currentSlideNum].current = true;
 			_slideChangeSignal.dispatch();
 		}

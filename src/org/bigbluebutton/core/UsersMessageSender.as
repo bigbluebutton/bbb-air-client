@@ -4,15 +4,17 @@ package org.bigbluebutton.core
 	
 	import org.bigbluebutton.model.IUserSession;
 	
-	public class UsersMessageSender implements IUsersMessageSender
+	public class UsersMessageSender
 	{
-		[Inject]
 		public var userSession:IUserSession;
 		
 		// The default callbacks of userSession.mainconnection.sendMessage
 		private var defaultSuccessResponse:Function = function(result:String):void { trace(result); };
 		private var defaultFailureResponse:Function = function(status:String):void { trace(status); };
 
+		public function UsersMessageSender() {
+
+		}
 		
 		public function kickUser(userID:String):void {
 			trace("UsersMessageSender::kickUser() -- Sending [participants.kickUser] message to server.. with message [userID:" + userID + "]");
@@ -29,33 +31,33 @@ package org.bigbluebutton.core
 			userSession.mainConnection.sendMessage("participants.getParticipants", defaultSuccessResponse, defaultFailureResponse);
 		}
 		
-		public function assignPresenter(userid:String, name:String, assignedBy:Number):void {
+		public function assignPresenter(userid:String, name:String, assignedBy:String):void {
 			trace("UsersMessageSender::assignPresenter() -- Sending [participants.assignPresenter] message to server with message " +
 					"[newPresenterID:" + userid + ", newPresenterName:" + name + ", assignedBy:" + assignedBy + "]");
 			
 			var message:Object = new Object();
 			message["newPresenterID"] = userid;
 			message["newPresenterName"] = name;
-			message["assignedBy"] = assignedBy.toString();
+			message["assignedBy"] = assignedBy;
 			
 			userSession.mainConnection.sendMessage("participants.assignPresenter", defaultSuccessResponse, defaultFailureResponse, message);
 		}
 		
-		public function raiseHand(userID:String, raise:Boolean):void {
-			if (raise) {
-				trace("UsersMessageSender::raiseHand() -- Sending [participants.userRaiseHand] message to server with message: [userId:" + userID + ", raise:" + raise + "]");
+		public function raiseHand():void {
+				trace("UsersMessageSender::raiseHand() -- Sending [participants.userRaiseHand] message to server");
 				
 				userSession.mainConnection.sendMessage("participants.userRaiseHand", defaultSuccessResponse, defaultFailureResponse);
-			}
-			else {
-				trace("UsersMessageSender::raiseHand() -- Sending [participants.lowerHand] message to server with message: [userId:" + userID + ", loweredBy:" + userID+ "]");
-				
-				var message:Object = new Object();
-				message["userId"] = userID;
-				message["loweredBy"] = userID;
-				
-				userSession.mainConnection.sendMessage("participants.lowerHand", defaultSuccessResponse, defaultFailureResponse, message);
-			}
+		}
+
+		
+		public function lowerHand(userID:String, loweredBy:String):void {
+			trace("UsersMessageSender::raiseHand() -- Sending [participants.lowerHand] message to server with message: [userId:" + userID + ", loweredBy:" + userID+ "]");
+			
+			var message:Object = new Object();
+			message["userId"] = userID;
+			message["loweredBy"] = loweredBy;
+			
+			userSession.mainConnection.sendMessage("participants.lowerHand", defaultSuccessResponse, defaultFailureResponse, message);
 		}
 		
 		public function addStream(userID:String, streamName:String):void {
@@ -87,7 +89,7 @@ package org.bigbluebutton.core
 		}
 		
 		public function muteAllUsers(mute:Boolean, dontMuteThese:Array = null):void {
-			trace("UsersMessageSender::muteAllUsers() -- Sending [voice.muteUnmuteUser] message to server");
+			trace("UsersMessageSender::muteAllUsers() -- Sending [voice.muteAllUsers] message to server");
 			
 			if (dontMuteThese == null) {
 				dontMuteThese = [];
@@ -97,7 +99,7 @@ package org.bigbluebutton.core
 			message["mute"] = mute;
 			message["exceptUsers"] = dontMuteThese;
 			
-			userSession.mainConnection.sendMessage("voice.muteUnmuteUser", defaultSuccessResponse, defaultFailureResponse, message);
+			userSession.mainConnection.sendMessage("voice.muteAllUsers", defaultSuccessResponse, defaultFailureResponse, message);
 		}
 		
 		public function muteUnmuteUser(userid:String, mute:Boolean):void {

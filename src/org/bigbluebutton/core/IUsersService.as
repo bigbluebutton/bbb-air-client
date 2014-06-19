@@ -4,12 +4,13 @@ package org.bigbluebutton.core
 
 	public interface IUsersService
 	{
-		function setupMessageReceiver():void;
+		function setupMessageSenderReceiver():void;
 		function sendJoinMeetingMessage():void; 
 		function kickUser(userID:String):void;
 		function queryForParticipants():void;
-		function assignPresenter(userid:String, name:String, assignedBy:Number):void;
-		function raiseHand(userID:String, raise:Boolean):void;
+		function assignPresenter(userid:String, name:String, assignedBy:String):void;
+		function raiseHand():void;
+		function lowerHand(userID:String, loweredBy:String):void; 
 		function addStream(userID:String, streamName:String):void;
 		function removeStream(userID:String, streamName:String):void;
 		function queryForRecordingStatus():void;

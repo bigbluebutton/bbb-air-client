@@ -27,10 +27,12 @@ package org.bigbluebutton.model
 		protected var _deskshareConnection:IDeskshareConnection;
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
+		protected var _recording:Boolean;
 		
 		protected var _guestSignal:ISignal = new Signal();
 		protected var _successJoiningMeetingSignal:ISignal = new Signal();
 		protected var _unsuccessJoiningMeetingSignal:ISignal = new Signal();
+		protected var _recordingStatusChangedSignal:ISignal = new Signal();
 		protected var _logoutSignal:Signal = new Signal();
 
 		public function get userList():UserList
@@ -146,6 +148,15 @@ package org.bigbluebutton.model
 		
 		public function get logoutSignal():Signal {
 			return _logoutSignal;
+		}
+		
+		public function get recordingStatusChangedSignal():ISignal {
+			return _recordingStatusChangedSignal;
+		}
+		
+		public function recordingStatusChanged(recording:Boolean):void {
+			_recording = recording;
+			recordingStatusChangedSignal.dispatch(recording);
 		}
 	}
 }

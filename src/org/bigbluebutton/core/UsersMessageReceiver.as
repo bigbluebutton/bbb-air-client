@@ -1,18 +1,16 @@
 package org.bigbluebutton.core
 {
-	import org.bigbluebutton.core.IUsersMessageReceiver;
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.osflash.signals.Signal;
 	
-	public class UsersMessageReceiver implements IUsersMessageReceiver, IMessageListener
+	public class UsersMessageReceiver implements IMessageListener
 	{
-		[Inject]
 		public var userSession: IUserSession;
 		
 		public function UsersMessageReceiver() {
-			
+
 		}
 		
 		public function onMessage(messageName:String, message:Object):void {
@@ -86,43 +84,20 @@ package org.bigbluebutton.core
 			var msg:Object = JSON.parse(m.msg);
 			
 			for(var i:int; i < msg.users.length; i++) {
-				var u:Object = msg.users[i];
-				var user:User = new User;
-				
-				user.hasStream = u.hasStream;
-				user.streamName = u.webcamStream;
-				user.locked = u.locked;
-				user.name = u.name;
-				user.phoneUser = u.phoneUser;
-				user.presenter = u.presenter;
-				user.raiseHand = u.raiseHand;
-				user.role = u.role;
-				user.userID = u.userId;
-				user.voiceJoined = u.voiceUser.joined;
-				user.voiceUserId = u.voiceUser.userId;
-				user.isLeavingFlag = false;
-				
-				userSession.userList.addUser(user);
-				
-				// The following properties are 'special', in that they have view changes associated with them.
-				// The UserList changes the model accordingly, then dispatches a signal to the views.
-				
-				if(user.hasStream) {
-					userSession.userList.userStreamChange(user.userID, user.hasStream, user.streamName);
-				}				
-				if(user.presenter) {
-					userSession.userList.assignPresenter(user.userID);
-				}
-				if(user.raiseHand) {
-					userSession.userList.raiseHandChange(user.userID, user.raiseHand);
-				}
+				var newUser:Object = msg.users[i];
+				addParticipant(newUser);
 			}
+			
 			userSession.userList.allUsersAddedSignal.dispatch();
 		}
 		
 		private function handleParticipantJoined(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			var newUser:Object = msg.user;
+			addParticipant(newUser);
+		}
+		
+		private function addParticipant(newUser:Object):void {
 			var user:User = new User;
 			
 			user.hasStream = newUser.hasStream;
@@ -137,21 +112,12 @@ package org.bigbluebutton.core
 			user.voiceJoined = newUser.voiceUser.joined;
 			user.voiceUserId = newUser.voiceUser.userId;
 			user.isLeavingFlag = false;
+			user.listenOnly = newUser.listenOnly;
 			
 			userSession.userList.addUser(user);
 			
 			// The following properties are 'special', in that they have view changes associated with them.
 			// The UserList changes the model appropriately, then dispatches a signal to the views.
-			
-			if(user.hasStream) {
-				userSession.userList.userStreamChange(user.userID, user.hasStream, user.streamName);
-			}				
-			if(user.presenter) {
-				userSession.userList.assignPresenter(user.userID);
-			}
-			if(user.raiseHand) {
-				userSession.userList.raiseHandChange(user.userID, user.raiseHand);
-			}
 		}
 		
 		private function handleParticipantLeft(m:Object):void {
@@ -192,13 +158,9 @@ package org.bigbluebutton.core
 		}
 		
 		private function handleUserListeningOnly(m:Object):void {
-			// This is commented out because, at the time of writing, there is no listenOnly property
-			// of the User class, and I'm not sure the correct way to handle it... - Adam
-
-			/*
 			var msg:Object = JSON.parse(m.msg);
-			userSession.userList.getUser(msg.userId).listenOnly = msg.listenOnly;
-			*/
+			trace("UsersMessageReceiver::handleUserListeningOnly -- user [" + msg.userId + "] has listen only set to [" + msg.listenOnly + "]");
+			userSession.userList.listenOnlyChange(msg.userId, msg.listenOnly);
 		}
 		
 		private function handleVoiceUserMuted(m:Object):void {
@@ -221,6 +183,7 @@ package org.bigbluebutton.core
 		private function handleMeetingHasEnded(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleMeetingHasEnded() -- meeting has ended");
+			userSession.logoutSignal.dispatch();
 		}
 
 		private function handleLogout(m:Object):void {
@@ -238,6 +201,7 @@ package org.bigbluebutton.core
 		private function handleRecordingStatusChanged(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleRecordingStatusChanged() -- recording status changed");
+			userSession.recordingStatusChanged(msg.recording);
 		}
 		
 		private function handleGetRecordingStatusReply(m:Object):void {

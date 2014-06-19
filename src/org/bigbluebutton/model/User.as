@@ -189,5 +189,17 @@ package org.bigbluebutton.model
 		{
 			return role == MODERATOR;
 		}
+		
+		private var _listenOnly:Boolean;
+		
+		public function get listenOnly():Boolean
+		{
+			return _listenOnly;
+		}
+		
+		public function set listenOnly(value:Boolean):void
+		{
+			_listenOnly = value;
+		}
 	}
 }

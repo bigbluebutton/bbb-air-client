@@ -5,22 +5,59 @@ package org.bigbluebutton.core
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.Signal;
 	
 	public class ChatMessageService implements IChatMessageService
-	{
-		[Inject]
-		public var chatMessageReceiver: IChatMessageReceiver;
-		
-		[Inject]
-		public var chatMessageSender: IChatMessageSender;
-		
+	{	
 		[Inject]
 		public var userSession: IUserSession;
 		
 		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
-		public function setupMessageReceiver():void {
+		[Inject]
+		public var chatMessagesSession:IChatMessagesSession;
+		
+		public var chatMessageSender: ChatMessageSender;
+		public var chatMessageReceiver: ChatMessageReceiver;
+		
+		private var _sendPublicMessageOnSucessSignal:ISignal = new Signal;
+		private var _sendPublicMessageOnFailureSignal:ISignal = new Signal;
+		
+		private var _sendPrivateMessageOnSucessSignal:ISignal = new Signal;
+		private var _sendPrivateMessageOnFailureSignal:ISignal = new Signal;
+		
+		public function get sendPublicMessageOnSucessSignal():ISignal {
+			return _sendPublicMessageOnSucessSignal;
+		}
+		
+		public function get sendPublicMessageOnFailureSignal():ISignal {
+			return _sendPublicMessageOnFailureSignal;
+		}
+		
+		public function get sendPrivateMessageOnSucessSignal():ISignal {
+			return _sendPrivateMessageOnSucessSignal;
+		}
+
+		public function get sendPrivateMessageOnFailureSignal():ISignal {
+			return _sendPrivateMessageOnFailureSignal;
+		}
+		
+		public function ChatMessageService() {
+			chatMessageSender = new ChatMessageSender;
+			chatMessageReceiver = new ChatMessageReceiver;
+		}
+		
+		public function setupMessageSenderReceiver():void {
+			chatMessageSender.userSession = userSession;
+			chatMessageSender.chatMessagesSession = chatMessagesSession;
+			chatMessageSender.chatMessageService = this;
+			
+			chatMessageReceiver.userSession = userSession;
+			chatMessageReceiver.chatMessagesSession = chatMessagesSession;
+			
 			userSession.mainConnection.addMessageListener(chatMessageReceiver as IMessageListener);
 		}
 		

@@ -70,10 +70,8 @@ package org.bigbluebutton.command
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
 			
-			// Setup all the message receivers for the services that use the BigBlueButtonConnection:
-			usersService.setupMessageReceiver();
-			chatService.setupMessageReceiver();
-			presentationService.setupMessageReceiver();
+			// Set up users message sender in order to send the "joinMeeting" message:
+			usersService.setupMessageSenderReceiver();
 			
 			// Send the join meeting message, then wait for the reponse
 			userSession.successJoiningMeetingSignal.add(successJoiningMeeting);
@@ -86,6 +84,10 @@ package org.bigbluebutton.command
 		}
 		
 		private function successJoiningMeeting():void {
+			
+			// Set up remaining message sender and receivers:
+			chatService.setupMessageSenderReceiver();
+			presentationService.setupMessageSenderReceiver();
 			
 			// set up and connect the remaining connections
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
@@ -115,9 +117,11 @@ package org.bigbluebutton.command
 
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			usersService.queryForParticipants();
+			usersService.queryForRecordingStatus();
 			
 			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
 			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
+			usersService.getRoomLockState();
 		}
 		
 		private function unsuccessJoiningMeeting():void {

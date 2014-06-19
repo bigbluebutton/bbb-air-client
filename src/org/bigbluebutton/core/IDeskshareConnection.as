@@ -24,7 +24,6 @@ package org.bigbluebutton.core
 		function get connection():NetConnection
 		function connect():void
 		function get mouseLocationChangedSignal():ISignal;
-		function setMouseCoordinates(x:Number, y:Number):void;
 		function deskshareStreamStopped():void;
 	}
 }

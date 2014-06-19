@@ -88,7 +88,10 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		override public function destroy():void
 		{
 			userSession.presentationList.presentationChangeSignal.remove(presentationChangeHandler);
-			_currentPresentation.slideChangeSignal.remove(slideChangeHandler);
+			
+			if(_currentPresentation != null) {
+				_currentPresentation.slideChangeSignal.remove(slideChangeHandler);
+			}
 			
 			super.destroy();
 			

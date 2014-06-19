@@ -170,11 +170,6 @@ package org.bigbluebutton.core
 		{
 			return _successConnected;
 		}
-		
-		public function setMouseCoordinates(x:Number, y:Number):void
-		{
-			_mouseLocationChangedSignal.dispatch(x, y);
-		}
 
 		public function appletStarted(videoWidth:Number, videoHeight:Number):void
 		{
@@ -208,7 +203,7 @@ package org.bigbluebutton.core
 		 */
 		public function mouseLocationCallback(x:Number, y:Number):void 
 		{	
-			setMouseCoordinates(x, y);
+			_mouseLocationChangedSignal.dispatch(x, y);
 		}
 	}
 }
