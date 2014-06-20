@@ -3,6 +3,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import flash.display.DisplayObject;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
+	import mx.resources.ResourceManager;
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.IUserSession;
@@ -47,6 +49,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			//}
 			
 			checkVideo();
+			FlexGlobals.topLevelApplication.pageTitle0.text = ResourceManager.getInstance().getString('resources', 'video.title');
 		}
 		
 		protected function getUserWithCamera():User

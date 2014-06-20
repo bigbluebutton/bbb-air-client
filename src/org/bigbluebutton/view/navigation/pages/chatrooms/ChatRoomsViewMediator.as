@@ -6,6 +6,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
 	
@@ -97,6 +98,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			userSession.userList.userAddedSignal.add(userAdded);
 			
 			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
+			FlexGlobals.topLevelApplication.pageTitle0.text = ResourceManager.getInstance().getString('resources', 'chat.title');
 		}
 		
 		/**

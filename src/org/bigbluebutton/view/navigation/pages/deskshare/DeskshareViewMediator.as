@@ -1,5 +1,8 @@
 package org.bigbluebutton.view.navigation.pages.deskshare
 {
+	import mx.core.FlexGlobals;
+	import mx.resources.ResourceManager;
+	
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	
@@ -22,6 +25,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 
 			userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
 			userSession.deskshareConnection.mouseLocationChangedSignal.add(onMouseLocationChanged);
+			FlexGlobals.topLevelApplication.pageTitle0.text = ResourceManager.getInstance().getString('resources', 'deskshare.title');
 		}
 		
 		/**

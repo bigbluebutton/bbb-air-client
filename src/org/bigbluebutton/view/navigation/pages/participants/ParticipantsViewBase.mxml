@@ -7,20 +7,10 @@
 				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
 				xmlns:participants="org.bigbluebutton.view.navigation.pages.participants.*"
 				>
-	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+	<s:Group width="100%" height="100%" >
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>	
-		<s:Group width="100%">
-			<s:layout>
-				<s:HorizontalLayout  />
-			</s:layout>
-			<ui:ProfileButton id="profileBtn" />                
-			<s:Label width="100%" styleName="pageNameStyle" text="{resourceManager.getString('resources', 'participants.title')}"/>
-			<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle"/>
-			<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" />
-		</s:Group>
 		<participants:ParticipantsList id="participantslist" width="100%" height="100%" />
-		<common:MenuButtonsView />
 	</s:Group>
 </view:NoTabView>

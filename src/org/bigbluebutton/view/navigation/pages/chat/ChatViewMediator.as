@@ -6,6 +6,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
 	

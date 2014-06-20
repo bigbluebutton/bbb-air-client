@@ -16,7 +16,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 		
 		public function dispose():void
 		{
-			
+
 		}
 		
 		public function get userNameText():Label

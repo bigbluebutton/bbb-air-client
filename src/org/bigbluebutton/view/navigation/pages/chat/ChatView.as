@@ -1,11 +1,14 @@
 package org.bigbluebutton.view.navigation.pages.chat
 {
 	import flash.events.MouseEvent;
-
+	
+	import mx.core.FlexGlobals;
+	
 	import spark.components.Button;
 	import spark.components.Label;
 	import spark.components.List;
 	import spark.components.TextInput;
+	
 	
 	public class ChatView extends ChatViewBase implements IChatView
 	{
@@ -28,7 +31,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		
 		public function get pageTitle():Label
 		{
-			return pageTitle0;
+			return FlexGlobals.topLevelApplication.pageTitle0;		
 		}
 		
 		override protected function childrenCreated():void

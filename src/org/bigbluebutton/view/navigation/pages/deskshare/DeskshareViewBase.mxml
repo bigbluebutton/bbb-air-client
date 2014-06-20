@@ -14,28 +14,16 @@
 		]]>
 	</fx:Script>
 	
-	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+	<s:Group width="100%" height="100%" >
 		<s:layout>
 			<s:VerticalLayout />
-		</s:layout>
-		
-		<s:Group width="100%" id="topMenuBar0" >
-			<s:layout>
-				<s:HorizontalLayout />
-			</s:layout>
-			<ui:ProfileButton id="profileBtn" />
-			<s:Label width="100%" styleName="pageNameStyle" text="{resourceManager.getString('resources', 'deskshare.title')}" />
-			<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle"/>
-			<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
-		</s:Group>
-
+		</s:layout>		
 		<s:Group id="deskshareGroup0" width="100%" height="100%" >
 			<s:layout>
 				<s:VerticalLayout />
 			</s:layout>
 			<s:Label id="noDeskshareMessage0" width="90%" height="100%" visible="true" text="{resourceManager.getString('resources', 'deskshare.noDeskshare')}" />
 		</s:Group>
-		<common:MenuButtonsView id="bottomMenuBar0"/>
 	</s:Group>
 	
 </view:NoTabView>

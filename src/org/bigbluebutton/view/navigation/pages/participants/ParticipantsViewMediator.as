@@ -5,6 +5,8 @@ package org.bigbluebutton.view.navigation.pages.participants
 	
 	import mx.binding.utils.BindingUtils;
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
+	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.core.IUsersServiceSO;
 	import org.bigbluebutton.core.UsersServiceSO;
@@ -60,6 +62,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 			userSession.userList.userChangeSignal.add(userChanged);
 			userSession.userList.userAddedSignal.add(addUser);
 			userSession.userList.userRemovedSignal.add(userRemoved);
+			FlexGlobals.topLevelApplication.pageTitle0.text = ResourceManager.getInstance().getString('resources', 'participants.title');
 		}
 		
 		private function addUser(user:User):void

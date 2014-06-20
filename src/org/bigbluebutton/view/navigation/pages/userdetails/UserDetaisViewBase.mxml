@@ -8,19 +8,10 @@
 				xmlns:userdetails="org.bigbluebutton.view.navigation.pages.userdetails.*"
 				styleName="viewStyle"
 				>
-	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+	<s:Group  width="100%" height="100%" >
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>	
-		<s:Group width="100%" >
-			<s:layout>
-				<s:HorizontalLayout />
-			</s:layout>
-			<ui:BackButton id="backBtn" />                
-			<s:Label width="100%" styleName="pageNameStyle" text="{resourceManager.getString('resources', 'userDetail.title')}" />
-			<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle"/>
-			<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
-		</s:Group>
 		<s:Group width="100%" height="100%">
 			<s:layout>
 				<s:VerticalLayout horizontalAlign="center" />
@@ -85,6 +76,5 @@
 				<s:Button id="showCameraButton0" y="161" width="200" label="Kick User" horizontalCenter="0"/>-->				
 			</s:Group>
 		</s:Group>
-		<common:MenuButtonsView />
 	</s:Group>
 </view:NoTabView>

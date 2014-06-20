@@ -32,7 +32,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 		*/
 		public function dispose():void
 		{
-			
+
 		}
 
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void

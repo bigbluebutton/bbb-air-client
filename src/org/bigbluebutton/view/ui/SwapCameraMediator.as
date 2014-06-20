@@ -32,6 +32,10 @@ package org.bigbluebutton.view.ui
 				(view as SwapCameraButton).addEventListener(MouseEvent.CLICK, mouseClickHandler);
 				userSession.userList.userChangeSignal.add(userChangeHandler);
 			}
+			else
+			{
+				(view as SwapCameraButton).includeInLayout = false;
+			}
 		}
 		
 		/**

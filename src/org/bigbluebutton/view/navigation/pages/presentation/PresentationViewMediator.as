@@ -34,6 +34,7 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			
 			setPresentation(userSession.presentationList.currentPresentation);
 			setCurrentSlideNum(userSession.presentationList.currentSlideNum);
+
 		}
 		
 		private function displaySlide():void {
