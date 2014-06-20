@@ -66,11 +66,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 				openChat(data);
 			}
 			
-			chatMessageService.sendPublicMessageOnSucessSignal.add(onSendSucess);
-			chatMessageService.sendPublicMessageOnFailureSignal.add(onSendFailure);
-			
-			chatMessageService.sendPrivateMessageOnSucessSignal.add(onSendSucess);
-			chatMessageService.sendPrivateMessageOnFailureSignal.add(onSendFailure);
+			chatMessageService.sendMessageOnSuccessSignal.add(onSendSucess);
+			chatMessageService.sendMessageOnFailureSignal.add(onSendFailure);
 			
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
@@ -222,11 +219,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			
-			chatMessageService.sendPublicMessageOnSucessSignal.remove(onSendSucess);
-			chatMessageService.sendPublicMessageOnFailureSignal.remove(onSendFailure);
-
-			chatMessageService.sendPrivateMessageOnSucessSignal.remove(onSendSucess);
-			chatMessageService.sendPrivateMessageOnFailureSignal.remove(onSendFailure);
+			chatMessageService.sendMessageOnSuccessSignal.remove(onSendSucess);
+			chatMessageService.sendMessageOnFailureSignal.remove(onSendFailure);
 			
 			userSession.userList.userRemovedSignal.remove(userRemoved);	
 			userSession.userList.userAddedSignal.remove(userAdded);

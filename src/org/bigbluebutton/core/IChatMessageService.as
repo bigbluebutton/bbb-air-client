@@ -5,11 +5,8 @@ package org.bigbluebutton.core
 
 	public interface IChatMessageService
 	{
-		
-		function get sendPublicMessageOnSucessSignal():ISignal;
-		function get sendPublicMessageOnFailureSignal():ISignal;
-		function get sendPrivateMessageOnSucessSignal():ISignal;
-		function get sendPrivateMessageOnFailureSignal():ISignal;
+		function get sendMessageOnSuccessSignal():ISignal;
+		function get sendMessageOnFailureSignal():ISignal;
 
 		function setupMessageSenderReceiver():void;
 		function getPublicChatMessages():void;

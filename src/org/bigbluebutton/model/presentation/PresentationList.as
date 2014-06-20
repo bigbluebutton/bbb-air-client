@@ -37,7 +37,7 @@ package org.bigbluebutton.model.presentation
 			}
 			var presentation:Presentation = new Presentation(presentationName, changeCurrentPresentation, numberOfSlides, current);
 			_presentations.addItem(presentation);
-			return presentation
+			return presentation;
 		}
 		
 		public function removePresentation(presentationName:String):void {

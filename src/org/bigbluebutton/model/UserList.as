@@ -190,18 +190,6 @@ package org.bigbluebutton.model
 					userChangeSignal.dispatch(newuser, LISTEN_ONLY);
 				}
 				
-/*				if(newuser.hasStream) {
-					userStreamChange(newuser.userID, newuser.hasStream, newuser.streamName);
-				}				
-				if(newuser.presenter) {
-					assignPresenter(newuser.userID);
-				}
-				if(newuser.raiseHand) {
-					raiseHandChange(newuser.userID, newuser.raiseHand);
-				}
-				_users.addItem(newuser);
-				_users.refresh();*/
-				
 				userAddedSignal.dispatch(newuser);
 			}					
 		}

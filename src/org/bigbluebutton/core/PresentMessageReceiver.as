@@ -142,7 +142,7 @@ package org.bigbluebutton.core
 			var presentation:Presentation = userSession.presentationList.getPresentation(msg.presentation.name);
 			
 			if(presentation != null) {
-				userSession.presentationList.getPresentation(msg.presentation.name).show();
+				presentation.show();
 			}
 		}
 		

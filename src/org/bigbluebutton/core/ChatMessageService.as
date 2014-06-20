@@ -23,40 +23,24 @@ package org.bigbluebutton.core
 		public var chatMessageSender: ChatMessageSender;
 		public var chatMessageReceiver: ChatMessageReceiver;
 		
-		private var _sendPublicMessageOnSucessSignal:ISignal = new Signal;
-		private var _sendPublicMessageOnFailureSignal:ISignal = new Signal;
+		private var _sendMessageOnSuccessSignal:ISignal = new Signal();
+		private var _sendMessageOnFailureSignal:ISignal = new Signal();
 		
-		private var _sendPrivateMessageOnSucessSignal:ISignal = new Signal;
-		private var _sendPrivateMessageOnFailureSignal:ISignal = new Signal;
-		
-		public function get sendPublicMessageOnSucessSignal():ISignal {
-			return _sendPublicMessageOnSucessSignal;
+		public function get sendMessageOnSuccessSignal():ISignal {
+			return _sendMessageOnSuccessSignal;
 		}
 		
-		public function get sendPublicMessageOnFailureSignal():ISignal {
-			return _sendPublicMessageOnFailureSignal;
-		}
-		
-		public function get sendPrivateMessageOnSucessSignal():ISignal {
-			return _sendPrivateMessageOnSucessSignal;
-		}
-
-		public function get sendPrivateMessageOnFailureSignal():ISignal {
-			return _sendPrivateMessageOnFailureSignal;
+		public function get sendMessageOnFailureSignal():ISignal {
+			return _sendMessageOnFailureSignal;
 		}
 		
 		public function ChatMessageService() {
-			chatMessageSender = new ChatMessageSender;
-			chatMessageReceiver = new ChatMessageReceiver;
+
 		}
 		
 		public function setupMessageSenderReceiver():void {
-			chatMessageSender.userSession = userSession;
-			chatMessageSender.chatMessagesSession = chatMessagesSession;
-			chatMessageSender.chatMessageService = this;
-			
-			chatMessageReceiver.userSession = userSession;
-			chatMessageReceiver.chatMessagesSession = chatMessagesSession;
+			chatMessageSender = new ChatMessageSender(userSession, _sendMessageOnSuccessSignal, _sendMessageOnFailureSignal);
+			chatMessageReceiver = new ChatMessageReceiver(userSession, chatMessagesSession);
 			
 			userSession.mainConnection.addMessageListener(chatMessageReceiver as IMessageListener);
 		}
