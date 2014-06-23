@@ -9,8 +9,6 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
 	
-	import org.bigbluebutton.core.IChatMessageReceiver;
-	import org.bigbluebutton.core.IChatMessageSender;
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -35,7 +33,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		public var view: IChatView;
 		
 		[Inject]
-		public var chatMessageSender: IChatMessageSender;
+		public var chatMessageService: IChatMessageService;
 		
 		[Inject]
 		public var userSession: IUserSession;
@@ -68,11 +66,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 				openChat(data);
 			}
 			
-			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
-			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
-			
-			chatMessageSender.sendPrivateMessageOnSucessSignal.add(onSendSucess);
-			chatMessageSender.sendPrivateMessageOnFailureSignal.add(onSendFailure);
+			chatMessageService.sendMessageOnSuccessSignal.add(onSendSucess);
+			chatMessageService.sendMessageOnFailureSignal.add(onSendFailure);
 			
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
@@ -195,12 +190,12 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if(publicChat)
 			{
 				m.chatType = "PUBLIC_CHAT";
-				chatMessageSender.sendPublicMessage(m);
+				chatMessageService.sendPublicMessage(m);
 			}
 			else
 			{
 				m.chatType = "PRIVATE_CHAT";
-				chatMessageSender.sendPrivateMessage(m);
+				chatMessageService.sendPrivateMessage(m);
 			}
 		}
 		
@@ -224,11 +219,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			
-			chatMessageSender.sendPublicMessageOnSucessSignal.remove(onSendSucess);
-			chatMessageSender.sendPublicMessageOnFailureSignal.remove(onSendFailure);
-			
-			chatMessageSender.sendPrivateMessageOnSucessSignal.remove(onSendSucess);
-			chatMessageSender.sendPrivateMessageOnFailureSignal.remove(onSendFailure);
+			chatMessageService.sendMessageOnSuccessSignal.remove(onSendSucess);
+			chatMessageService.sendMessageOnFailureSignal.remove(onSendFailure);
 			
 			userSession.userList.userRemovedSignal.remove(userRemoved);	
 			userSession.userList.userAddedSignal.remove(userAdded);

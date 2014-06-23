@@ -1,6 +1,8 @@
 package org.bigbluebutton.core
 {
 	import flash.net.NetConnection;
+	import flash.net.Responder;
+	import flash.net.SharedObject;
 	
 	import org.bigbluebutton.model.ConferenceParameters;
 	import org.bigbluebutton.model.IConferenceParameters;
@@ -25,6 +27,8 @@ package org.bigbluebutton.core
 		private var _streamWidth:Number;
 		private var _streamHeight:Number;
 		private var _applicationURI:String;
+		private var _room:String;
+		private var _deskSO:SharedObject;
 			
 		public function DeskshareConnection()
 		{
@@ -41,7 +45,44 @@ package org.bigbluebutton.core
 		
 		public function onConnectionSuccess():void
 		{
+			_deskSO = SharedObject.getRemote(room + "-deskSO", applicationURI, false);
+			_deskSO.client = this;
+			_deskSO.connect(baseConnection.connection);
+			
+			checkIfStreamIsPublishing();
+			
 			_successConnected.dispatch();
+		}
+		
+		private function checkIfStreamIsPublishing():void
+		{
+			baseConnection.connection.call("deskshare.checkIfStreamIsPublishing",
+				new Responder
+				(
+					function(result:Object):void
+					{
+						if(result != null && (result.publishing as Boolean))
+						{	
+							streamHeight = result.height as Number;
+							streamWidth = result.width as Number;
+							
+							trace("Deskshare stream is streaming [" + streamWidth + "," + streamHeight + "]"); 
+							
+							// if we receive result from the server, then somebody is sharing their desktop - dispatch the notification signal
+							isStreaming = true;
+						}
+						else
+						{
+							trace("No deskshare stream being published");
+						}
+					},
+					function(status:Object):void
+					{
+						trace("Error while trying to call remote method on the server");
+					}
+				)
+			);
+	
 		}
 		
 		public function onConnectionUnsuccess(reason:String):void
@@ -77,6 +118,16 @@ package org.bigbluebutton.core
 		public function set streamHeight(value:Number):void
 		{
 			_streamHeight = value;
+		}
+		
+		public function get room():String
+		{
+			return _room;
+		}
+		
+		public function set room(value:String):void
+		{
+			_room = value;
 		}
 		
 		public function get connection():NetConnection
@@ -119,9 +170,39 @@ package org.bigbluebutton.core
 		{
 			return _successConnected;
 		}
-		
-		public function setMouseCoordinates(x:Number, y:Number):void
+
+		public function appletStarted(videoWidth:Number, videoHeight:Number):void
 		{
+			trace("Deskshare Applet started sharing.");		
+		}
+		
+		/**
+		 * Called by the server when a notification is received to start viewing the broadcast stream.
+		 * This method is called on successful execution of sendStartViewingNotification()
+		 * 
+		 */		
+		public function startViewing(videoWidth:Number, videoHeight:Number):void
+		{
+			trace("DeskShare-startViewing.");
+			streamWidth = videoWidth;
+			streamHeight = videoHeight;
+			isStreaming = true;
+		}
+		
+		/**
+		 * Called by the server to notify clients that the deskshare stream has stopped.
+		 */
+		public function deskshareStreamStopped():void 
+		{
+			trace("DeskShare-deskshareStreamStopped.");
+			isStreaming = false;
+		}
+		
+		/**
+		 * Called by the server to notify clients that mouse location has changed
+		 */
+		public function mouseLocationCallback(x:Number, y:Number):void 
+		{	
 			_mouseLocationChangedSignal.dispatch(x, y);
 		}
 	}
