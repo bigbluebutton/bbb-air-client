@@ -47,7 +47,7 @@ package org.bigbluebutton.core
 		
 		private function muteUnmute(user:User, mute:Boolean):void {
 			if (user.voiceJoined) {
-				usersMessageSender.muteUnmuteUser(user.voiceUserId, mute);
+				usersMessageSender.muteUnmuteUser(user.userID, mute);
 			}
 		}
 		
