@@ -93,7 +93,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			userSession.userList.userAddedSignal.add(userAdded);
 			
 			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
-			FlexGlobals.topLevelApplication.pageTitle0.text = ResourceManager.getInstance().getString('resources', 'chat.title');
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title');
 		}
 		
 		/**

@@ -109,7 +109,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if (view != null && user.userID == userID)
 			{
 				view.inputMessage.enabled = false;
-				view.pageTitle.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+				view.pageName.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 			}
 		}
 		
@@ -122,7 +122,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if ((view != null) && (user != null) && (user.userID == newuser.userID))
 			{
 				view.inputMessage.enabled = true;
-				view.pageTitle.text = user.name;
+				view.pageName.text = user.name;
 			}
 		}
 		
@@ -130,7 +130,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		{
 			publicChat = false;
 			this.user = user;
-			view.pageTitle.text = user.name;
+			view.pageName.text = user.name;
 			view.inputMessage.enabled = chatMessagesSession.getPrivateMessages(user.userID, user.name).userOnline;
 			
 			dataProvider = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat.messages;
@@ -142,14 +142,14 @@ package org.bigbluebutton.view.navigation.pages.chat
 		{
 			publicChat = currentPageDetails.publicChat;
 			user = currentPageDetails.user;
-			view.pageTitle.text = currentPageDetails.name;
+			view.pageName.text = currentPageDetails.name;
 			if (!publicChat)
 			{
 				view.inputMessage.enabled = currentPageDetails.online;
 				// if user went offline, and 'OFFLINE' marker is not already part of the string, add OFFLINE to the username
-				if((currentPageDetails.online == false) && (view.pageTitle.text.indexOf(ResourceManager.getInstance().getString('resources', 'userDetail.userOffline')) == -1))
+				if((currentPageDetails.online == false) && (view.pageName.text.indexOf(ResourceManager.getInstance().getString('resources', 'userDetail.userOffline')) == -1))
 				{
-					view.pageTitle.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 				}
 			}
 			

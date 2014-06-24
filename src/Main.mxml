@@ -2,13 +2,12 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:top="org.bigbluebutton.top.view.*"
-			   xmlns:ui="org.bigbluebutton.view.navigation.ui.*"
 			   xmlns:navigation="org.bigbluebutton.view.navigation.*" 
 			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
-			   xmlns:topActionBar="org.bigbluebutton.view.ui.*" 
+			   xmlns:ui="org.bigbluebutton.view.ui.*" 
 			   xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
-			   styleName="topActionBarStyle"
+			   styleName="mainshellStyle"
 			   preinitialize="preinitializeHandler(event)" 
 			   creationComplete="creationCompleteHandler(event)"
 			   applicationComplete="applicationCompleteHandler(event)" 	
@@ -209,36 +208,36 @@
 		[ResourceBundle("resources")]
 	</fx:Metadata> 
 	
+	<loading:LoadingScreen width="100%" height="100%" />
+	
 	<s:Group width="100%" height="100%" id="mainshell" visible="false">
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<s:Group width="100%" id="topActionBar0" >
+		<s:Group width="100%" id="topActionBar" >
 			<s:Rect  height="100%" width="100%">
 				<s:fill>
 					<s:SolidColor color="{getStyle('topActionBarColor')}" />
 				</s:fill>
 			</s:Rect>
 			<s:HGroup width="100%" height="100%">					
-				<topActionBar:NavigationButton id="profileBtn" click="profileBtn_clickHandler(event)" 					 
+				<ui:NavigationButton id="profileBtn" click="profileBtn_clickHandler(event)" 					 
 										styleName="profileButtonStyle topButtonStyle "
 										navigateTo="{[PagesENUM.PROFILE]}"
 										transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"
 										height="100%" />
-				<topActionBar:NavigationButton id="backBtn" visible="false" includeInLayout="false" click="button_clickHandler(event)"
+				<ui:NavigationButton id="backBtn" visible="false" includeInLayout="false" click="button_clickHandler(event)"
 										styleName="backButtonStyle topButtonStyle"
 										navigateTo="{[PagesENUM.LAST]}"
 										transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
 										height="100%"/>   
-				<s:Label id="pageTitle0" styleName="pageNameStyle"  width="100%" />
-				<topActionBar:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
-				<topActionBar:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
+				<s:Label id="pageName" styleName="pageNameStyle"  width="100%" />
+				<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
+				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
 			</s:HGroup>
 		</s:Group>
 
 		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>	
-    	<common:MenuButtonsView id="bottomMenu0" width="100%"  click="button_clickHandler(event)"/>
-	</s:Group>
-	<loading:LoadingScreen width="100%" height="100%" />
-
+    	<common:MenuButtonsView id="bottomMenu" width="100%"  click="button_clickHandler(event)"/>
+	</s:Group>	
 </s:Application>

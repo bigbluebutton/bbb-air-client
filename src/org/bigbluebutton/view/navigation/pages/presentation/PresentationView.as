@@ -26,7 +26,7 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		}
 
 		public function setPresentationName(name:String):void {
-			FlexGlobals.topLevelApplication.pageTitle0.text = name;
+			FlexGlobals.topLevelApplication.pageName.text = name;
 		}
 		
 		public function setSlide(s:Slide):void {

@@ -48,7 +48,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			//}
 			
 			checkVideo();
-			FlexGlobals.topLevelApplication.pageTitle0.text = ResourceManager.getInstance().getString('resources', 'video.title');
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'video.title');
 		}
 		
 		protected function getUserWithCamera():User

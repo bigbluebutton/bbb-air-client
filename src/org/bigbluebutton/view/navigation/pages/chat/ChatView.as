@@ -29,9 +29,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			return sendButton0;
 		}
 		
-		public function get pageTitle():Label
+		public function get pageName():Label
 		{
-			return FlexGlobals.topLevelApplication.pageTitle0;		
+			return FlexGlobals.topLevelApplication.pageName;		
 		}
 		
 		override protected function childrenCreated():void

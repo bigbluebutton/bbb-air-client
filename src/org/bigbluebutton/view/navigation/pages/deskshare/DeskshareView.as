@@ -31,7 +31,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			deskshareVideoView.percentWidth = 100;
 			deskshareVideoView.percentHeight = 100;
 			this.addElement(deskshareVideoView);
-			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, FlexGlobals.topLevelApplication.topActionBar0.height, FlexGlobals.topLevelApplication.bottomMenu0.height);
+			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, FlexGlobals.topLevelApplication.topActionBar.height, FlexGlobals.topLevelApplication.bottomMenu.height);
 			deskshareVideoView.addMouseToStage();
 			rotationHandler(FlexGlobals.topLevelApplication.currentOrientation);
 		}		

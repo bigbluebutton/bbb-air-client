@@ -5,15 +5,10 @@
 				xmlns:view="org.bigbluebutton.core.view.*" 
 				>
 	
-	<s:Group width="100%" height="100%" styleName="pageStyle">
+	<s:Group id="content" width="100%" height="100%" styleName="pageStyle">
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<s:Group id="content" width="100%" height="100%">
-			<s:layout>
-				<s:VerticalLayout />
-			</s:layout>
-			<s:Image id="slide" width="100%" height="100%" />
-		</s:Group>
+		<s:Image id="slide" width="100%" height="100%" />
 	</s:Group>
 </view:NoTabView>

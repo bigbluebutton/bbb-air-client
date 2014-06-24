@@ -839,7 +839,7 @@ global
 		height: 60;
 	}
 	
-	s|Application.topActionBarStyle
+	s|Application.mainshellStyle
 	{
 		topActionBarColor: #444544;
 	}
