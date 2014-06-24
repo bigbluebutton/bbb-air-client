@@ -2,10 +2,12 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:top="org.bigbluebutton.top.view.*"
-			   xmlns:ui="org.bigbluebutton.view.navigation.ui.*"
 			   xmlns:navigation="org.bigbluebutton.view.navigation.*" 
 			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
+			   xmlns:ui="org.bigbluebutton.view.ui.*" 
+			   xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
+			   styleName="mainshellStyle"
 			   preinitialize="preinitializeHandler(event)" 
 			   creationComplete="creationCompleteHandler(event)"
 			   applicationComplete="applicationCompleteHandler(event)" 	
@@ -21,15 +23,19 @@
 		<![CDATA[
 			import com.adobe.utils.LocaleUtil;
 			
-			import mx.events.FlexEvent;
-			import mx.resources.ResourceManager;	
 			import flash.system.Capabilities;
+			
+			import mx.events.FlexEvent;
+			import mx.resources.ResourceManager;
 			
 			import org.bigbluebutton.AppConfig;
 			import org.bigbluebutton.core.util.OrientationCalculator;
 			import org.bigbluebutton.core.view.NoTabView;
+			import org.bigbluebutton.model.UserSession;
 			import org.bigbluebutton.util.BigBlueButtonLoggerFactory;
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
+			import org.bigbluebutton.view.navigation.pages.PagesENUM;
+			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
 			import org.bigbluebutton.view.navigation.pages.common.MenuButtonsConfig;
@@ -42,7 +48,6 @@
 			import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantConfig;
 			import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisConfig;
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
-			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
 			import org.bigbluebutton.view.ui.SwapCameraConfig;
@@ -55,7 +60,7 @@
 			import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 			import robotlegs.bender.framework.api.IContext;
 			import robotlegs.bender.framework.api.LogLevel;
-			import robotlegs.bender.framework.impl.Context;
+			import robotlegs.bender.framework.impl.Context;		
 			
 			protected var context: IContext;
 			
@@ -113,7 +118,6 @@
 					.configure(ParticipantsConfig)
 					.configure(SelectParticipantConfig)		
 					.configure(MicButtonConfig)
-					.configure(LoginButtonConfig)
 					.configure(NavigationButtonConfig)
 					.configure(SwapCameraConfig)
 					.configure(DisconnectPageConfig)
@@ -179,8 +183,24 @@
 			private function accelerometerCallback():void {
 				currentOrientation = _orientationCalc.currentOrientation;
 				(pagesNavigatorView.activeView as NoTabView).rotationHandler(_orientationCalc.currentOrientation);
+			}			
+
+			protected function button_clickHandler(event:MouseEvent):void
+			{
+				backBtn.visible=false;
+				backBtn.includeInLayout=false;
+				profileBtn.visible=true;
+				profileBtn.includeInLayout=true;
 			}
 			
+			protected function profileBtn_clickHandler(event:MouseEvent):void
+			{
+				backBtn.visible=true;
+				backBtn.includeInLayout=true;
+				profileBtn.visible=false;
+				profileBtn.includeInLayout=false;
+			}
+
 		]]>
 	</fx:Script>
 	
@@ -188,7 +208,36 @@
 		[ResourceBundle("resources")]
 	</fx:Metadata> 
 	
-	<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
 	<loading:LoadingScreen width="100%" height="100%" />
-	<!--<s:TextArea id="traceText" x="10" y="10" height="488"/>-->
+	
+	<s:Group width="100%" height="100%" id="mainshell" visible="false">
+		<s:layout>
+			<s:VerticalLayout />
+		</s:layout>
+		<s:Group width="100%" id="topActionBar" >
+			<s:Rect  height="100%" width="100%">
+				<s:fill>
+					<s:SolidColor color="{getStyle('topActionBarColor')}" />
+				</s:fill>
+			</s:Rect>
+			<s:HGroup width="100%" height="100%">					
+				<ui:NavigationButton id="profileBtn" click="profileBtn_clickHandler(event)" 					 
+										styleName="profileButtonStyle topButtonStyle "
+										navigateTo="{[PagesENUM.PROFILE]}"
+										transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"
+										height="100%" />
+				<ui:NavigationButton id="backBtn" visible="false" includeInLayout="false" click="button_clickHandler(event)"
+										styleName="backButtonStyle topButtonStyle"
+										navigateTo="{[PagesENUM.LAST]}"
+										transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
+										height="100%"/>   
+				<s:Label id="pageName" styleName="pageNameStyle"  width="100%" />
+				<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
+				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
+			</s:HGroup>
+		</s:Group>
+
+		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>	
+    	<common:MenuButtonsView id="bottomMenu" width="100%"  click="button_clickHandler(event)"/>
+	</s:Group>	
 </s:Application>

@@ -3,6 +3,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import flash.display.DisplayObject;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
+	import mx.resources.ResourceManager;
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.model.IUserSession;
@@ -30,7 +32,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
 			userSession.userList.userRemovedSignal.add(userRemovedHandler);
 			userSession.userList.userAddedSignal.add(userAddedHandler);
 			userSession.userList.userChangeSignal.add(userChangeHandler);
@@ -47,6 +48,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			//}
 			
 			checkVideo();
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'video.title');
 		}
 		
 		protected function getUserWithCamera():User
@@ -59,7 +61,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				if (u.hasStream) {
 					if (u.me)
 					{
-						userMe = u;
+						userMe = u;		
 					}
 					else
 					{

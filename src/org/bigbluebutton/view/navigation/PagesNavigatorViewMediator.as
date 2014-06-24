@@ -69,7 +69,6 @@ package org.bigbluebutton.view.navigation
 					break;
 				}
 			}
-			
 			if(pageName == PagesENUM.PARTICIPANTS || pageName == PagesENUM.PRESENTATION || pageName == PagesENUM.VIDEO_CHAT || pageName == PagesENUM.CHATROOMS)
 			{
 				view.popAll();

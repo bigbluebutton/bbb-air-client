@@ -3,6 +3,8 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	
+	import mx.core.FlexGlobals;
+	import mx.resources.ResourceManager;
 	import mx.states.Transition;
 	
 	import org.bigbluebutton.model.IUserSession;
@@ -40,6 +42,7 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			
 			view.showCameraButton.addEventListener(MouseEvent.CLICK, onShowCameraButton);
 			view.showPrivateChat.addEventListener(MouseEvent.CLICK, onShowPrivateChatButton);
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'userDetail.title');
 		}
 		
 		protected function onShowCameraButton(event:MouseEvent):void

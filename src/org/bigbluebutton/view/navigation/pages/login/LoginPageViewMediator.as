@@ -5,6 +5,8 @@ package org.bigbluebutton.view.navigation.pages.login
 	import flash.filesystem.File;
 	import flash.system.Capabilities;
 	
+	import mx.core.FlexGlobals;
+	
 	import org.bigbluebutton.command.JoinMeetingSignal;
 	import org.bigbluebutton.core.ILoginService;
 	import org.bigbluebutton.model.IUserSession;
@@ -50,6 +52,8 @@ package org.bigbluebutton.view.navigation.pages.login
 		private function onUnsucess(reason:String):void 
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":onUnsucess() " + reason);
+			FlexGlobals.topLevelApplication.topActionBar.visible=false;
+			FlexGlobals.topLevelApplication.bottomMenu.visible=false;
 			
 			switch(reason) {
 				case "emptyJoinUrl":

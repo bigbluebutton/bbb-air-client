@@ -1,11 +1,11 @@
 package org.bigbluebutton.view.ui
 {
+	import mx.core.FlexGlobals;
 	import mx.core.UIComponent;
 	
 	import org.bigbluebutton.command.NavigateToSignal;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
-
 	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -59,35 +59,16 @@ package org.bigbluebutton.view.ui
 		{
 			if(view.navigateTo.indexOf(page) == 0)
 			{
-				if(containState(view, "selected")) 
-				{
 					view.currentState = "selected";
-				}
 			}
 			else if(view.navigateTo.indexOf(page)>0)
 			{				
-				if(containState(view, "unselected"))
-				{
-					view.currentState = "selected";																	
-				}
-				else
-				{
-					view.currentState = "unselected";
-				}
+					view.currentState = "selected";		
 			}
-		}
-		
-		private function containState(view:INavigationButton, stateName:String):Boolean
-		{
-			var states:Array = view.states;
-			for (var i:int = 0; i < states.length; i++)
+			else
 			{
-				if (states[i].name == stateName)
-				{
-					return true;
-				}
+				view.currentState = "unselected";		
 			}
-			return false;			
 		}
 	}
 }

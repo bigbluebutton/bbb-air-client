@@ -3,8 +3,10 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
 	import mx.events.CollectionEvent;
 	import mx.events.IndexChangedEvent;
+	import mx.resources.ResourceManager;
 	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -57,6 +59,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 			userSession.userList.userChangeSignal.add(userChanged);
 			userSession.userList.userAddedSignal.add(userAdded);
 			userSession.userList.userRemovedSignal.add(userRemoved);
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'selectParticipant.title');
 		}
 		
 		private function userAdded(user:User):void
