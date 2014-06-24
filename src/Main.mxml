@@ -8,6 +8,7 @@
 			   xmlns:topActionBar="org.bigbluebutton.view.ui.*" 
 			   xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
+			   styleName="topActionBarStyle"
 			   preinitialize="preinitializeHandler(event)" 
 			   creationComplete="creationCompleteHandler(event)"
 			   applicationComplete="applicationCompleteHandler(event)" 	
@@ -35,6 +36,7 @@
 			import org.bigbluebutton.util.BigBlueButtonLoggerFactory;
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
+			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
 			import org.bigbluebutton.view.navigation.pages.common.MenuButtonsConfig;
@@ -47,7 +49,6 @@
 			import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantConfig;
 			import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisConfig;
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
-			import org.bigbluebutton.view.ui.LoginButtonConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
 			import org.bigbluebutton.view.ui.SwapCameraConfig;
@@ -118,7 +119,6 @@
 					.configure(ParticipantsConfig)
 					.configure(SelectParticipantConfig)		
 					.configure(MicButtonConfig)
-					.configure(LoginButtonConfig)
 					.configure(NavigationButtonConfig)
 					.configure(SwapCameraConfig)
 					.configure(DisconnectPageConfig)
@@ -185,7 +185,7 @@
 				currentOrientation = _orientationCalc.currentOrientation;
 				(pagesNavigatorView.activeView as NoTabView).rotationHandler(_orientationCalc.currentOrientation);
 			}			
-			
+
 			protected function button_clickHandler(event:MouseEvent):void
 			{
 				backBtn.visible=false;
@@ -201,7 +201,7 @@
 				profileBtn.visible=false;
 				profileBtn.includeInLayout=false;
 			}
-					
+
 		]]>
 	</fx:Script>
 	
@@ -209,24 +209,35 @@
 		[ResourceBundle("resources")]
 	</fx:Metadata> 
 	
-	<s:Group width="100%" height="100%" id="mainshell" styleName="mainshell">
+	<s:Group width="100%" height="100%" id="mainshell" visible="false">
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<s:Group width="100%" id="topActionBar0">
-			<s:layout>
-				<s:HorizontalLayout />
-			</s:layout>
-			<topActionBar:ProfileButton id="profileBtn" click="profileBtn_clickHandler(event)"/>
-			<topActionBar:BackButton id="backBtn" visible="false" includeInLayout="false" click="button_clickHandler(event)"/>   
-			<s:Label id="pageTitle0" styleName="pageNameStyle"  width="100%"/>
-			<topActionBar:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle"/>
-			<topActionBar:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
+		<s:Group width="100%" id="topActionBar0" >
+			<s:Rect  height="100%" width="100%">
+				<s:fill>
+					<s:SolidColor color="{getStyle('topActionBarColor')}" />
+				</s:fill>
+			</s:Rect>
+			<s:HGroup width="100%" height="100%">					
+				<topActionBar:NavigationButton id="profileBtn" click="profileBtn_clickHandler(event)" 					 
+										styleName="profileButtonStyle topButtonStyle "
+										navigateTo="{[PagesENUM.PROFILE]}"
+										transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"
+										height="100%" />
+				<topActionBar:NavigationButton id="backBtn" visible="false" includeInLayout="false" click="button_clickHandler(event)"
+										styleName="backButtonStyle topButtonStyle"
+										navigateTo="{[PagesENUM.LAST]}"
+										transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
+										height="100%"/>   
+				<s:Label id="pageTitle0" styleName="pageNameStyle"  width="100%" />
+				<topActionBar:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
+				<topActionBar:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
+			</s:HGroup>
 		</s:Group>
 
-		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
-	
-    	<common:MenuButtonsView id="bottomMenu0" width="100%" click="button_clickHandler(event)"/>
+		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>	
+    	<common:MenuButtonsView id="bottomMenu0" width="100%"  click="button_clickHandler(event)"/>
 	</s:Group>
 	<loading:LoadingScreen width="100%" height="100%" />
 

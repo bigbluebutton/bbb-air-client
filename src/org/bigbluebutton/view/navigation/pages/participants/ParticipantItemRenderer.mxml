@@ -42,7 +42,7 @@
 			<s:HorizontalLayout  verticalAlign="middle" />
 		</s:layout>
 		<s:Group left="0"  >
-			<s:Image id="profileIcon" left="0" styleName="iconStyle profileIconStyle" />
+			<s:Image id="profileIcon" left="0" styleName="iconStyle moderatorIconStyle" />
 			<s:Image id="presentationIcon" left="0" styleName="iconStyle presentationIconStyle" />
 		</s:Group>
 		<s:Image id="handIcon"  styleName="iconStyle handIconStyle" />
@@ -54,7 +54,7 @@
 			<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false" />
 		</s:Group>
 		<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" />
-		<s:Image styleName="iconStyle arrowRightStyle"  />
+		<!--<s:Image styleName="iconStyle arrowRightStyle"  />-->
 	</s:Group>
 
 </s:ItemRenderer>

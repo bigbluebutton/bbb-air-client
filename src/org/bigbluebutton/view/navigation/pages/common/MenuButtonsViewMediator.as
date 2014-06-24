@@ -21,7 +21,7 @@ package org.bigbluebutton.view.navigation.pages.common
 		public override function initialize():void
 		{	
 			userUISession.loadingSignal.add(loadingFinished);
-
+			
 		}
 		private function loadingFinished(loading:Boolean):void
 		{

@@ -63,5 +63,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				return null;
 			}
 		}
+		
 	}
 }

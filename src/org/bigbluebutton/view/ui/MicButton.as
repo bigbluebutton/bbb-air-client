@@ -20,7 +20,7 @@ package org.bigbluebutton.view.ui
 			super.childrenCreated();
 			var selected:State = new State({name : "selected"});
 			var unselected:State = new State({name : "unselected"});
-			selected.overrides = [new SetStyle(this,"backgroundColor", this.getStyle('selectedBackgroundColor') )];
+			selected.overrides = [new SetStyle(this,"backgroundImage", this.getStyle('mutedBackgroundImage') )];
 			this.states.push(selected);
 			this.states.push(unselected);
 		}		
