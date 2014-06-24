@@ -3,14 +3,16 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
 	import mx.events.CollectionEvent;
 	import mx.events.IndexChangedEvent;
+	import mx.resources.ResourceManager;
 	
-	import org.bigbluebutton.core.IUsersServiceSO;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
@@ -29,10 +31,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 		
 		[Inject]
 		public var userUISession: IUserUISession;
-		
-		[Inject]
-		public var usersServiceSO: IUsersServiceSO;
-		
+
 		protected var dataProvider:ArrayCollection;
 		protected var dicUserIdtoUser:Dictionary
 		protected var usersSignal:ISignal; 
@@ -60,6 +59,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 			userSession.userList.userChangeSignal.add(userChanged);
 			userSession.userList.userAddedSignal.add(userAdded);
 			userSession.userList.userRemovedSignal.add(userRemoved);
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'selectParticipant.title');
 		}
 		
 		private function userAdded(user:User):void
@@ -85,7 +85,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 		protected function onSelectUser(event:IndexChangeEvent):void
 		{
 			var user:User = dataProvider.getItemAt(event.newIndex) as User;
-			userUISession.pushPage(PagesENUM.CHAT, user);
+			userUISession.pushPage(PagesENUM.CHAT, user, TransitionAnimationENUM.SLIDE_LEFT);
 		}
 		
 		override public function destroy():void

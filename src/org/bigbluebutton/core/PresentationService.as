@@ -7,29 +7,47 @@ package org.bigbluebutton.core
 	public class PresentationService implements IPresentationService
 	{
 		[Inject]
-		public var presentServiceSO : IPresentServiceSO;
-		
-		[Inject]
-		public var presentMessageReceiver : IPresentMessageReceiver;
-		
-		[Inject]
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
 		public var userSession: IUserSession;
 		
-		public function PresentationService()
-		{
+		public var presentMessageSender:PresentMessageSender;
+		public var presentMessageReceiver:PresentMessageReceiver;
+		
+		public function PresentationService() {
+			presentMessageSender = new PresentMessageSender;
+			presentMessageReceiver = new PresentMessageReceiver;
 		}
 		
-		public function connectPresent(uri:String):void {
-			presentServiceSO.connect(userSession.mainConnection.connection, uri, conferenceParameters);
+		public function setupMessageSenderReceiver():void {
+			presentMessageSender.userSession = userSession;
+			presentMessageReceiver.userSession = userSession;
 			userSession.mainConnection.addMessageListener(presentMessageReceiver as IMessageListener);
 		}
 		
-		public function disconnect():void {
-			presentServiceSO.disconnect();
-			userSession.mainConnection.removeMessageListener(presentMessageReceiver as IMessageListener);
+		public function getPresentationInfo():void {
+			presentMessageSender.getPresentationInfo();
+		}
+
+		public function gotoSlide(id:String):void {
+			presentMessageSender.gotoSlide(id);
+		}
+		
+		public function move(xOffset:Number, yOffset:Number, widthRatio:Number, heightRatio:Number):void {
+			presentMessageSender.move(xOffset, yOffset, widthRatio, heightRatio);
+		}
+		
+		public function removePresentation(name:String):void {
+			presentMessageSender.removePresentation(name);
+		}
+		
+		public function sendCursorUpdate(xPercent:Number, yPercent:Number):void {
+			presentMessageSender.sendCursorUpdate(xPercent, yPercent);
+		}
+		
+		public function sharePresentation(share:Boolean, presentationName:String):void {
+			presentMessageSender.sharePresentation(share, presentationName);
 		}
 	}
 }

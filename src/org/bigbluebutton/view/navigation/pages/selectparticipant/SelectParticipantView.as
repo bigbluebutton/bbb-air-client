@@ -32,7 +32,7 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 		*/
 		public function dispose():void
 		{
-			
+
 		}
 
 	}

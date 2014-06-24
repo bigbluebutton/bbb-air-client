@@ -1,5 +1,7 @@
 package org.bigbluebutton.view.ui.loading
 {
+	import mx.core.FlexGlobals;
+	
 	import org.bigbluebutton.model.IUserUISession;
 	import org.osmf.logging.Log;
 	
@@ -54,6 +56,7 @@ package org.bigbluebutton.view.ui.loading
 			{
 				view.setVisible(false);
 				view.includeInLayout = false;
+				FlexGlobals.topLevelApplication.mainshell.visible=true;
 			}
 		}
 	}

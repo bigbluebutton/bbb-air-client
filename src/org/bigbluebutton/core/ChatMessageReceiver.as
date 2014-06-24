@@ -2,16 +2,19 @@ package org.bigbluebutton.core
 {
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
-	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.chat.ChatMessageVO;
+	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	
-	public class ChatMessageReceiver implements IChatMessageReceiver, IMessageListener
-	{
-		[Inject]
+	public class ChatMessageReceiver implements IMessageListener
+	{		
+		public var userSession: IUserSession;
+		
 		public var chatMessagesSession: IChatMessagesSession;
 		
-		[Inject]
-		public var userSession: IUserSession;
+		public function ChatMessageReceiver(userSession:IUserSession, chatMessagesSession:IChatMessagesSession) {
+			this.userSession = userSession;
+			this.chatMessagesSession = chatMessagesSession ;
+		}
 		
 		public function onMessage(messageName:String, message:Object):void
 		{

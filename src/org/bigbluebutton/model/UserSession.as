@@ -5,7 +5,9 @@ package org.bigbluebutton.model
 	import mx.collections.ArrayList;
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
+	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
@@ -16,27 +18,23 @@ package org.bigbluebutton.model
 	
 	public class UserSession implements IUserSession
 	{
-		protected var _netconnection:NetConnection;
 		protected var _config:Config;
 		protected var _userId:String;
 		protected var _mainConnection:IBigBlueButtonConnection;
-		protected var _voiceConnection:VoiceConnection;
+		protected var _voiceConnection:IVoiceConnection;
 		protected var _voiceStreamManager:VoiceStreamManager;
 		protected var _videoConnection:IVideoConnection;
+		protected var _deskshareConnection:IDeskshareConnection;
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
+		protected var _recording:Boolean;
+		
 		protected var _guestSignal:ISignal = new Signal();
+		protected var _successJoiningMeetingSignal:ISignal = new Signal();
+		protected var _unsuccessJoiningMeetingSignal:ISignal = new Signal();
+		protected var _recordingStatusChangedSignal:ISignal = new Signal();
+		protected var _logoutSignal:Signal = new Signal();
 
-		public function get netconnection():NetConnection
-		{
-			return _netconnection;
-		}
-		
-		public function set netconnection(value:NetConnection):void
-		{
-			_netconnection = value;
-		}
-		
 		public function get userList():UserList
 		{
 			return _userList;
@@ -63,12 +61,12 @@ package org.bigbluebutton.model
 			_userList.me.userID = value;
 		}
 
-		public function get voiceConnection():VoiceConnection
+		public function get voiceConnection():IVoiceConnection
 		{
 			return _voiceConnection;
 		}
 
-		public function set voiceConnection(value:VoiceConnection):void
+		public function set voiceConnection(value:IVoiceConnection):void
 		{
 			_voiceConnection = value;
 		}
@@ -80,7 +78,7 @@ package org.bigbluebutton.model
 
 		public function set mainConnection(value:IBigBlueButtonConnection):void
 		{
-			_mainConnection = value;
+			_mainConnection = value;  
 		}
 
 		public function get voiceStreamManager():VoiceStreamManager
@@ -102,6 +100,16 @@ package org.bigbluebutton.model
 		{
 			_videoConnection = value;
 		}
+		
+		public function get deskshareConnection():IDeskshareConnection
+		{
+			return _deskshareConnection;
+		}
+		
+		public function set deskshareConnection(value:IDeskshareConnection):void
+		{
+			_deskshareConnection = value;
+		}
 
 		public function UserSession()
 		{
@@ -117,6 +125,38 @@ package org.bigbluebutton.model
 		public function get guestSignal():ISignal
 		{
 			return _guestSignal;
+		}
+		
+		public function get successJoiningMeetingSignal():ISignal
+		{
+			return _successJoiningMeetingSignal;
+		}
+		
+		public function get unsuccessJoiningMeetingSignal():ISignal
+		{
+			return _unsuccessJoiningMeetingSignal;
+		}
+		
+		public function joinMeetingResponse(msg:Object):void {
+			if(msg.user) {
+				_successJoiningMeetingSignal.dispatch();
+			}
+			else {
+				_unsuccessJoiningMeetingSignal.dispatch();
+			}
+		}
+		
+		public function get logoutSignal():Signal {
+			return _logoutSignal;
+		}
+		
+		public function get recordingStatusChangedSignal():ISignal {
+			return _recordingStatusChangedSignal;
+		}
+		
+		public function recordingStatusChanged(recording:Boolean):void {
+			_recording = recording;
+			recordingStatusChangedSignal.dispatch(recording);
 		}
 	}
 }

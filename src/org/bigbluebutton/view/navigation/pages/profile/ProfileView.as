@@ -13,40 +13,40 @@ package org.bigbluebutton.view.navigation.pages.profile
 		{
 			super.childrenCreated();
 		}
-
+		
 		public function dispose():void
 		{
-			
+
 		}
 		
 		public function get userNameText():Label
 		{
 			return userName;
 		}
-
+		
 		public function get shareCameraButton():Button
 		{
 			return shareCameraBtn0;
 		}
-
-		public function get cameraOnOffText():Label
+				
+		public function get shareCameraBtnLabel():String
 		{
-			return cameraOnOffTxt0;
+			return shareCameraBtn0.label;
 		}
 		
 		public function get shareMicButton():Button
 		{
 			return shareMicBtn0;
 		}
-		
-		public function get micOnOffText():Label
+
+		public function get shareMicBtnLabel():String
 		{
-			return micOnOffTxt0;
+			return shareMicBtn0.label;
 		}
 		
-		public function get raiseHandText():Label
+		public function get raiseHandBtnLabel():String
 		{
-			return raiseHandLabel0;
+			return raiseHandButton0.label;
 		}
 		
 		public function get raiseHandButton():Button
@@ -59,10 +59,32 @@ package org.bigbluebutton.view.navigation.pages.profile
 			return cameraQualityTypeRadioButtonGroup;
 		}
 		
+		public function setCameraQuality(value:int):void
+		{
+			switch(value)
+			{
+				case 0:
+					cameraQualityTypeRadioButtonGroup.selectedValue = "low";
+					break;
+				case 1:
+					cameraQualityTypeRadioButtonGroup.selectedValue = "medium";
+					break;
+				case 2:
+					cameraQualityTypeRadioButtonGroup.selectedValue = "high";
+					break;	
+			}
+			
+		}
+		
 		public function setCameraQualityGroupVisibility(hasStream:Boolean):void
 		{
 			cameraQualityGroup.visible = hasStream;
 			cameraQualityGroup.includeInLayout = hasStream;
-		}	
+		}
+		
+		public function get logoutButton():Button
+		{
+			return logoutButton0;
+		}			
 	}
 }

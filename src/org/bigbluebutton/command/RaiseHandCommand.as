@@ -1,11 +1,15 @@
 package org.bigbluebutton.command
 {
 	import org.bigbluebutton.core.IUsersService;
+	import org.bigbluebutton.model.IUserSession;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class RaiseHandCommand extends Command
 	{
+		[Inject]
+		public var userSession: IUserSession;
+		
 		[Inject]
 		public var userService: IUsersService;
 		
@@ -17,8 +21,15 @@ package org.bigbluebutton.command
 		
 		override public function execute():void
 		{
-		    trace("RaiseHandCommand.execute() - handRaised = " + raised);
-			userService.raiseHand(userId, raised);
+			if(raised) {
+				trace("RaiseHandCommand.execute() - handRaised");
+				userService.raiseHand();
+			}
+			else {
+				trace("RaiseHandCommand.execute() - hand lowered for user " + userId + " by user " + userId);
+				userService.lowerHand(userId, userSession.userId);
+			}
+
 		}
 	}
 }

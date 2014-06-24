@@ -2,13 +2,16 @@ package org.bigbluebutton.command
 {
 	import flash.media.Camera;
 	
+	import mx.messaging.management.Attribute;
 	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IChatMessageService;
+	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.IPresentationService;
 	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -35,6 +38,12 @@ package org.bigbluebutton.command
 		public var videoConnection: IVideoConnection;
 		
 		[Inject]
+		public var voiceConnection: IVoiceConnection;
+		
+		[Inject]
+		public var deskshareConnection : IDeskshareConnection;
+		
+		[Inject]
 		public var uri: String;
 		
 		[Inject]
@@ -55,40 +64,73 @@ package org.bigbluebutton.command
 			connection.connect(conferenceParameters);
 		}
 		
-		private function successConnected():void {
+		private function successConnected():void {			
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":successConnected()");
 			
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
 			
-			usersService.connectUsers(uri);
+			// Set up users message sender in order to send the "joinMeeting" message:
+			usersService.setupMessageSenderReceiver();
 			
-			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
+			// Send the join meeting message, then wait for the reponse
+			userSession.successJoiningMeetingSignal.add(successJoiningMeeting);
+			userSession.unsuccessJoiningMeetingSignal.add(unsuccessJoiningMeeting);
 			
-			//TODO use proper callbacks
-			//TODO see if videoConnection.successConnected is dispatched when it's connected properly
-			videoConnection.successConnected.add(successVideoConnected);
-			videoConnection.unsuccessConnected.add(unsuccessVideoConnected);
-			
-			videoConnection.connect();
-			userSession.videoConnection = videoConnection;
-			
-			usersService.connectListeners(uri);
-			
-			chatService.getPublicChatMessages();
-			
-			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
-			
-			presentationService.connectPresent(uri);
+			usersService.sendJoinMeetingMessage();
 			
 			connection.successConnected.remove(successConnected);
 			connection.unsuccessConnected.remove(unsuccessConnected);
 		}
 		
-		/**
-		 * Raised when we receive signal from UserServiceSO.as that all participants were added. 
-		 * Now we can switch from loading screen to participants screen
-		 */
+		private function successJoiningMeeting():void {
+			
+			// Set up remaining message sender and receivers:
+			chatService.setupMessageSenderReceiver();
+			presentationService.setupMessageSenderReceiver();
+			
+			// set up and connect the remaining connections
+			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
+			
+			//TODO see if videoConnection.successConnected is dispatched when it's connected properly
+			videoConnection.successConnected.add(successVideoConnected);
+			videoConnection.unsuccessConnected.add(unsuccessVideoConnected);
+			
+			videoConnection.connect();
+			
+			userSession.videoConnection = videoConnection;
+			
+			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
+			userSession.voiceConnection = voiceConnection;
+			
+			deskshareConnection.applicationURI = userSession.config.getConfigFor("DeskShareModule").@uri;
+			deskshareConnection.room = conferenceParameters.room;
+			deskshareConnection.connect();
+			
+			userSession.deskshareConnection = deskshareConnection;
+
+			// Query the server for chat, users, and presentation info
+			chatService.sendWelcomeMessage();
+			chatService.getPublicChatMessages();
+			
+			presentationService.getPresentationInfo();
+
+			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
+			usersService.queryForParticipants();
+			usersService.queryForRecordingStatus();
+			
+			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
+			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
+			usersService.getRoomLockState();
+		}
+		
+		private function unsuccessJoiningMeeting():void {
+			trace("ConnectCommand::unsuccessJoiningMeeting() -- Failed to join the meeting!!!");
+			
+			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
+			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
+		}
+		
 		private function successUsersAdded():void
 		{
 			userUISession.loading = false;

@@ -2,45 +2,41 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				xmlns:assets="assets.*"
-				width="100%">
+				width="100%"
+				>
 	
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.model.chat.ChatMessage;
 			import org.bigbluebutton.model.chat.ChatMessages;
-			
-			[Bindable]
-			private var _normalStateVisible:Boolean = true;
-			
-			[Bindable]
-			private var _buttonStateVisible:Boolean = false;
-			
+					
 			override public function set data(obj:Object):void {
 				super.data = obj;
 				if(obj)
 				{
 					if(!obj.hasOwnProperty("button"))
 					{
-						currentState = "NormalState";
 						title.text = obj.name;
-						
 						if (obj.online == false)
 						{
 							title.text += resourceManager.getString('resources', 'userDetail.userOffline');
 						}
 
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages;
-						newMessages.text.text = String(chatMessages.newMessages);
+						newMessages.label = String(chatMessages.newMessages);
 						if(chatMessages.newMessages > 0)
-							_normalStateVisible = true;
-							
+						{
+							newMessages.visible = true;
+						}
 						else
-							_normalStateVisible = false;		
+						{
+							newMessages.visible = false;
+						}
 					}
 					else
 					{
-						currentState = "ButtonState";
+						newMessages.visible = false;
+						title.text ="+" + resourceManager.getString('resources', 'chat.item.privateChat');
 					}
 				}
 			}
@@ -48,23 +44,15 @@
 		]]>
 	</fx:Script>
 	<s:layout>
-		<s:HorizontalLayout gap="0"
-							paddingBottom="0"
-							paddingLeft="0"
-							paddingRight="0"
-							paddingTop="5"
-							/>
+		<s:HorizontalLayout />
 	</s:layout>
-	<s:states>
-		<s:State name="NormalState"/>
-		<s:State name="ButtonState"/>
-	</s:states>
-	<s:Label id="title" y="0" left="0" right="0" width="100%" height="100%" color="#000000"
-			 fontSize="14" paddingLeft="5" paddingRight="5" textAlign="left" verticalAlign="middle"
-			 text.ButtonState="+ {resourceManager.getString('resources', 'chat.item.privateChat')}"/>
-	
-	<assets:NewMesseges id="newMessages" visible.NormalState="{_normalStateVisible}" visible.ButtonState="{_buttonStateVisible}" />
-	<s:Group width="40" height="100%">
-		<assets:ArrowRight x="7" y="0"/>
-	</s:Group> 
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout />
+		</s:layout>
+		<s:Label id="title" left="0" right="0" width="100%" height="100%" color="#000000"  textAlign="left" verticalAlign="middle" />
+		<s:Button id="newMessages" buttonMode="false" styleName="newMessagesButtonStyle" />
+		<s:Image styleName="iconStyle arrowRightStyle" horizontalCenter="0"  verticalCenter="0" height="100%"/>
+	</s:Group>
+
 </s:ItemRenderer>

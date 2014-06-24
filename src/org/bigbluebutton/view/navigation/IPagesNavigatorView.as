@@ -15,5 +15,6 @@ package org.bigbluebutton.view.navigation
 			
 		function set visible(value:Boolean):void
 		function set includeInLayout(value:Boolean):void
+		function popAll(transition:ViewTransitionBase = null):void
 	}
 }
