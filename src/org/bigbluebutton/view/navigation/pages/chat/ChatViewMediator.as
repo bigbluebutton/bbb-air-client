@@ -6,11 +6,10 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
 	
-	import org.bigbluebutton.core.IChatMessageReceiver;
-	import org.bigbluebutton.core.IChatMessageSender;
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -35,7 +34,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		public var view: IChatView;
 		
 		[Inject]
-		public var chatMessageSender: IChatMessageSender;
+		public var chatMessageService: IChatMessageService;
 		
 		[Inject]
 		public var userSession: IUserSession;
@@ -68,11 +67,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 				openChat(data);
 			}
 			
-			chatMessageSender.sendPublicMessageOnSucessSignal.add(onSendSucess);
-			chatMessageSender.sendPublicMessageOnFailureSignal.add(onSendFailure);
-			
-			chatMessageSender.sendPrivateMessageOnSucessSignal.add(onSendSucess);
-			chatMessageSender.sendPrivateMessageOnFailureSignal.add(onSendFailure);
+			chatMessageService.sendMessageOnSuccessSignal.add(onSendSucess);
+			chatMessageService.sendMessageOnFailureSignal.add(onSendFailure);
 			
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
@@ -113,7 +109,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if (view != null && user.userID == userID)
 			{
 				view.inputMessage.enabled = false;
-				view.pageTitle.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+				view.pageName.text = user.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 			}
 		}
 		
@@ -126,7 +122,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if ((view != null) && (user != null) && (user.userID == newuser.userID))
 			{
 				view.inputMessage.enabled = true;
-				view.pageTitle.text = user.name;
+				view.pageName.text = user.name;
 			}
 		}
 		
@@ -134,7 +130,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		{
 			publicChat = false;
 			this.user = user;
-			view.pageTitle.text = user.name;
+			view.pageName.text = user.name;
 			view.inputMessage.enabled = chatMessagesSession.getPrivateMessages(user.userID, user.name).userOnline;
 			
 			dataProvider = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat.messages;
@@ -146,14 +142,14 @@ package org.bigbluebutton.view.navigation.pages.chat
 		{
 			publicChat = currentPageDetails.publicChat;
 			user = currentPageDetails.user;
-			view.pageTitle.text = currentPageDetails.name;
+			view.pageName.text = currentPageDetails.name;
 			if (!publicChat)
 			{
 				view.inputMessage.enabled = currentPageDetails.online;
 				// if user went offline, and 'OFFLINE' marker is not already part of the string, add OFFLINE to the username
-				if((currentPageDetails.online == false) && (view.pageTitle.text.indexOf(ResourceManager.getInstance().getString('resources', 'userDetail.userOffline')) == -1))
+				if((currentPageDetails.online == false) && (view.pageName.text.indexOf(ResourceManager.getInstance().getString('resources', 'userDetail.userOffline')) == -1))
 				{
-					view.pageTitle.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 				}
 			}
 			
@@ -195,12 +191,12 @@ package org.bigbluebutton.view.navigation.pages.chat
 			if(publicChat)
 			{
 				m.chatType = "PUBLIC_CHAT";
-				chatMessageSender.sendPublicMessage(m);
+				chatMessageService.sendPublicMessage(m);
 			}
 			else
 			{
 				m.chatType = "PRIVATE_CHAT";
-				chatMessageSender.sendPrivateMessage(m);
+				chatMessageService.sendPrivateMessage(m);
 			}
 		}
 		
@@ -224,11 +220,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			view.sendButton.removeEventListener(MouseEvent.CLICK, onSendButtonClick);
 			
-			chatMessageSender.sendPublicMessageOnSucessSignal.remove(onSendSucess);
-			chatMessageSender.sendPublicMessageOnFailureSignal.remove(onSendFailure);
-			
-			chatMessageSender.sendPrivateMessageOnSucessSignal.remove(onSendSucess);
-			chatMessageSender.sendPrivateMessageOnFailureSignal.remove(onSendFailure);
+			chatMessageService.sendMessageOnSuccessSignal.remove(onSendSucess);
+			chatMessageService.sendMessageOnFailureSignal.remove(onSendFailure);
 			
 			userSession.userList.userRemovedSignal.remove(userRemoved);	
 			userSession.userList.userAddedSignal.remove(userAdded);

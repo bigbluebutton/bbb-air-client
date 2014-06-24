@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:view="org.bigbluebutton.core.view.*"
+				>
+	
+	<view:states>
+		<s:State name="MEETING_ENDED"/>
+		<s:State name="CONNECTION_DROPPED"/>
+		<s:State name="USER_LOGGED_OUT"/>
+		<s:State name="USER_KICKED_OUT"/>
+	</view:states>
+	
+	<s:Group width="100%" height="100%" styleName="pageStyle">
+		<s:layout>
+			<s:VerticalLayout horizontalAlign="center"/>
+		</s:layout>
+		<s:Group height="50%"  >
+			<s:layout>
+				<s:VerticalLayout  verticalAlign="bottom"/>
+			</s:layout>
+			<s:Image  styleName="bbbLogoStyle" />
+		</s:Group>
+		<s:Label id="messageText0" width="90%" 
+				 text.CONNECTION_DROPPED="{resourceManager.getString('resources', 'disconnect.reason.connectionDropped')}"
+				 text.MEETING_ENDED="{resourceManager.getString('resources', 'disconnect.reason.meetingEnded')}"
+				 text.USER_KICKED_OUT="{resourceManager.getString('resources', 'disconnect.reason.userKickedOut')}"
+				 text.USER_LOGGED_OUT="{resourceManager.getString('resources', 'disconnect.reason.userLoggedOut')}">
+		</s:Label>
+		<s:Button id="exitButton0" width="50%" content="{resourceManager.getString('resources', 'disconnect.reason.userExit')}"/>
+	</s:Group>
+	
+</view:NoTabView>

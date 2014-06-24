@@ -9,14 +9,18 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.model.ConnectionFailedEvent;
-	import org.bigbluebutton.model.IMessageListener;
+	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
 	
 	public class BaseConnection implements IBaseConnection
-	{
+	{	
+		[Inject]
+		public var disconnectUserSignal:DisconnectUserSignal;
+					
 		public static const NAME:String = "BaseConnection";
 		
 		protected var _successConnected:ISignal = new Signal();
@@ -25,10 +29,13 @@ package org.bigbluebutton.core
 		protected var _netConnection:NetConnection;
 		protected var _uri:String;
 		protected var _onUserCommand:Boolean;
-		
-		public function BaseConnection(callback:IDefaultConnectionCallback) {
+
+		public function BaseConnection() {
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
+		}
+		
+		public function init(callback:IDefaultConnectionCallback):void
+		{
 			_netConnection = new NetConnection();
 			_netConnection.client = callback;
 			_netConnection.addEventListener( NetStatusEvent.NET_STATUS, netStatus );
@@ -53,8 +60,16 @@ package org.bigbluebutton.core
 		
 		public function connect(uri:String, ...parameters):void {
 			_uri = uri;
+
+			// The connect call needs to be done properly. At the moment lock settings
+			// are not implemented in the mobile client, so parameters[7] and parameters[8]
+			// are "faked" in order to connect (without them, I couldn't get the connect 
+			// call to work...) - Adam
+			parameters[7] = false;
+			parameters[8] = false;
+			
 			try {
-				trace("Connecting to " + uri + "[" + parameters + "]");
+				trace("Trying to connect to [" + uri +  "] ...");
 				// passing an array to a method that expects a variable number of parameters
 				// http://stackoverflow.com/a/3852920
 				_netConnection.connect.apply(null, new Array(uri).concat(parameters));
@@ -123,7 +138,7 @@ package org.bigbluebutton.core
 					break;
 			}
 		}
-		
+	
 		protected function sendConnectionSuccessEvent():void 
 		{
 			successConnected.dispatch();
@@ -131,7 +146,8 @@ package org.bigbluebutton.core
 		
 		protected function sendConnectionFailedEvent(reason:String):void 
 		{
-			unsuccessConnected.dispatch(reason);
+			//unsuccessConnected.dispatch(reason);
+			disconnectUserSignal.dispatch(DisconnectEnum.CONNECTION_STATUS_CONNECTION_DROPPED);
 		}
 		
 		protected function netSecurityError( event : SecurityErrorEvent ) : void 
@@ -153,15 +169,15 @@ package org.bigbluebutton.core
 		}
 		
 		public function sendMessage(service:String, onSuccess:Function, onFailure:Function, message:Object=null):void {
-			trace("SENDING [" + service + "]");
+			trace("SENDING MESSAGE: [" + service + "]");
 			var responder:Responder =	new Responder(                    
 				function(result:Object):void { // On successful result
-					onSuccess("Successfully sent [" + service + "]."); 
+					onSuccess("SUCCESSFULLY SENT: [" + service + "]."); 
 				},	                   
 				function(status:Object):void { // status - On error occurred
-					var errorReason:String = "Failed to send [" + service + "]:\n"; 
+					var errorReason:String = "FAILED TO SEND: [" + service + "]:"; 
 					for (var x:Object in status) { 
-						errorReason += "\t" + x + " : " + status[x]; 
+						errorReason += "\n - " + x + " : " + status[x]; 
 					}
 					onFailure(errorReason);
 				}

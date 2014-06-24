@@ -2,88 +2,77 @@
 <view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				xmlns:ui="org.bigbluebutton.view.ui.*"
 				xmlns:view="org.bigbluebutton.core.view.*" 
-				xmlns:assets="assets.*" 
-				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
 				xmlns:userdetails="org.bigbluebutton.view.navigation.pages.userdetails.*"
+				styleName="viewStyle"
 				>
-	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+	<s:Group  width="100%" height="100%" styleName="pageStyle" >
 		<s:layout>
-			<s:VerticalLayout gap="0"
-							  paddingBottom="0"
-							  paddingLeft="0"
-							  paddingRight="0"
-							  paddingTop="0"
-							  />
-		</s:layout>
-		
-		<s:Group width="100%" height="50">
-			<s:layout>
-				<s:HorizontalLayout gap="5"
-									paddingBottom="10"
-									paddingLeft="10"
-									paddingRight="10"
-									paddingTop="10"
-									/>
-			</s:layout>
-			<ui:BackButton id="backBtn" width="30" height="30"/>                
-			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" text="{resourceManager.getString('resources', 'userDetail.title')}" verticalCenter="0"/>
-			</s:Group>		
-			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
-			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
-		</s:Group>
+			<s:VerticalLayout />
+		</s:layout>	
 		<s:Group width="100%" height="100%">
 			<s:layout>
-				<s:VerticalLayout gap="0"
-								  paddingBottom="0"
-								  paddingLeft="0"
-								  paddingRight="0"
-								  paddingTop="0"
-								  horizontalAlign="center"
-								  />
+				<s:VerticalLayout horizontalAlign="center" />
 			</s:layout>
-			<s:Group y="-4" width="100%" height="40">
-				<s:Label width="82" color="#BEBEBE" horizontalCenter="-98" text="{resourceManager.getString('resources', 'userDetail.name')}"
-						 verticalCenter="0"/>
-				<s:Label id="userNameText" width="187" horizontalCenter="43" text="USERNAME"
-						 textAlign="left" verticalCenter="0"/>
-			</s:Group>
-			<userdetails:HRule width="280"/>
-			<s:Group width="100%" height="50">
-				<s:Label width="82" color="#BEBEBE" horizontalCenter="-98" text="{resourceManager.getString('resources', 'userDetail.role')}"
-						 verticalCenter="0"/>
-				<s:Label id="statusText" width="187" horizontalCenter="43" text="Moderator"
-						 textAlign="left" verticalCenter="0"/>
-			</s:Group>
-			<userdetails:HRule width="280"/>
-			<s:Group width="100%" height="50">
-				<s:Label width="82" color="#BEBEBE" horizontalCenter="-98" text="{resourceManager.getString('resources', 'userDetail.media')}"
-						 verticalCenter="0"/>
-				<assets:CameraIcon id="cameraIcon" horizontalCenter="-38" verticalCenter="0"/>
-				<assets:MicIcon id="micIcon" horizontalCenter="4" verticalCenter="0"/>
-				<assets:MicOffIcon id="micOffIcon" visible="false" horizontalCenter="4" verticalCenter="0"/>
-				<assets:SoundIcon id="soundIcon" horizontalCenter="41" verticalCenter="0"/>
-			</s:Group>
-			<userdetails:HRule width="280"/>
-			<s:Group width="100%" height="100%">
-				<s:layout>
-					<s:VerticalLayout gap="5"
-									  paddingBottom="0"
-									  paddingLeft="0"
-									  paddingRight="0"
-									  paddingTop="10"
-									  horizontalAlign="center"
-									  />
+			<s:Group width="100%" styleName="userDetail"  height="{getStyle('height')}">
+				<s:layout>				
+					<s:HorizontalLayout />
 				</s:layout>
-				
-				<s:Button id="showCameraButton0" y="10" width="200" label="{resourceManager.getString('resources', 'userDetail.cameraBtn.text')}" horizontalCenter="0"/>
-				<s:Button id="showPrivateChat0" y="60" width="200" label="{resourceManager.getString('resources', 'userDetail.privateChatBtn.text')}" horizontalCenter="0"/>
+				<s:Label width="30%" styleName="userDetailsLabelStyle" color="{getStyle('color')}" 
+						 text="{resourceManager.getString('resources', 'userDetail.name')}"
+						 height="100%" />
+				<s:Label id="userNameText" width="70%" styleName="userDetailsLabelStyle" text="USERNAME" height="100%" />
+			</s:Group>
+			<s:Line width="90%" height="0" >
+				<s:stroke>
+					<s:SolidColorStroke color="{getStyle('userDetailslineColor')}" weight="{getStyle('weight')}" />
+				</s:stroke>
+			</s:Line>	
+			<s:Group width="100%" styleName="userDetail"  height="{getStyle('height')}">
+				<s:layout>				
+					<s:HorizontalLayout />
+				</s:layout>
+				<s:Label width="30%" styleName="userDetailsLabelStyle" color="{getStyle('color')}" 
+						 height="100%" text="{resourceManager.getString('resources', 'userDetail.role')}"/>
+				<s:Label id="statusText" width="70%"  text="Moderator" styleName="userDetailsLabelStyle" height="100%"  />
+			</s:Group>
+			<s:Line width="90%" height="0" >
+				<s:stroke>
+					<s:SolidColorStroke color="{getStyle('userDetailslineColor')}" weight="{getStyle('weight')}" />
+				</s:stroke>
+			</s:Line>	
+			<s:Group width="100%" styleName="userDetail"  height="{getStyle('height')}">
+				<s:layout>				
+					<s:HorizontalLayout />
+				</s:layout>
+				<s:Label width="30%" styleName="userDetailsLabelStyle" color="{getStyle('color')}" 
+						 height="100%" text="{resourceManager.getString('resources', 'userDetail.media')}" />
+				<s:Group  width="70%" height="100%">
+					<s:layout>				
+						<s:HorizontalLayout  horizontalAlign="center"/>
+					</s:layout>
+					<s:Image id="cameraIcon" styleName="iconStyle cameraIconStyle" height="100%" />
+					<s:Group height="100%">	
+						<s:Image id="micIcon"    styleName="iconStyle micIconStyle" height="100%" left="0"/>
+						<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false"  height="100%" left="0"/>
+					</s:Group>
+					<s:Image id="soundIcon"  styleName="iconStyle soundIconStyle" height="100%" />
+				</s:Group>
+			</s:Group>
+			<s:Line width="90%" height="0" >
+				<s:stroke>
+					<s:SolidColorStroke color="{getStyle('userDetailslineColor')}" weight="{getStyle('weight')}" />
+				</s:stroke>
+			</s:Line>	
+			<s:Group width="50%" height="100%">
+				<s:layout>
+					<s:VerticalLayout horizontalAlign="center" verticalAlign="middle" />
+				</s:layout>				
+				<s:Button id="showCameraButton0" width="100%" label="{resourceManager.getString('resources', 'userDetail.cameraBtn.text')}" horizontalCenter="0"/>
+				<s:Button id="showPrivateChat0"  width="100%" label="{resourceManager.getString('resources', 'userDetail.privateChatBtn.text')}" horizontalCenter="0"/>
 				<!--<s:Button id="showCameraButton0" y="111" width="200" label="Make Presenter" horizontalCenter="0"/>
 				<s:Button id="showCameraButton0" y="161" width="200" label="Kick User" horizontalCenter="0"/>-->				
 			</s:Group>
 		</s:Group>
-		<common:MenuButtons width="100%" height="42"/>
 	</s:Group>
 </view:NoTabView>

@@ -16,7 +16,7 @@ package org.bigbluebutton.view.navigation.pages.login
 		
 		public function dispose():void
 		{
-			
+
 		}
 
 		public function get messageText():Label

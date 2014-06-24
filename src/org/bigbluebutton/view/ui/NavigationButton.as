@@ -2,13 +2,30 @@ package org.bigbluebutton.view.ui
 {
 	import flash.events.MouseEvent;
 	
+	import mx.events.FlexEvent;
+	import mx.states.SetStyle;
+	import mx.states.State;
+	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
-	import spark.components.Group;
+	import spark.components.Button;
+
 	
-	public class NavigationButton extends Group implements INavigationButton
+	public class NavigationButton extends Button implements INavigationButton
 	{		
+		private var _transitionAnimation:int;
+			
+		public function get transitionAnimation():int
+		{
+			return _transitionAnimation;	
+		}
+		
+		public function set transitionAnimation(value:int):void
+		{
+			_transitionAnimation = value;
+		}
+		
 		private var _navigationSignal: Signal = new Signal();
 		
 		/**
@@ -18,17 +35,23 @@ package org.bigbluebutton.view.ui
 		{
 			return _navigationSignal;
 		}
-		
+
 		public function NavigationButton()
 		{
 			super();
+
 		}
 		
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
-			
 			this.addEventListener(MouseEvent.CLICK, onClick);
+			var selected:State = new State({name : "selected"});
+			var unselected:State = new State({name : "unselected"});
+			selected.overrides = [new SetStyle(this,"backgroundColor", this.getStyle('selectedBackgroundColor') )];
+			unselected.overrides = [new SetStyle(this,"backgroundColor", this.getStyle('backgroundColor') )];
+			this.states.push(selected);
+			this.states.push(unselected);
 		}
 		
 		protected function onClick(e:MouseEvent):void
@@ -48,14 +71,14 @@ package org.bigbluebutton.view.ui
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 		}
 		
-		protected var _navigateTo:String = "";
+		protected var _navigateTo:Array = new Array();
 
-		public function get navigateTo():String
+		public function get navigateTo():Array
 		{
 			return _navigateTo;
 		}
 
-		public function set navigateTo(value:String):void
+		public function set navigateTo(value:Array):void
 		{
 			_navigateTo = value;
 		}

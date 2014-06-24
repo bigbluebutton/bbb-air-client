@@ -16,7 +16,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			return chatroomslist;
 		}
-		
+
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();

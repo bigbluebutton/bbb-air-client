@@ -6,11 +6,10 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import flash.utils.Dictionary;
 	
 	import mx.collections.ArrayCollection;
+	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
-	
-	import org.bigbluebutton.core.IChatMessageReceiver;
-	import org.bigbluebutton.core.IChatMessageSender;
+
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -22,6 +21,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.chat.PrivateChatMessage;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osmf.logging.Log;
 	
@@ -35,9 +35,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	{
 		[Inject]
 		public var view: IChatRoomsView;
-		
-		[Inject]
-		public var chatMessageSender: IChatMessageSender;
 		
 		[Inject]
 		public var userSession: IUserSession;
@@ -96,6 +93,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			userSession.userList.userAddedSignal.add(userAdded);
 			
 			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title');
 		}
 		
 		/**
@@ -262,11 +260,11 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			{
 				if(item.hasOwnProperty("button"))
 				{
-					userUISession.pushPage(PagesENUM.SELECT_PARTICIPANT, item)
+					userUISession.pushPage(PagesENUM.SELECT_PARTICIPANT, item, TransitionAnimationENUM.SLIDE_LEFT)
 				}
 				else
 				{
-					userUISession.pushPage(PagesENUM.CHAT, item)
+					userUISession.pushPage(PagesENUM.CHAT, item, TransitionAnimationENUM.SLIDE_LEFT)
 				}
 			}
 			else

@@ -12,6 +12,6 @@ package org.bigbluebutton.view.navigation.pages.chat
 		function get list():List;
 		function get inputMessage():TextInput;
 		function get sendButton():Button;
-		function get pageTitle():Label;
+		function get pageName():Label;
 	}
 }

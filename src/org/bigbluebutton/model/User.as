@@ -112,13 +112,13 @@ package org.bigbluebutton.model
 			verifyMedia();
 		}
 		
-		private var _voiceUserId:Number;
-		public function get voiceUserId():Number
+		private var _voiceUserId:String;
+		public function get voiceUserId():String
 		{
 			return _voiceUserId;
 		}
 		
-		public function set voiceUserId(value:Number):void
+		public function set voiceUserId(value:String):void
 		{
 			_voiceUserId = value;
 		}
@@ -188,6 +188,18 @@ package org.bigbluebutton.model
 		public function isModerator():Boolean
 		{
 			return role == MODERATOR;
+		}
+		
+		private var _listenOnly:Boolean;
+		
+		public function get listenOnly():Boolean
+		{
+			return _listenOnly;
+		}
+		
+		public function set listenOnly(value:Boolean):void
+		{
+			_listenOnly = value;
 		}
 	}
 }

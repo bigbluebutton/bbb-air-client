@@ -17,6 +17,7 @@ package org.bigbluebutton.model
 		public static const MUTE:int = 4;
 		public static const RAISE_HAND:int = 5;
 		public static const LOCKED:int = 6;
+		public static const LISTEN_ONLY:int = 7;
 		
 		private var _users:ArrayCollection;	
 		
@@ -171,10 +172,23 @@ package org.bigbluebutton.model
 					// if we don't set _me to the just added user, _me won't get any update ever, it wouldn't be
 					// possible to use me.isModerator(), for instance
 					_me = newuser;
-				}						
-				
+				}
+
 				_users.addItem(newuser);
 				_users.refresh();
+
+				if(newuser.hasStream) {
+					userChangeSignal.dispatch(newuser, HAS_STREAM);
+				}				
+				if(newuser.presenter) {
+					userChangeSignal.dispatch(newuser, PRESENTER);
+				}
+				if(newuser.raiseHand) {
+					userChangeSignal.dispatch(newuser, RAISE_HAND);
+				}
+				if(newuser.listenOnly) {
+					userChangeSignal.dispatch(newuser, LISTEN_ONLY);
+				}
 				
 				userAddedSignal.dispatch(newuser);
 			}					
@@ -198,7 +212,7 @@ package org.bigbluebutton.model
 			return null;				
 		}
 		
-		public function getUserByVoiceUserId(voiceUserId:Number):User {
+		public function getUserByVoiceUserId(voiceUserId:String):User {
 			var aUser:User;
 			
 			for (var i:int = 0; i < _users.length; i++) {
@@ -304,7 +318,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userJoinAudio(userID:String, voiceUserID:Number, muted:Boolean, talking:Boolean, locked:Boolean):void {
+		public function userJoinAudio(userID:String, voiceUserID:String, muted:Boolean, talking:Boolean, locked:Boolean):void {
 			var p:Object = getUserIndex(userID);
 			
 			if (p != null) {
@@ -322,8 +336,8 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userLeaveAudio(voiceUserID:Number):void {
-			var user:User = getUserByVoiceUserId(voiceUserID);
+		public function userLeaveAudio(userID:String):void {
+			var user:User = getUser(userID);
 			if(user != null) {
 				user.voiceJoined = false;
 				
@@ -333,7 +347,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userMuteChange(voiceUserID:Number, mute:Boolean):void {
+		public function userMuteChange(voiceUserID:String, mute:Boolean):void {
 			var user:User = getUserByVoiceUserId(voiceUserID);
 			
 			if (user != null) {
@@ -347,7 +361,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userLockedChange(voiceUserID:Number, locked:Boolean):void {
+		public function userLockedChange(voiceUserID:String, locked:Boolean):void {
 			var user:User = getUserByVoiceUserId(voiceUserID);
 			
 			if (user != null) {
@@ -357,7 +371,7 @@ package org.bigbluebutton.model
 			}
 		}
 		
-		public function userTalkingChange(voiceUserID:Number, talking:Boolean):void {
+		public function userTalkingChange(voiceUserID:String, talking:Boolean):void {
 			var user:User = getUserByVoiceUserId(voiceUserID);
 			
 			if (user != null) {
@@ -383,6 +397,16 @@ package org.bigbluebutton.model
 			}				
 			
 			return null;
+		}
+		
+		public function listenOnlyChange(userID:String, listenOnly:Boolean):void {
+			var user:User = getUser(userID);
+			
+			if(user != null) {
+				user.listenOnly = listenOnly;
+				// Doesn't do anything at the moment... waiting for css changes - Adam
+				userChangeSignal.dispatch(user, LISTEN_ONLY);
+			}
 		}
 	}
 }

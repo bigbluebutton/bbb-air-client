@@ -2,6 +2,7 @@ package org.bigbluebutton.model
 {
 	import mx.collections.ArrayList;
 	
+	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
@@ -81,23 +82,23 @@ package org.bigbluebutton.model
 		
 		
 		
-		public function pushPage(value:String, details:Object = null):void
+		public function pushPage(value:String, details:Object = null, animation:int = TransitionAnimationENUM.APPEAR):void
 		{
 			if(value != currentPage)
 			{
 				_listPages.addItem({value:value, details:details});
 				var removeView:Boolean = false;
-				_pageChangedSignal.dispatch(currentPage, removeView);
+				_pageChangedSignal.dispatch(currentPage, removeView, animation);
 			}
 		}
 		
-		public function popPage():void
+		public function popPage(animation:int = TransitionAnimationENUM.APPEAR):void
 		{
 			if(_listPages.length > 0)
 			{
 				_listPages.removeItemAt(_listPages.length-1);
 				var removeView:Boolean = true;
-				_pageChangedSignal.dispatch(currentPage, removeView);
+				_pageChangedSignal.dispatch(currentPage, removeView, animation);
 			}				
 		}
 		

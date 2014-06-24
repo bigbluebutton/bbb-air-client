@@ -2,169 +2,85 @@
 <view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				xmlns:ui="org.bigbluebutton.view.ui.*"
 				xmlns:view="org.bigbluebutton.core.view.*" 
-				xmlns:assets="assets.*" 
-				xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
+				styleName="viewStyle"
 				>
-	<fx:Script>
-		<![CDATA[
-
-		]]>
-	</fx:Script>
 	
 	<fx:Declarations>
 		<s:RadioButtonGroup id="cameraQualityTypeRadioButtonGroup" />
 	</fx:Declarations>
 	
-	<s:Group id="mainshell" width="100%" height="100%" styleName="mainshell">
+	<s:Group  width="100%" height="100%" styleName="pageStyle">
 		<s:layout>
-			<s:VerticalLayout gap="0"
-							  paddingBottom="0"
-							  paddingLeft="0"
-							  paddingRight="0"
-							  paddingTop="0"
-							  />
-		</s:layout>
-		
-		<s:Group width="100%" height="50">
-			<s:layout>
-				<s:HorizontalLayout gap="5"
-									paddingBottom="10"
-									paddingLeft="10"
-									paddingRight="10"
-									paddingTop="10"
-									/>
-			</s:layout>
-			<ui:BackButton width="30" height="30" />                
-			<s:Group width="100%" height="30">
-				<s:Label horizontalCenter="0" text="{resourceManager.getString('resources', 'profile.title')}" verticalCenter="0"/>
-			</s:Group>			
-			<ui:SwapCameraButton id="swapCameraBtn" width="30" height="30" />
-			<ui:MicButton id="microphoneBtn" width="30" height="30"/>
-		</s:Group>
-		<s:Group width="100%" height="100%">
-			<s:layout>
-				<s:VerticalLayout gap="5"
-								  paddingBottom="10"
-								  paddingLeft="10"
-								  paddingRight="10"
-								  paddingTop="10"
-								  horizontalAlign="center"
-								  />
-			</s:layout>
-			<s:Group y="9" width="300" height="133">
-				<s:Rect x="2" y="23" width="296" height="98" radiusX="5" radiusY="5">
-					<s:stroke>
-						<s:SolidColorStroke color="0x000000" weight="2"/>
-					</s:stroke>
-				</s:Rect>
-				<s:Line x="3" y="82" width="294" height="0">
-					<s:stroke>
-						<s:SolidColorStroke color="0x000000" weight="2"/>
-					</s:stroke>
-				</s:Line>
-				<s:Label id="userName" x="1" y="44" width="299" fontFamily="Georgia" fontSize="18" textAlign="center"/>
-				<s:Label x="11" y="5" width="279" color="#BEBEBE" text="{resourceManager.getString('resources', 'profile.participant')}"/>
-			</s:Group>
-			<s:Group width="300" height="150">
-				<s:layout>
-					<s:VerticalLayout gap="5"
-									  paddingBottom="10"
-									  paddingLeft="10"
-									  paddingRight="10"
-									  paddingTop="10"
-									  horizontalAlign="center"
-									  />
-				</s:layout>
-				<s:Label x="0" y="1" width="100%" color="#BEBEBE" text="{resourceManager.getString('resources', 'profile.settings')}"/>
-				<s:Group x="0" y="10" width="300">
-					<s:Rect x="0" y="0" width="100%" height="120" radiusX="5" radiusY="5">
-						<s:stroke>
-							<s:SolidColorStroke color="0x000000" weight="2"/>
-						</s:stroke>
-						<s:fill>
-							<s:SolidColor color="0xFFFFFF" />
-						</s:fill>
-					</s:Rect>
-					<s:Line x="0" y="40" height="0" width="100%">
-						<s:stroke>
-							<s:SolidColorStroke color="0x000000" weight="2"/>
-						</s:stroke>
-					</s:Line>
-					<s:Line x="0" y="80" height="0" width="100%">
-						<s:stroke>
-							<s:SolidColorStroke color="0x000000" weight="2"/>
-						</s:stroke>
-					</s:Line>
-					<s:Label id="cameraOnOffTxt0" y="13" width="100%" fontSize="14" text="OFF"
-							 textAlign="center" verticalAlign="top"/>
-					<s:Button id="shareCameraBtn0" y="0" width="300" height="39" alpha="0" buttonMode="true"
-							  horizontalCenter="0" useHandCursor="true"/>					
-					<s:Label id="micOnOffTxt0" y="56" width="100%" fontSize="14" text="OFF"
-							 textAlign="center" verticalAlign="top"/>
-					<s:Button id="shareMicBtn0" x="0" y="43" width="100%" height="39" alpha="0" buttonMode="true"
-							  horizontalCenter="0" useHandCursor="true"/>				
-					<s:Label id="raiseHandLabel0" x="0" y="95" width="299" fontSize="14"
-							 text="Raise Hand" textAlign="center"/>
-					<s:Button id="raiseHandButton0" y="82" width="300" height="39" alpha="0" buttonMode="true"
-							  horizontalCenter="0" useHandCursor="true"/>
-				</s:Group>
-				
-				<s:Group width="300" height="150" id="cameraQualityGroup">
-					<s:layout>
-						<s:VerticalLayout gap="5"
-										  paddingBottom="10"
-										  paddingLeft="10"
-										  paddingRight="10"
-										  paddingTop="10"
-										  horizontalAlign="center"
-										  />
-					</s:layout>
-					<s:Label width="100%" paddingTop="10"  x="0" y="1" color="#BEBEBE"
-							 text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.selectquality')}" />
-					<s:Group x="0" y="20" width="300">
-						<s:Rect x="0" y="0" width="100%" height="120" radiusX="5" radiusY="5">
+			<s:VerticalLayout />
+		</s:layout>		
+		<s:Scroller width="100%" height="100%"> 
+			<s:VGroup width="100%" height="100%" horizontalAlign="center">
+				<s:VGroup width="80%">
+					<s:Label width="100%" color="{getStyle('textColor')}" text="{resourceManager.getString('resources', 'profile.participant')}"/>
+					<s:SkinnableContainer width="100%" styleName="containerStyle">
+						<s:layout>
+							<s:VerticalLayout />
+						</s:layout>
+						<s:Label id="userName" width="100%" />
+						<s:Line width="100%" height="0" >
 							<s:stroke>
-								<s:SolidColorStroke color="0x000000" weight="2"/>
+								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}" />
 							</s:stroke>
-							<s:fill>
-								<s:SolidColor color="0xFFFFFF" />
-							</s:fill>
-						</s:Rect>
-						<s:Line x="0" y="40" height="0" width="100%">
+						</s:Line>	
+						<s:Button id="logoutButton0" width="100%" styleName="logoutButtonStyle" />
+					</s:SkinnableContainer> 
+				</s:VGroup>	
+				
+				<s:VGroup width="80%">
+					<s:Label width="100%" color="{getStyle('textColor')}"  text="{resourceManager.getString('resources', 'profile.settings')}"/>
+					<s:SkinnableContainer width="100%" styleName="containerStyle">
+						<s:layout>
+							<s:VerticalLayout />
+						</s:layout>
+						<s:Button id="shareCameraBtn0" width="100%"  styleName="profileSettingsButtonStyle" />		
+						<s:Line  height="0" width="100%" >
 							<s:stroke>
-								<s:SolidColorStroke color="0x000000" weight="2"/>
+								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}"/>
 							</s:stroke>
 						</s:Line>
-						<s:Line x="0" y="80" height="0" width="100%">
+						<s:Button id="shareMicBtn0" width="100%" label="{resourceManager.getString('resources', 'profile.settings.mic.off')}" styleName="profileSettingsButtonStyle"/>	
+						<s:Line height="0" width="100%" >
 							<s:stroke>
-								<s:SolidColorStroke color="0x000000" weight="2"/>
+								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}" />
 							</s:stroke>
 						</s:Line>
+						<s:Button id="raiseHandButton0"  width="100%" label="{resourceManager.getString('resources', 'profile.settings.handRaise')}" styleName="profileSettingsButtonStyle" />
 						
-						<s:Label id="cameraQualityLowLabel" y="13" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.low') + ' (160x120)'} "
-								 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="4"  id="lowQuality" value="low"
-										   width="299" />	
-							<s:Label id="cameraQualityMediumLabel" y="56" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.medium') + ' (320x240)'}"
-									 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="45"  id="mediumQuality" selected="true" value="medium"
-										   width="299" />
-							<s:Label id="cameraQualityHighLabel" y="95" width="100%" fontSize="14" text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.high') + ' (640x480)'}"
-									 textAlign="center" verticalAlign="top"/>
-							<s:RadioButton groupName="cameraQualityTypeRadioButtonGroup" x="4" y="84" id="highQuality" value="high"
-										   width="299" />	
-						
-					</s:Group>
-				</s:Group>
-				
-			</s:Group>
-		</s:Group>
-		<common:MenuButtons width="100%" height="42"/>
+					</s:SkinnableContainer>
+					
+					<s:VGroup  id="cameraQualityGroup" width="100%">
+						<s:Label width="100%" color="{getStyle('textColor')}"
+								 text="{resourceManager.getString('resources', 'profile.settings.cameraQuality.selectquality')}" />
+						<s:SkinnableContainer width="100%" styleName="containerStyle" >
+							<s:layout>
+								<s:VerticalLayout  verticalAlign="middle" />
+							</s:layout>
+							<s:RadioButton id="lowQuality" label="{resourceManager.getString('resources', 'profile.settings.cameraQuality.low') + ' (160x120)'}"
+										   groupName="cameraQualityTypeRadioButtonGroup" width="100%" value="low" />	
+							<s:Line height="0" width="100%" >
+								<s:stroke>
+									<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}"/>
+								</s:stroke>
+							</s:Line>
+							<s:RadioButton id="mediumQuality" label="{resourceManager.getString('resources', 'profile.settings.cameraQuality.medium') + ' (320x240)'}"
+											groupName="cameraQualityTypeRadioButtonGroup" width="100%" value="medium" />
+							<s:Line  height="0" width="100%">
+								<s:stroke>
+									<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}" />
+								</s:stroke>
+							</s:Line>
+							<s:RadioButton id="highQuality" label="{resourceManager.getString('resources', 'profile.settings.cameraQuality.high') + ' (640x480)'}"
+											 groupName="cameraQualityTypeRadioButtonGroup" width="100%" value="high" />							
+						</s:SkinnableContainer>
+					</s:VGroup>					
+				</s:VGroup>
+			</s:VGroup>	
+		</s:Scroller>
 	</s:Group>
-	<s:Label y="154" fontWeight="bold" horizontalCenter="0" text="{resourceManager.getString('resources', 'profile.logout')}"/>
-	<s:Button y="135" width="300" height="53" alpha="0" buttonMode="true" useHandCursor="true"
-			  click="NativeApplication.nativeApplication.exit()" horizontalCenter="0"/>
-	
 </view:NoTabView>
