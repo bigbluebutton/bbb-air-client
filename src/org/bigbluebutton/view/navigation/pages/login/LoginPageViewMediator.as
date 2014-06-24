@@ -52,8 +52,8 @@ package org.bigbluebutton.view.navigation.pages.login
 		private function onUnsucess(reason:String):void 
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this) + ":onUnsucess() " + reason);
-			FlexGlobals.topLevelApplication.topActionBar0.visible=false;
-			FlexGlobals.topLevelApplication.bottomMenu0.visible=false;
+			FlexGlobals.topLevelApplication.topActionBar.visible=false;
+			FlexGlobals.topLevelApplication.bottomMenu.visible=false;
 			
 			switch(reason) {
 				case "emptyJoinUrl":
