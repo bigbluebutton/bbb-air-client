@@ -19,9 +19,11 @@ package org.bigbluebutton.core
 		function set streamWidth(value:Number):void
 		function get streamHeight():Number	
 		function set streamHeight(value:Number):void
+		function get room():String;
+		function set room(value:String):void;
 		function get connection():NetConnection
 		function connect():void
 		function get mouseLocationChangedSignal():ISignal;
-		function setMouseCoordinates(x:Number, y:Number):void;
+		function deskshareStreamStopped():void;
 	}
 }

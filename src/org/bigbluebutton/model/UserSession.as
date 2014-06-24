@@ -18,7 +18,6 @@ package org.bigbluebutton.model
 	
 	public class UserSession implements IUserSession
 	{
-		protected var _netconnection:NetConnection;
 		protected var _config:Config;
 		protected var _userId:String;
 		protected var _mainConnection:IBigBlueButtonConnection;
@@ -28,7 +27,13 @@ package org.bigbluebutton.model
 		protected var _deskshareConnection:IDeskshareConnection;
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
+		protected var _recording:Boolean;
+		
 		protected var _guestSignal:ISignal = new Signal();
+		protected var _successJoiningMeetingSignal:ISignal = new Signal();
+		protected var _unsuccessJoiningMeetingSignal:ISignal = new Signal();
+		protected var _recordingStatusChangedSignal:ISignal = new Signal();
+		protected var _logoutSignal:Signal = new Signal();
 
 		public function get userList():UserList
 		{
@@ -120,6 +125,38 @@ package org.bigbluebutton.model
 		public function get guestSignal():ISignal
 		{
 			return _guestSignal;
+		}
+		
+		public function get successJoiningMeetingSignal():ISignal
+		{
+			return _successJoiningMeetingSignal;
+		}
+		
+		public function get unsuccessJoiningMeetingSignal():ISignal
+		{
+			return _unsuccessJoiningMeetingSignal;
+		}
+		
+		public function joinMeetingResponse(msg:Object):void {
+			if(msg.user) {
+				_successJoiningMeetingSignal.dispatch();
+			}
+			else {
+				_unsuccessJoiningMeetingSignal.dispatch();
+			}
+		}
+		
+		public function get logoutSignal():Signal {
+			return _logoutSignal;
+		}
+		
+		public function get recordingStatusChangedSignal():ISignal {
+			return _recordingStatusChangedSignal;
+		}
+		
+		public function recordingStatusChanged(recording:Boolean):void {
+			_recording = recording;
+			recordingStatusChangedSignal.dispatch(recording);
 		}
 	}
 }

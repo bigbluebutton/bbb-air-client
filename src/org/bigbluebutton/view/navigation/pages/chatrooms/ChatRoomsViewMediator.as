@@ -9,9 +9,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
-	
-	import org.bigbluebutton.core.IChatMessageReceiver;
-	import org.bigbluebutton.core.IChatMessageSender;
+
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -37,9 +35,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	{
 		[Inject]
 		public var view: IChatRoomsView;
-		
-		[Inject]
-		public var chatMessageSender: IChatMessageSender;
 		
 		[Inject]
 		public var userSession: IUserSession;

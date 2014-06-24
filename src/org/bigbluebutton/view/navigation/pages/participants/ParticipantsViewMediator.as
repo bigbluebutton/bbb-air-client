@@ -7,9 +7,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 	import mx.collections.ArrayCollection;
 	import mx.core.FlexGlobals;
 	import mx.resources.ResourceManager;
-	
-	import org.bigbluebutton.core.IUsersServiceSO;
-	import org.bigbluebutton.core.UsersServiceSO;
+
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
@@ -34,9 +32,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 		
 		[Inject]
 		public var userUISession: IUserUISession
-		
-		[Inject]
-		public var usersServiceSO: IUsersServiceSO;
+
 		
 		protected var dataProvider:ArrayCollection;
 		protected var dicUserIdtoUser:Dictionary

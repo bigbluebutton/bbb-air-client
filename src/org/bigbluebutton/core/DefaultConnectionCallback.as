@@ -35,8 +35,9 @@ package org.bigbluebutton.core
 		}
 		
 		public function onMessageFromServer(messageName:String, result:Object):void {
-			trace("Got message from server [" + messageName + "]");    
-			notifyListeners(messageName, result);
+			trace("RECEIVED MESSAGE: [" + messageName + "]");
+			
+			notifyListeners(messageName, result);			
 		}		
 
 		public function addMessageListener(listener:IMessageListener):void {
@@ -60,6 +61,7 @@ package org.bigbluebutton.core
 			} else {
 				trace("Message name is undefined");
 			}
-		}   
+		}
+
 	}
 }
