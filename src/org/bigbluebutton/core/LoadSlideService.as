@@ -1,30 +1,39 @@
 package org.bigbluebutton.core
 {
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
+	import flash.system.SecurityDomain;
+	import flash.system.System;
+	import flash.utils.ByteArray;
+	
+	import mx.controls.SWFLoader;
 	
 	import org.bigbluebutton.model.presentation.Slide;
-
+	
 	public class LoadSlideService
 	{
-		private var _loader:URLLoader
+		private var _loader:Loader = new Loader();
 		private var _slide:Slide;
 		
 		public function LoadSlideService(s:Slide) {
 			trace("LoadSlideService: loading a new slide");
 			_slide = s;
-			
-			_loader = new URLLoader();
-			_loader.addEventListener(Event.COMPLETE, handleComplete);	
-			_loader.dataFormat = URLLoaderDataFormat.BINARY;
-			
-			_loader.load(new URLRequest(s.slideURI));
+			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, handleLoaderComplete);
+			_loader.load(new URLRequest(_slide.slideURI));
 		}
 		
-		private function handleComplete(e:Event):void {
-			_slide.data = _loader.data;
+		private function handleLoaderComplete(e:Event):void {
+			var context:LoaderContext = new LoaderContext();			
+			context.allowCodeImport = true;
+			_slide.SWFFile.loaderContext = context;
+			_slide.swfSource = e.target.bytes;
 			trace("LoadSlideService: loading of slide data finished successfully");
 		}
 	}
