@@ -142,6 +142,11 @@ s|SkinnableContainer.containerStyle
 	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileViewContainerSkin");
 }
 
+s|Application.mainshellStyle
+{
+	topActionBarColor: #646262;
+}
+
 global
 {
 	font-family: Verdana;
@@ -837,11 +842,6 @@ global
 	s|Group.userDetailGroupStyle
 	{
 		height: 60;
-	}
-	
-	s|Application.mainshellStyle
-	{
-		topActionBarColor: #444544;
 	}
 	
 	global

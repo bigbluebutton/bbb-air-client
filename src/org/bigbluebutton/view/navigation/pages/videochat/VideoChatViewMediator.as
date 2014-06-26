@@ -18,6 +18,9 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
+	import spark.components.List;
+	import spark.events.IndexChangeEvent;
+	
 	public class VideoChatViewMediator extends Mediator
 	{
 		[Inject]
@@ -29,6 +32,10 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
+		
+		protected var list:List;
+		protected var dataProvider:ArrayCollection;
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -37,7 +44,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
 			userUISession.pageTransitionStartSignal.add(onPageTransitionStart);
-			
+			view.streamlist.addEventListener(IndexChangeEvent.CHANGE, onSelectStream);
 			// find all currently open streams
 			//var users:ArrayCollection = userSession.userlist.users;
 			//for (var i:Number=0; i < users.length; i++) {
@@ -49,6 +56,26 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			checkVideo();
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'video.title');
+			dataProvider = new ArrayCollection();
+			view.streamlist.dataProvider = dataProvider;
+			var users:ArrayCollection = userSession.userList.users;
+			for each(var u:User in users) 
+			{
+				if(u.hasStream)
+				{
+					dataProvider.addItem(u);					
+				}
+				
+			}
+			if(dataProvider.length==0)
+			{
+				view.noVideoMessage.visible = true;
+			}
+			else
+			{
+				view.noVideoMessage.visible = false;
+			}
+			
 		}
 		
 		protected function getUserWithCamera():User
@@ -81,6 +108,17 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
+		private function onSelectStream(event:IndexChangeEvent):void
+		{
+			if (event.newIndex >= 0) {
+				var user:User = dataProvider.getItemAt(event.newIndex) as User;
+				if(user.hasStream)
+				{
+					stopStream(view.getDisplayedUserID());
+					startStream(user.name, user.streamName);
+				}
+			}
+		}
 		override public function destroy():void
 		{
 			userSession.userList.userRemovedSignal.remove(userRemovedHandler);
@@ -96,8 +134,10 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		}
 		
 		private function userAddedHandler(user:User):void {
-			if (user.hasStream)
+			if (user.hasStream){
 				checkVideo();
+				dataProvider.addItem(user);						
+			}
 		}
 		
 		private function userRemovedHandler(userID:String):void {
@@ -105,6 +145,19 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				stopStream(userID);
 				checkVideo();
 			}
+			if(dataProvider.contains(userSession.userList.getUserByUserId(userID)))
+			{
+				dataProvider.removeItemAt(dataProvider.getItemIndex(userSession.userList.getUserByUserId(userID)))
+				if(dataProvider.length==0)
+				{
+					view.noVideoMessage.visible = true;
+				}
+				else
+				{
+					view.noVideoMessage.visible = false;
+				}
+			}
+			
 		}
 		
 		private function userChangeHandler(user:User, property:int):void {
@@ -112,7 +165,26 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				if (user.userID == view.getDisplayedUserID() && !user.hasStream) {
 					stopStream(user.userID);
 				}
+				
 				checkVideo(user);
+				
+				if(dataProvider.contains(user) && !user.hasStream)
+				{
+					dataProvider.removeItemAt(dataProvider.getItemIndex(user));	
+				}
+				else if(!dataProvider.contains(user) && user.hasStream)
+				{
+					dataProvider.addItem(user);					
+				}
+				
+				if(dataProvider.length==0)
+				{
+					view.noVideoMessage.visible = true;
+				}
+				else
+				{
+					view.noVideoMessage.visible = false;
+				}
 			}
 		}
 		
@@ -213,11 +285,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					// otherwise, nobody transmitts video at this moment
 				else
 				{
-					view.noVideoMessage.visible = true;
+				//	view.noVideoMessage.visible = true;
 					return;
 				}
 				
-				view.noVideoMessage.visible = false;		
+			//	view.noVideoMessage.visible = false;		
 				
 				if (newUser)
 				{
