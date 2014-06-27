@@ -31,7 +31,6 @@ package org.bigbluebutton.core
 		protected var _onUserCommand:Boolean;
 
 		public function BaseConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		public function init(callback:IDefaultConnectionCallback):void

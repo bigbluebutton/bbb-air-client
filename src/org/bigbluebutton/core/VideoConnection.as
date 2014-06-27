@@ -37,7 +37,6 @@ package org.bigbluebutton.core
 	
 		public function VideoConnection()
 		{
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]

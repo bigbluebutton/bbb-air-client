@@ -28,7 +28,6 @@ package org.bigbluebutton.core
 		protected var _conferenceParameters:IConferenceParameters;
 		
 		public function VoiceConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]

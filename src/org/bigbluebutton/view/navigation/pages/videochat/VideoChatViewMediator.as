@@ -11,7 +11,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
-	import org.mockito.integrations.currentMockito;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;

@@ -32,7 +32,6 @@ package org.bigbluebutton.core
 			
 		public function DeskshareConnection()
 		{
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]

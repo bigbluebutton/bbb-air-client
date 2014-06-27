@@ -70,6 +70,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			userSession.deskshareConnection.isStreamingSignal.remove(onDeskshareStreamChange);
 			userSession.deskshareConnection.mouseLocationChangedSignal.remove(onMouseLocationChanged);
 			view.stopStream();
+			view = null;
 		}
 	}	
 }
