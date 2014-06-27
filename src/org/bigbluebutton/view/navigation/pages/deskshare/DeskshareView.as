@@ -3,10 +3,10 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 	import flash.display.StageOrientation;
 	import flash.net.NetConnection;
 	
+	import mx.core.FlexGlobals;
+	
 	import spark.components.Group;
 	import spark.components.Label;
-	
-	import mx.core.FlexGlobals;
 	
 	public class DeskshareView extends DeskshareViewBase implements IDeskshareView
 	{
@@ -31,7 +31,7 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			deskshareVideoView.percentWidth = 100;
 			deskshareVideoView.percentHeight = 100;
 			this.addElement(deskshareVideoView);
-			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, topMenuBar0.height, bottomMenuBar0.height);
+			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, FlexGlobals.topLevelApplication.topActionBar.height, FlexGlobals.topLevelApplication.bottomMenu.height);
 			deskshareVideoView.addMouseToStage();
 			rotationHandler(FlexGlobals.topLevelApplication.currentOrientation);
 		}		

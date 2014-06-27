@@ -13,19 +13,9 @@
 		<s:State name="over" />
 		<s:State name="up" />
 	</s:states>
-	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}">
-		<s:stroke>
-			<s:SolidColorStroke color="{getStyle('strokeColor')}" weight="{getStyle('strokeWeight')}" />
-		</s:stroke>
-		<s:fill >
-			<s:SolidColor color="{getStyle('backgroundColor')}" />
-		</s:fill>
-	</s:Rect>
+	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}" />
 	<s:BitmapImage scaleMode="letterbox" scaleX="{hostComponent.getStyle('imageScaleX')}"
-				   scaleY="{hostComponent.getStyle('imageScaleY')}" 
-				   source="{getStyle('backgroundImage')}" 
-				   source.down="{getStyle('backgroundImageDown')}"
-				   horizontalCenter="0" horizontalAlign="center"
-				   verticalAlign="middle" verticalCenter="0"/>
-	
+				   scaleY="{hostComponent.getStyle('imageScaleY')}" source="{getStyle('backgroundImage')}" 
+				   horizontalAlign="center" verticalAlign="middle" top="0" left="0" right="0" bottom="0"
+				   />
 </s:Skin>

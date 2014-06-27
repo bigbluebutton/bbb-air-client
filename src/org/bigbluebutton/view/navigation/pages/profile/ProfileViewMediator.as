@@ -4,6 +4,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import flash.media.Camera;
 	import flash.media.CameraPosition;
 	
+	import mx.core.FlexGlobals;
 	import mx.events.ItemClickEvent;
 	import mx.resources.ResourceManager;
 	
@@ -72,6 +73,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.setCameraQualityGroupVisibility(userSession.userList.me.hasStream);
 			view.setCameraQuality(userSession.videoConnection.selectedCameraQuality);
 			view.logoutButton.addEventListener(MouseEvent.CLICK, logoutClick);
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'profile.title');
 		}
 		
 		private function userChangeHandler(user:User, type:int):void

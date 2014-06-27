@@ -2,6 +2,8 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 {
 	import flash.events.MouseEvent;
 	
+	import mx.core.FlexGlobals;
+	
 	import org.bigbluebutton.model.User;
 	
 	import spark.components.Button;
@@ -30,7 +32,7 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		
 		public function update():void
 		{
-			if(user != null && mainshell != null)
+			if(user != null && FlexGlobals.topLevelApplication.mainshell != null)
 			{			
 				if(_user.me)
 				{
@@ -57,7 +59,7 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 		
 		public function dispose():void
 		{
-			
+
 		}
 
 		public function get showCameraButton():Button

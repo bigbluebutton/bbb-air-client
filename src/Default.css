@@ -18,8 +18,10 @@ view|TopView.topView
 ui|NavigationButton
 {
 	backgroundColor: #FFFFFF;
-	strokeColor: #000000;
+	strokeColor: #C8CCC8;
 	selectedBackgroundColor: #918E8E;
+	imageScaleX: 0.4;
+	imageScaleY: 0.4;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.NavigationButtonSkin");
 }
 
@@ -42,8 +44,8 @@ s|Label#noVideoMessage0
 s|Label#noDeskshareMessage0
 {
 	textAlign: center;
-	verticalCenter: 0;	
-	horizontalCenter: 0;
+	verticalAlign: middle;
+	horizontalAlign:center;
 }
 
 s|Label#labelDisplay
@@ -81,13 +83,14 @@ s|Label.pageNameStyle
 	verticalCenter: 0;
 	textAlign: center;
 	horizontalCenter: 0;
+	color: #FFFFFF;
 }
 
 s|Button.topButtonStyle
 {
-	imageScaleX: 0.5;
-	imageScaleY: 0.5;
-	backgroundColor: #FFFFFF;
+	imageScaleX: 0.6;
+	imageScaleY: 0.6;
+	backgroundColor: #444544;
 	strokeColor: #000000;
 	selectedBackgroundColor: #918E8E;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.TopButtonSkin");
@@ -158,6 +161,12 @@ global
 		paddingBottom: 10;
 	}
 	
+	s|Group.pageStyle
+	{
+		left:4;
+		right:4;
+	}
+	
 	s|View.viewStyle
 	{
 		weight: 2;
@@ -188,9 +197,6 @@ global
 	s|Label#noDeskshareMessage0
 	{
 		fontSize: 16;
-		paddingLeft: 15;
-		paddingRight: 15;
-		paddingTop: 100;
 	}
 	
 	s|Label#labelDisplay
@@ -219,10 +225,8 @@ global
 	
 	ui|NavigationButton
 	{
-		imageScaleX: 0.4;
-		imageScaleY: 0.4;
 		height: 44;
-		strokeWeight: 1;
+		strokeWeight: 0.1;
 	}
 	
 	ui|NavigationButton.presentationBtnStyle
@@ -274,7 +278,7 @@ global
 	
 	s|Button.profileButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-mdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/userProfile.png");
 	}
 	
 	s|Button#showCameraButton0, s|Button#showPrivateChat0, s|Button#exitButton0
@@ -292,7 +296,8 @@ global
 	
 	s|Button.micButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-mdpi/microphone.png");
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/micBtn_on.png");
+		mutedBackgroundImage: Embed(source="assets/res/drawable-mdpi/micBtn_off.png");
 	}
 	
 	s|Button.swapCameraButtonStyle
@@ -326,7 +331,7 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/sound.png");
 	}
 	
-	s|Image.profileIconStyle
+	s|Image.moderatorIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/profile.png");
 	}
@@ -372,15 +377,7 @@ global
 	s|Group.userDetailGroupStyle
 	{
 		height: 30;
-	}
-	
-	s|Group.mainshell
-	{
-		top: 3;
-		bottom: 0;
-		left: 3;
-		right: 3;
-	}
+	}	
 	
 	global
 	{
@@ -395,6 +392,12 @@ global
 	{
 		paddingTop: 15;
 		paddingBottom: 15;
+	}
+	
+	s|Group.pageStyle
+	{
+		left:6;
+		right:6;
 	}
 	
 	s|View.viewStyle
@@ -427,9 +430,6 @@ global
 	s|Label#noDeskshareMessage0
 	{
 		fontSize: 24;
-		paddingLeft: 22;
-		paddingRight: 22;
-		paddingTop: 150;
 	}
 	
 	s|Label#labelDisplay
@@ -481,10 +481,8 @@ global
 	
 	ui|NavigationButton
 	{
-		imageScaleX: 0.4;
-		imageScaleY: 0.4;
 		height: 66;
-		strokeWeight: 1.5;
+		strokeWeight: 0.15;
 	}
 	
 	ui|NavigationButton.presentationBtnStyle
@@ -521,7 +519,7 @@ global
 	
 	s|Button.profileButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/userProfile.png");
 	}
 	
 	s|Button.backButtonStyle
@@ -531,7 +529,8 @@ global
 	
 	s|Button.micButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/microphone.png");
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/micBtn_on.png");
+		mutedBackgroundImage: Embed(source="assets/res/drawable-hdpi/micBtn_off.png");
 	}
 	
 	s|Button.swapCameraButtonStyle
@@ -565,7 +564,7 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/sound.png");
 	}
 	
-	s|Image.profileIconStyle
+	s|Image.moderatorIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/profile.png");
 	}
@@ -613,14 +612,6 @@ global
 		height: 45;
 	}
 	
-	s|Group.mainshell
-	{
-		top: 5;
-		bottom: 0;
-		left: 5;
-		right: 5;
-	}
-	
 	global
 	{
 		font-size: 22;
@@ -633,6 +624,12 @@ global
 	{
 		paddingTop: 20;
 		paddingBottom: 20;
+	}
+	
+	s|Group.pageStyle
+	{
+		left:8;
+		right:8;
 	}
 	
 	s|View.viewStyle
@@ -665,9 +662,6 @@ global
 	s|Label#noDeskshareMessage0
 	{
 		fontSize: 36;
-		paddingLeft: 34;
-		paddingRight: 34;
-		paddingTop: 200;
 	}
 	
 	s|Label#labelDisplay
@@ -719,10 +713,8 @@ global
 	
 	ui|NavigationButton
 	{
-		imageScaleX: 0.4;
-		imageScaleY: 0.4;
 		height: 88;
-		strokeWeight: 2;
+		strokeWeight: 0.2;
 	}
 	
 	ui|NavigationButton.presentationBtnStyle
@@ -749,7 +741,7 @@ global
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/deskshare.png");
 	}
-	
+
 	s|Button.topButtonStyle
 	{
 		width: 60;
@@ -759,7 +751,7 @@ global
 	
 	s|Button.profileButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/userProfile.png");
 	}
 	
 	s|Button.backButtonStyle
@@ -769,7 +761,8 @@ global
 	
 	s|Button.micButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/microphone.png");
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/micBtn_on.png");
+		mutedBackgroundImage: Embed(source="assets/res/drawable-xhdpi/micBtn_off.png");
 	}
 	
 	s|Button.swapCameraButtonStyle
@@ -803,14 +796,9 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sound.png");
 	}
 	
-	s|Image.profileIconStyle
+	s|Image.moderatorIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/profile.png");
-	}
-			
-	s|Image.presentationIconStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/presentation.png");
 	}
 	
 	s|Image.handIconStyle
@@ -851,12 +839,9 @@ global
 		height: 60;
 	}
 	
-	s|Group.mainshell
+	s|Application.mainshellStyle
 	{
-		top: 7;
-		bottom: 0;
-		left: 7;
-		right: 7;
+		topActionBarColor: #444544;
 	}
 	
 	global
@@ -871,6 +856,12 @@ global
 	{
 		paddingTop: 30;
 		paddingBottom: 30;
+	}
+	
+	s|Group.pageStyle
+	{
+		left:12;
+		right:12;
 	}
 	
 	s|View.viewStyle
@@ -903,9 +894,6 @@ global
 	s|Label#noDeskshareMessage0
 	{
 		fontSize: 48;
-		paddingLeft: 45;
-		paddingRight: 45;
-		paddingTop: 300;
 	}
 	
 	s|Label#labelDisplay
@@ -934,10 +922,8 @@ global
 	
 	ui|NavigationButton
 	{
-		imageScaleX: 0.4;
-		imageScaleY: 0.4;
 		height: 132;
-		strokeWeight: 3;
+		strokeWeight: 0.3;
 	}
 	
 	ui|NavigationButton.presentationBtnStyle
@@ -997,7 +983,7 @@ global
 	
 	s|Button.profileButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/userProfile.png");
 	}
 	
 	s|Button.backButtonStyle
@@ -1007,7 +993,8 @@ global
 	
 	s|Button.micButtonStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/microphone.png");
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/micBtn_on.png");
+		mutedBackgroundImage: Embed(source="assets/res/drawable-xxhdpi/micBtn_off.png");
 	}
 	
 	s|Button.swapCameraButtonStyle
@@ -1041,7 +1028,7 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sound.png");
 	}
 	
-	s|Image.profileIconStyle
+	s|Image.moderatorIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/profile.png");
 	}
@@ -1088,15 +1075,7 @@ global
 	{
 		height: 90;
 	}
-	
-	s|Group.mainshell
-	{
-		top: 10;
-		bottom: 0;
-		left: 10;
-		right: 10;
-	}
-	
+		
 	global
 	{
 		font-size: 42;

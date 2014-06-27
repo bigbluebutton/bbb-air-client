@@ -4,7 +4,10 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	import mx.core.FlexGlobals;
+	
 	import org.bigbluebutton.model.IUserUISession;
+	import org.bigbluebutton.view.navigation.pages.common.MenuButtons;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectType;
 	
@@ -22,6 +25,9 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 		{
 			view.exitButton.addEventListener(MouseEvent.CLICK, applicationExit);
 			changeConnectionStatus(userUISession.currentPageDetails as int);
+			FlexGlobals.topLevelApplication.pageName.text = "";
+			FlexGlobals.topLevelApplication.topActionBar.visible = false;
+			FlexGlobals.topLevelApplication.bottomMenu.visible = false;
 		}
 		
 		/**
