@@ -2,6 +2,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 {
 	import flash.display.GradientType;
 	import flash.display.Graphics;
+	import flash.display.InterpolationMethod;
 	import flash.display.Shape;
 	import flash.display.SpreadMethod;
 	import flash.geom.*;
@@ -47,11 +48,34 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			_userName.setTextFormat(nameFormat, 0, name.length);
 			_userName.x = x;
 			_userName.y = y - _userName.textHeight;
-			var matrix:Matrix = new Matrix();
-			_shape= new Shape();
-			matrix.createGradientBox(video.width, video.height, Math.PI/2,0,0);
-			_shape.graphics.beginGradientFill(GradientType.LINEAR,  [0xFFFFFF,0x000000], [0,0.75], [0,127], matrix,SpreadMethod.PAD);
-			_shape.graphics.drawRect(_userName.x,_userName.y,video.width, _userName.height);
+			
+			var gradientMatrixWidth:Number = video.width;
+			var gradientMatrixHeight:Number = _userName.height;
+			var gradientMatrixRotation:Number = 1.57;
+			var gradientTx:Number = 0;
+			var gradientTy:Number = -_userName.height/2;
+			
+			var gradientDrawWidth:Number = video.width;
+			var gradientDrawHeight:Number = _userName.height;
+			var gradientOffsetX:Number = 0;
+			var gradientOffsetY:Number = _userName.y;
+			
+			var gradientMatrix:Matrix = new Matrix ( );
+			gradientMatrix.createGradientBox ( gradientMatrixWidth, gradientMatrixHeight, gradientMatrixRotation, gradientTx + gradientOffsetX, gradientTy + gradientOffsetY);
+			
+			var gradientType:String = GradientType.LINEAR;
+			var gradientColors:Array = [0xB8B8B6, 0x242423];
+			var gradientAlphas:Array = [1, 1];
+			var gradientRatios:Array = [0, 255];
+			var gradientSpreadMethod:String = SpreadMethod.PAD;
+			var gradientInterpolationMethod:String = InterpolationMethod.LINEAR_RGB;
+			var gradientFocalPoint:Number = 0;
+			_shape = new Shape();
+			var gradientGraphics:Graphics = _shape.graphics;
+			
+			gradientGraphics.beginGradientFill ( gradientType, gradientColors, gradientAlphas, gradientRatios, gradientMatrix, gradientSpreadMethod,  gradientInterpolationMethod, gradientFocalPoint );
+			gradientGraphics.drawRect ( gradientOffsetX, gradientOffsetY, gradientDrawWidth ,gradientDrawHeight );
+			gradientGraphics.endFill ( );
 			this.stage.addChild(_shape);
 			this.stage.addChild(_userName);
 		}
