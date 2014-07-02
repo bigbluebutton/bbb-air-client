@@ -4,10 +4,14 @@ package org.bigbluebutton.view.ui
 	
 	import mockolate.prepare;
 	import mockolate.runner.MockolateRule;
+	import mockolate.stub;
 	
+	import org.bigbluebutton.model.UserList;
+	import org.bigbluebutton.model.UserSession;
 	import org.flexunit.asserts.assertTrue;
 	import org.flexunit.asserts.fail;
 	import org.flexunit.async.Async;
+	import org.osflash.signals.Signal;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -19,6 +23,15 @@ package org.bigbluebutton.view.ui
 		[Mock]
 		public var view:SwapCameraButton;
 		
+		[Mock]
+		public var userList:UserList;
+		
+		[Mock]
+		public var userSession:UserSession;
+		
+		[Mock]
+		public var userChangeSignal:Signal;
+		
 		private static var TIMEOUT:Number = 5000;
 		
 		protected var instance:SwapCameraMediator;
@@ -26,10 +39,11 @@ package org.bigbluebutton.view.ui
 		[Before(async)]
 		public function setUp():void
 		{
-			Async.proceedOnEvent(this, prepare(SwapCameraButton), Event.COMPLETE, TIMEOUT, timeoutHandler)
+			Async.proceedOnEvent(this, prepare(SwapCameraButton, UserSession, UserList, Signal), Event.COMPLETE, TIMEOUT, timeoutHandler)
 			instance = new SwapCameraMediator();
 			
 			instance.view = this.view;
+			instance.userSession = this.userSession;
 		}
 		
 		[After]
@@ -52,7 +66,10 @@ package org.bigbluebutton.view.ui
 		
 		[Test]
 		public function destroyed_viewIsDestroyed():void
-		{
+		{	
+			stub(instance.userSession).getter("userList").returns(this.userList);
+			stub(instance.userSession.userList).getter("userChangeSignal").returns(this.userChangeSignal);
+			
 			// Act
 			instance.destroy();
 			
