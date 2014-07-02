@@ -59,23 +59,14 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			dataProvider = new ArrayCollection();
 			view.streamlist.dataProvider = dataProvider;
 			var users:ArrayCollection = userSession.userList.users;
-			for each(var u:User in users) 
+			for each(var u:User in users)
 			{
 				if(u.hasStream)
 				{
-					dataProvider.addItem(u);					
-				}
-				
+					dataProvider.addItem(u);			
+				}	
 			}
-			if(dataProvider.length==0)
-			{
-				view.noVideoMessage.visible = true;
-			}
-			else
-			{
-				view.noVideoMessage.visible = false;
-			}
-			
+
 		}
 		
 		protected function getUserWithCamera():User
@@ -85,7 +76,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			for each(var u:User in users) 
 			{
-				if (u.hasStream) {
+				if (u.hasStream) 
+				{
 					if (u.me)
 					{
 						userMe = u;		
@@ -110,15 +102,20 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		
 		private function onSelectStream(event:IndexChangeEvent):void
 		{
-			if (event.newIndex >= 0) {
+			if (event.newIndex >= 0) 
+			{
 				var user:User = dataProvider.getItemAt(event.newIndex) as User;
 				if(user.hasStream)
 				{
-					stopStream(view.getDisplayedUserID());
+					if(view && view.getDisplayedUserID() != null)
+					{
+						stopStream(view.getDisplayedUserID());
+					}
 					startStream(user.name, user.streamName);
 				}
 			}
 		}
+		
 		override public function destroy():void
 		{
 			userSession.userList.userRemovedSignal.remove(userRemovedHandler);
@@ -133,15 +130,19 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			super.destroy();
 		}
 		
-		private function userAddedHandler(user:User):void {
-			if (user.hasStream){
+		private function userAddedHandler(user:User):void 
+		{
+			if (user.hasStream)
+			{
 				checkVideo();
-				dataProvider.addItem(user);						
+				dataProvider.addItem(user);		
 			}
 		}
 		
-		private function userRemovedHandler(userID:String):void {
-			if (view.getDisplayedUserID() == userID) {
+		private function userRemovedHandler(userID:String):void 
+		{
+			if (view.getDisplayedUserID() == userID) 
+			{
 				stopStream(userID);
 				checkVideo();
 			}
@@ -160,13 +161,16 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 		}
 		
-		private function userChangeHandler(user:User, property:int):void {
-			if (property == UserList.HAS_STREAM) {
-				if (user.userID == view.getDisplayedUserID() && !user.hasStream) {
+		private function userChangeHandler(user:User, property:int):void 
+		{
+			if (property == UserList.HAS_STREAM)
+			{
+				if (user.userID == view.getDisplayedUserID() && !user.hasStream)
+				{
 					stopStream(user.userID);
 				}
 				
-				checkVideo(user);
+			//	checkVideo(user);
 				
 				if(dataProvider.contains(user) && !user.hasStream)
 				{
@@ -188,10 +192,12 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		private function startStream(name:String, streamName:String):void {
+		private function startStream(name:String, streamName:String):void 
+		{
 			var resolution:Object = getVideoResolution(streamName);
 			
-			if (resolution) {
+			if (resolution) 
+			{
 				trace(ObjectUtil.toString(resolution));
 				var width:Number = Number(String(resolution.dimensions[0]));
 				var length:Number = Number(String(resolution.dimensions[1]));
@@ -202,13 +208,16 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		private function stopStream(userID:String):void {
-			if (view) {
+		private function stopStream(userID:String):void 
+		{
+			if (view) 
+			{
 				view.stopStream();
 			}
 		}
 		
-		private function checkVideo(changedUser:User = null):void {
+		private function checkVideo(changedUser:User = null):void 
+		{
 			// get id of the user that is currently displayed
 			var currentUserID:String = view.getDisplayedUserID();
 			
@@ -271,7 +280,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					newUser = presenter;
 				}
 					// current user is the third priority
-				else if (currentUserID != null) {
+				else if (currentUserID != null) 
+				{
 					if (changedUser != null && currentUserID == changedUser.userID)
 					{
 						newUser = changedUser;
@@ -299,14 +309,18 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			}
 		}
 		
-		protected function getVideoResolution(stream:String):Object {
+		protected function getVideoResolution(stream:String):Object
+		{
 			var pattern:RegExp = new RegExp("(\\d+x\\d+)-([A-Za-z0-9]+)-\\d+", "");
-			if (pattern.test(stream)) {
+			if (pattern.test(stream))
+			{
 				trace("The stream name is well formatted [" + stream + "]");
 				trace("Stream resolution is [" + pattern.exec(stream)[1] + "]");
 				trace("Userid [" + pattern.exec(stream)[2] + "]");
 				return {userID: pattern.exec(stream)[2], dimensions:pattern.exec(stream)[1].split("x")};
-			} else {
+			}
+			else
+			{
 				trace("The stream name doesn't follow the pattern <width>x<height>-<userId>-<timestamp>. However, the video resolution will be set to 320x240");
 				return null;
 			}

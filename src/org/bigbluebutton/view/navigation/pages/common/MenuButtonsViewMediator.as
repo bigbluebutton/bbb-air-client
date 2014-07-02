@@ -1,9 +1,12 @@
 package org.bigbluebutton.view.navigation.pages.common
 {	
+	import mx.collections.ArrayCollection;
 	import mx.core.FlexGlobals;
 	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
+	import org.bigbluebutton.model.User;
+	import org.bigbluebutton.model.UserList;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -27,9 +30,22 @@ package org.bigbluebutton.view.navigation.pages.common
 		{
 			if (!loading)
 			{
+				var users:ArrayCollection = userSession.userList.users;
 				userUISession.loadingSignal.remove(loadingFinished);
-				view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = userSession.deskshareConnection.isStreaming;
-				userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
+				if (userSession.deskshareConnection != null)
+				{
+					view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = userSession.deskshareConnection.isStreaming;
+					userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);					
+				}
+				userSession.userList.userChangeSignal.add(userChangeHandler);
+				for each(var u:User in users) 
+				{
+					if(u.hasStream)
+					{
+						view.menuVideoChatButton.visible = view.menuVideoChatButton.includeInLayout = true;
+						break;
+					}
+				}
 			}
 		}
 		/**
@@ -40,12 +56,39 @@ package org.bigbluebutton.view.navigation.pages.common
 			view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = isDeskshareStreaming;
 		}
 		
+		private function userChangeHandler(user:User, property:int):void
+		{
+			var users:ArrayCollection = userSession.userList.users;
+			var hasStream : Boolean = false;
+			if (property == UserList.HAS_STREAM )
+			{
+				if(user.hasStream)
+				{
+					hasStream = true;
+				}
+				else
+				{
+					for each(var u:User in users)
+					{
+						if(u.hasStream)
+						{
+							hasStream = true;
+							break;
+						}			
+					}
+				}
+				view.menuVideoChatButton.visible = view.menuVideoChatButton.includeInLayout = hasStream;
+			}
+		}
+		
+				
 		/**
 		 * Unsubscribe from listening for Deskshare Streaming Signal
 		 */
 		public override function destroy():void
 		{
 			userSession.deskshareConnection.isStreamingSignal.remove(onDeskshareStreamChange);
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
 		}
 	}
 }

@@ -4,10 +4,17 @@
 @namespace ui "org.bigbluebutton.view.ui.*";
 @namespace skins "org.bigbluebutton.view.skins.*";
 @namespace common "org.bigbluebutton.view.navigation.pages.common.*";
+@namespace text "flash.text.*";
 
 s|Button
 {
 	chromeColor: #918E8E;
+}
+
+s|Group.videoTextFieldStyle
+{
+	color: #FFFFFF;
+	font-family: Verdana;
 }
 
 view|TopView.topView
@@ -132,7 +139,6 @@ s|Image.iconStyle
 s|View.viewStyle
 {
 	lineColor: #000000;
-	userDetailslineColor: #AF0000;
 	textColor: #BEBEBE;
 }
 
@@ -166,15 +172,21 @@ global
 		paddingBottom: 10;
 	}
 	
+	s|Group.videoTextFieldStyle
+	{
+		fontSize:14;
+		indent: 20;
+	}
+	
 	s|Group.pageStyle
 	{
-		left:4;
-		right:4;
+		left:0;
+		right:0;
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 2;
+		lineWeight: 2;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -399,15 +411,21 @@ global
 		paddingBottom: 15;
 	}
 	
+	s|Group.videoTextFieldStyle
+	{
+		fontSize:22;
+		indent: 30;
+	}
+	
 	s|Group.pageStyle
 	{
-		left:6;
-		right:6;
+		left:0;
+		right:0;
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 3;
+		lineWeight: 3;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -631,15 +649,21 @@ global
 		paddingBottom: 20;
 	}
 	
+	s|Group.videoTextFieldStyle
+	{
+		fontSize:28;
+		indent: 40;
+	}
+	
 	s|Group.pageStyle
 	{
-		left:8;
-		right:8;
+		left:0;
+		right:0;
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 4;
+		lineWeight: 4;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -858,15 +882,21 @@ global
 		paddingBottom: 30;
 	}
 	
+	s|Group.videoTextFieldStyle
+	{
+		fontSize:42;
+		indent: 60;
+	}
+	
 	s|Group.pageStyle
 	{
-		left:12;
-		right:12;
+		left:0;
+		right:0;
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 6;
+		lineWeight: 6;
 	}
 	
 	s|SkinnableContainer.containerStyle
