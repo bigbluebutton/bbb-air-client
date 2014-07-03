@@ -6,6 +6,8 @@ package org.bigbluebutton.model.presentation
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
 	
+	import mx.controls.SWFLoader;
+	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 
@@ -18,6 +20,7 @@ package org.bigbluebutton.model.presentation
 		private var _txtURI:String;
 		private var _current:Boolean;
 		private var _data:ByteArray;
+		private var _swfFile:SWFLoader = new SWFLoader();
 		
 		private var _slideLoadedSignal:ISignal = new Signal;
 		
@@ -47,10 +50,22 @@ package org.bigbluebutton.model.presentation
 				_loaded = true;
 				slideLoadedSignal.dispatch();
 			}
+		}		
+		
+		public function set swfSource(source:Object):void {
+			_swfFile.source = source;
+			if (_swfFile.source != null) {
+				_loaded = true;
+				slideLoadedSignal.dispatch();
+			}
+		}
+		
+		public function get SWFFile():SWFLoader {
+			return _swfFile;
 		}
 		
 		public function get slideURI():String {
-			return _thumbURI;
+			return _slideURI;
 		}
 		
 		public function get loaded():Boolean {
