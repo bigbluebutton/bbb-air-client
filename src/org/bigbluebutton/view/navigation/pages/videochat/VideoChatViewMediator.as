@@ -18,7 +18,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
-	import spark.components.List;
 	import spark.events.IndexChangeEvent;
 	
 	public class VideoChatViewMediator extends Mediator
@@ -32,8 +31,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
-		
-		protected var list:List;
 		protected var dataProvider:ArrayCollection;
 		
 		override public function initialize():void
@@ -45,14 +42,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			userUISession.pageTransitionStartSignal.add(onPageTransitionStart);
 			view.streamlist.addEventListener(IndexChangeEvent.CHANGE, onSelectStream);
-			// find all currently open streams
-			//var users:ArrayCollection = userSession.userlist.users;
-			//for (var i:Number=0; i < users.length; i++) {
-			//	var u:User = users.getItemAt(i) as User;
-			//	if (u.hasStream) {
-			//		startStream(u.name, u.streamName);
-			//	}
-			//}
 			
 			checkVideo();
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'video.title');
@@ -61,12 +50,15 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			var users:ArrayCollection = userSession.userList.users;
 			for each(var u:User in users)
 			{
-				if(u.hasStream)
+				if(u.hasStream && !dataProvider.contains(u))
 				{
-					dataProvider.addItem(u);			
-				}	
-			}
-
+					dataProvider.addItem(u);
+					if(view && view.getDisplayedUserID() == u.userID)
+					{
+						view.streamlist.selectedIndex = dataProvider.getItemIndex(u);
+					}
+				}
+			}		
 		}
 		
 		protected function getUserWithCamera():User
@@ -168,17 +160,16 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				if (user.userID == view.getDisplayedUserID() && !user.hasStream)
 				{
 					stopStream(user.userID);
-				}
-				
-			//	checkVideo(user);
+				}				
 				
 				if(dataProvider.contains(user) && !user.hasStream)
 				{
-					dataProvider.removeItemAt(dataProvider.getItemIndex(user));	
+					dataProvider.removeItemAt(dataProvider.getItemIndex(user));
+					checkVideo();
 				}
 				else if(!dataProvider.contains(user) && user.hasStream)
 				{
-					dataProvider.addItem(user);					
+					dataProvider.addItem(user);
 				}
 				
 				if(dataProvider.length==0)
@@ -295,16 +286,14 @@ package org.bigbluebutton.view.navigation.pages.videochat
 					// otherwise, nobody transmitts video at this moment
 				else
 				{
-				//	view.noVideoMessage.visible = true;
 					return;
 				}
-				
-			//	view.noVideoMessage.visible = false;		
-				
+								
 				if (newUser)
 				{
 					if (view) view.stopStream();	
 					startStream(newUser.name, newUser.streamName);
+					view.noVideoMessage.visible = false;
 				}	
 			}
 		}

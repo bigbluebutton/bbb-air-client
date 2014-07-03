@@ -8,8 +8,9 @@
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.model.User;
-			
-			override public function set data(obj:Object):void {
+
+			override public function set data(obj:Object):void
+			{
 				super.data = obj;
 				var user:User = data as User;
 				if(user)
@@ -21,18 +22,9 @@
 					title.text = resourceManager.getString('resources', 'video.noVideo');
 				}
 			}
-			
+
 		]]>
 	</fx:Script>
-	<s:layout>
-		<s:HorizontalLayout />
-	</s:layout>
-	<s:Group width="100%">
-		<s:layout>
-			<s:HorizontalLayout />
-		</s:layout>
 		<s:Label id="title" left="0" right="0" width="50%" height="100%" color="#000000"  textAlign="center" verticalAlign="middle" />
 		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
-	</s:Group>
-	
 </s:ItemRenderer>

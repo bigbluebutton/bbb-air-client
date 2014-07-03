@@ -28,7 +28,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			var topActionBarHeight : Number = FlexGlobals.topLevelApplication.topActionBar.height;
 			var bottomMenuHeight : Number = FlexGlobals.topLevelApplication.bottomMenu.height;
 			webcam.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth,topActionBarHeight, bottomMenuHeight);			
-			webcam.setVideoPosition(name);			
+			webcam.setVideoPosition(name);
 		}
 		
 		public function stopStream():void 
@@ -54,7 +54,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		public function dispose():void
 		{
 			stopStream();
-		}		
+		}
 		
 		public function get noVideoMessage():Label
 		{

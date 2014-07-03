@@ -4,7 +4,6 @@
 @namespace ui "org.bigbluebutton.view.ui.*";
 @namespace skins "org.bigbluebutton.view.skins.*";
 @namespace common "org.bigbluebutton.view.navigation.pages.common.*";
-@namespace text "flash.text.*";
 
 s|Button
 {
@@ -153,6 +152,12 @@ s|Application.mainshellStyle
 	topActionBarColor: #646262;
 }
 
+s|Group.pageStyle
+{
+	left:0;
+	right:0;
+}
+
 global
 {
 	font-family: Verdana;
@@ -176,12 +181,7 @@ global
 	{
 		fontSize:14;
 		indent: 20;
-	}
-	
-	s|Group.pageStyle
-	{
-		left:0;
-		right:0;
+		loadingImageSource: "assets/res/drawable-mdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
@@ -415,12 +415,7 @@ global
 	{
 		fontSize:22;
 		indent: 30;
-	}
-	
-	s|Group.pageStyle
-	{
-		left:0;
-		right:0;
+		loadingImageSource: "assets/res/drawable-hdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
@@ -653,12 +648,7 @@ global
 	{
 		fontSize:28;
 		indent: 40;
-	}
-	
-	s|Group.pageStyle
-	{
-		left:0;
-		right:0;
+		loadingImageSource: "assets/res/drawable-xhdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
@@ -886,12 +876,7 @@ global
 	{
 		fontSize:42;
 		indent: 60;
-	}
-	
-	s|Group.pageStyle
-	{
-		left:0;
-		right:0;
+		loadingImageSource: "assets/res/drawable-xxhdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
