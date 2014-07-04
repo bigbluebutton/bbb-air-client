@@ -1,12 +1,9 @@
 package org.bigbluebutton.view.navigation.pages.common
-{	
-	import mx.collections.ArrayCollection;
+{
 	import mx.core.FlexGlobals;
 	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
-	import org.bigbluebutton.model.User;
-	import org.bigbluebutton.model.UserList;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -23,21 +20,21 @@ package org.bigbluebutton.view.navigation.pages.common
 		
 		public override function initialize():void
 		{	
-			userUISession.loadingSignal.add(loadingFinished);
-			
+			userUISession.loadingSignal.add(loadingFinished);			
 		}
+		
 		private function loadingFinished(loading:Boolean):void
 		{
 			if (!loading)
 			{
-				var users:ArrayCollection = userSession.userList.users;
+				/*var users:ArrayCollection = userSession.userList.users;*/
 				userUISession.loadingSignal.remove(loadingFinished);
 				if (userSession.deskshareConnection != null)
 				{
 					view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = userSession.deskshareConnection.isStreaming;
-					userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);					
+					userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
 				}
-				userSession.userList.userChangeSignal.add(userChangeHandler);
+				/*userSession.userList.userChangeSignal.add(userChangeHandler);
 				for each(var u:User in users) 
 				{
 					if(u.hasStream)
@@ -45,7 +42,7 @@ package org.bigbluebutton.view.navigation.pages.common
 						view.menuVideoChatButton.visible = view.menuVideoChatButton.includeInLayout = true;
 						break;
 					}
-				}
+				}*/
 			}
 		}
 		/**
@@ -56,7 +53,7 @@ package org.bigbluebutton.view.navigation.pages.common
 			view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = isDeskshareStreaming;
 		}
 		
-		private function userChangeHandler(user:User, property:int):void
+		/*private function userChangeHandler(user:User, property:int):void
 		{
 			var users:ArrayCollection = userSession.userList.users;
 			var hasStream : Boolean = false;
@@ -79,16 +76,15 @@ package org.bigbluebutton.view.navigation.pages.common
 				}
 				view.menuVideoChatButton.visible = view.menuVideoChatButton.includeInLayout = hasStream;
 			}
-		}
+		}*/
 		
-				
 		/**
 		 * Unsubscribe from listening for Deskshare Streaming Signal
 		 */
 		public override function destroy():void
 		{
 			userSession.deskshareConnection.isStreamingSignal.remove(onDeskshareStreamChange);
-			userSession.userList.userChangeSignal.remove(userChangeHandler);
+			/*userSession.userList.userChangeSignal.remove(userChangeHandler);*/
 		}
 	}
 }

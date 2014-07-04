@@ -165,11 +165,15 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				if(dataProvider.contains(user) && !user.hasStream)
 				{
 					dataProvider.removeItemAt(dataProvider.getItemIndex(user));
-					checkVideo();
 				}
 				else if(!dataProvider.contains(user) && user.hasStream)
 				{
 					dataProvider.addItem(user);
+				}
+				
+				if(view.getDisplayedUserID()==null)
+				{
+					checkVideo();
 				}
 				
 				if(dataProvider.length==0)
@@ -179,6 +183,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				else
 				{
 					view.noVideoMessage.visible = false;
+					view.streamlist.selectedIndex = dataProvider.getItemIndex(userSession.userList.getUserByUserId(view.getDisplayedUserID()));
 				}
 			}
 		}
