@@ -3,6 +3,7 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 	import flash.desktop.NativeApplication;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.system.Capabilities;
 	
 	import mx.core.FlexGlobals;
 	
@@ -23,7 +24,14 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 			
 		override public function initialize():void
 		{
-			view.exitButton.addEventListener(MouseEvent.CLICK, applicationExit);
+			// If operating system is iOS, don't show exit button because there is no way to exit application:
+			if(Capabilities.os.search("iPhone") >= 0) {
+				view.exitButton.visible = false;
+			}
+			else {
+				view.exitButton.addEventListener(MouseEvent.CLICK, applicationExit);
+			}
+			
 			changeConnectionStatus(userUISession.currentPageDetails as int);
 			FlexGlobals.topLevelApplication.pageName.text = "";
 			FlexGlobals.topLevelApplication.topActionBar.visible = false;

@@ -339,6 +339,7 @@ package org.bigbluebutton.model
 		public function userLeaveAudio(userID:String):void {
 			var user:User = getUser(userID);
 			if(user != null) {
+				user.talking = false;
 				user.voiceJoined = false;
 				
 				userChangeSignal.dispatch(user, JOIN_AUDIO);
