@@ -142,6 +142,13 @@ s|SkinnableContainer.containerStyle
 	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileViewContainerSkin");
 }
 
+s|Application.mainshellStyle
+{
+	topActionBarColor: #444544;
+	imageScaleX:0.6;
+	imageScaleY:0.6;
+}
+
 global
 {
 	font-family: Verdana;
@@ -154,6 +161,11 @@ global
 }
 
 @media (application-dpi: 160) {
+	
+	s|Application.mainshellStyle
+	{
+		recordingStatusImage: "assets/res/drawable-mdpi/media_record.png";
+	}
 	
 	s|Label
 	{
@@ -388,6 +400,11 @@ global
 
 @media (application-dpi: 240) {
 	
+	s|Application.mainshellStyle
+	{
+		recordingStatusImage: "assets/res/drawable-hdpi/media_record.png";
+	}
+	
 	s|Label
 	{
 		paddingTop: 15;
@@ -620,6 +637,11 @@ global
 
 @media (application-dpi: 320) {
 	
+	s|Application.mainshellStyle
+	{
+		recordingStatusImage: "assets/res/drawable-xhdpi/media_record.png";
+	}
+	
 	s|Label
 	{
 		paddingTop: 20;
@@ -839,11 +861,6 @@ global
 		height: 60;
 	}
 	
-	s|Application.mainshellStyle
-	{
-		topActionBarColor: #444544;
-	}
-	
 	global
 	{
 		font-size: 34;
@@ -851,6 +868,11 @@ global
 }
 
 @media (application-dpi: 480) {
+	
+	s|Application.mainshellStyle
+	{
+		recordingStatusImage: "assets/res/drawable-xxhdpi/media_record.png";
+	}
 	
 	s|Label
 	{

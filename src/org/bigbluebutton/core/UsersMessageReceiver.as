@@ -207,6 +207,7 @@ package org.bigbluebutton.core
 		private function handleGetRecordingStatusReply(m:Object):void {
 			trace("UsersMessageReceiver::handleGetRecordingStatusReply() -- recording status");
 			var msg:Object = JSON.parse(m.msg);
+			userSession.recordingStatusChanged(msg.recording);
 		}
 	}
 }

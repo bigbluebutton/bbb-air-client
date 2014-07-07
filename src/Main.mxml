@@ -50,6 +50,7 @@
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
+			import org.bigbluebutton.view.ui.RecordingStatusConfig;
 			import org.bigbluebutton.view.ui.SwapCameraConfig;
 			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
@@ -66,6 +67,7 @@
 			
 			private var _orientationCalc:OrientationCalculator;
 			public var currentOrientation:String;
+			
 			
 			protected function preinitializeHandler(event:FlexEvent):void
 			{
@@ -123,6 +125,7 @@
 					.configure(DisconnectPageConfig)
 					.configure(DeskshareConfig)
 					.configure(MenuButtonsConfig)
+					.configure(RecordingStatusConfig)
 					
 					.configure(new ContextView(this));
 				
@@ -152,7 +155,7 @@
 			
 			protected function creationCompleteHandler(event:FlexEvent):void
 			{
-				
+
 			}
 			
 			protected function applicationCompleteHandler(event:FlexEvent):void
@@ -220,7 +223,7 @@
 					<s:SolidColor color="{getStyle('topActionBarColor')}" />
 				</s:fill>
 			</s:Rect>
-			<s:HGroup width="100%" height="100%">					
+			<s:HGroup width="100%" height="100%" verticalAlign="middle">					
 				<ui:NavigationButton id="profileBtn" click="profileBtn_clickHandler(event)" 					 
 										styleName="profileButtonStyle topButtonStyle "
 										navigateTo="{[PagesENUM.PROFILE]}"
@@ -230,7 +233,9 @@
 										styleName="backButtonStyle topButtonStyle"
 										navigateTo="{[PagesENUM.LAST]}"
 										transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
-										height="100%"/>   
+										height="100%"/> 
+				<ui:RecordingStatus id="recordingStatus" source="{getStyle('recordingStatusImage')}" visible="false" 
+									scaleMode="letterbox" scaleX="{getStyle('imageScaleX')}" scaleY="{getStyle('imageScaleY')}" height="100%"/>
 				<s:Label id="pageName" styleName="pageNameStyle"  width="100%" />
 				<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
 				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
