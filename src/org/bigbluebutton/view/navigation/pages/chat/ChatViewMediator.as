@@ -47,10 +47,11 @@ package org.bigbluebutton.view.navigation.pages.chat
 		
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
-		protected var list:List;
 		protected var publicChat:Boolean = true;
 		protected var user:User;
 		protected var data:Object;
+		
+		internal var list:List;
 		
 		override public function initialize():void
 		{

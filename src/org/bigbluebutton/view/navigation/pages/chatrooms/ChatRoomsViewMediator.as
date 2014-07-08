@@ -46,11 +46,12 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		public var userUISession: IUserUISession;
 		protected var dataProvider:ArrayCollection;
 		protected var usersSignal:ISignal; 
-		protected var list:List;
 		
 		protected var dicUsertoChat:Dictionary;
 		
 		protected var button:Object;
+		
+		internal var list:List;
 		
 		private var _users:ArrayCollection; 
 		private var _usersAdded:Array = new Array();

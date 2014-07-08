@@ -10,7 +10,7 @@ package org.bigbluebutton.view.navigation.pages
 	import org.bigbluebutton.view.navigation.pages.presentation.PresentationView;
 	import org.bigbluebutton.view.navigation.pages.profile.ProfileView;
 	import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantView;
-	import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisView;
+	import org.bigbluebutton.view.navigation.pages.userdetails.UserDetailsView;
 	import org.bigbluebutton.view.navigation.pages.videochat.VideoChatView;
 	import org.bigbluebutton.view.navigation.pages.deskshare.DeskshareView;
 
@@ -40,7 +40,7 @@ package org.bigbluebutton.view.navigation.pages
 				dic[PRESENTATION] = PresentationView;
 				dic[LOGIN] = LoginPageView;
 				dic[PROFILE] = ProfileView;
-				dic[USER_DETAIS] = UserDetaisView;
+				dic[USER_DETAIS] = UserDetailsView;
 				dic[VIDEO_CHAT] = VideoChatView;
 				dic[CHATROOMS] = ChatRoomsView;
 				dic[CHAT] = ChatView;

@@ -65,5 +65,10 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 			trace("DisconnectPageViewMediator.applicationExit - exitting the application!");
 			NativeApplication.nativeApplication.exit();
 		}
+		
+		override public function destroy():void
+		{
+			view = null;
+		}
 	}
 }

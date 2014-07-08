@@ -46,6 +46,8 @@ package org.bigbluebutton.view.navigation.pages.common
 		public override function destroy():void
 		{
 			userSession.deskshareConnection.isStreamingSignal.remove(onDeskshareStreamChange);
+			
+			view = null;
 		}
 	}
 }

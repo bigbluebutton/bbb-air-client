@@ -47,7 +47,7 @@
 		</s:Group>
 		<s:Image id="handIcon"  styleName="iconStyle handIconStyle" />
 		<s:Label id="labelDisplay" width="70%"  horizontalCenter="0"
-				 text="Lucas Jones&#xd;" textAlign="left" verticalAlign="middle"/>
+				  textAlign="left" verticalAlign="middle"/>
 		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
 		<s:Group left="0" >
 			<s:Image id="micIcon"    styleName="iconStyle micIconStyle" />

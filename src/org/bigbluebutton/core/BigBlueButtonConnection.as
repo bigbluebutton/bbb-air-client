@@ -27,7 +27,6 @@ package org.bigbluebutton.core
 		private var _userId:String;
 		
 		public function BigBlueButtonConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]

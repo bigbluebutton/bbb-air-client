@@ -63,5 +63,13 @@ package org.bigbluebutton.view.ui
 				view.setVisibility(user.hasStream);
 			}
 		}
+		
+		public override function destroy():void
+		{
+			(view as SwapCameraButton).removeEventListener(MouseEvent.CLICK, mouseClickHandler);
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
+			view.dispose();
+			view = null;
+		}
 	}
 }

@@ -92,6 +92,8 @@ package org.bigbluebutton.view.navigation
 		
 		override public function destroy():void
 		{
+			userUISession.pageChangedSignal.remove(changePage);
+			
 			super.destroy();
 			
 			view.dispose();
