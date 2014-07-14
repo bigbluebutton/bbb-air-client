@@ -56,7 +56,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			_userName.textColor = this.getStyle("color");
 			_userName.setTextFormat(nameFormat, 0, name.length);
 			_userName.x = x;
-			_userName.y = y - _userName.textHeight;
+			_userName.y = y - _userName.textHeight*1.5;
 			
 			var gradientMatrixWidth:Number = video.width;
 			var gradientMatrixHeight:Number = _userName.height*2;
@@ -66,8 +66,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			var gradientDrawWidth:Number = video.width;
 			var gradientDrawHeight:Number = _userName.height*2;
-			var gradientOffsetX:Number = 0;
-			var gradientOffsetY:Number = _userName.y-_userName.height;
+			var gradientOffsetX:Number = video.x;
+			var gradientOffsetY:Number = video.y + video.height - gradientDrawHeight;
 			
 			var gradientMatrix:Matrix = new Matrix ( );
 			gradientMatrix.createGradientBox ( gradientMatrixWidth, gradientMatrixHeight, gradientMatrixRotation, gradientTx + gradientOffsetX, gradientTy + gradientOffsetY);

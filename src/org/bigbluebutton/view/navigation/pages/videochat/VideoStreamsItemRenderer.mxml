@@ -12,19 +12,13 @@
 			override public function set data(obj:Object):void
 			{
 				super.data = obj;
-				var user:User = data as User;
-				if(user)
+				if(obj)
 				{
-					title.text = user.name;
-				}
-				else
-				{
-					title.text = resourceManager.getString('resources', 'video.noVideo');
+					title.text = obj.name;
 				}
 			}
-
 		]]>
 	</fx:Script>
-		<s:Label id="title" left="0" right="0" width="50%" height="100%" color="#000000"  textAlign="center" verticalAlign="middle" />
-		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
+	<s:Label id="title" left="0" right="0" width="50%" height="100%" color="#000000"  textAlign="center" verticalAlign="middle" />
+	<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
 </s:ItemRenderer>
