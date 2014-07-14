@@ -80,7 +80,8 @@ package org.bigbluebutton.core
 					{
 						trace("Error while trying to call remote method on the server");
 					}
-				)
+				),
+				_room
 			);
 	
 		}

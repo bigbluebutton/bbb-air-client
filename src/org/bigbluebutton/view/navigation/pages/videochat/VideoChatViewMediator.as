@@ -138,19 +138,22 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				stopStream(userID);
 				checkVideo();
 			}
-			if(dataProvider.contains(userSession.userList.getUserByUserId(userID)))
+			for(var item:int; item<dataProvider.length; item++)
 			{
-				dataProvider.removeItemAt(dataProvider.getItemIndex(userSession.userList.getUserByUserId(userID)))
-				if(dataProvider.length==0)
+				if((dataProvider.getItemAt(item) as User).userID == userID)
 				{
-					view.noVideoMessage.visible = true;
-				}
-				else
-				{
-					view.noVideoMessage.visible = false;
+					dataProvider.removeItemAt(item);
+					break;
 				}
 			}
-			
+			if(dataProvider.length==0)
+			{
+				view.noVideoMessage.visible = true;
+			}
+			else
+			{
+				view.noVideoMessage.visible = false;
+			}			
 		}
 		
 		private function userChangeHandler(user:User, property:int):void 
