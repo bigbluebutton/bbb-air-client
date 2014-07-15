@@ -126,7 +126,6 @@
 					.configure(SwapCameraConfig)
 					.configure(DisconnectPageConfig)
 					.configure(DeskshareConfig)
-					.configure(MenuButtonsConfig)
 					.configure(RecordingStatusConfig)
 					.configure(CameraSettingsConfig)
 					.configure(AudioSettingsConfig)

@@ -250,9 +250,30 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 40;
+		strokeWeight: 1;
+		disableBackgroundImage: Embed(source="assets/res/drawable-mdpi/lock.png");
+		radiusX: 2;
+		radiusY: 2;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 2;
+		topPadding: 20;
+		weight:2;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -538,9 +559,30 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 60;
+		strokeWeight: 1.5;
+		disableBackgroundImage: Embed(source="assets/res/drawable-hdpi/lock.png");
+		radiusX: 3;
+		radiusY: 3;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 3;
+		topPadding: 30;
+		weight:3;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -825,9 +867,30 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 80;
+		strokeWeight: 2;
+		disableBackgroundImage: Embed(source="assets/res/drawable-xhdpi/lock.png");
+		radiusX: 4;
+		radiusY: 4;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 4;
+		topPadding: 40;
+		weight:4;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -1107,9 +1170,30 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 120;
+		strokeWeight: 3;
+		disableBackgroundImage: Embed(source="assets/res/drawable-xxhdpi/lock.png");
+		radiusX: 6;
+		radiusY: 6;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 6;
+		topPadding: 60;
+		weight:6;
 	}
 	
 	s|SkinnableContainer.containerStyle
