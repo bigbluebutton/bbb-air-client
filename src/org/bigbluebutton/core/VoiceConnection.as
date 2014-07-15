@@ -7,6 +7,7 @@ package org.bigbluebutton.core
 	
 	import org.bigbluebutton.model.ConferenceParameters;
 	import org.bigbluebutton.model.IConferenceParameters;
+	import org.bigbluebutton.model.IUserSession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
@@ -15,6 +16,9 @@ package org.bigbluebutton.core
 	{
 		[Inject]
 		public var baseConnection:IBaseConnection;
+		
+		[Inject]
+		public var userSession:IUserSession;
 		
 		public static const NAME:String = "VoiceConnection";
 		
@@ -46,7 +50,7 @@ package org.bigbluebutton.core
 		
 		private function onConnectionSuccess():void
 		{
-			call();
+			call(userSession.userList.me.listenOnly);
 		}
 		
 		public function get unsuccessConnected():ISignal
@@ -103,7 +107,7 @@ package org.bigbluebutton.core
 			trace(NAME + "::disconnectedFromJoinVoiceConferenceCallback(): " + msg);
 			unsuccessConnected.dispatch("Failed on disconnectedFromJoinVoiceConferenceCallback()");
 			hangUp();
-		}	
+		}
 		
 		public function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):* {
 			trace(NAME + "::successfullyJoinedVoiceConferenceCallback()");
@@ -117,19 +121,21 @@ package org.bigbluebutton.core
 		//												//
 		//**********************************************//
 
-		public function call():void
+		public function call(listenOnly:Boolean=false):void
 		{
 			if (!callActive) {
-				trace(NAME + "::call(): starting voice call");
+				trace(NAME + "::call(listenOnly:Boolean): starting voice call");
 				baseConnection.connection.call(
 					"voiceconf.call",
 					new Responder(callOnSucess, callUnsucess),
 					"default",
 					_username,
-					_conferenceParameters.webvoiceconf
+					_conferenceParameters.webvoiceconf,
+					listenOnly.toString()
 				);
-			} else {
-				trace(NAME + "::call(): voice call already active");
+			}
+			else {
+				trace(NAME + "::call(listenOnly:Boolean=false): voice call already active");
 			}
 		}
 		

@@ -6,6 +6,7 @@ package org.bigbluebutton.command
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IUsersService;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.IConferenceParameters;
@@ -15,7 +16,6 @@ package org.bigbluebutton.command
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
-	import org.bigbluebutton.core.IVoiceConnection;
 	
 	public class ShareMicrophoneCommand extends Command
 	{		
@@ -26,39 +26,56 @@ package org.bigbluebutton.command
 		public var conferenceParameters: IConferenceParameters;
 		
 		[Inject]
-		public var enabled: Boolean;
+		public var audioOptions: Object;
+		
+		private var _shareMic:Boolean;
+		private var _listenOnly:Boolean;
 		
 		private var voiceConnection:IVoiceConnection;
 		
 		override public function execute():void
 		{
-			if (enabled) {
-				enableMic();
-			} else {
-				disableMic();
+			getAudioOption(audioOptions);
+			if (_shareMic || _listenOnly)
+			{
+				enableAudio();	
+			} 
+			else 
+			{
+				disableAudio();
 			}
 		}
 		
-		private function enableMic():void {
+		private function getAudioOption(option:Object):void
+		{
+			if(option && option.hasOwnProperty("shareMic") && option.hasOwnProperty("listenOnly"))
+			{
+				_shareMic = option.shareMic;
+				_listenOnly = option.listenOnly;
+			}		
+		}
+		
+		private function enableAudio():void {
 			voiceConnection = userSession.voiceConnection;
-			
 			if (!voiceConnection.connection.connected) {
 				voiceConnection.connect(conferenceParameters);
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
 			} 
 			else if (!voiceConnection.callActive) {
-				voiceConnection.call();
+				voiceConnection.call(_listenOnly);
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
 			}
 		}
 		
-		private function disableMic():void {
+		
+		private function disableAudio():void {
 			var manager:VoiceStreamManager = userSession.voiceStreamManager;
-			
+			voiceConnection = userSession.voiceConnection;
 			if (manager != null) {
 				manager.close();
+				voiceConnection.hangUp();
 			}
 		}
 		
@@ -67,9 +84,11 @@ package org.bigbluebutton.command
 			
 			var manager:VoiceStreamManager = new VoiceStreamManager();
 			manager.play(voiceConnection.connection, playName);
-			manager.publish(voiceConnection.connection, publishName, codec);			
-			userSession.voiceStreamManager = manager;
-			
+			if(publishName != null && publishName.length != 0)
+			{
+				manager.publish(voiceConnection.connection, publishName, codec);
+			}						
+			userSession.voiceStreamManager = manager;			
 			voiceConnection.successConnected.remove(mediaSuccessConnected);
 			voiceConnection.unsuccessConnected.remove(mediaUnsuccessConnected);
 		}

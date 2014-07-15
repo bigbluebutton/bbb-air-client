@@ -31,6 +31,16 @@ ui|NavigationButton
 	skinClass: ClassReference("org.bigbluebutton.view.skins.NavigationButtonSkin");
 }
 
+s|Button.cameraSettingsButtonStyle
+{
+	backgroundColor: #FFFFFF;
+	strokeColor: #C8CCC8;
+	onClickBackgroundColor: #918E8E;
+	imageScaleX: 0.6;
+	imageScaleY: 0.6;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.CameraSettingsButtonSkin");
+}
+
 s|Label.userDetailsLabelStyle
 {
 	fontWeight: normal;
@@ -75,12 +85,42 @@ s|Label#userName
 
 s|Button.logoutButtonStyle
 {
-	chromeColor: #FFFFFF;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.LogoutButtonSkin");
+	backgroundColor: #3385FF;
+	textColor: #FFFFFF;
+}
+
+s|Button.userSettingsButtonStyle
+{
+	buttonLabelAlign: center;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.userSettingsButtonSkin");
+}
+
+s|Button.userSettingsRaseHandButtonStyle
+{
+	backgroundColor: #FFFFFF;
+	textColor: #000000;
+	buttonLabelAlign:left;
+}
+
+s|Button.userNameLableStyle
+{
+	backgroundColor: #FFFFFF;
+	textColor: #000000;
 }
 
 s|Button.profileSettingsButtonStyle
 {
+	labelTextAlign:left;
+	backgroundColor:#FFFFFF;
+	onClickBackgroundColor:#918E8E;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileSettingsButtonSkin");
+}
+
+s|Button.audioSettingsButtonStyle
+{
+	labelTextAlign:center;
+	backgroundColor:#FFFFFF;
+	onClickBackgroundColor:#918E8E;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileSettingsButtonSkin");
 }
 
@@ -191,6 +231,25 @@ global
 		loadingImageSource: "assets/res/drawable-mdpi/videoLoading.png";
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 40;
+		strokeWeight: 1;
+		disableBackgroundImage: Embed(source="assets/res/drawable-mdpi/lock.png");
+		radiusX: 2;
+		radiusY: 2;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 2;
@@ -278,14 +337,39 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/deskshare.png");
 	}
 	
-	s|Button.logoutButtonStyle
+	s|Button.userSettingsButtonStyle
 	{
 		height: 50; 
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
 	}
 	
 	s|Button.profileSettingsButtonStyle
 	{
 		height: 50;
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 60;
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/sound.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -343,6 +427,11 @@ global
 	s|Image.micIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/microphone.png");
+	}
+	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/listenOnly.png");
 	}
 	
 	s|Image.micOffIconStyle
@@ -430,6 +519,25 @@ global
 		loadingImageSource: "assets/res/drawable-hdpi/videoLoading.png";
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 60;
+		strokeWeight: 1.5;
+		disableBackgroundImage: Embed(source="assets/res/drawable-hdpi/lock.png");
+		radiusX: 3;
+		radiusY: 3;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 3;
@@ -486,9 +594,12 @@ global
 		fontsize: 22;
 	}
 	
-	s|Button.logoutButtonStyle
+	s|Button.userSettingsButtonStyle
 	{
 		height: 75; 
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
 	}
 	
 	s|Button#showCameraButton0, s|Button#showPrivateChat0, s|Button#exitButton0
@@ -501,7 +612,29 @@ global
 	
 	s|Button.profileSettingsButtonStyle
 	{
-		height: 75; 
+		height: 75;
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 90;
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/sound.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -589,6 +722,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/micOffIcon.png");
 	}
 	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/listenOnly.png");
+	}
+	
 	s|Image.soundIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/sound.png");
@@ -668,6 +806,25 @@ global
 		loadingImageSource: "assets/res/drawable-xhdpi/videoLoading.png";
 	}
 	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 80;
+		strokeWeight: 2;
+		disableBackgroundImage: Embed(source="assets/res/drawable-xhdpi/lock.png");
+		radiusX: 4;
+		radiusY: 4;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
+	}
+	
 	s|View.viewStyle
 	{
 		lineWeight: 4;
@@ -724,9 +881,12 @@ global
 		fontsize: 28;
 	}
 	
-	s|Button.logoutButtonStyle
+	s|Button.userSettingsButtonStyle
 	{
 		height: 90; 
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
 	}
 	
 	s|Button#showCameraButton0, s|Button#showPrivateChat0, s|Button#exitButton0
@@ -740,6 +900,28 @@ global
 	s|Button.profileSettingsButtonStyle
 	{
 		height: 90; 
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 120;
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sound.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -827,6 +1009,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/micOffIcon.png");
 	}
 	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/listenOnly.png");
+	}
+	
 	s|Image.soundIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sound.png");
@@ -899,6 +1086,25 @@ global
 		fontSize:42;
 		indent: 60;
 		loadingImageSource: "assets/res/drawable-xxhdpi/videoLoading.png";
+	}
+	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 120;
+		strokeWeight: 3;
+		disableBackgroundImage: Embed(source="assets/res/drawable-xxhdpi/lock.png");
+		radiusX: 6;
+		radiusY: 6;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
 	}
 	
 	s|View.viewStyle
@@ -988,9 +1194,12 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/deskshare.png");
 	}
 	
-	s|Button.logoutButtonStyle
+	s|Button.userSettingsButtonStyle
 	{
 		height: 150; 
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
 	}
 	
 	s|Button#showCameraButton0, s|Button#showPrivateChat0, s|Button#exitButton0
@@ -1004,6 +1213,28 @@ global
 	s|Button.profileSettingsButtonStyle
 	{
 		height: 150; 
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 180;
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sound.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -1058,6 +1289,11 @@ global
 	s|Image.micOffIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/micOffIcon.png");
+	}
+	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/listenOnly.png");
 	}
 	
 	s|Image.soundIconStyle

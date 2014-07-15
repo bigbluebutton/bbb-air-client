@@ -18,12 +18,10 @@
 			height="{hostComponent.getStyle('height')}" width="100%" >
 		<s:stroke>
 			<s:LinearGradientStroke weight="{getStyle('weight')}"/>
-		</s:stroke> 
+		</s:stroke>
 		<s:fill >
-			<s:SolidColor color="{hostComponent.getStyle('backgroundColor')}" color.down="{hostComponent.getStyle('onClickBackgroundColor')}"/>
+			<s:SolidColor color="{hostComponent.getStyle('backgroundColor')}" />
 		</s:fill>
 	</s:Rect>
-	<s:BitmapImage source="{getStyle('backgroundImage')}" 
-				   verticalCenter="0" right="0" scaleMode="letterbox" scaleX="0.5" scaleY="0.5"/>
-	<s:Label width="100%" id="labelDisplay" text="{hostComponent.label}" textAlign="{getStyle('labelTextAlign')}" fontWeight="normal"  verticalCenter="0"/>
+	<s:Label width="100%" id="labelDisplay" text="{hostComponent.label}" textAlign="{getStyle('buttonLabelAlign')}" fontWeight="normal"  verticalCenter="0" color="{hostComponent.getStyle('textColor')}"/>
 </s:Skin>

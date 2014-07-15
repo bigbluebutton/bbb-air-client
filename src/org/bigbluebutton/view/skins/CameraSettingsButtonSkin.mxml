@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("spark.components.Button")]
+	</fx:Metadata>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="disabled" />
+		<s:State name="down" />
+		<s:State name="over" />
+		<s:State name="up" />
+	</s:states>
+	
+	<s:Rect width="100%" height="{hostComponent.getStyle('height')}" radiusX="{getStyle('radiusX')}" radiusY="{getStyle('radiusY')}">
+		<s:stroke>
+			<s:SolidColorStroke color="{hostComponent.getStyle('strokeColor')}" weight="{hostComponent.getStyle('strokeWeight')}" />
+		</s:stroke>
+		<s:fill >
+			<s:SolidColor color="{hostComponent.getStyle('backgroundColor')}" color.down="{hostComponent.getStyle('onClickBackgroundColor')}"/>
+		</s:fill>
+	</s:Rect>
+	<s:Label width="100%" id="labelDisplay" text="{hostComponent.label}" textAlign="center" fontWeight="normal"  verticalCenter="0"/>
+	<s:BitmapImage scaleMode="letterbox"  right="0" verticalAlign="middle" top="0" bottom="0"
+				   source="{getStyle('backgroundImage')}" source.disabled="{getStyle('disableBackgroundImage')}"
+				   scaleX="{getStyle('imageScaleX')}" scaleY="{getStyle('imageScaleY')}"/>
+	
+</s:Skin>

@@ -36,6 +36,8 @@
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
 			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
+			import org.bigbluebutton.view.navigation.pages.audiosettings.AudioSettingsConfig;
+			import org.bigbluebutton.view.navigation.pages.camerasettings.CameraSettingsConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
 			import org.bigbluebutton.view.navigation.pages.common.MenuButtonsConfig;
@@ -126,6 +128,8 @@
 					.configure(DeskshareConfig)
 					.configure(MenuButtonsConfig)
 					.configure(RecordingStatusConfig)
+					.configure(CameraSettingsConfig)
+					.configure(AudioSettingsConfig)
 					
 					.configure(new ContextView(this));
 				
@@ -215,7 +219,7 @@
 	
 	<s:Group width="100%" height="100%" id="mainshell" visible="false">
 		<s:layout>
-			<s:VerticalLayout />
+			<s:VerticalLayout gap="0"/>
 		</s:layout>
 		<s:Group width="100%" id="topActionBar" >
 			<s:Rect  height="100%" width="100%">
@@ -237,7 +241,7 @@
 				<ui:RecordingStatus id="recordingStatus" source="{getStyle('recordingStatusImage')}" visible="false" 
 									scaleMode="letterbox" scaleX="{getStyle('imageScaleX')}" scaleY="{getStyle('imageScaleY')}" height="100%"/>
 				<s:Label id="pageName" styleName="pageNameStyle"  width="100%" />
-				<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
+				<!--<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />-->
 				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
 			</s:HGroup>
 		</s:Group>

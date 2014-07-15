@@ -19,9 +19,9 @@ package org.bigbluebutton.view.navigation.pages.profile
 
 		}
 		
-		public function get userNameText():Label
+		public function get userNameButton():Button
 		{
-			return userName;
+			return userName0;
 		}
 		
 		public function get shareCameraButton():Button
@@ -54,12 +54,12 @@ package org.bigbluebutton.view.navigation.pages.profile
 			return raiseHandButton0;
 		}
 		
-		public function get cameraQualityRadioGroup():RadioButtonGroup
+/*		public function get cameraQualityRadioGroup():RadioButtonGroup
 		{
 			return cameraQualityTypeRadioButtonGroup;
 		}
-		
-		public function setCameraQuality(value:int):void
+		*/
+/*		public function setCameraQuality(value:int):void
 		{
 			switch(value)
 			{
@@ -74,13 +74,13 @@ package org.bigbluebutton.view.navigation.pages.profile
 					break;	
 			}
 			
-		}
+		}*/
 		
-		public function setCameraQualityGroupVisibility(hasStream:Boolean):void
+/*		public function setCameraQualityGroupVisibility(hasStream:Boolean):void
 		{
 			cameraQualityGroup.visible = hasStream;
 			cameraQualityGroup.includeInLayout = hasStream;
-		}
+		}*/
 		
 		public function get logoutButton():Button
 		{

@@ -331,6 +331,10 @@ package org.bigbluebutton.model
 				user.locked = locked;
 				
 				userChangeSignal.dispatch(user, JOIN_AUDIO);
+				if(user.listenOnly)
+				{
+					listenOnlyChange(user.userID,!user.listenOnly);
+				}
 			} else {
 				trace("UserList: User join audio failed - user not found");
 			}
@@ -407,6 +411,8 @@ package org.bigbluebutton.model
 				user.listenOnly = listenOnly;
 				// Doesn't do anything at the moment... waiting for css changes - Adam
 				userChangeSignal.dispatch(user, LISTEN_ONLY);
+				trace("userlist model line 413============================="+ user.name);
+				trace(user.listenOnly);
 			}
 		}
 	}
