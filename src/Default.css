@@ -10,6 +10,12 @@ s|Button
 	chromeColor: #918E8E;
 }
 
+s|Group.videoTextFieldStyle
+{
+	color: #FFFFFF;
+	font-family: Verdana;
+}
+
 view|TopView.topView
 {
 	fontWeight: bold;
@@ -132,7 +138,6 @@ s|Image.iconStyle
 s|View.viewStyle
 {
 	lineColor: #000000;
-	userDetailslineColor: #AF0000;
 	textColor: #BEBEBE;
 }
 
@@ -144,9 +149,15 @@ s|SkinnableContainer.containerStyle
 
 s|Application.mainshellStyle
 {
-	topActionBarColor: #444544;
+	topActionBarColor: #646262;
 	imageScaleX:0.6;
 	imageScaleY:0.6;
+}
+
+s|Group.pageStyle
+{
+	left:0;
+	right:0;
 }
 
 global
@@ -173,15 +184,16 @@ global
 		paddingBottom: 10;
 	}
 	
-	s|Group.pageStyle
+	s|Group.videoTextFieldStyle
 	{
-		left:4;
-		right:4;
+		fontSize:14;
+		indent: 20;
+		loadingImageSource: "assets/res/drawable-mdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 2;
+		lineWeight: 2;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -411,15 +423,16 @@ global
 		paddingBottom: 15;
 	}
 	
-	s|Group.pageStyle
+	s|Group.videoTextFieldStyle
 	{
-		left:6;
-		right:6;
+		fontSize:22;
+		indent: 30;
+		loadingImageSource: "assets/res/drawable-hdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 3;
+		lineWeight: 3;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -648,15 +661,16 @@ global
 		paddingBottom: 20;
 	}
 	
-	s|Group.pageStyle
+	s|Group.videoTextFieldStyle
 	{
-		left:8;
-		right:8;
+		fontSize:28;
+		indent: 40;
+		loadingImageSource: "assets/res/drawable-xhdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 4;
+		lineWeight: 4;
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -880,15 +894,16 @@ global
 		paddingBottom: 30;
 	}
 	
-	s|Group.pageStyle
+	s|Group.videoTextFieldStyle
 	{
-		left:12;
-		right:12;
+		fontSize:42;
+		indent: 60;
+		loadingImageSource: "assets/res/drawable-xxhdpi/videoLoading.png";
 	}
 	
 	s|View.viewStyle
 	{
-		weight: 6;
+		lineWeight: 6;
 	}
 	
 	s|SkinnableContainer.containerStyle

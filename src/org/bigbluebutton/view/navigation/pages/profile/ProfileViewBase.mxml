@@ -25,7 +25,7 @@
 						<s:Label id="userName" width="100%" />
 						<s:Line width="100%" height="0" >
 							<s:stroke>
-								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}" />
+								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 							</s:stroke>
 						</s:Line>	
 						<s:Button id="logoutButton0" width="100%" styleName="logoutButtonStyle" />
@@ -41,13 +41,13 @@
 						<s:Button id="shareCameraBtn0" width="100%"  styleName="profileSettingsButtonStyle" />		
 						<s:Line  height="0" width="100%" >
 							<s:stroke>
-								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}"/>
+								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}"/>
 							</s:stroke>
 						</s:Line>
 						<s:Button id="shareMicBtn0" width="100%" label="{resourceManager.getString('resources', 'profile.settings.mic.off')}" styleName="profileSettingsButtonStyle"/>	
 						<s:Line height="0" width="100%" >
 							<s:stroke>
-								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}" />
+								<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 							</s:stroke>
 						</s:Line>
 						<s:Button id="raiseHandButton0"  width="100%" label="{resourceManager.getString('resources', 'profile.settings.handRaise')}" styleName="profileSettingsButtonStyle" />
@@ -65,14 +65,14 @@
 										   groupName="cameraQualityTypeRadioButtonGroup" width="100%" value="low" />	
 							<s:Line height="0" width="100%" >
 								<s:stroke>
-									<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}"/>
+									<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}"/>
 								</s:stroke>
 							</s:Line>
 							<s:RadioButton id="mediumQuality" label="{resourceManager.getString('resources', 'profile.settings.cameraQuality.medium') + ' (320x240)'}"
 											groupName="cameraQualityTypeRadioButtonGroup" width="100%" value="medium" />
 							<s:Line  height="0" width="100%">
 								<s:stroke>
-									<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('weight')}" />
+									<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 								</s:stroke>
 							</s:Line>
 							<s:RadioButton id="highQuality" label="{resourceManager.getString('resources', 'profile.settings.cameraQuality.high') + ' (640x480)'}"

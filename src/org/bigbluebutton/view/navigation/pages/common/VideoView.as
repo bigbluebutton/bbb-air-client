@@ -90,7 +90,7 @@ package org.bigbluebutton.view.navigation.pages.common
 				// make the video height full height of the screen
 				video.height = screenHeight;
 				// calculate width based on a video height, it order to keep the same aspect ratio
-				video.width = ((originalVideoWidth  * video.height)/originalVideoHeight);		
+				video.width = ((originalVideoWidth  * video.height)/originalVideoHeight);
 				
 				// if calculated width appeared to be bigger than screen width, recalculuate the video size based on height
 				if (screenWidth < video.width) {
@@ -98,32 +98,32 @@ package org.bigbluebutton.view.navigation.pages.common
 					video.width = screenWidth;
 					// calculate height based on a video width, it order to keep the same aspect ratio
 					video.height = (video.width/originalVideoWidth) * originalVideoHeight;
-				}			
+				}
 			}
 		}
 		
 		public function resizeForLandscape():void
 		{
-			if (screenHeight < screenWidth) 
-			{		
+			if (screenHeight < screenWidth)
+			{
 				video.height = screenWidth;
 				video.width = ((originalVideoWidth * video.height)/originalVideoHeight);
 
-				if (screenWidth < video.width) 
+				if (screenWidth < video.width)
 				{
 					video.width = screenHeight;
 					video.height = (video.width/originalVideoWidth) * originalVideoHeight;
-				}		
-			} 
-			else {			
+				}
+			}
+			else {
 				video.width = screenHeight;
 				video.height = (video.width/originalVideoWidth) * originalVideoHeight;
 				
 				if (screenHeight < video.height) {
 					video.height = screenWidth;
-					video.width = ((originalVideoWidth * video.height)/originalVideoHeight);		
-				}	
-			}	
+					video.width = ((originalVideoWidth * video.height)/originalVideoHeight);
+				}
+			}
 		}
 		
 		public function rotateVideo(rotation:Number):void
@@ -202,6 +202,6 @@ package org.bigbluebutton.view.navigation.pages.common
 				ns.close();
 				ns = null;
 			}
-		}	
+		}
 	}
 }
