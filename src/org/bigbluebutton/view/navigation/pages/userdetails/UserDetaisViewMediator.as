@@ -43,6 +43,8 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 			view.showCameraButton.addEventListener(MouseEvent.CLICK, onShowCameraButton);
 			view.showPrivateChat.addEventListener(MouseEvent.CLICK, onShowPrivateChatButton);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'userDetail.title');
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
 		}
 		
 		protected function onShowCameraButton(event:MouseEvent):void

@@ -29,28 +29,17 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.userList.userChangeSignal.add(userChangeHandler);
-			
+			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'audioSettings.title');			
 			var userMe:User = userSession.userList.me;
+			
 			view.shareMicButton.addEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.listenOnlyButton.addEventListener(MouseEvent.CLICK, onListenOnlyClick);
-			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'audioSettings.title');
-			if(userMe.voiceJoined)
-			{
-				view.listenOnlyButton.visible = false;
-				view.shareMicButton.visible=true;
-				view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userMe.voiceJoined ? 'audioSettings.shareMicrophone.off' : 'audioSettings.shareMicrophone.on');
-			}
-			else if(userMe.listenOnly)
-			{
-				view.listenOnlyButton.visible = true;
-				view.shareMicButton.visible=false;
-				view.listenOnlyButton.label = ResourceManager.getInstance().getString('resources', userMe.listenOnly ? 'audioSettings.listenOnly.off' : 'audioSettings.listenOnly.on');
-			}
-			else
-			{
-				view.listenOnlyButton.visible = true;
-				view.shareMicButton.visible=true;
-			}
+			view.listenOnlyButton.visible = !userMe.voiceJoined;
+			view.shareMicButton.visible=!userMe.listenOnly;
+			view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userMe.voiceJoined ? 'audioSettings.shareMicrophone.off' : 'audioSettings.shareMicrophone.on');
+			view.listenOnlyButton.label = ResourceManager.getInstance().getString('resources', userMe.listenOnly ? 'audioSettings.listenOnly.off' : 'audioSettings.listenOnly.on');
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = true;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = false;
 		}
 		
 		private function onShareMicClick(event:MouseEvent):void
@@ -58,18 +47,15 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 			var audioOptions:Object = new Object();
 			audioOptions.shareMic = userSession.userList.me.voiceJoined = !userSession.userList.me.voiceJoined;
 			audioOptions.listenOnly = userSession.userList.me.listenOnly = false;
-			shareMicrophoneSignal.dispatch(audioOptions);
-			view.listenOnlyButton.visible = !userSession.userList.me.voiceJoined;
-
+			shareMicrophoneSignal.dispatch(audioOptions);			
 		}
 		
 		private function onListenOnlyClick(event:MouseEvent):void
 		{
 			var audioOptions:Object = new Object();
-			audioOptions.listenOnly = userSession.userList.me.listenOnly = !userSession.userList.me.listenOnly;
+			audioOptions.listenOnly = !userSession.userList.me.listenOnly;
 			audioOptions.shareMic = userSession.userList.me.voiceJoined = false;
 			shareMicrophoneSignal.dispatch(audioOptions);
-			view.shareMicButton.visible = !userSession.userList.me.listenOnly;
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
@@ -82,6 +68,8 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 			{
 				view.listenOnlyButton.label = ResourceManager.getInstance().getString('resources', user.listenOnly ? 'audioSettings.listenOnly.off' : 'audioSettings.listenOnly.on');
 			}
+			view.shareMicButton.visible = !userSession.userList.me.listenOnly;
+			view.listenOnlyButton.visible = !userSession.userList.me.voiceJoined;
 		}	
 		
 		override public function destroy():void

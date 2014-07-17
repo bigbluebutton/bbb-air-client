@@ -28,10 +28,10 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 		public var userSession: IUserSession;
 		
 		[Inject]
-		public var shareCameraSignal: ShareCameraSignal;				
+		public var shareCameraSignal: ShareCameraSignal;			
 		
 		[Inject]
-		public var changeQualitySignal : CameraQualitySignal;	
+		public var changeQualitySignal : CameraQualitySignal;
 		
 	
 		override public function initialize():void
@@ -67,6 +67,7 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 			view.startCameraButton.addEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.cameraQualityRadioGroup.addEventListener(ItemClickEvent.ITEM_CLICK, onCameraQualityRadioGroupClick);
 			view.setCameraQuality(userSession.videoConnection.selectedCameraQuality);
+			setRadioGroupEnable(userMe.hasStream);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'cameraSettings.title');
 		}
 		

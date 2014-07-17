@@ -108,17 +108,9 @@ s|Button.userNameLableStyle
 	textColor: #000000;
 }
 
-s|Button.profileSettingsButtonStyle
+s|Button.profileSettingsButtonStyle,s|Button.audioSettingsButtonStyle
 {
 	labelTextAlign:left;
-	backgroundColor:#FFFFFF;
-	onClickBackgroundColor:#918E8E;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileSettingsButtonSkin");
-}
-
-s|Button.audioSettingsButtonStyle
-{
-	labelTextAlign:center;
 	backgroundColor:#FFFFFF;
 	onClickBackgroundColor:#918E8E;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileSettingsButtonSkin");
@@ -234,29 +226,10 @@ global
 	s|Button.cameraSettingsButtonStyle
 	{
 		height: 40;
-		strokeWeight: 1;
-		disableBackgroundImage: Embed(source="assets/res/drawable-mdpi/lock.png");
+		strokeWeight: 0.1;
 		radiusX: 2;
 		radiusY: 2;
-	}
-	
-	s|Button.cameraSettingsStartButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
-	}
-	
-	s|Button.cameraSettingsSwapButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
-	}
-	
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 40;
-		strokeWeight: 1;
-		disableBackgroundImage: Embed(source="assets/res/drawable-mdpi/lock.png");
-		radiusX: 2;
-		radiusY: 2;
+		imageAlign:10;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -273,12 +246,12 @@ global
 	{
 		lineWeight: 2;
 		topPadding: 20;
-		weight:2;
+		weight:0.1;
 	}
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 2;
+		weight: 0.1;
 		radiusX: 4;
 		radiusY: 4;
 		top: 5;
@@ -372,6 +345,7 @@ global
 		weight: 0.1;
 		radiusX:2;
 		radiusY:2;
+		imageAlign:10;
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/arrowRight.png");
 	}
 	
@@ -381,6 +355,7 @@ global
 		weight: 0.1;
 		radiusX:2;
 		radiusY:2;
+		imageAlign:10;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -543,29 +518,10 @@ global
 	s|Button.cameraSettingsButtonStyle
 	{
 		height: 60;
-		strokeWeight: 1.5;
-		disableBackgroundImage: Embed(source="assets/res/drawable-hdpi/lock.png");
+		strokeWeight: 0.15;
 		radiusX: 3;
 		radiusY: 3;
-	}
-	
-	s|Button.cameraSettingsStartButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/video.png");
-	}
-	
-	s|Button.cameraSettingsSwapButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
-	}
-	
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 60;
-		strokeWeight: 1.5;
-		disableBackgroundImage: Embed(source="assets/res/drawable-hdpi/lock.png");
-		radiusX: 3;
-		radiusY: 3;
+		imageAlign:15;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -582,12 +538,12 @@ global
 	{
 		lineWeight: 3;
 		topPadding: 30;
-		weight:3;
+		weight:0.15;
 	}
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 3;
+		weight: 0.15;
 		radiusX: 6;
 		radiusY: 6;
 		top: 8;
@@ -658,6 +614,7 @@ global
 		weight: 0.15;
 		radiusX:3;
 		radiusY:3;
+		imageAlign:15;
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/arrowRight.png");
 	}
 	
@@ -667,6 +624,7 @@ global
 		weight: 0.15;
 		radiusX:3;
 		radiusY:3;
+		imageAlign:15;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -851,29 +809,10 @@ global
 	s|Button.cameraSettingsButtonStyle
 	{
 		height: 80;
-		strokeWeight: 2;
-		disableBackgroundImage: Embed(source="assets/res/drawable-xhdpi/lock.png");
+		strokeWeight: 0.2;
 		radiusX: 4;
 		radiusY: 4;
-	}
-	
-	s|Button.cameraSettingsStartButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/video.png");
-	}
-	
-	s|Button.cameraSettingsSwapButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
-	}
-	
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 80;
-		strokeWeight: 2;
-		disableBackgroundImage: Embed(source="assets/res/drawable-xhdpi/lock.png");
-		radiusX: 4;
-		radiusY: 4;
+		imageAlign:20;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -890,12 +829,12 @@ global
 	{
 		lineWeight: 4;
 		topPadding: 40;
-		weight:4;
+		weight:0.2;
 	}
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 4;
+		weight: 0.2;
 		radiusX: 8;
 		radiusY: 8;
 		top: 10;
@@ -966,6 +905,7 @@ global
 		weight: 0.2;
 		radiusX:4;
 		radiusY:4;
+		imageAlign:20;
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/arrowRight.png");
 	}
 	
@@ -975,6 +915,7 @@ global
 		weight: 0.2;
 		radiusX:4;
 		radiusY:4;
+		imageAlign:20;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -1154,29 +1095,10 @@ global
 	s|Button.cameraSettingsButtonStyle
 	{
 		height: 120;
-		strokeWeight: 3;
-		disableBackgroundImage: Embed(source="assets/res/drawable-xxhdpi/lock.png");
+		strokeWeight: 0.3;
 		radiusX: 6;
 		radiusY: 6;
-	}
-	
-	s|Button.cameraSettingsStartButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/video.png");
-	}
-	
-	s|Button.cameraSettingsSwapButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
-	}
-	
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 120;
-		strokeWeight: 3;
-		disableBackgroundImage: Embed(source="assets/res/drawable-xxhdpi/lock.png");
-		radiusX: 6;
-		radiusY: 6;
+		imageAlign:30;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -1193,12 +1115,12 @@ global
 	{
 		lineWeight: 6;
 		topPadding: 60;
-		weight:6;
+		weight:0.3;
 	}
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 6;
+		weight: 0.3;
 		radiusX: 12;
 		radiusY: 12;
 		top: 15;
@@ -1300,6 +1222,7 @@ global
 		weight: 0.3;
 		radiusX:6;
 		radiusY:6;
+		imageAlign:30;
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/arrowRight.png");
 	}
 	
@@ -1309,6 +1232,7 @@ global
 		weight: 0.3;
 		radiusX:6;
 		radiusY:6;
+		imageAlign:30;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle

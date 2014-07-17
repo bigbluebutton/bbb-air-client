@@ -12,7 +12,6 @@ package org.bigbluebutton.command
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
-	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
@@ -38,9 +37,9 @@ package org.bigbluebutton.command
 			getAudioOption(audioOptions);
 			if (_shareMic || _listenOnly)
 			{
-				enableAudio();	
-			} 
-			else 
+				enableAudio();
+			}
+			else
 			{
 				disableAudio();
 			}
@@ -48,11 +47,11 @@ package org.bigbluebutton.command
 		
 		private function getAudioOption(option:Object):void
 		{
-			if(option && option.hasOwnProperty("shareMic") && option.hasOwnProperty("listenOnly"))
+			if(option != null && option.hasOwnProperty("shareMic") && option.hasOwnProperty("listenOnly"))
 			{
 				_shareMic = option.shareMic;
 				_listenOnly = option.listenOnly;
-			}		
+			}	
 		}
 		
 		private function enableAudio():void {
@@ -61,14 +60,13 @@ package org.bigbluebutton.command
 				voiceConnection.connect(conferenceParameters);
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
-			} 
+			}
 			else if (!voiceConnection.callActive) {
 				voiceConnection.call(_listenOnly);
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
 			}
 		}
-		
 		
 		private function disableAudio():void {
 			var manager:VoiceStreamManager = userSession.voiceStreamManager;

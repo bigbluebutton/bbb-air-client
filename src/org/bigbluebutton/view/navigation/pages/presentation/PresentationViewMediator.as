@@ -2,6 +2,8 @@ package org.bigbluebutton.view.navigation.pages.presentation
 {
 	import flash.display.DisplayObject;
 	
+	import mx.core.FlexGlobals;
+	
 	import org.bigbluebutton.command.LoadSlideSignal;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.presentation.Presentation;
@@ -32,6 +34,8 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			userSession.presentationList.presentationChangeSignal.add(presentationChangeHandler);
 			
 			setPresentation(userSession.presentationList.currentPresentation);
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
 		}
 		
 		private function displaySlide():void {

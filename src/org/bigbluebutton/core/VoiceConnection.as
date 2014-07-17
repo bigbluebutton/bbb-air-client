@@ -106,7 +106,7 @@ package org.bigbluebutton.core
 		public function disconnectedFromJoinVoiceConferenceCallback(msg:String):* {
 			trace(NAME + "::disconnectedFromJoinVoiceConferenceCallback(): " + msg);
 			unsuccessConnected.dispatch("Failed on disconnectedFromJoinVoiceConferenceCallback()");
-			hangUp();
+			//hangUp();
 		}
 		
 		public function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):* {

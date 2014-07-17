@@ -8,8 +8,10 @@
 				>
 	<fx:Script>
 		<![CDATA[
+			import mx.core.FlexGlobals;
+			
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
-			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
+			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;			
 		]]>
 	</fx:Script>
 	
@@ -31,18 +33,16 @@
 			<s:Button id="raiseHandButton0"  width="90%" 
 					  label="{resourceManager.getString('resources', 'profile.settings.handRaise')}" 
 					  styleName="userSettingsButtonStyle userSettingsRaseHandButtonStyle " />
-			<ui:NavigationButton id="shareCameraBtn0"  styleName="profileSettingsButtonStyle"
-								 navigateTo="{[PagesENUM.CAMERASETTINGS]}"
+			<ui:NavigationButton id="shareCameraBtn0" width="90%"
 								 label="{resourceManager.getString('resources', 'cameraSettings.title')}"
-								 transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
-								 width="90%"
-								 />
-			<ui:NavigationButton id="shareMicBtn0"  styleName="profileSettingsButtonStyle"
-								 navigateTo="{[PagesENUM.AUDIOSETTINGS]}"
-								 transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
+								 navigateTo="{[PagesENUM.CAMERASETTINGS]}"
+								 styleName="profileSettingsButtonStyle"
+								 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
+			<ui:NavigationButton id="shareMicBtn0" width="90%"
 								 label="{resourceManager.getString('resources', 'audioSettings.title')}"
-								 width="90%"
-								 />
+								 navigateTo="{[PagesENUM.AUDIOSETTINGS]}"
+								 styleName="profileSettingsButtonStyle"
+								 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
 		</s:VGroup>
 	</s:Group>
 </view:NoTabView>

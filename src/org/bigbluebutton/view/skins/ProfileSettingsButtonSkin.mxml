@@ -24,6 +24,6 @@
 		</s:fill>
 	</s:Rect>
 	<s:BitmapImage source="{getStyle('backgroundImage')}" 
-				   verticalCenter="0" right="0" scaleMode="letterbox" scaleX="0.5" scaleY="0.5"/>
+				   verticalCenter="0" right="{getStyle('imageAlign')}" scaleMode="letterbox" scaleX="0.5" scaleY="0.5"/>
 	<s:Label width="100%" id="labelDisplay" text="{hostComponent.label}" textAlign="{getStyle('labelTextAlign')}" fontWeight="normal"  verticalCenter="0"/>
 </s:Skin>

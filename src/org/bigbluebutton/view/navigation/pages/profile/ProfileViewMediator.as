@@ -42,6 +42,8 @@ package org.bigbluebutton.view.navigation.pages.profile
 			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			view.logoutButton.addEventListener(MouseEvent.CLICK, logoutClick);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'profile.title');
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = true;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = false;
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
