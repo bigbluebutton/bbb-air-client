@@ -2,9 +2,10 @@ package org.bigbluebutton.view.navigation
 {
 	import flash.events.MouseEvent;
 	
+	import spark.components.ViewNavigator;
 	import spark.transitions.ViewTransitionBase;
 	
-	public class PagesNavigatorView extends PagesNavigatorViewBase implements IPagesNavigatorView
+	public class PagesNavigatorView extends ViewNavigator implements IPagesNavigatorView
 	{
 		
 		override protected function childrenCreated():void

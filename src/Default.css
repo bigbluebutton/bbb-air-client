@@ -178,6 +178,11 @@ global
 		recordingStatusImage: "assets/res/drawable-mdpi/media_record.png";
 	}
 	
+	s|TextInput
+	{
+		fontSize: 16;
+	}
+	
 	s|Label
 	{
 		paddingTop: 10;
@@ -415,6 +420,11 @@ global
 	s|Application.mainshellStyle
 	{
 		recordingStatusImage: "assets/res/drawable-hdpi/media_record.png";
+	}
+	
+	s|TextInput
+	{
+		fontSize: 24;
 	}
 	
 	s|Label
@@ -655,6 +665,11 @@ global
 		recordingStatusImage: "assets/res/drawable-xhdpi/media_record.png";
 	}
 	
+	s|TextInput
+	{
+		fontSize: 32;
+	}
+	
 	s|Label
 	{
 		paddingTop: 20;
@@ -886,6 +901,11 @@ global
 	s|Application.mainshellStyle
 	{
 		recordingStatusImage: "assets/res/drawable-xxhdpi/media_record.png";
+	}
+	
+	s|TextInput
+	{
+		fontSize: 48;
 	}
 	
 	s|Label

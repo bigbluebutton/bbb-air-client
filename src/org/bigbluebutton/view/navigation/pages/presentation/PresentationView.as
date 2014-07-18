@@ -25,7 +25,6 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
-			rotationHandler(FlexGlobals.topLevelApplication.currentOrientation);
 		}
 		
 		public function onClick(e:MouseEvent):void
@@ -56,20 +55,21 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		override public function rotationHandler(rotation:String):void {
 			switch (rotation) {
 				case StageOrientation.ROTATED_LEFT:
-					content.rotation = -90;
+					slide.rotation = -90;
 					break;
 				case StageOrientation.ROTATED_RIGHT:
-					content.rotation = 90;
+					slide.rotation = 90;
 					break;
 				case StageOrientation.UPSIDE_DOWN:
-					content.rotation = 180;
+					slide.rotation = 180;
 					break;
 				case StageOrientation.DEFAULT:
 				case StageOrientation.UNKNOWN:
 				default:
-					content.rotation = 0;
-			}	
+					slide.rotation = 0;
+			}
 		}
+		
 		
 		public function dispose():void
 		{
