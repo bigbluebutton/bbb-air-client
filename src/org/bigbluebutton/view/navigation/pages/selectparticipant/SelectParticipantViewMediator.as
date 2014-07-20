@@ -60,6 +60,8 @@ package org.bigbluebutton.view.navigation.pages.selectparticipant
 			userSession.userList.userAddedSignal.add(userAdded);
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'selectParticipant.title');
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
 		}
 		
 		private function userAdded(user:User):void

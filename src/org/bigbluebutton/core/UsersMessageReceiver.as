@@ -159,8 +159,11 @@ package org.bigbluebutton.core
 		
 		private function handleUserListeningOnly(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
-			trace("UsersMessageReceiver::handleUserListeningOnly -- user [" + msg.userId + "] has listen only set to [" + msg.listenOnly + "]");
-			userSession.userList.listenOnlyChange(msg.userId, msg.listenOnly);
+			//It seems that listenOnly keeps to be true
+			//Temp solution to set listenOnly to false when user drop listen only mode.
+			var listenOnly:Boolean = userSession.userList.me.listenOnly? false : true;
+			trace("UsersMessageReceiver::handleUserListeningOnly -- user [" + msg.userId + "] has listen only set to [" + listenOnly + "]");
+			userSession.userList.listenOnlyChange(msg.userId, listenOnly);
 		}
 		
 		private function handleVoiceUserMuted(m:Object):void {

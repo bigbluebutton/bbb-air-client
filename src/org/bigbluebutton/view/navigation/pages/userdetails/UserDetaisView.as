@@ -46,6 +46,7 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 				cameraIcon.visible = _user.hasStream;
 				micIcon.visible = (_user.voiceJoined && !_user.muted);
 				micOffIcon.visible = (_user.voiceJoined && _user.muted);
+				listenOnlyIcon.visible = _user.listenOnly;
 				soundIcon.visible = user.talking; 
 				
 				//TODO: buttons

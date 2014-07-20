@@ -19,10 +19,9 @@
 					profileIcon.visible = ((user.role == User.MODERATOR) && (!user.presenter));
 					cameraIcon.visible = user.hasStream;
 					handIcon.visible = user.raiseHand; 
-					
-					micIcon.visible = (user.voiceJoined && !user.muted);
-					micOffIcon.visible = (user.voiceJoined && user.muted);
-					
+					micIcon.visible = (user.voiceJoined && !user.muted && !user.listenOnly);
+					micOffIcon.visible = (user.voiceJoined && user.muted && !user.listenOnly);
+					listenOnlyIcon.visible = (!user.voiceJoined && user.listenOnly);
 					soundIcon.visible = user.talking;
 					if(user.me)
 					{
@@ -52,9 +51,9 @@
 		<s:Group left="0" >
 			<s:Image id="micIcon"    styleName="iconStyle micIconStyle" />
 			<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false" />
+			<s:Image id="listenOnlyIcon" styleName="iconStyle listenOnlyIconStyle" visible="false" />
 		</s:Group>
 		<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" />
-		<!--<s:Image styleName="iconStyle arrowRightStyle"  />-->
 	</s:Group>
 
 </s:ItemRenderer>

@@ -94,6 +94,8 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title');
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
 		}
 		
 		/**
