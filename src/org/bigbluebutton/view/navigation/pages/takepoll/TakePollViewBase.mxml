@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:view="org.bigbluebutton.core.view.*" 
+				xmlns:pollresults="org.bigbluebutton.view.navigation.pages.pollresults.*"
+				xmlns:pollslist="org.bigbluebutton.view.navigation.pages.pollslist.*"
+				xmlns:takepoll="org.bigbluebutton.view.navigation.pages.takepoll.*"
+				>
+	<s:Group id="pageGroup" width="100%" height="100%" styleName="pageStyle">
+		<s:Scroller height="100%" width="100%" >
+			
+			<s:VGroup width="100%" horizontalAlign="center">
+				<s:VGroup id="questionViewGroup" width="96%" >
+					<!-- This is where the QuestionViews go -->
+				</s:VGroup>
+				<s:Button id="submitButton0" label="{resourceManager.getString('resources', 'takePoll.submit')}" />
+				<s:Label id="errorMessage0" text="{resourceManager.getString('resources', 'takePoll.errorMessage')}" visible="false" width="100%" textAlign="center" />
+			</s:VGroup>
+			
+		</s:Scroller>
+	</s:Group>
+</view:NoTabView>

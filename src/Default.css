@@ -115,6 +115,11 @@ s|RadioButton
 	skinClass: ClassReference("org.bigbluebutton.view.skins.RadioButtonSkin");
 }
 
+s|CheckBox
+{
+	skinClass: ClassReference("org.bigbluebutton.view.skins.CheckBoxSkin")	
+}
+
 s|Image.bbbLogoStyle
 {
 	verticalCenter: 0;
@@ -254,6 +259,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/deskshare.png");
 	}
 	
+	ui|NavigationButton.pollsBtnStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/polling.png");
+	}
+	
 	s|Button.logoutButtonStyle
 	{
 		height: 50; 
@@ -367,6 +377,12 @@ global
 		eclipseRight: 10;
 		eclipseTop: 10;
 		eclipseBottom: 10;
+	}
+	
+	s|CheckBox
+	{
+		height: 40;
+		width: 40;
 	}
 	
 	s|Image.bbbLogoStyle
@@ -510,6 +526,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/deskshare.png");
 	}
 	
+	ui|NavigationButton.pollsBtnStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/polling.png");
+	}
+	
 	s|Button.topButtonStyle
 	{
 		width: 45;
@@ -600,6 +621,12 @@ global
 		eclipseRight: 15;
 		eclipseTop: 15;
 		eclipseBottom: 15;
+	}
+	
+	s|CheckBox
+	{
+		height: 60;
+		width: 60;
 	}
 	
 	s|Image.bbbLogoStyle
@@ -742,6 +769,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/deskshare.png");
 	}
 
+	ui|NavigationButton.pollsBtnStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/polling.png");
+	}
+	
 	s|Button.topButtonStyle
 	{
 		width: 60;
@@ -827,6 +859,12 @@ global
 		eclipseRight: 20;
 		eclipseTop: 20;
 		eclipseBottom: 20;
+	}
+	
+	s|CheckBox
+	{
+		height: 80;
+		width: 80;
 	}
 	
 	s|Image.bbbLogoStyle
@@ -951,6 +989,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/deskshare.png");
 	}
 	
+	ui|NavigationButton.pollsBtnStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/polling.png");
+	}
+	
 	s|Button.logoutButtonStyle
 	{
 		height: 150; 
@@ -1069,6 +1112,12 @@ global
 		eclipseRight: 30;
 		eclipseTop: 30;
 		eclipseBottom: 30;
+	}
+	
+	s|CheckBox
+	{
+		height: 120;
+		width: 120;
 	}
 	
 	s|Group.userDetailGroupStyle

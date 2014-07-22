@@ -16,6 +16,7 @@ package org.bigbluebutton.command
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
+	import org.bigbluebutton.core.IPollService;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
@@ -55,6 +56,9 @@ package org.bigbluebutton.command
 		[Inject]
 		public var presentationService: IPresentationService;
 		
+		[Inject]
+		public var pollService:IPollService;
+		
 		override public function execute():void {
 			connection.uri = uri;
 			
@@ -88,6 +92,7 @@ package org.bigbluebutton.command
 			// Set up remaining message sender and receivers:
 			chatService.setupMessageSenderReceiver();
 			presentationService.setupMessageSenderReceiver();
+			pollService.setupMessageSenderReceiver();
 			
 			// set up and connect the remaining connections
 			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
@@ -108,20 +113,21 @@ package org.bigbluebutton.command
 			deskshareConnection.connect();
 			
 			userSession.deskshareConnection = deskshareConnection;
-
-			// Query the server for chat, users, and presentation info
+			
+			// Query the server for chat, users, polls, and presentation info
 			chatService.sendWelcomeMessage();
 			chatService.getPublicChatMessages();
 			
 			presentationService.getPresentationInfo();
-
+			
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			usersService.queryForParticipants();
 			usersService.queryForRecordingStatus();
 			
+			pollService.getPolls();
+			
 			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
 			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
-			usersService.getRoomLockState();
 		}
 		
 		private function unsuccessJoiningMeeting():void {

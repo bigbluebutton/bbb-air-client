@@ -11,6 +11,7 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.core.VoiceStreamManager;
 	import org.bigbluebutton.model.chat.ChatMessages;
+	import org.bigbluebutton.model.polling.PollModel;
 	import org.bigbluebutton.model.presentation.PresentationList;
 	import org.hamcrest.core.throws;
 	import org.osflash.signals.ISignal;
@@ -28,6 +29,7 @@ package org.bigbluebutton.model
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
 		protected var _recording:Boolean;
+		protected var _pollModel:PollModel;
 		
 		protected var _guestSignal:ISignal = new Signal();
 		protected var _successJoiningMeetingSignal:ISignal = new Signal();
@@ -35,6 +37,14 @@ package org.bigbluebutton.model
 		protected var _recordingStatusChangedSignal:ISignal = new Signal();
 		protected var _logoutSignal:Signal = new Signal();
 
+		
+		public function UserSession()
+		{
+			_userList = new UserList();
+			_presentationList = new PresentationList();
+			_pollModel = new PollModel();
+		}
+		
 		public function get userList():UserList
 		{
 			return _userList;
@@ -110,16 +120,14 @@ package org.bigbluebutton.model
 		{
 			_deskshareConnection = value;
 		}
-
-		public function UserSession()
-		{
-			_userList = new UserList();
-			_presentationList = new PresentationList();
-		}
 		
 		public function get presentationList():PresentationList
 		{
 			return _presentationList
+		}
+		
+		public function get pollModel():PollModel {
+			return _pollModel;
 		}
 		
 		public function get guestSignal():ISignal

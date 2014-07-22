@@ -48,6 +48,9 @@
 			import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantConfig;
 			import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisConfig;
 			import org.bigbluebutton.view.navigation.pages.videochat.VideoChatConfig;
+			import org.bigbluebutton.view.navigation.pages.pollslist.PollsListConfig;
+			import org.bigbluebutton.view.navigation.pages.takepoll.TakePollConfig;
+			import org.bigbluebutton.view.navigation.pages.pollresults.PollResultsConfig;
 			import org.bigbluebutton.view.ui.MicButtonConfig;
 			import org.bigbluebutton.view.ui.NavigationButtonConfig;
 			import org.bigbluebutton.view.ui.SwapCameraConfig;
@@ -123,6 +126,9 @@
 					.configure(DisconnectPageConfig)
 					.configure(DeskshareConfig)
 					.configure(MenuButtonsConfig)
+					.configure(PollsListConfig)
+					.configure(TakePollConfig)
+					.configure(PollResultsConfig)
 					
 					.configure(new ContextView(this));
 				

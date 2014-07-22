@@ -38,7 +38,8 @@ package org.bigbluebutton
 	import org.bigbluebutton.model.UserUISession;
 	import org.bigbluebutton.model.chat.ChatMessagesSession;
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
-
+	import org.bigbluebutton.core.IPollService;
+	import org.bigbluebutton.core.PollService;
 
 	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
@@ -63,6 +64,7 @@ package org.bigbluebutton
 			injector.map(IChatMessageService).toSingleton(ChatMessageService);
 			injector.map(IPresentationService).toSingleton(PresentationService);
 			injector.map(IChatMessagesSession).toSingleton(ChatMessagesSession);
+			injector.map(IPollService).toSingleton(PollService);
 			injector.map(IDeskshareConnection).toSingleton(DeskshareConnection);
 			
 			// Type mapping

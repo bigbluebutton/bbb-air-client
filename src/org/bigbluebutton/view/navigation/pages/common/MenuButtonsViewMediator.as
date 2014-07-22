@@ -30,8 +30,15 @@ package org.bigbluebutton.view.navigation.pages.common
 				userUISession.loadingSignal.remove(loadingFinished);
 				view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = userSession.deskshareConnection.isStreaming;
 				userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
+				userSession.pollModel.pollsChangedSignal.add(onPollChange);
 			}
 		}
+		
+		public function onPollChange(change:int, pollID:String):void
+		{
+			view.menuPollsButton.visible = view.menuPollsButton.includeInLayout = true;
+		}
+		
 		/**
 		 * If we recieve signal that deskshare stream is on - include Deskshare button to the layout
 		 */ 

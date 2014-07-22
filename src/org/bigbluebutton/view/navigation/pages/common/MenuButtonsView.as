@@ -4,6 +4,10 @@ package org.bigbluebutton.view.navigation.pages.common
 		
 	public class MenuButtonsView extends MenuButtons implements IMenuButtonsView
 	{
+		public function get menuPollsButton():NavigationButton
+		{
+			return pollsBtn0;
+		}
 		
 		public function get menuDeskshareButton():NavigationButton
 		{

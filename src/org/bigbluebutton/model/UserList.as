@@ -21,6 +21,15 @@ package org.bigbluebutton.model
 		
 		private var _users:ArrayCollection;	
 		
+		public function UserList()
+		{
+			_me = new User();
+			_users = new ArrayCollection();
+			_sort = new Sort();
+			_sort.compareFunction = sortFunction;
+			_users.sort = _sort;
+		}
+		
 		[Bindable]
 		public function get users():ArrayCollection
 		{
@@ -45,15 +54,6 @@ package org.bigbluebutton.model
 		}
 		
 		private var _sort:Sort;
-		
-		public function UserList()
-		{
-			_me = new User();
-			_users = new ArrayCollection();
-			_sort = new Sort();
-			_sort.compareFunction = sortFunction;
-			_users.sort = _sort;
-		}
 		
 		/**
 		 * Dispatched when all participants are added

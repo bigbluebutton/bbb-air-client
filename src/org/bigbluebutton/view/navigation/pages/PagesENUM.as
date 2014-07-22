@@ -13,6 +13,9 @@ package org.bigbluebutton.view.navigation.pages
 	import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisView;
 	import org.bigbluebutton.view.navigation.pages.videochat.VideoChatView;
 	import org.bigbluebutton.view.navigation.pages.deskshare.DeskshareView;
+	import org.bigbluebutton.view.navigation.pages.pollslist.PollsListView;
+	import org.bigbluebutton.view.navigation.pages.takepoll.TakePollView;
+	import org.bigbluebutton.view.navigation.pages.pollresults.PollResultsView;
 
 	public class PagesENUM
 	{
@@ -27,6 +30,9 @@ package org.bigbluebutton.view.navigation.pages
 		public static const SELECT_PARTICIPANT:String = "selectparticipant";
 		public static const DISCONNECT:String = "Disconnect";
 		public static const DESKSHARE:String = "Deskshare";
+		public static const POLLS_LIST:String = "PollsList";
+		public static const TAKE_POLL:String =  "TakePoll";
+		public static const POLL_RESULTS:String = "PollResults";
 		
 		/**
 		 * Especials
@@ -48,6 +54,9 @@ package org.bigbluebutton.view.navigation.pages
 				dic[SELECT_PARTICIPANT] = SelectParticipantView;
 				dic[DISCONNECT] = DisconnectPageView;
 				dic[DESKSHARE] = DeskshareView;
+				dic[POLLS_LIST] = PollsListView;
+				dic[TAKE_POLL] = TakePollView;
+				dic[POLL_RESULTS] = PollResultsView;
 				
 				dicInitiated = true;
 			}
