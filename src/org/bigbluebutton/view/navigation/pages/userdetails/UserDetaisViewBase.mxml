@@ -25,7 +25,7 @@
 			</s:Group>
 			<s:Line width="90%" height="0" >
 				<s:stroke>
-					<s:SolidColorStroke color="{getStyle('userDetailslineColor')}" weight="{getStyle('weight')}" />
+					<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 				</s:stroke>
 			</s:Line>	
 			<s:Group width="100%" styleName="userDetail"  height="{getStyle('height')}">
@@ -38,7 +38,7 @@
 			</s:Group>
 			<s:Line width="90%" height="0" >
 				<s:stroke>
-					<s:SolidColorStroke color="{getStyle('userDetailslineColor')}" weight="{getStyle('weight')}" />
+					<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 				</s:stroke>
 			</s:Line>	
 			<s:Group width="100%" styleName="userDetail"  height="{getStyle('height')}">
@@ -61,7 +61,7 @@
 			</s:Group>
 			<s:Line width="90%" height="0" >
 				<s:stroke>
-					<s:SolidColorStroke color="{getStyle('userDetailslineColor')}" weight="{getStyle('weight')}" />
+					<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 				</s:stroke>
 			</s:Line>	
 			<s:Group width="50%" height="100%">

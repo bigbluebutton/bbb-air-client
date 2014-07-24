@@ -7,6 +7,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 	
 	import spark.components.Group;
 	import spark.components.Label;
+	import spark.components.List;
+	import spark.components.Scroller;
 
 	public interface IVideoChatView extends IView
 	{
@@ -15,5 +17,6 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		function get noVideoMessage():Label
 		function getDisplayedUserID():String
 		function get videoGroup():Group
+		function get streamlist():List
 	}
 }

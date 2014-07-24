@@ -2,8 +2,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 {
 	import flash.net.NetConnection;
 	
+	import mx.core.FlexGlobals;
+	
 	import spark.components.Group;
 	import spark.components.Label;
+	import spark.components.List;
 	
 	public class VideoChatView extends VideoChatViewBase implements IVideoChatView
 	{
@@ -22,8 +25,10 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			webcam.percentWidth = 100;
 			webcam.percentHeight = 100;
 			this.videoGroup.addElement(webcam);
-			webcam.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth);
-			webcam.rotateVideo(0);
+			var topActionBarHeight : Number = FlexGlobals.topLevelApplication.topActionBar.height;
+			var bottomMenuHeight : Number = FlexGlobals.topLevelApplication.bottomMenu.height;
+			webcam.startStream(connection, name, streamName, userID, width, height, screenHeight, screenWidth,topActionBarHeight, bottomMenuHeight);			
+			webcam.setVideoPosition(name);
 		}
 		
 		public function stopStream():void 
@@ -54,6 +59,11 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		public function get noVideoMessage():Label
 		{
 			return noVideoMessage0;
+		}
+		
+		public function get streamlist():List
+		{
+			return videoStreamsList;
 		}
 		
 		public function getDisplayedUserID():String {
