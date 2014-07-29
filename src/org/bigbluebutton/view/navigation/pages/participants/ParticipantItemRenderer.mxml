@@ -85,7 +85,7 @@
 				<s:Image id="micIcon" styleName="iconStyle micIconStyle" height="100%"/>
 				<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false" height="100%"/>
 			</s:Group>
-			<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" height="100%" />	
+			<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" height="100%" />
 	</s:Group>
 	<s:Line width="100%">
 		<s:stroke>

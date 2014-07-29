@@ -50,6 +50,19 @@
 				<s:Group>
 					<s:Image id="micIcon"    styleName="iconStyle micIconStyle"/>
 					<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false"/>
+				<s:Label width="50%" styleName="userDetailsLabelStyle" color="{getStyle('color')}" 
+						 height="100%" text="{resourceManager.getString('resources', 'userDetail.media')}" />
+				<s:Group  width="50%" height="100%">
+					<s:layout>				
+						<s:HorizontalLayout  horizontalAlign="center"/>
+					</s:layout>
+					<s:Image id="cameraIcon" styleName="iconStyle cameraIconStyle" height="100%" />
+					<s:Group height="100%">	
+						<s:Image id="micIcon"    styleName="iconStyle micIconStyle" height="100%" />
+						<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false"  height="100%" />
+						<s:Image id="listenOnlyIcon" styleName="iconStyle listenOnlyIconStyle" visible="false" height="100%" />
+					</s:Group>
+					<s:Image id="soundIcon"  styleName="iconStyle soundIconStyle" height="100%" />
 				</s:Group>
 				<s:Image id="soundIcon"  styleName="iconStyle soundIconStyle"/>
 			</s:Group>

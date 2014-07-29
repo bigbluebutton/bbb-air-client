@@ -93,7 +93,8 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			userSession.userList.userAddedSignal.add(userAdded);
 			setPageTitle();
 			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
-			
+			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
 		}
 		
 		/**

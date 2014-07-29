@@ -30,6 +30,16 @@ ui|NavigationButton
 	skinClass: ClassReference("org.bigbluebutton.view.skins.NavigationButtonSkin");
 }
 
+s|Button.cameraSettingsButtonStyle
+{
+	backgroundColor: #FFFFFF;
+	strokeColor: #C8CCC8;
+	onClickBackgroundColor: #918E8E;
+	imageScaleX: 0.6;
+	imageScaleY: 0.6;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.CameraSettingsButtonSkin");
+}
+
 s|Label.userDetailsLabelStyle
 {
 	color: #BEBEBE;
@@ -48,12 +58,34 @@ s|Label.chatTimeColor
 
 s|Button.logoutButtonStyle
 {
-	chromeColor: #FFFFFF;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.LogoutButtonSkin");
+	backgroundColor: #3385FF;
+	textColor: #FFFFFF;
 }
 
-s|Button.profileSettingsButtonStyle
+s|Button.userSettingsButtonStyle
 {
+	buttonLabelAlign: center;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.userSettingsButtonSkin");
+}
+
+s|Button.userSettingsRaseHandButtonStyle
+{
+	backgroundColor: #FFFFFF;
+	textColor: #000000;
+	buttonLabelAlign:left;
+}
+
+s|Button.userNameLableStyle
+{
+	backgroundColor: #FFFFFF;
+	textColor: #000000;
+}
+
+s|Button.profileSettingsButtonStyle,s|Button.audioSettingsButtonStyle
+{
+	labelTextAlign:left;
+	backgroundColor:#FFFFFF;
+	onClickBackgroundColor:#918E8E;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileSettingsButtonSkin");
 }
 
@@ -160,6 +192,32 @@ global
 	{
 		paddingBottom:40;
 		paddingTop:40;
+	}
+	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 40;
+		strokeWeight: 0.1;
+		radiusX: 2;
+		radiusY: 2;
+		imageAlign:10;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
+	}
+	
+	s|View.viewStyle
+	{
+		lineWeight: 2;
+		topPadding: 20;
+		weight:0.1;
 	}
 	
 	s|Label.chatRoomLabelStyle,s|Label.selectParticipantLabelStyle
@@ -273,12 +331,57 @@ global
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/deskshare.png");
 	}
+
+	s|Button.userSettingsButtonStyle
+	{
+		height: 50; 
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
+	}
 	
 	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
 	{
-		height: 50; 
+		height: 50;
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
+		imageAlign:10;
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/arrowRight.png");
 	}
 	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 60;
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
+		imageAlign:10;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/sound.png");
+	}
+	
+	s|Label.pageNameStyle
+	{
+		fontSize: 18;
+	}
+	
+	s|Button.topButtonStyle
+	{
+		width: 30;
+		height: 30;
+		strokeWeight: 1;
+	}
+	
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	s|Button.profileButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/participants.png");
@@ -324,6 +427,11 @@ global
 	s|Image.micIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/microphone.png");
+	}
+	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/listenOnly.png");
 	}
 	
 	s|Image.micOffIconStyle
@@ -407,17 +515,52 @@ global
 		paddingBottom:18;
 	}
 	
+<<<<<<< HEAD
 	s|Label.disconnectMsgStyle
 	{
 		paddingBottom: 60;
 		paddingTop:60;
+=======
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 60;
+		strokeWeight: 0.15;
+		radiusX: 3;
+		radiusY: 3;
+		imageAlign:15;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
+	}
+	
+	s|View.viewStyle
+	{
+		lineWeight: 3;
+		topPadding: 30;
+		weight:0.15;
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|Label.chatRoomLabelStyle,s|Label.selectParticipantLabelStyle
 	{
+<<<<<<< HEAD
 		paddingLeft:9;
 		paddingTop:30;
 		paddingBottom:30;
+=======
+		weight: 0.15;
+		radiusX: 6;
+		radiusY: 6;
+		top: 8;
+		bottom: 8;
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|TextInput.msgInputBoxStyle
@@ -466,10 +609,19 @@ global
 		lineWeight: 0.3;
 	}
 	
+<<<<<<< HEAD
 	s|View.userDetailviewStyle
 	{
 		lineWeight: 0.75;
 		showCameraButtonPaddingTop:60;
+=======
+	s|Button.userSettingsButtonStyle
+	{
+		height: 75; 
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|View.chatViewStyle
@@ -497,7 +649,31 @@ global
 	
 	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
 	{
-		height: 75; 
+		height: 75;
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
+		imageAlign:15;
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 90;
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
+		imageAlign:15;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/sound.png");
 	}
 	
 	s|Button.commonButtonStyle
@@ -580,6 +756,11 @@ global
 	s|Image.micOffIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/micOffIcon_dark.png");
+	}
+	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/listenOnly.png");
 	}
 	
 	s|Image.soundIconStyle
@@ -670,14 +851,49 @@ global
 		paddingBottom:40;
 	}
 	
+<<<<<<< HEAD
 	s|TextInput.msgInputBoxStyle
 	{
 		paddingRight:80;
+=======
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 80;
+		strokeWeight: 0.2;
+		radiusX: 4;
+		radiusY: 4;
+		imageAlign:20;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
+	}
+	
+	s|View.viewStyle
+	{
+		lineWeight: 4;
+		topPadding: 40;
+		weight:0.2;
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|Button.sendButtonStyle
 	{
+<<<<<<< HEAD
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sendMsgIcon.png");
+=======
+		weight: 0.2;
+		radiusX: 8;
+		radiusY: 8;
+		top: 10;
+		bottom: 10;
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|Label.pageNameStyle
@@ -722,10 +938,19 @@ global
 		showCameraButtonPaddingTop:80;
 	}
 	
+<<<<<<< HEAD
 	s|View.chatViewStyle
 	{
 		chatInputTextHeight:96;
 		btnWidth:80;
+=======
+	s|Button.userSettingsButtonStyle
+	{
+		height: 90; 
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
+>>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|SkinnableContainer.containerStyle
@@ -748,6 +973,30 @@ global
 	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
 	{
 		height: 90; 
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
+		imageAlign:20;
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 120;
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
+		imageAlign:20;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sound.png");
 	}
 	
 	s|Button.commonButtonStyle
@@ -830,6 +1079,11 @@ global
 	s|Image.micOffIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/micOffIcon_dark.png");
+	}
+	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/listenOnly.png");
 	}
 	
 	s|Image.soundIconStyle
@@ -923,6 +1177,32 @@ global
 	s|Button.sendButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sendMsgIcon.png");
+	}
+	
+	s|Button.cameraSettingsButtonStyle
+	{
+		height: 120;
+		strokeWeight: 0.3;
+		radiusX: 6;
+		radiusY: 6;
+		imageAlign:30;
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsSwapButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
+	}
+	
+	s|View.viewStyle
+	{
+		lineWeight: 6;
+		topPadding: 60;
+		weight:0.3;
 	}
 	
 	s|Label.pageNameStyle
@@ -1020,9 +1300,12 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/deskshare.png");
 	}
 	
-	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
+	s|Button.userSettingsButtonStyle
 	{
 		height: 150; 
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
 	}
 	
 	s|Button.commonButtonStyle
@@ -1031,8 +1314,47 @@ global
 		width:396;
 		radiusX: 24;
 		radiusY: 24;
-		textFontSize:48;
-		labelPaddingTop:6;
+	}
+	
+	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
+	{
+		height: 150; 
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
+		imageAlign:30;
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/arrowRight.png");
+	}
+	
+	s|Button.audioSettingsButtonStyle
+	{
+		height: 180;
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
+		imageAlign:30;
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsListenOnlyButtonStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sound.png");
+	}
+	
+	s|Label.pageNameStyle
+	{
+		fontSize: 54;
+	}
+	
+	s|Button.topButtonStyle
+	{
+		width: 90;
+		height: 90;
+		strokeWeight: 3;
 	}
 	
 	s|Button.profileButtonStyle
@@ -1075,6 +1397,11 @@ global
 	s|Image.micOffIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/micOffIcon_dark.png");
+	}
+	
+	s|Image.listenOnlyIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/listenOnly.png");
 	}
 	
 	s|Image.soundIconStyle

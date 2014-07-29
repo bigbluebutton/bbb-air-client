@@ -21,7 +21,7 @@
 				<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 			</s:stroke>
 		</s:Line>	
-		<s:Scroller id="streamListScroller" width="100%" height="38%"  >
+		<s:Scroller id="streamListScroller" width="100%" height="38%" >
 			<s:Group height="100%" width="100%" >
 				<s:List id="videoStreamsList" width="100%" height="100%" itemRenderer="org.bigbluebutton.view.navigation.pages.videochat.VideoStreamsItemRenderer"/>
 			</s:Group>
