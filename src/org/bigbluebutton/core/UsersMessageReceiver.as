@@ -113,7 +113,7 @@ package org.bigbluebutton.core
 			user.voiceUserId = newUser.voiceUser.userId;
 			user.isLeavingFlag = false;
 			user.listenOnly = newUser.listenOnly;
-			
+			user.muted = newUser.voiceUser.muted;
 			userSession.userList.addUser(user);
 			
 			// The following properties are 'special', in that they have view changes associated with them.

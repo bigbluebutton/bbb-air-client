@@ -2,6 +2,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 {
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
 	
@@ -73,7 +74,6 @@ package org.bigbluebutton.view.navigation.pages.chat
 			list.addEventListener(FlexEvent.UPDATE_COMPLETE, scrollUpdate);
 			
 			view.sendButton.addEventListener(MouseEvent.CLICK, onSendButtonClick);
-			
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
 			

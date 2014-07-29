@@ -9,7 +9,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 	import mx.core.FlexGlobals;
 	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
-
+	
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
@@ -91,9 +91,9 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
-			
+			setPageTitle();
 			chatMessagesSession.chatMessageChangeSignal.add(newMessageReceived);
-			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title');
+			
 		}
 		
 		/**
@@ -127,7 +127,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		}
 		
 		/**
-		 * if user removed, sets online property to true and updates data provider
+		 * if user added, sets online property to true and updates data provider
 		 **/
 		public function userAdded(user:Object):void
 		{
@@ -162,6 +162,24 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			dataProvider.refresh();
 		}
+		
+		/**
+		 * Count chat rooms and set page title accordingly
+		 **/
+		public function setPageTitle():void
+		{
+			if(dataProvider != null)
+			{
+				if(dataProvider.length<=2)
+				{
+					FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title');
+				}
+				else
+				{
+					FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title') + "s (" + (dataProvider.length-1) + ")";
+				}
+			}
+		}		
 		
 		/**
 		 * Populate ArrayCollection after a new message was received 
@@ -235,6 +253,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			
 			//dataProvider.setItemAt(button, dataProvider.length-1);
 			dataProvider.refresh();
+			setPageTitle();
 			//dicUsertoChat[chat.user] = chat;				
 		}
 		

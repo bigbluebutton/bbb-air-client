@@ -5,7 +5,7 @@
 	<fx:Metadata>
 		[HostComponent("spark.components.Button")]
 	</fx:Metadata>
-	
+
 	<!-- states -->
 	<s:states>
 		<s:State name="disabled" />
@@ -18,17 +18,20 @@
 	name=iconDisplay, type=spark.primitives.BitmapImage, required=false
 	name=labelDisplay, type=spark.core.IDisplayText, required=false
 	-->
-	<s:Rect width="{hostComponent.getStyle('width')}" 
-			height="{hostComponent.getStyle('height')}"
+	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}"
 			horizontalCenter="0" verticalCenter="0"
-			radiusX="{hostComponent.getStyle('radiusX')}" radiusY="{hostComponent.getStyle('radiusY')}">
-		<s:fill >
+			radiusX="{hostComponent.getStyle('radiusX')}"
+			radiusY="{hostComponent.getStyle('radiusY')}"
+			>
+		<s:fill>
 			<s:SolidColor color="{hostComponent.getStyle('fillColor')}" />
 		</s:fill>
 	</s:Rect>
 	
-	<s:Label id="labelDisplay"
-			 horizontalCenter="0" textAlign="center" verticalAlign="middle"
-			  color="#FFFFFF">
+	<s:Label id="labelDisplay" color="{hostComponent.getStyle('textColor')}"
+			 fontSize="{hostComponent.getStyle('textFontSize')}" 
+			 horizontalCenter="0" verticalCenter="0"
+			 paddingTop="{hostComponent.getStyle('labelPaddingTop')}" paddingBottom="0"
+			 >
 	</s:Label>
 </s:Skin>

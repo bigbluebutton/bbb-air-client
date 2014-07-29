@@ -2,7 +2,7 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				width="500">
+				>
 	
 	<fx:Script>
 		<![CDATA[
@@ -68,20 +68,23 @@
 			
 		]]>
 	</fx:Script>
-	<s:layout>
-		<s:VerticalLayout />
-	</s:layout>
 	<s:states>
 		<s:State name="others_state"/>
 		<s:State name="me_state"/>
 	</s:states>
-	<s:Group id="nameTimeGroup" width="100%">
-		<s:Label id="username"  left="0" width="50%"  color="#9E9E9E" 
-				 textAlign="left" left.me_state="" right.me_state="0" textAlign.me_state="right"/>
-		<s:Label id="time"  right="0" width="50%" color="#9E9E9E" 
-				  textAlign="right" left.me_state="0" right.me_state="" textAlign.me_state="left"/>
-	</s:Group>
-	<s:Group width="100%">
-		<s:RichEditableText editable="false" selectable="false" id="message" width="100%" textAlign="left"/>
+	<s:Group width="100%" >
+		<s:layout>
+			<s:VerticalLayout verticalAlign="middle"/>
+		</s:layout>
+		<s:Group id="nameTimeGroup" width="100%">
+			<s:layout>
+				<s:HorizontalLayout />
+			</s:layout>
+			<s:Label id="username" width="50%" styleName="chatNameColor chatNameTimeStyle subContentFontSize"/>
+			<s:Label id="time" width="50%" textAlign="right" styleName="chatTimeColor chatNameTimeStyle subContentFontSize" />
+		</s:Group>
+		<s:Group width="100%">
+			<s:RichEditableText editable="false" selectable="false" id="message" width="100%"  styleName="msgTextStyle contentFontSize"/>
+		</s:Group>
 	</s:Group>
 </s:ItemRenderer>

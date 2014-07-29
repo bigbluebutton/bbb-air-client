@@ -11,7 +11,7 @@ package org.bigbluebutton.view.ui
 		
 		public function setVisibility(val:Boolean):void
 		{
-			super.visible = val;
+			super.visible = super.includeInLayout = val;
 		}
 		
 		public function dispose():void

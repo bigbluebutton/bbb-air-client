@@ -3,20 +3,20 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				xmlns:view="org.bigbluebutton.core.view.*" 
-				styleName="viewStyle"
+				styleName="deviderLineStyle"
 				>
 	<view:states>
 		<s:State name="verticalState"/>
 		<s:State name="horizontalState"/>
 	</view:states>
-	<s:Group width="100%" height="100%" styleName="pageStyle">
+	<s:Group width="100%" height="100%">
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
 		<s:Group id="videoGroup0" width="100%" height="60%" >
-			<s:Label id="noVideoMessage0" width="100%" height="100%" visible="true" text="{resourceManager.getString('resources', 'video.noVideo')}" />
+			<s:Label id="noVideoMessage0" styleName="contentFontSize"  textAlign="center" width="100%" height="100%" visible="true" text="{resourceManager.getString('resources', 'video.noVideo')}" />
 		</s:Group>
-		<s:Line width="100%" height="0" >
+		<s:Line width="100%">
 			<s:stroke>
 				<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
 			</s:stroke>
