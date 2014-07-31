@@ -31,6 +31,9 @@ package org.bigbluebutton.command
 		[Inject]
 		public var usersService: IUsersService;
 		
+		[Inject]
+		public var conferenceParameters:IConferenceParameters;
+		
 		override public function execute():void {
 			if (enabled) {
 				userSession.videoConnection.cameraPosition = position;
@@ -40,12 +43,12 @@ package org.bigbluebutton.command
 			}
 		}
 		
-		private function buildStreamName(camWidth:int, camHeight:int, userId:String):String {
+		private function buildStreamName(camWidth:int, camHeight:int, userId:String, roomId:String):String {
 			var d:Date = new Date();
 			var curTime:Number = d.getTime();	
 			var uid:String = userSession.userId;
 			var res:String = camWidth + "x" + camHeight;
-			return res.concat("-" + uid) + "-" + curTime;
+			return res.concat("-" + uid) + "-" + roomId + "-" + curTime;
 		}
 		
 		private function setupCamera(position:String):Camera 
@@ -107,7 +110,7 @@ package org.bigbluebutton.command
 			
 			if(userSession.videoConnection.camera)
 			{
-				var streamName:String = buildStreamName(userSession.videoConnection.camera.width, userSession.videoConnection.camera.height, userId);
+				var streamName:String = buildStreamName(userSession.videoConnection.camera.width, userSession.videoConnection.camera.height, userId, conferenceParameters.room);
 				
 				usersService.addStream(userId, streamName);
 				userSession.videoConnection.startPublishing(userSession.videoConnection.camera, streamName);

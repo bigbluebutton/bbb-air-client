@@ -46,7 +46,7 @@ package org.bigbluebutton.view.navigation.pages.common
 			ns = new NetStream(connection);
 			ns.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
 			ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
-			ns.client = this;
+			ns.client = {};
 			ns.bufferTime = 0;
 			ns.receiveVideo(true);
 			ns.receiveAudio(false);

@@ -9,9 +9,14 @@ package org.bigbluebutton.core
 	{
 		function get unsuccessConnected():ISignal
 		function get successConnected():ISignal
+		function get unsuccessIOSConnected():ISignal
+		function get successIOSConnected():ISignal
 		function set uri(uri:String):void
 		function get uri():String
+		function set iosUri(uri:String):void
+		function get iosUri():String
 		function get connection():NetConnection
+		function get iosConnection():NetConnection
 		function get cameraPosition():String;
 		function set cameraPosition(position:String):void
 		function get camera():Camera;

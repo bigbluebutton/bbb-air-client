@@ -22,6 +22,7 @@ package org.bigbluebutton.model
 		function set config(value:Config):void;
 		function get userId():String;
 		function set userId(value:String):void;		
+		function get clientIsIOS():Boolean;
 		function get userList():UserList;
 		function get voiceConnection():IVoiceConnection;
 		function set voiceConnection(value:IVoiceConnection):void;

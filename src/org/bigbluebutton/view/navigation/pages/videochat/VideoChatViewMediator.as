@@ -202,7 +202,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				var length:Number = Number(String(resolution.dimensions[1]));
 				if (view) 
 				{
-					view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length, view.videoGroup.height, view.videoGroup.width);
+					view.startStream(userSession.clientIsIOS ? userSession.videoConnection.iosConnection : userSession.videoConnection.connection, name, streamName, resolution.userID, width, length, view.videoGroup.height, view.videoGroup.width);
 				}
 			}
 		}
@@ -308,7 +308,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		
 		protected function getVideoResolution(stream:String):Object
 		{
-			var pattern:RegExp = new RegExp("(\\d+x\\d+)-([A-Za-z0-9]+)-\\d+", "");
+			var pattern:RegExp = new RegExp("(\\d+x\\d+)-([A-Za-z0-9]+)-([a-z0-9]+-\\d+)-\\d+", "");
 			if (pattern.test(stream))
 			{
 				trace("The stream name is well formatted [" + stream + "]");

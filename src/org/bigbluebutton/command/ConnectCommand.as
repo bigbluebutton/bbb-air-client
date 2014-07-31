@@ -90,11 +90,14 @@ package org.bigbluebutton.command
 			presentationService.setupMessageSenderReceiver();
 			
 			// set up and connect the remaining connections
-			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri + "/" + conferenceParameters.room;
+			videoConnection.uri = userSession.config.getConfigFor("VideoConfModule").@uri;
+			videoConnection.iosUri = userSession.config.getConfigFor("VideoConfModule").@iosUri;
 			
 			//TODO see if videoConnection.successConnected is dispatched when it's connected properly
 			videoConnection.successConnected.add(successVideoConnected);
 			videoConnection.unsuccessConnected.add(unsuccessVideoConnected);
+			videoConnection.successIOSConnected.add(successIOSVideoConnected);
+			videoConnection.unsuccessIOSConnected.add(unsuccessIOSVideoConnected);
 			
 			videoConnection.connect();
 			
@@ -161,6 +164,20 @@ package org.bigbluebutton.command
 			
 			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 			videoConnection.successConnected.remove(successVideoConnected);
+		}
+		
+		private function successIOSVideoConnected():void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":successIOSVideoConnected()");
+			
+			videoConnection.successConnected.remove(successIOSVideoConnected);
+			videoConnection.unsuccessConnected.remove(unsuccessIOSVideoConnected);
+		}
+		
+		private function unsuccessIOSVideoConnected(reason:String):void {
+			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessIOSVideoConnected()");
+			
+			videoConnection.unsuccessConnected.remove(unsuccessIOSVideoConnected);
+			videoConnection.successConnected.remove(successIOSVideoConnected);
 		}
 	}
 }

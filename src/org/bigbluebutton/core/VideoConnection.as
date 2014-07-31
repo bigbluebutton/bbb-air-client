@@ -10,22 +10,35 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.model.IUserSession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
+	
+	import robotlegs.bender.framework.api.IInjector;
 	
 	public class VideoConnection extends DefaultConnectionCallback implements IVideoConnection
 	{
 		[Inject]
 		public var baseConnection:IBaseConnection;
 		
+		[Inject]
+		public var injector:IInjector;
+		
+		[Inject]
+		public var userSession:IUserSession;
+		
+		private var _iosBaseConnection:IBaseConnection;
 		private var _ns:NetStream;
 		private var _cameraPosition:String;
 		
 		protected var _successConnected:ISignal = new Signal();
 		protected var _unsuccessConnected:ISignal = new Signal();
+		protected var _successIOSConnected:ISignal = new Signal();
+		protected var _unsuccessIOSConnected:ISignal = new Signal();
 		
 		protected var _applicationURI:String;
+		protected var _iosApplicationURI:String;
 		
 		private var _camera:Camera;
 		
@@ -34,7 +47,7 @@ package org.bigbluebutton.core
 		public static var CAMERA_QUALITY_LOW:int = 0;
 		public static var CAMERA_QUALITY_MEDIUM:int = 1;
 		public static var CAMERA_QUALITY_HIGH:int = 2;
-	
+		
 		public function VideoConnection()
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
@@ -46,6 +59,23 @@ package org.bigbluebutton.core
 			baseConnection.init(this);
 			baseConnection.successConnected.add(onConnectionSuccess);
 			baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
+		}
+		
+		public function initIOSConnection():void
+		{
+			_iosBaseConnection.init(this);
+			_iosBaseConnection.successConnected.add(onIOSConnectionSuccess);
+			_iosBaseConnection.unsuccessConnected.add(onIOSConnectionUnsuccess);
+		}
+		
+		private function onIOSConnectionUnsuccess(reason:String):void
+		{
+			unsuccessIOSConnected.dispatch(reason);
+		}
+		
+		private function onIOSConnectionSuccess():void
+		{
+			successIOSConnected.dispatch();
 		}
 		
 		private function onConnectionUnsuccess(reason:String):void
@@ -69,6 +99,15 @@ package org.bigbluebutton.core
 			return _successConnected;
 		}
 		
+		public function get unsuccessIOSConnected():ISignal
+		{
+			return _unsuccessIOSConnected;
+		}
+		public function get successIOSConnected():ISignal
+		{
+			return _successIOSConnected;
+		}
+		
 		public function set uri(uri:String):void {
 			_applicationURI = uri;
 		}
@@ -77,12 +116,33 @@ package org.bigbluebutton.core
 			return _applicationURI;
 		}
 		
+		public function set iosUri(uri:String):void {
+			_iosApplicationURI = uri;
+		}
+		
+		public function get iosUri():String {
+			return _iosApplicationURI;
+		}
+		
 		public function get connection():NetConnection {
 			return baseConnection.connection;
 		}
 		
+		public function get iosConnection():NetConnection
+		{
+			return _iosBaseConnection.connection;
+		}
+		
 		public function connect():void {
 			baseConnection.connect(uri);
+			
+			// if iOS - create separate video connection
+			if (userSession.clientIsIOS)
+			{
+				_iosBaseConnection = injector.getInstance(IBaseConnection);
+				initIOSConnection();
+				_iosBaseConnection.connect(iosUri);
+			}
 		}
 		
 		public function get cameraPosition():String

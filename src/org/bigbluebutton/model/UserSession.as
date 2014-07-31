@@ -1,6 +1,7 @@
 package org.bigbluebutton.model
 {
 	import flash.net.NetConnection;
+	import flash.system.Capabilities;
 	
 	import mx.collections.ArrayList;
 	
@@ -28,6 +29,7 @@ package org.bigbluebutton.model
 		protected var _userList:UserList;
 		protected var _presentationList:PresentationList;
 		protected var _recording:Boolean;
+		protected var _clientIsIOS:Boolean;
 		
 		protected var _guestSignal:ISignal = new Signal();
 		protected var _successJoiningMeetingSignal:ISignal = new Signal();
@@ -110,11 +112,17 @@ package org.bigbluebutton.model
 		{
 			_deskshareConnection = value;
 		}
+		
+		public function get clientIsIOS():Boolean
+		{
+			return _clientIsIOS;
+		}
 
 		public function UserSession()
 		{
 			_userList = new UserList();
 			_presentationList = new PresentationList();
+			_clientIsIOS = (Capabilities.manufacturer.indexOf("iOS") != -1);
 		}
 		
 		public function get presentationList():PresentationList
