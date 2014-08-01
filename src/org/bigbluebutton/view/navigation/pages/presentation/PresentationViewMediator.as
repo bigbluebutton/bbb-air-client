@@ -34,8 +34,8 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			userSession.presentationList.presentationChangeSignal.add(presentationChangeHandler);
 			
 			setPresentation(userSession.presentationList.currentPresentation);
-			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
-			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
+			FlexGlobals.topLevelApplication.backBtn.visible = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = true;
 		}
 		
 		private function displaySlide():void {

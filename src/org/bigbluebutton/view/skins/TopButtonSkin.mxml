@@ -13,11 +13,11 @@
 		<s:State name="over" />
 		<s:State name="up" />
 	</s:states>
-	<s:Rect top="0" bottom="0" left="0" right="0">
+	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}">
 		<s:fill>
 			<s:LinearGradient rotation="90">
-				<s:GradientEntry color="{hostComponent.getStyle('gradientColorTop')}" color.down="#454852"/>
-				<s:GradientEntry color="{hostComponent.getStyle('gradientColorBottom')}" color.down="#00000"/>
+				<s:GradientEntry color="{hostComponent.getStyle('gradientColorTop')}" color.down="{hostComponent.getStyle('selectedGradientColorTop')}"/>
+				<s:GradientEntry color="{hostComponent.getStyle('gradientColorBottom')}" color.down="{hostComponent.getStyle('selectedGradientColorBottom')}"/>
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>

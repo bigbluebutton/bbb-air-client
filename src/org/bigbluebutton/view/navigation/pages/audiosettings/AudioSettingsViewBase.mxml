@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				xmlns:s="library://ns.adobe.com/flex/spark" 
-				xmlns:mx="library://ns.adobe.com/flex/mx" 
+<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009"
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx"
 				xmlns:view="org.bigbluebutton.core.view.*"
-				xmlns:ui="org.bigbluebutton.view.ui.*" 
-				styleName="viewStyle"
 				>
 	
 	<fx:Script>
@@ -14,11 +12,11 @@
 		]]>
 	</fx:Script>
 	
-	<s:VGroup width="60%" height="100%" styleName="pageStyle" horizontalAlign="center" paddingTop="{getStyle('topPadding')}" horizontalCenter="0">
-		<s:Label text="How do you want to join the audio?" />
+	<s:VGroup width="90%" height="100%" horizontalAlign="center" horizontalCenter="0">
+		<s:Label styleName="audioSettingStyle contentFontSize" text="{resourceManager.getString('resources', 'audioSettings.label.text')}" />
 		<s:Button id="shareMicBtn" width="100%" label="{resourceManager.getString('resources', 'audioSettings.shareMicrophone.on')}" 
-				  styleName="audioSettingsShareMicButtonStyle audioSettingsButtonStyle"/>		
+				  styleName="audioSettingsShareMicButtonStyle videoAudioSettingStyle contentFontSize"/>
 		<s:Button id="listenOnlyBtn" width="100%" label="{resourceManager.getString('resources', 'audioSettings.listenOnly.on')}" 
-				  styleName="audioSettingsListenOnlyButtonStyle audioSettingsButtonStyle"/>
+				  styleName="audioSettingsListenOnlyButtonStyle videoAudioSettingStyle contentFontSize"/>
 	</s:VGroup>
 </view:NoTabView>

@@ -12,6 +12,8 @@ s|Group.videoTextFieldStyle
 
 s|Button.sendButtonStyle
 {
+	backgroundColor:#FFFFFF;
+	onClickBackgroundColor:#DBDBDB;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.SendMsgBtnSkin");
 }
 
@@ -30,27 +32,6 @@ ui|NavigationButton
 	skinClass: ClassReference("org.bigbluebutton.view.skins.NavigationButtonSkin");
 }
 
-s|Button.cameraSettingsButtonStyle
-{
-	backgroundColor: #FFFFFF;
-	strokeColor: #C8CCC8;
-	onClickBackgroundColor: #918E8E;
-	imageScaleX: 0.6;
-	imageScaleY: 0.6;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.CameraSettingsButtonSkin");
-}
-
-s|Label.userDetailsLabelStyle
-{
-	color: #BEBEBE;
-	verticalAlign: middle;
-}
-
-s|RichEditableText.msgTextStyle, s|Label.chatNameColor
-{
-	color: #777777;
-}
-
 s|Label.chatTimeColor
 {
 	color: #C3C3C3;
@@ -59,40 +40,47 @@ s|Label.chatTimeColor
 s|Button.logoutButtonStyle
 {
 	backgroundColor: #3385FF;
-	textColor: #FFFFFF;
+	textColor:#FFFFFF;
 }
 
 s|Button.userSettingsButtonStyle
-{
-	buttonLabelAlign: center;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.userSettingsButtonSkin");
+{	
+	onClickBackgroundColor:#DBDBDB;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.UserSettingsParticipantBtnSkin");
 }
 
-s|Button.userSettingsRaseHandButtonStyle
+s|Button.userSettingsRaseHandButtonStyle,s|Button.userSettingsUserNameStyle
 {
-	backgroundColor: #FFFFFF;
-	textColor: #000000;
-	buttonLabelAlign:left;
+	textColor:#777777;
+	backgroundColor: #F4F4F4;
 }
 
-s|Button.userNameLableStyle
+s|Button.videoAudioSettingStyle
 {
-	backgroundColor: #FFFFFF;
-	textColor: #000000;
+	backgroundColor:#F4F4F4;
+	onClickBackgroundColor:#DBDBDB;
+	skinClass: ClassReference("org.bigbluebutton.view.skins.VideoAudioSettingsBtnSkin");
 }
 
-s|Button.profileSettingsButtonStyle,s|Button.audioSettingsButtonStyle
+s|Button.profileSettingsButtonStyle,s|Button.audioSettingsShareMicButtonStyle, s|Button.audioSettingsListenOnlyButtonStyle
 {
 	labelTextAlign:left;
-	backgroundColor:#FFFFFF;
-	onClickBackgroundColor:#918E8E;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileSettingsButtonSkin");
+}
+
+s|Button.cameraSettingsStartButtonStyle,s|Button.cameraSettingsSwapButtonStyle
+{
+	labelTextAlign:center;
 }
 
 s|Label.pageNameStyle
 {
 	textAlign: center;
 	color: #FFFFFF;
+}
+
+s|Label.participantStatusStyle
+{
+	color: #999999;
 }
 
 s|Button.topButtonStyle
@@ -104,18 +92,11 @@ s|Button.topButtonStyle
 	skinClass: ClassReference("org.bigbluebutton.view.skins.TopButtonSkin");
 }
 
-s|Button.commonButtonStyle
-{
-	fillColor: #5C5C69;
-	textColor: #FFFFFF;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.CommonButtonSkin");
-}
-
 s|Button.newMessagesButtonStyle
 {
 	fillColor: #777777;
 	textColor: #FFFFFF;
-	skinClass: ClassReference("org.bigbluebutton.view.skins.CommonButtonSkin");
+	skinClass: ClassReference("org.bigbluebutton.view.skins.NewMessagesButtonSkin");
 }
 
 s|RadioButton
@@ -128,29 +109,20 @@ s|Image.bbbLogoStyle
 	skinClass: ClassReference("org.bigbluebutton.view.skins.BBBLogoSkin");
 }
 
-s|Image.iconStyle
+s|Image.iconStyle, s|Image.userDetailIconStyle
 {
 	skinClass: ClassReference("org.bigbluebutton.view.skins.IconSkin");
 }
 
-s|View.deviderLineStyle, s|View.userDetailviewStyle
+s|View.userDetailviewStyle
 {
-	lineColor: #000000;
-	textColor: #BEBEBE;
+	bgColor:#F4F4F4;
 }
 
 s|SkinnableContainer.containerStyle
 {
-	fillColor: #FFFFFF;
+	fillColor: #F4F4F4;
 	skinClass: ClassReference("org.bigbluebutton.view.skins.ProfileViewContainerSkin");
-}
-
-s|Application.mainshellStyle
-{
-	toolBarColorTop: #4A4C58;
-	toolBarColorBottom: #43434B;
-	imageScaleX:0.6;
-	imageScaleY:0.6;
 }
 
 global
@@ -162,6 +134,7 @@ global
 	content-background-color: #FFFFFF;
 	symbol-color: #F6F2F2;
 	chrome-color: #0C0B0B;
+	color: #777777;
 }
 
 @media (application-dpi: 160) {
@@ -169,16 +142,43 @@ global
 	s|Application.mainshellStyle
 	{
 		toolBarHeight:48;
-		topButtonWidth: 48;
 		bottomToolBarHeight:48;
-		recordingStatusImage: "assets/res/drawable-mdpi/media_record.png";
+	}
+	
+	s|Button.recordingStatusIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/media_record.png");
+	}
+	
+	s|Button.videoAudioSettingStyle
+	{
+		height: 50;
+		weight: 0.1;
+		radiusX:2;
+		radiusY:2;
+		imageAlign:10;
+		labelPaddingLeft:6;
+	}
+	
+	s|Label.cameraSettingStyle,s|Label.audioSettingStyle
+	{
+		paddingTop:16;
+		paddingBottom:16;
+	}
+	
+	s|Label.userSettingsStyle
+	{
+		paddingLeft:6;
+		paddingTop:12;
+		paddingBottom:12;
 	}
 	
 	s|Label.chatNameTimeStyle
 	{
 		paddingLeft:6;
 		paddingRight:6;
-		paddingBottom:6;
+		paddingBottom:3;
+		paddingTop:3;
 	}
 	
 	s|RichEditableText.msgTextStyle
@@ -194,15 +194,6 @@ global
 		paddingTop:40;
 	}
 	
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 40;
-		strokeWeight: 0.1;
-		radiusX: 2;
-		radiusY: 2;
-		imageAlign:10;
-	}
-	
 	s|Button.cameraSettingsStartButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
@@ -213,10 +204,10 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
 	}
 	
-	s|View.viewStyle
+	s|View.cameraSettingsViewStyle
 	{
 		lineWeight: 2;
-		topPadding: 20;
+		topPadding: 24;
 		weight:0.1;
 	}
 	
@@ -233,7 +224,10 @@ global
 	}
 	
 	s|Button.sendButtonStyle
-	{		
+	{
+		topAlign:2;
+		bottomAlign:2;
+		rightAlign:2;
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/sendMsgIcon.png");
 	}
 	
@@ -261,16 +255,17 @@ global
 		itemPaddingRight:6;
 	}
 	
+	s|ItemRenderer.chatRoomItemStyle
+	{
+		lineColor: #F2F2F2;
+		lineWeight:0.5;
+	}
+	
 	s|Group.videoTextFieldStyle
 	{
 		fontSize:10;
 		indent: 20;
 		loadingImageSource: "assets/res/drawable-mdpi/videoLoading.png";
-	}
-	
-	s|View.deviderLineStyle
-	{
-		lineWeight: 0.2;
 	}
 	
 	s|View.chatViewStyle
@@ -279,27 +274,25 @@ global
 		btnWidth:40;
 	}
 	
-	s|View.userDetailviewStyle
-	{
-		lineWeight: 0.5;
-		showCameraButtonPaddingTop:40;
-	}
-	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 2;
+		weight: 0.1;
 		radiusX: 4;
 		radiusY: 4;
 		top: 5;
 		bottom: 5;
 	}
 	
-	s|Label.userDetailsLabelStyle
+	s|Label.userDetailsNameStyle
 	{
-		height: 50;
-		paddingTop: 10;
-		paddingBottom: 10;
-		paddingLeft:20;
+		paddingTop: 20;
+		paddingBottom:0;
+	}
+	
+	s|Label.userDetailsStatusStyle
+	{
+		paddingTop: 0;
+		paddingBottom:20;
 	}
 	
 	ui|NavigationButton
@@ -340,23 +333,9 @@ global
 		radiusY:2;
 	}
 	
-	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
+	s|Button.profileSettingsButtonStyle
 	{
-		height: 50;
-		weight: 0.1;
-		radiusX:2;
-		radiusY:2;
-		imageAlign:10;
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/arrowRight.png");
-	}
-	
-	s|Button.audioSettingsButtonStyle
-	{
-		height: 60;
-		weight: 0.1;
-		radiusX:2;
-		radiusY:2;
-		imageAlign:10;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -369,32 +348,15 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/sound.png");
 	}
 	
-	s|Label.pageNameStyle
-	{
-		fontSize: 18;
-	}
-	
 	s|Button.topButtonStyle
 	{
-		width: 30;
-		height: 30;
-		strokeWeight: 1;
+		width: 48;
+		height: 48;
 	}
 	
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	s|Button.profileButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/participants.png");
-	}
-	
-	s|Button.commonButtonStyle
-	{
-		height: 44;
-		width: 132;
-		radiusX: 8;
-		radiusY: 8;
-		textFontSize:16;
-		labelPaddingTop:2;
 	}
 	
 	s|Button.backButtonStyle
@@ -408,11 +370,6 @@ global
 		mutedBackgroundImage: Embed(source="assets/res/drawable-mdpi/micBtn_off.png");
 	}
 	
-	s|Button.swapCameraButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
-	}
-	
 	s|Image.iconStyle
 	{
 		width: 30;
@@ -422,6 +379,13 @@ global
 	s|Image.cameraIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
+	}
+	
+	s|Image.userDetailIconStyle
+	{
+		width: 60;
+		height: 60;
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/user_detail.png");
 	}
 	
 	s|Image.micIconStyle
@@ -446,7 +410,7 @@ global
 	
 	s|Image.moderatorIconStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-mdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/participants.png");
 	}
 	
 	s|Image.presentationIconStyle
@@ -470,8 +434,7 @@ global
 		height: 30;
 		radiusX: 4;
 		radiusY: 4;
-		textFontSize:16;
-		labelPaddingTop:2;
+		fontSize:12;
 	}
 	
 	s|RadioButton
@@ -496,16 +459,43 @@ global
 	s|Application.mainshellStyle
 	{
 		toolBarHeight:72;
-		topButtonWidth: 72;
 		bottomToolBarHeight:72;
-		recordingStatusImage: "assets/res/drawable-hdpi/media_record.png";
+	}
+	
+	s|Button.recordingStatusIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/media_record.png");
+	}
+	
+	s|Button.videoAudioSettingStyle
+	{
+		height: 75;
+		weight: 0.15;
+		radiusX:3;
+		radiusY:3;
+		imageAlign:15;
+		labelPaddingLeft:9;
+	}
+	
+	s|Label.cameraSettingStyle,s|Label.audioSettingStyle
+	{
+		paddingTop:24;
+		paddingBottom:24;
+	}
+	
+	s|Label.userSettingsStyle
+	{
+		paddingLeft:9;
+		paddingTop:18;
+		paddingBottom:18;
 	}
 	
 	s|Label.chatNameTimeStyle
 	{
 		paddingLeft:9;
 		paddingRight:9;
-		paddingBottom:9;
+		paddingBottom:4.5;
+		paddingTop:4.5;
 	}
 	
 	s|RichEditableText.msgTextStyle
@@ -515,19 +505,10 @@ global
 		paddingBottom:18;
 	}
 	
-<<<<<<< HEAD
 	s|Label.disconnectMsgStyle
 	{
 		paddingBottom: 60;
 		paddingTop:60;
-=======
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 60;
-		strokeWeight: 0.15;
-		radiusX: 3;
-		radiusY: 3;
-		imageAlign:15;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -540,27 +521,18 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
 	}
 	
-	s|View.viewStyle
+	s|View.cameraSettingsViewStyle
 	{
 		lineWeight: 3;
-		topPadding: 30;
+		topPadding: 36;
 		weight:0.15;
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|Label.chatRoomLabelStyle,s|Label.selectParticipantLabelStyle
 	{
-<<<<<<< HEAD
 		paddingLeft:9;
 		paddingTop:30;
 		paddingBottom:30;
-=======
-		weight: 0.15;
-		radiusX: 6;
-		radiusY: 6;
-		top: 8;
-		bottom: 8;
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|TextInput.msgInputBoxStyle
@@ -570,12 +542,21 @@ global
 	
 	s|Button.sendButtonStyle
 	{
+		topAlign:3;
+		bottomAlign:3;
+		rightAlign:3;
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/sendMsgIcon.png");
 	}
 	
 	s|Label.pageNameStyle
 	{
 		fontSize:27;
+	}
+	
+	s|Button.topButtonStyle
+	{
+		width: 72;
+		height: 72;
 	}
 	
 	.contentFontSize
@@ -597,6 +578,12 @@ global
 		itemPaddingRight:9;
 	}
 	
+	s|ItemRenderer.chatRoomItemStyle
+	{
+		lineColor: #F2F2F2;
+		lineWeight:0.75;
+	}
+	
 	s|Group.videoTextFieldStyle
 	{
 		fontSize:15;
@@ -604,24 +591,12 @@ global
 		loadingImageSource: "assets/res/drawable-hdpi/videoLoading.png";
 	}
 	
-	s|View.deviderLineStyle
-	{
-		lineWeight: 0.3;
-	}
-	
-<<<<<<< HEAD
-	s|View.userDetailviewStyle
-	{
-		lineWeight: 0.75;
-		showCameraButtonPaddingTop:60;
-=======
 	s|Button.userSettingsButtonStyle
 	{
 		height: 75; 
 		weight: 0.15;
 		radiusX:3;
 		radiusY:3;
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|View.chatViewStyle
@@ -632,38 +607,28 @@ global
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 3;
+		weight: 0.15;
 		radiusX: 6;
 		radiusY: 6;
 		top: 8;
 		bottom: 8;
 	}
 	
-	s|Label.userDetailsLabelStyle
+	s|Label.userDetailsNameStyle
 	{
-		height: 75;
-		paddingTop: 15;
-		paddingBottom: 15;
-		paddingLeft:30;
+		paddingTop: 30;
+		paddingBottom:0;
 	}
 	
-	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
+	s|Label.userDetailsStatusStyle
 	{
-		height: 75;
-		weight: 0.15;
-		radiusX:3;
-		radiusY:3;
-		imageAlign:15;
+		paddingTop: 0;
+		paddingBottom:30;
+	}
+	
+	s|Button.profileSettingsButtonStyle
+	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/arrowRight.png");
-	}
-	
-	s|Button.audioSettingsButtonStyle
-	{
-		height: 90;
-		weight: 0.15;
-		radiusX:3;
-		radiusY:3;
-		imageAlign:15;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -674,16 +639,6 @@ global
 	s|Button.audioSettingsListenOnlyButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/sound.png");
-	}
-	
-	s|Button.commonButtonStyle
-	{
-		height: 66;
-		width:198;
-		radiusX: 12;
-		radiusY: 12;
-		textFontSize:24;
-		labelPaddingTop:3;
 	}
 	
 	ui|NavigationButton
@@ -732,11 +687,6 @@ global
 		mutedBackgroundImage: Embed(source="assets/res/drawable-hdpi/micBtn_off.png");
 	}
 	
-	s|Button.swapCameraButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
-	}
-	
 	s|Image.iconStyle
 	{
 		width: 45;
@@ -746,6 +696,13 @@ global
 	s|Image.cameraIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/video.png");
+	}
+	
+	s|Image.userDetailIconStyle
+	{
+		width: 90;
+		height: 90;
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/user_detail.png");
 	}
 	
 	s|Image.micIconStyle
@@ -770,7 +727,7 @@ global
 	
 	s|Image.moderatorIconStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-hdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/participants.png");
 	}
 	
 	s|Image.presentationIconStyle
@@ -794,8 +751,7 @@ global
 		height: 45;
 		radiusX: 6;
 		radiusY: 6;
-		textFontSize:24;
-		labelPaddingTop:3;
+		fontSize:18;
 	}
 	
 	s|RadioButton
@@ -819,16 +775,43 @@ global
 	s|Application.mainshellStyle
 	{
 		toolBarHeight:96;
-		topButtonWidth: 96;
 		bottomToolBarHeight:96;
-		recordingStatusImage: "assets/res/drawable-xhdpi/media_record.png";
+	}
+	
+	s|Button.recordingStatusIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/media_record.png");
+	}
+	
+	s|Button.videoAudioSettingStyle
+	{
+		height: 90;
+		weight: 0.2;
+		radiusX:4;
+		radiusY:4;
+		imageAlign:20;
+		labelPaddingLeft:12;
+	}
+	
+	s|Label.cameraSettingStyle,s|Label.audioSettingStyle
+	{
+		paddingTop:32;
+		paddingBottom:32;
+	}
+	
+	s|Label.userSettingsStyle
+	{
+		paddingLeft:12;
+		paddingTop:24;
+		paddingBottom:24;
 	}
 	
 	s|Label.chatNameTimeStyle
 	{
 		paddingLeft:12;
 		paddingRight:12;
-		paddingBottom:12;
+		paddingBottom:6;
+		paddingTop:6;
 	}
 	
 	s|RichEditableText.msgTextStyle
@@ -851,18 +834,9 @@ global
 		paddingBottom:40;
 	}
 	
-<<<<<<< HEAD
 	s|TextInput.msgInputBoxStyle
 	{
 		paddingRight:80;
-=======
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 80;
-		strokeWeight: 0.2;
-		radiusX: 4;
-		radiusY: 4;
-		imageAlign:20;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -875,30 +849,30 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
 	}
 	
-	s|View.viewStyle
+	s|View.cameraSettingsViewStyle
 	{
 		lineWeight: 4;
-		topPadding: 40;
+		topPadding: 48;
 		weight:0.2;
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|Button.sendButtonStyle
 	{
-<<<<<<< HEAD
+		topAlign:4;
+		bottomAlign:4;
+		rightAlign:4;
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sendMsgIcon.png");
-=======
-		weight: 0.2;
-		radiusX: 8;
-		radiusY: 8;
-		top: 10;
-		bottom: 10;
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|Label.pageNameStyle
 	{
 		fontSize:36;
+	}
+	
+	s|Button.topButtonStyle
+	{
+		width: 96;
+		height: 96;
 	}
 	
 	.contentFontSize
@@ -920,6 +894,12 @@ global
 		itemPaddingRight:12;
 	}
 	
+	s|ItemRenderer.chatRoomItemStyle
+	{
+		lineColor: #F2F2F2;
+		lineWeight:1;
+	}
+	
 	s|Group.videoTextFieldStyle
 	{
 		fontSize:20;
@@ -927,66 +907,44 @@ global
 		loadingImageSource: "assets/res/drawable-xhdpi/videoLoading.png";
 	}
 	
-	s|View.deviderLineStyle
-	{
-		lineWeight: 0.4;
-	}
-	
-	s|View.userDetailviewStyle
-	{
-		lineWeight: 1;
-		showCameraButtonPaddingTop:80;
-	}
-	
-<<<<<<< HEAD
 	s|View.chatViewStyle
 	{
 		chatInputTextHeight:96;
 		btnWidth:80;
-=======
+	}
+	
 	s|Button.userSettingsButtonStyle
 	{
 		height: 90; 
 		weight: 0.2;
 		radiusX:4;
 		radiusY:4;
->>>>>>> ce67a3e8ef496f74f5edf14a89a5a175228c75b0
 	}
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 4;
+		weight: 0.2;
 		radiusX: 8;
 		radiusY: 8;
 		top: 10;
 		bottom: 10;
 	}
 	
-	s|Label.userDetailsLabelStyle
+	s|Label.userDetailsNameStyle
 	{
-		height: 100;
-		paddingTop: 20;
-		paddingBottom: 20;
-		paddingLeft:40;
+		paddingTop: 40;
+		paddingBottom:0;
 	}
 	
-	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
+	s|Label.userDetailsStatusStyle
 	{
-		height: 90; 
-		weight: 0.2;
-		radiusX:4;
-		radiusY:4;
-		imageAlign:20;
+		paddingTop: 0;
+		paddingBottom:40;
+	}
+	
+	s|Button.profileSettingsButtonStyle
+	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/arrowRight.png");
-	}
-	
-	s|Button.audioSettingsButtonStyle
-	{
-		height: 120;
-		weight: 0.2;
-		radiusX:4;
-		radiusY:4;
-		imageAlign:20;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -997,16 +955,6 @@ global
 	s|Button.audioSettingsListenOnlyButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sound.png");
-	}
-	
-	s|Button.commonButtonStyle
-	{
-		height: 88;
-		width:264;
-		radiusX: 16;
-		radiusY: 16;
-		textFontSize:32;
-		labelPaddingTop:4;
 	}
 	
 	ui|NavigationButton
@@ -1055,11 +1003,6 @@ global
 		mutedBackgroundImage: Embed(source="assets/res/drawable-xhdpi/micBtn_off.png");
 	}
 	
-	s|Button.swapCameraButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
-	}
-	
 	s|Image.iconStyle
 	{
 		width: 60;
@@ -1069,6 +1012,13 @@ global
 	s|Image.cameraIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/video.png");
+	}
+	
+	s|Image.userDetailIconStyle
+	{
+		width: 120;
+		height: 120;
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/user_detail.png");
 	}
 	
 	s|Image.micIconStyle
@@ -1093,7 +1043,12 @@ global
 	
 	s|Image.moderatorIconStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-xhdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/participants.png");
+	}
+	
+	s|Image.presentationIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/presentation.png");
 	}
 	
 	s|Image.handIconStyle
@@ -1112,8 +1067,7 @@ global
 		height: 40;
 		radiusX: 8;
 		radiusY: 8;
-		textFontSize:32;
-		labelPaddingTop:4;
+		fontSize:24;
 	}
 	
 	s|RadioButton
@@ -1137,16 +1091,43 @@ global
 	s|Application.mainshellStyle
 	{
 		toolBarHeight:144;
-		topButtonWidth: 144;
 		bottomToolBarHeight:144;
-		recordingStatusImage: "assets/res/drawable-xxhdpi/media_record.png";
+	}
+	
+	s|Button.recordingStatusIconStyle
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/media_record.png");
+	}
+	
+	s|Button.videoAudioSettingStyle
+	{
+		height: 150;
+		weight: 0.3;
+		radiusX:6;
+		radiusY:6;
+		imageAlign:30;
+		labelPaddingLeft:18;
+	}
+	
+	s|Label.cameraSettingStyle,s|Label.audioSettingStyle
+	{
+		paddingTop:48;
+		paddingBottom:48;
+	}
+	
+	s|Label.userSettingsStyle
+	{
+		paddingLeft:18;
+		paddingTop:36;
+		paddingBottom:36;
 	}
 	
 	s|Label.chatNameTimeStyle
 	{
 		paddingLeft:18;
 		paddingRight:18;
-		paddingBottom:18;
+		paddingBottom:9;
+		paddingTop:9;
 	}
 	
 	s|RichEditableText.msgTextStyle
@@ -1176,16 +1157,10 @@ global
 	
 	s|Button.sendButtonStyle
 	{
+		topAlign:6;
+		bottomAlign:6;
+		rightAlign:6;
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sendMsgIcon.png");
-	}
-	
-	s|Button.cameraSettingsButtonStyle
-	{
-		height: 120;
-		strokeWeight: 0.3;
-		radiusX: 6;
-		radiusY: 6;
-		imageAlign:30;
 	}
 	
 	s|Button.cameraSettingsStartButtonStyle
@@ -1198,10 +1173,10 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
 	}
 	
-	s|View.viewStyle
+	s|View.cameraSettingsViewStyle
 	{
 		lineWeight: 6;
-		topPadding: 60;
+		topPadding: 72;
 		weight:0.3;
 	}
 	
@@ -1229,22 +1204,17 @@ global
 		itemPaddingRight:18;
 	}
 	
+	s|ItemRenderer.chatRoomItemStyle
+	{
+		lineColor: #F2F2F2;
+		lineWeight:1.5;
+	}
+	
 	s|Group.videoTextFieldStyle
 	{
 		fontSize:30;
 		indent: 60;
 		loadingImageSource: "assets/res/drawable-xxhdpi/videoLoading.png";
-	}
-	
-	s|View.deviderLineStyle
-	{
-		lineWeight: 0.6;
-	}
-	
-	s|View.userDetailviewStyle
-	{
-		lineWeight: 1.5;
-		showCameraButtonPaddingTop:120;
 	}
 	
 	s|View.chatViewStyle
@@ -1255,19 +1225,23 @@ global
 	
 	s|SkinnableContainer.containerStyle
 	{
-		weight: 6;
+		weight: 0.3;
 		radiusX: 12;
 		radiusY: 12;
 		top: 15;
 		bottom: 15;
 	}
 	
-	s|Label.userDetailsLabelStyle
+	s|Label.userDetailsNameStyle
 	{
-		height: 150;
-		paddingTop: 30;
-		paddingBottom: 30;
-		paddingLeft:60;
+		paddingTop: 60;
+		paddingBottom:0;
+	}
+	
+	s|Label.userDetailsStatusStyle
+	{
+		paddingTop: 0;
+		paddingBottom:60;
 	}
 	
 	ui|NavigationButton
@@ -1308,31 +1282,9 @@ global
 		radiusY:6;
 	}
 	
-	s|Button.commonButtonStyle
+	s|Button.profileSettingsButtonStyle
 	{
-		height: 132;
-		width:396;
-		radiusX: 24;
-		radiusY: 24;
-	}
-	
-	s|Button.logoutButtonStyle,s|Button.profileSettingsButtonStyle
-	{
-		height: 150; 
-		weight: 0.3;
-		radiusX:6;
-		radiusY:6;
-		imageAlign:30;
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/arrowRight.png");
-	}
-	
-	s|Button.audioSettingsButtonStyle
-	{
-		height: 180;
-		weight: 0.3;
-		radiusX:6;
-		radiusY:6;
-		imageAlign:30;
 	}
 	
 	s|Button.audioSettingsShareMicButtonStyle
@@ -1345,16 +1297,10 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sound.png");
 	}
 	
-	s|Label.pageNameStyle
-	{
-		fontSize: 54;
-	}
-	
 	s|Button.topButtonStyle
 	{
-		width: 90;
-		height: 90;
-		strokeWeight: 3;
+		width: 144;
+		height: 144;
 	}
 	
 	s|Button.profileButtonStyle
@@ -1373,11 +1319,6 @@ global
 		mutedBackgroundImage: Embed(source="assets/res/drawable-xxhdpi/micBtn_off.png");
 	}
 	
-	s|Button.swapCameraButtonStyle
-	{
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/SwapCamera_up.png");
-	}
-	
 	s|Image.iconStyle
 	{
 		width: 90;
@@ -1387,6 +1328,13 @@ global
 	s|Image.cameraIconStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/video.png");
+	}
+	
+	s|Image.userDetailIconStyle
+	{
+		width: 180;
+		height: 180;
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/user_detail.png");
 	}
 	
 	s|Image.micIconStyle
@@ -1411,7 +1359,7 @@ global
 	
 	s|Image.moderatorIconStyle
 	{
-		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/profile.png");
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/participants.png");
 	}
 	
 	s|Image.presentationIconStyle
@@ -1435,8 +1383,7 @@ global
 		height: 60;
 		radiusX: 12;
 		radiusY: 12;
-		textFontSize:48;
-		labelPaddingTop:6;
+		fontSize:36;
 	}
 	
 	s|Image.bbbLogoStyle

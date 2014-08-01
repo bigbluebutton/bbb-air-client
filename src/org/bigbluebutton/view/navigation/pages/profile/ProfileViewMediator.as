@@ -38,12 +38,12 @@ package org.bigbluebutton.view.navigation.pages.profile
 			
 			var userMe:User = userSession.userList.me;		
 			
-			view.userNameButton.label = userMe.name;				
+			view.userNameButton.label = userMe.name;
 			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			view.logoutButton.addEventListener(MouseEvent.CLICK, logoutClick);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'profile.title');
-			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = true;
-			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = false;
+			FlexGlobals.topLevelApplication.backBtn.visible = true;			
 		}
 		
 		private function userChangeHandler(user:User, type:int):void

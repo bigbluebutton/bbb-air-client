@@ -22,7 +22,7 @@
 		<s:layout>
 			<s:HorizontalLayout verticalAlign="middle"/>
 		</s:layout>
-		<s:Label id="title" width="60%" height="100%" textAlign="center" styleName="contentFontSize"/>
+		<s:Label id="title" width="60%" height="100%" textAlign="center" styleName="videoStreamName contentFontSize"/>
 		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
 	</s:Group>
 </s:ItemRenderer>

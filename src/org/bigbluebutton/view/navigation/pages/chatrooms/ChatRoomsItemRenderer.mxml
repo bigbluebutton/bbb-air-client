@@ -2,6 +2,7 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
+				styleName="chatRoomItemStyle"
 				>
 	
 	<fx:Script>
@@ -42,16 +43,17 @@
 			
 		]]>
 	</fx:Script>
-	<s:layout>
-		<s:HorizontalLayout />
-	</s:layout>
 	<s:Group  width="100%">
 		<s:layout>
 			<s:HorizontalLayout verticalAlign="middle"/>
 		</s:layout>
-		<s:Label id="title" width="100%" verticalAlign="middle" styleName="contentFontSize chatRoomLabelStyle"/>
+		<s:Label id="title" width="100%" styleName="contentFontSize chatRoomLabelStyle" verticalCenter="0" horizontalCenter="0"/>
 		<s:Button id="newMessages" buttonMode="false" styleName="newMessagesButtonStyle" />
 		<s:Image styleName="iconStyle arrowRightStyle" horizontalCenter="0"  verticalCenter="0" />
 	</s:Group>
-
+	<s:Line width="100%">
+		<s:stroke>
+			<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
+		</s:stroke>
+	</s:Line>
 </s:ItemRenderer>

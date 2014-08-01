@@ -26,8 +26,8 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 			userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
 			userSession.deskshareConnection.mouseLocationChangedSignal.add(onMouseLocationChanged);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'deskshare.title');
-			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
-			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
+			FlexGlobals.topLevelApplication.backBtn.visible = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = true;
 		}
 		
 		/**

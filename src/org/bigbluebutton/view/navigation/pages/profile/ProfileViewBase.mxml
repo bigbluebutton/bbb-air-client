@@ -2,45 +2,39 @@
 <view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
-				xmlns:view="org.bigbluebutton.core.view.*" 
-				styleName="deviderLineStyle"
+				xmlns:view="org.bigbluebutton.core.view.*"
+				xmlns:ui="org.bigbluebutton.view.ui.*"
 				>
 	<fx:Script>
-		<![CDATA[
-			import mx.core.FlexGlobals;
-			
+		<![CDATA[			
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
 			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;			
 		]]>
 	</fx:Script>
 	
-	<fx:Declarations>
-		<s:RadioButtonGroup id="cameraQualityTypeRadioButtonGroup" />
-	</fx:Declarations>
-	
 	<s:Group  width="100%" height="100%">
 		<s:layout>
-			<s:VerticalLayout />
+			<s:VerticalLayout/>
 		</s:layout>		
 		<s:VGroup width="100%" height="100%" horizontalAlign="center">
-			<s:Label width="90%" color="{getStyle('textColor')}" text="{resourceManager.getString('resources', 'profile.participant')}"/>					
-			<s:Button id="userName0" width="90%" styleName="userSettingsButtonStyle userNameLableStyle" horizontalCenter="0"/>
+			<s:Label width="90%" styleName="contentFontSize userSettingsStyle" text="{resourceManager.getString('resources', 'profile.participant')}"/>					
+			<s:Button id="userName0" width="90%" buttonMode="false" styleName="userSettingsButtonStyle userSettingsUserNameStyle contentFontSize"/>
+			<s:Button id="raiseHandButton0"  width="90%"
+					  label="{resourceManager.getString('resources', 'profile.settings.handRaise')}" 
+					  styleName="userSettingsButtonStyle userSettingsRaseHandButtonStyle contentFontSize" />
 			<s:Button id="logoutButton0" width="90%"
 					  label="{resourceManager.getString('resources', 'profile.logout')}"
-					  styleName="userSettingsButtonStyle logoutButtonStyle"/>					
-			<s:Label width="90%" color="{getStyle('textColor')}"  text="{resourceManager.getString('resources', 'profile.settings')}"/>
-			<s:Button id="raiseHandButton0"  width="90%" 
-					  label="{resourceManager.getString('resources', 'profile.settings.handRaise')}" 
-					  styleName="userSettingsButtonStyle userSettingsRaseHandButtonStyle " />
+					  styleName="userSettingsButtonStyle logoutButtonStyle contentFontSize"/>				
+			<s:Label width="90%" styleName="contentFontSize userSettingsStyle" text="{resourceManager.getString('resources', 'profile.settings')}"/>
 			<ui:NavigationButton id="shareCameraBtn0" width="90%"
 								 label="{resourceManager.getString('resources', 'cameraSettings.title')}"
 								 navigateTo="{[PagesENUM.CAMERASETTINGS]}"
-								 styleName="profileSettingsButtonStyle"
+								 styleName="profileSettingsButtonStyle videoAudioSettingStyle contentFontSize"
 								 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
 			<ui:NavigationButton id="shareMicBtn0" width="90%"
 								 label="{resourceManager.getString('resources', 'audioSettings.title')}"
 								 navigateTo="{[PagesENUM.AUDIOSETTINGS]}"
-								 styleName="profileSettingsButtonStyle"
+								 styleName="profileSettingsButtonStyle videoAudioSettingStyle contentFontSize"
 								 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
 		</s:VGroup>
 	</s:Group>

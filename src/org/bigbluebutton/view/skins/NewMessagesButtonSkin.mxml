@@ -19,7 +19,6 @@
 	name=labelDisplay, type=spark.core.IDisplayText, required=false
 	-->
 	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}"
-			horizontalCenter="0" verticalCenter="0"
 			radiusX="{hostComponent.getStyle('radiusX')}"
 			radiusY="{hostComponent.getStyle('radiusY')}"
 			>
@@ -28,10 +27,5 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:Label id="labelDisplay" color="{hostComponent.getStyle('textColor')}"
-			 fontSize="{hostComponent.getStyle('textFontSize')}" 
-			 horizontalCenter="0" verticalCenter="0"
-			 paddingTop="{hostComponent.getStyle('labelPaddingTop')}" paddingBottom="0"
-			 >
-	</s:Label>
+	<s:Label id="labelDisplay" color="{hostComponent.getStyle('textColor')}" horizontalCenter="0" verticalCenter="0" />
 </s:Skin>

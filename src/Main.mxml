@@ -205,29 +205,20 @@
 			<s:VerticalLayout gap="0"/>
 		</s:layout>
 		<s:SkinnableContainer id="topActionBar" width="100%" height="{getStyle('toolBarHeight')}" styleName="topToolBarStyle"  verticalCenter="0">
-			<s:HGroup width="100%" height="100%" verticalCenter="0">
-				<ui:NavigationButton id="profileBtn" height="100%" click="profileBtn_clickHandler(event)"
-									 width="{getStyle('topButtonWidth')}"
-									 styleName="profileButtonStyle topButtonStyle"
-									 navigateTo="{[PagesENUM.PROFILE]}"
-									 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"									 
-									 />
-				<ui:NavigationButton id="backBtn" height="100%" visible="false" includeInLayout="false" click="button_clickHandler(event)"
-									 styleName="backButtonStyle topButtonStyle"
-									 navigateTo="{[PagesENUM.LAST]}"
-									 transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
-									 width="{getStyle('topButtonWidth')}"
-									 /> 
-
-				<s:Label id="pageName"  styleName="pageNameStyle" width="100%" height="100%"/>
-				<ui:RecordingStatus id="recordingStatus" source="{getStyle('recordingStatusImage')}" visible="false" includeInLayout="false"
-									scaleMode="letterbox" scaleX="{getStyle('imageScaleX')}" scaleY="{getStyle('imageScaleY')}"
-									width="{getStyle('topButtonWidth')}" height="100%"/>
-				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" width="{getStyle('topButtonWidth')}" height="100%"/>			
+			<s:HGroup width="100%" height="100%">
+				<s:Group>
+					<ui:NavigationButton id="profileBtn" styleName="profileButtonStyle topButtonStyle"
+										 navigateTo="{[PagesENUM.PROFILE]}" transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
+					<ui:NavigationButton id="backBtn" styleName="backButtonStyle topButtonStyle"
+										 navigateTo="{[PagesENUM.LAST]}" transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"/>
+				</s:Group>
+				<s:Label id="pageName" styleName="pageNameStyle" width="100%" height="100%"/>
+				<ui:RecordingStatus id="recordingStatus" styleName="recordingStatusIconStyle topButtonStyle"/>
+				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
 			</s:HGroup>
 		</s:SkinnableContainer>
 
 		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
-    	<common:MenuButtonsView id="bottomMenu" width="100%" height="{getStyle('bottomToolBarHeight')}" click="button_clickHandler(event)"/>
+    	<common:MenuButtonsView id="bottomMenu" width="100%" height="{getStyle('bottomToolBarHeight')}"/>
 	</s:Group>	
 </s:Application>

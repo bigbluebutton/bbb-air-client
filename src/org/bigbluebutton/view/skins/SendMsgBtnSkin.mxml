@@ -14,7 +14,11 @@
 		<s:State name="up" />
 	</s:states>
 	
-	<s:Rect top="0" bottom="0" right="0" left="0" />
+	<s:Rect top="{getStyle('topAlign')}" bottom="{getStyle('bottomAlign')}" right="{getStyle('rightAlign')}" left="0">
+		<s:fill >
+			<s:SolidColor  color="{hostComponent.getStyle('backgroundColor')}" color.down="{hostComponent.getStyle('onClickBackgroundColor')}"/>
+		</s:fill>
+	</s:Rect>
 	<s:BitmapImage source="{getStyle('backgroundImage')}" horizontalCenter="0" verticalCenter="0"/>
 	
 </s:Skin>

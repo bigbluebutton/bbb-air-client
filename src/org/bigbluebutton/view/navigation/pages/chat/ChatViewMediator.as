@@ -78,8 +78,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			userSession.userList.userAddedSignal.add(userAdded);
 			
 			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
-			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
-			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
+			FlexGlobals.topLevelApplication.backBtn.visible = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = true;
 		}
 		
 		/**

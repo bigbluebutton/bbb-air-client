@@ -16,6 +16,7 @@
 				<chat:ChatList id="chatlist" width="100%" height="100%"/>
 			</s:VGroup>
 		</s:Scroller>
+		
 		<s:Group width="100%" height="{getStyle('chatInputTextHeight')}" >
 			<s:TextInput id="inputMessage0" width="100%" height="100%"  prompt="{resourceManager.getString('resources','chat.textInput.text')}" 
 						 styleName="contentFontSize msgInputBoxStyle" />

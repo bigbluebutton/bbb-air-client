@@ -38,8 +38,8 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 			view.shareMicButton.visible=!userMe.listenOnly;
 			view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userMe.voiceJoined ? 'audioSettings.shareMicrophone.off' : 'audioSettings.shareMicrophone.on');
 			view.listenOnlyButton.label = ResourceManager.getInstance().getString('resources', userMe.listenOnly ? 'audioSettings.listenOnly.off' : 'audioSettings.listenOnly.on');
-			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = true;
-			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = false;
+			FlexGlobals.topLevelApplication.backBtn.visible = true;
+			FlexGlobals.topLevelApplication.profileBtn.visible = false;
 		}
 		
 		private function onShareMicClick(event:MouseEvent):void

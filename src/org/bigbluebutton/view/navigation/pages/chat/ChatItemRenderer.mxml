@@ -80,7 +80,7 @@
 			<s:layout>
 				<s:HorizontalLayout />
 			</s:layout>
-			<s:Label id="username" width="50%" styleName="chatNameColor chatNameTimeStyle subContentFontSize"/>
+			<s:Label id="username" width="50%" styleName="chatNameTimeStyle subContentFontSize"/>
 			<s:Label id="time" width="50%" textAlign="right" styleName="chatTimeColor chatNameTimeStyle subContentFontSize" />
 		</s:Group>
 		<s:Group width="100%">

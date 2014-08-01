@@ -27,7 +27,7 @@
 			<s:VerticalLayout horizontalAlign="center" verticalAlign="middle"/>
 		</s:layout>
 		<s:Image  styleName="bbbLogoStyle" includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect"/>
-		<s:Label id="messageText0" width="90%" 
+		<s:Label id="messageText0" width="90%" textAlign="center"
 				 includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect"			 
 				 text.ChecksumError="{resourceManager.getString('resources', 'login.error.checksumError')}"
 				 text.GenericError="{resourceManager.getString('resources', 'login.error.genericError')}"

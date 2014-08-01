@@ -20,8 +20,8 @@
 			<s:LinearGradientStroke weight="{getStyle('weight')}"/>
 		</s:stroke>
 		<s:fill >
-			<s:SolidColor color="{hostComponent.getStyle('backgroundColor')}" />
+			<s:SolidColor color="{hostComponent.getStyle('backgroundColor')}" color.down="{hostComponent.getStyle('onClickBackgroundColor')}"/>
 		</s:fill>
 	</s:Rect>
-	<s:Label width="100%" id="labelDisplay" text="{hostComponent.label}" textAlign="{getStyle('buttonLabelAlign')}" fontWeight="normal"  verticalCenter="0" color="{hostComponent.getStyle('textColor')}"/>
+	<s:Label width="100%"  id="labelDisplay" text="{hostComponent.label}" textAlign="center" color="{hostComponent.getStyle('textColor')}" verticalCenter="0" />
 </s:Skin>

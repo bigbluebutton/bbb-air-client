@@ -45,8 +45,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			checkVideo();
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'video.title');
-			FlexGlobals.topLevelApplication.backBtn.visible = FlexGlobals.topLevelApplication.backBtn.includeInLayout = false;
-			FlexGlobals.topLevelApplication.profileBtn.visible = FlexGlobals.topLevelApplication.profileBtn.includeInLayout = true;
+			FlexGlobals.topLevelApplication.backBtn.visible = false;
+			FlexGlobals.topLevelApplication.profileBtn.visible = true;
 			dataProvider = new ArrayCollection();
 			view.streamlist.dataProvider = dataProvider;
 			var users:ArrayCollection = userSession.userList.users;
