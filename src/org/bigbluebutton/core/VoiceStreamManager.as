@@ -162,7 +162,7 @@ package org.bigbluebutton.core
 				_outgoingStream.attachAudio(null);
 				_outgoingStream.close();
 				_outgoingStream = null;
-			}		
+			}
 		}
 
 		protected function onNetStatusEvent(event:NetStatusEvent):void

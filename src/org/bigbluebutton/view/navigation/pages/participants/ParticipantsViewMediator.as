@@ -49,9 +49,9 @@ package org.bigbluebutton.view.navigation.pages.participants
 			dicUserIdtoUser = new Dictionary();
 			
 			var users:ArrayCollection = userSession.userList.users;
-			for each (var user:User in users) 
-			{				
-				addUser(user);			
+			for each (var user:User in users)
+			{
+				addUser(user);
 			}
 			
 			userSession.userList.userChangeSignal.add(userChanged);
@@ -64,7 +64,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 		
 		private function addUser(user:User):void
 		{
-			dataProvider.addItem(user);	
+			dataProvider.addItem(user);
 			dataProvider.refresh();
 			dicUserIdtoUser[user.userID] = user;
 			setPageTitle();

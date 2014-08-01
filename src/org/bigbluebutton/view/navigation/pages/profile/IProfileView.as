@@ -16,9 +16,6 @@ package org.bigbluebutton.view.navigation.pages.profile
 		function get shareMicBtnLabel():String;
 		function get raiseHandBtnLabel():String;
 		function get raiseHandButton():Button;
-		/*function get cameraQualityRadioGroup():RadioButtonGroup;*/
 		function get logoutButton():Button;
-/*		function setCameraQuality(value:int):void;
-		function setCameraQualityGroupVisibility(hasStream:Boolean):void*/
 	}
 }
