@@ -43,6 +43,11 @@ package org.bigbluebutton.view.navigation.pages.common
 			this.streamName = streamName;
 			this.connection = connection;
 			
+			initNetStream(connection);
+		}
+		
+		public function initNetStream(connection:NetConnection):void
+		{
 			ns = new NetStream(connection);
 			ns.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
 			ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
@@ -108,7 +113,7 @@ package org.bigbluebutton.view.navigation.pages.common
 			{
 				video.height = screenWidth;
 				video.width = ((originalVideoWidth * video.height)/originalVideoHeight);
-
+				
 				if (screenWidth < video.width)
 				{
 					video.width = screenHeight;
@@ -164,7 +169,7 @@ package org.bigbluebutton.view.navigation.pages.common
 			this.stage.addChild(video);
 		}
 		
-		private function onNetStatus(e:NetStatusEvent):void{
+		protected function onNetStatus(e:NetStatusEvent):void{
 			switch(e.info.code){
 				case "NetStream.Publish.Start":
 					trace("NetStream.Publish.Start for broadcast stream " + streamName);
@@ -184,7 +189,7 @@ package org.bigbluebutton.view.navigation.pages.common
 			}
 		}
 		
-		private function onAsyncError(e:AsyncErrorEvent):void{
+		protected function onAsyncError(e:AsyncErrorEvent):void{
 			trace("VideoWindow::asyncerror " + e.toString());
 		}
 		

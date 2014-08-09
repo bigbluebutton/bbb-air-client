@@ -101,6 +101,11 @@ package org.bigbluebutton.command
 			
 			videoConnection.connect();
 			
+			if (userSession.clientIsIOS)
+			{
+				videoConnection.connectIOS();
+			}
+			
 			userSession.videoConnection = videoConnection;
 			
 			voiceConnection.uri = userSession.config.getConfigFor("PhoneModule").@uri;
@@ -111,13 +116,13 @@ package org.bigbluebutton.command
 			deskshareConnection.connect();
 			
 			userSession.deskshareConnection = deskshareConnection;
-
+			
 			// Query the server for chat, users, and presentation info
 			chatService.sendWelcomeMessage();
 			chatService.getPublicChatMessages();
 			
 			presentationService.getPresentationInfo();
-
+			
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			usersService.queryForParticipants();
 			usersService.queryForRecordingStatus();

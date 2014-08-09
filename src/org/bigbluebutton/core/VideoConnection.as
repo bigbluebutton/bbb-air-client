@@ -10,6 +10,7 @@ package org.bigbluebutton.core
 	
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.command.ReconnectIOSVideoSignal;
 	import org.bigbluebutton.model.IUserSession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
@@ -28,6 +29,9 @@ package org.bigbluebutton.core
 		[Inject]
 		public var userSession:IUserSession;
 		
+		[Inject]
+		public var reconnectIOSVideoSignal:ReconnectIOSVideoSignal;
+		
 		private var _iosBaseConnection:IBaseConnection;
 		private var _ns:NetStream;
 		private var _cameraPosition:String;
@@ -36,6 +40,7 @@ package org.bigbluebutton.core
 		protected var _unsuccessConnected:ISignal = new Signal();
 		protected var _successIOSConnected:ISignal = new Signal();
 		protected var _unsuccessIOSConnected:ISignal = new Signal();
+		protected var _successIOSReconnected:ISignal = new Signal();
 		
 		protected var _applicationURI:String;
 		protected var _iosApplicationURI:String;
@@ -43,10 +48,14 @@ package org.bigbluebutton.core
 		private var _camera:Camera;
 		
 		private var _selectedCameraQuality:int;
+		private var _streamViewCounter:int;
 		
 		public static var CAMERA_QUALITY_LOW:int = 0;
 		public static var CAMERA_QUALITY_MEDIUM:int = 1;
 		public static var CAMERA_QUALITY_HIGH:int = 2;
+		public static var MAX_STREAM_VIEWS:int = 4;
+		
+		public static const IOS_NAME:String = "IOSVideoConnection";
 		
 		public function VideoConnection()
 		{
@@ -66,6 +75,7 @@ package org.bigbluebutton.core
 			_iosBaseConnection.init(this);
 			_iosBaseConnection.successConnected.add(onIOSConnectionSuccess);
 			_iosBaseConnection.unsuccessConnected.add(onIOSConnectionUnsuccess);
+			_iosBaseConnection.connection.addEventListener(NetStatusEvent.NET_STATUS, netStatus);
 		}
 		
 		private function onIOSConnectionUnsuccess(reason:String):void
@@ -133,16 +143,47 @@ package org.bigbluebutton.core
 			return _iosBaseConnection.connection;
 		}
 		
+		public function get iosBaseConnection():IBaseConnection
+		{
+			return _iosBaseConnection;
+		}
+		
 		public function connect():void {
 			baseConnection.connect(uri);
+		}
+		
+		public function connectIOS():void
+		{
+			_iosBaseConnection = injector.getInstance(IBaseConnection);
+			initIOSConnection();
+			_iosBaseConnection.connect(iosUri);
+		}
+		
+		protected function netStatus(event:NetStatusEvent):void
+		{
+			var info : Object = event.info;
+			var statusCode : String = info.code;
 			
-			// if iOS - create separate video connection
-			if (userSession.clientIsIOS)
-			{
-				_iosBaseConnection = injector.getInstance(IBaseConnection);
-				initIOSConnection();
-				_iosBaseConnection.connect(iosUri);
+			switch (statusCode) {	
+				case "NetConnection.Connect.Success":				
+					trace(IOS_NAME + ": Connection succeeded. Uri: " + uri);
+					sendIOSVideoReconnectionSuccessEvent();
+					break;
+				case "NetConnection.Connect.Closed":
+					trace(IOS_NAME + ": Connection closed. Uri: " + uri);
+					reconnectIOSVideoSignal.dispatch();
+					break;
 			}
+		}
+		
+		protected function sendIOSVideoReconnectionSuccessEvent():void 
+		{
+			successIOSVideoReconnected.dispatch();
+		}
+		
+		public function get successIOSVideoReconnected():ISignal
+		{
+			return _successIOSReconnected;
 		}
 		
 		public function get cameraPosition():String
@@ -173,6 +214,21 @@ package org.bigbluebutton.core
 		public function set selectedCameraQuality(value:int):void
 		{
 			_selectedCameraQuality = value;
+		}
+		
+		public function get streamViewCounter():int
+		{
+			return _streamViewCounter;
+		}
+		
+		public function increaseStreamViewCounter():void
+		{
+			_streamViewCounter++;
+		}
+		
+		public function resetStreamViewCounter():void
+		{
+			_streamViewCounter = 0;
 		}
 		
 		/**
