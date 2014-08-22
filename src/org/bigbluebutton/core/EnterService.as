@@ -1,14 +1,6 @@
 package org.bigbluebutton.core
 {
-	import flash.events.Event;
-	import flash.events.HTTPStatusEvent;
-	import flash.events.IOErrorEvent;
-	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import flash.net.URLRequestHeader;
-	import flash.net.URLRequestMethod;
-	
-	import mx.utils.ObjectUtil;
 	
 	import org.bigbluebutton.core.util.URLFetcher;
 	import org.osflash.signals.ISignal;
@@ -35,7 +27,8 @@ package org.bigbluebutton.core
 		}
 		
 		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
-			successSignal.dispatch(new XML(data));
+			var result : Object = JSON.parse(data as String);
+			successSignal.dispatch(result.response);
 		}
 		
 		protected function onUnsuccess(reason:String):void {
