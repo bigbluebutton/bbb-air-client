@@ -5,6 +5,10 @@ package org.bigbluebutton.model
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
+	import flash.media.CameraPosition;
+	import org.bigbluebutton.command.MicrophoneMuteSignal;
+	import org.bigbluebutton.command.ShareCameraSignal;
+	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	
 	import spark.collections.Sort;
@@ -18,6 +22,25 @@ package org.bigbluebutton.model
 		public static const RAISE_HAND:int = 5;
 		public static const LOCKED:int = 6;
 		public static const LISTEN_ONLY:int = 7;
+		
+		[Inject]
+		public var shareCameraSignal: ShareCameraSignal;
+		
+		[Inject]
+		public var microphoneMuteSignal: MicrophoneMuteSignal;
+		
+		private var _applyViewerLockSettingsSignal:Signal = new Signal();
+		private var _applyPresenterModeratorLockSettingsSignal:Signal = new Signal();
+		
+		public function get applyViewerLockSettingsSignal():ISignal
+		{
+			return _applyViewerLockSettingsSignal;
+		}
+		
+		public function get applyPresenterModeratorLockSettingsSignal():ISignal
+		{
+			return _applyPresenterModeratorLockSettingsSignal;
+		}
 		
 		private var _users:ArrayCollection;	
 		
@@ -409,5 +432,15 @@ package org.bigbluebutton.model
 				userChangeSignal.dispatch(user, LISTEN_ONLY);
 			}
 		}
+		
+		public function applyLockSettingsToUsers(ls:LockSettings):void {
+			for(var i:int = 0; i < users.length; i++) {
+				var user:User = users.getItemAt(i) as User;
+				if(user != null) {
+					user.setLockSettings(ls);
+				}
+			}
+		}
+		
 	}
 }

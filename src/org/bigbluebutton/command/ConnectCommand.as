@@ -118,10 +118,10 @@ package org.bigbluebutton.command
 			userSession.userList.allUsersAddedSignal.add(successUsersAdded);
 			usersService.queryForParticipants();
 			usersService.queryForRecordingStatus();
+			userSession.initializeLockSettings();
 			
 			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
 			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
-			usersService.getRoomLockState();
 		}
 		
 		private function unsuccessJoiningMeeting():void {

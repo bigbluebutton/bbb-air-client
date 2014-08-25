@@ -15,6 +15,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import org.bigbluebutton.command.ShareMicrophoneSignal;
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.LockSettings;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
@@ -50,20 +51,20 @@ package org.bigbluebutton.view.navigation.pages.profile
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
 			userSession.userList.userChangeSignal.add(userChangeHandler);
+			userSession.userList.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.userList.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
 			
 			var userMe:User = userSession.userList.me;		
 			
 			view.userNameText.text = userMe.name;		
 
-			if (Camera.getCamera() == null)
+			if(userSession.userList.me.role == User.MODERATOR || userSession.userList.me.presenter)
 			{
-				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
-				view.shareCameraButton.enabled = false;
+				applyPresenterModeratorLockSettings();
 			}
 			else
 			{
-				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', userMe.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
-				view.shareCameraButton.enabled = true;
+				applyViewerLockSettings();
 			}
 			
 			view.shareCameraButton.addEventListener(MouseEvent.CLICK, onShareCameraClick);
@@ -81,9 +82,21 @@ package org.bigbluebutton.view.navigation.pages.profile
 			if (user.me) {
 				if (type == UserList.JOIN_AUDIO) {
 					view.shareMicButton.label = ResourceManager.getInstance().getString('resources', user.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
+					
+					// These lock settings checks very ugly. The setting of the labels for shareMicButton/shareCameraButton should proabably be factored out, since they are set
+					// by lock settings being changed, AND user status being changed... however I will leave it ugly, since the UI is being redone anyways. I will wait to 
+					// see what changes I have to merge in first, before making it not-ugly... -- Adam
+					
+					if(!(userSession.userList.me.role == User.MODERATOR || userSession.userList.me.presenter) && userSession.lockSettings.disableMic) {
+						view.shareMicButton.label += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
+					}
 				} else if (type == UserList.HAS_STREAM) {
 					view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', user.hasStream ? 'profile.settings.camera.on' : 'profile.settings.camera.off');
 					view.setCameraQualityGroupVisibility(user.hasStream);
+					
+					if(!(userSession.userList.me.role == User.MODERATOR || userSession.userList.me.presenter) && userSession.lockSettings.disableCam) {
+						view.shareCameraButton.label += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
+					}
 				} else if (type == UserList.RAISE_HAND) { 
 					view.raiseHandButton.label = ResourceManager.getInstance().getString('resources', user.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 				}
@@ -133,11 +146,61 @@ package org.bigbluebutton.view.navigation.pages.profile
 			disconnectUserSignal.dispatch(DisconnectEnum.CONNECTION_STATUS_USER_LOGGED_OUT);
 		}
 		
+		private function applyPresenterModeratorLockSettings():void
+		{
+			var lockSettings:LockSettings = userSession.lockSettings;
+			
+			if(Camera.getCamera() != null)
+			{
+				view.shareCameraButton.enabled = true;
+				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', userSession.userList.me.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
+			}
+			else
+			{
+				view.shareCameraButton.enabled = false;
+				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
+			}
+			
+			view.shareMicButton.enabled = true;
+			view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userSession.userList.me.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
+		}
+		
+		private function applyViewerLockSettings():void
+		{
+			var lockSettings:LockSettings = userSession.lockSettings;
+
+			if(Camera.getCamera() != null)
+			{
+				view.shareCameraButton.enabled = !lockSettings.disableCam;
+				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', userSession.userList.me.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
+				
+				if(lockSettings.disableCam)
+				{
+					view.shareCameraButton.label += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
+				}
+			}
+			else
+			{
+				view.shareCameraButton.enabled = false;
+				view.shareCameraButton.label = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
+			}
+			
+			view.shareMicButton.enabled = !lockSettings.disableMic;
+			view.shareMicButton.label = ResourceManager.getInstance().getString('resources', userSession.userList.me.voiceJoined ? 'profile.settings.mic.on' : 'profile.settings.mic.off');
+			
+			if(lockSettings.disableMic)
+			{
+				view.shareMicButton.label += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
+			}
+		}
+		
 		override public function destroy():void
 		{
 			super.destroy();
 			
 			userSession.userList.userChangeSignal.remove(userChangeHandler);
+			userSession.userList.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.userList.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
 			
 			view.shareCameraButton.removeEventListener(MouseEvent.CLICK, onShareCameraClick);
 			view.shareMicButton.removeEventListener(MouseEvent.CLICK, onShareMicClick);

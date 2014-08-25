@@ -3,6 +3,7 @@ package org.bigbluebutton.model
 	import flash.net.NetConnection;
 	
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
+	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.VideoConnection;
@@ -12,8 +13,6 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.model.presentation.PresentationList;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.bigbluebutton.core.IVoiceConnection;
-	import org.bigbluebutton.core.IDeskshareConnection;
 	
 
 	public interface IUserSession
@@ -41,5 +40,9 @@ package org.bigbluebutton.model
 		function get recordingStatusChangedSignal():ISignal;
 		function joinMeetingResponse(msg:Object):void;
 		function recordingStatusChanged(recording:Boolean):void;
+		function initializeLockSettings():void;
+		function set lockSettings(value:LockSettings):void;
+		function get lockSettings():LockSettings;
+		function applyMyLockState():void;
 	}
 }

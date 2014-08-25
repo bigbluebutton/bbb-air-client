@@ -2,6 +2,7 @@ package org.bigbluebutton.core
 {
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.LockSettings;
 	import org.bigbluebutton.model.User;
 	import org.osflash.signals.Signal;
 	
@@ -69,6 +70,12 @@ package org.bigbluebutton.core
 				case "meetingEnded":
 					handleLogout(message);
 					break;
+				case "meetingState":
+					handleMeetingState(message);
+					break;
+				case "permissionsSettingsChanged":
+					handlePermissionsSettingsChanged(message);
+					break;
 				default:
 					break;
 			}
@@ -114,10 +121,10 @@ package org.bigbluebutton.core
 			user.isLeavingFlag = false;
 			user.listenOnly = newUser.listenOnly;
 			
+			var permissions:Object = newUser.permissions;			
+			user.setLockSettings(parseLockSettings(permissions));
+
 			userSession.userList.addUser(user);
-			
-			// The following properties are 'special', in that they have view changes associated with them.
-			// The UserList changes the model appropriately, then dispatches a signal to the views.
 		}
 		
 		private function handleParticipantLeft(m:Object):void {
@@ -130,6 +137,9 @@ package org.bigbluebutton.core
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleAssignPresenterCallback() -- user [" + msg.newPresenterID + "] is now the presenter");
 			userSession.userList.assignPresenter(msg.newPresenterID);
+			
+			// When gaining or losing presenter status, lock settings need to be re-applied (since presenters ignore the meeting lock state):
+			userSession.applyMyLockState();
 		}
 		
 		private function handleUserJoinedVoice(m:Object):void {
@@ -208,6 +218,30 @@ package org.bigbluebutton.core
 			trace("UsersMessageReceiver::handleGetRecordingStatusReply() -- recording status");
 			var msg:Object = JSON.parse(m.msg);
 			userSession.recordingStatusChanged(msg.recording);
+		}
+		
+		private function handleMeetingState(m:Object):void {
+			trace("UsersMessageReceiver::handleMeetingState() -- meeting state received");
+			var msg:Object = JSON.parse(m.msg);
+			var permissions:Object = msg.permissions;
+			userSession.lockSettings = parseLockSettings(permissions);
+		}
+		
+		private function handlePermissionsSettingsChanged(m:Object):void {
+			trace("UsersMessageReceiver::handlePermissionsSettingsChanged() -- lock settings have changed");
+			var msg:Object = JSON.parse(m.msg);
+			userSession.lockSettings = parseLockSettings(msg);
+		}
+		
+		private function parseLockSettings(obj:Object):LockSettings {
+			
+			var lockSettings:LockSettings = new LockSettings(obj.disableCam,
+															 obj.disableMic,
+															 obj.disablePrivChat,
+															 obj.disablePubChat,
+															 obj.lockedLayout
+											);
+			return lockSettings;
 		}
 	}
 }

@@ -88,5 +88,14 @@ package org.bigbluebutton.model
 			return null;
 		}
 		
+		public function get lock():Object {
+			if(_config.lock == null) {
+				return null;
+			}
+			else {
+				return new XML(_config.lock.toXMLString());
+			}
+		}
+		
 	}
 }
