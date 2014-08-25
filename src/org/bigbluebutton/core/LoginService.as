@@ -76,38 +76,39 @@ package org.bigbluebutton.core
 			enterSubservice.enter(config.application.host, _urlRequest);
 		}
 		
-		protected function afterEnter(xml:XML):void {
-			if (xml.returncode == 'SUCCESS') {
+		protected function afterEnter(result:Object):void {
+			if (result.returncode == 'SUCCESS') {
 				trace("Join SUCCESS");
 				var user:Object = {
-					username:xml.fullname, 
-						conference:xml.conference, 
-						conferenceName:xml.confname,
-						externMeetingID:xml.externMeetingID,
-						meetingID:xml.meetingID, 
-						externUserID:xml.externUserID, 
-						internalUserId:xml.internalUserID,
-						role:xml.role, 
-						room:xml.room, 
-						authToken:xml.room, 
-						record:xml.record, 
-						webvoiceconf:xml.webvoiceconf, 
-						dialnumber:xml.dialnumber,
-						voicebridge:xml.voicebridge, 
-						mode:xml.mode, 
-						welcome:xml.welcome, 
-						logoutUrl:xml.logoutUrl, 
-						defaultLayout:xml.defaultLayout, 
-						avatarURL:xml.avatarURL,
-						guest:xml.guest };
+					username:result.fullname, 
+						conference:result.conference, 
+						conferenceName:result.confname,
+						externMeetingID:result.externMeetingID,
+						meetingID:result.meetingID, 
+						externUserID:result.externUserID, 
+						internalUserId:result.internalUserID,
+						role:result.role, 
+						room:result.room, 
+						authToken:result.room, 
+						record:result.record, 
+						webvoiceconf:result.webvoiceconf, 
+						dialnumber:result.dialnumber,
+						voicebridge:result.voicebridge, 
+						mode:result.mode, 
+						welcome:result.welcome, 
+						logoutUrl:result.logoutUrl, 
+						defaultLayout:result.defaultLayout, 
+						avatarURL:result.avatarURL,
+						guest:result.guest };
 				user.customdata = new Object();
-				if(xml.customdata)
+				if(result.customdata)
 				{
-					for each(var cdnode:XML in xml.customdata.elements()){
-						trace("checking user customdata: "+cdnode.name() + " = " + cdnode);
-						user.customdata[cdnode.name()] = cdnode.toString();
+					for (var key:String in result.customdata) {
+						trace("checking user customdata: "+key + " = " + result.customdata[key]);
+						user.customdata[key] = result.customdata[key].toString();
 					}
 				}
+				
 				successJoinedSignal.dispatch(user);
 			} else {
 				trace("Join FAILED");
