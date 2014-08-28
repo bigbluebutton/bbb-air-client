@@ -32,23 +32,11 @@ package org.bigbluebutton.view.ui
 			
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
+			userSession.userList.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.userList.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
+			
 			view.setVisibility(userSession.userList.me.voiceJoined);  
 			view.selected = userSession.userList.me.muted;
-		}
-		
-		/**
-		 * Destroy view and listeners
-		 */
-		override public function destroy():void
-		{
-			(view as MicButton).removeEventListener(MouseEvent.CLICK, mouseEventClickHandler);
-			userSession.userList.userChangeSignal.remove(userChangeHandler);
-			
-			super.destroy();
-			
-			view.dispose();
-			
-			view = null;
 		}
 		
 		/**
@@ -69,8 +57,50 @@ package org.bigbluebutton.view.ui
 					view.setVisibility(user.voiceJoined);
 				} else if (type == UserList.MUTE) {
 					view.selected = user.muted;
+					
+					// Special care needs to be taken with the mute button when lock settings are in place.
+					// For example, if the moderator unmutes somebody, they should still be able to mute
+					// themselves again when they are done talking:
+					
+					if(user.disableMyMic) {
+						if(!user.muted) { // Moderator unmuted me, or I'm moderator/presenter, so don't disable me!
+							view.enabled = true;
+						} else if(user.role != User.MODERATOR && !user.presenter) { // I have been muted, and lock settings are in place!
+							view.enabled = false;
+						}
+					}
+					
 				}
 			}
 		}
+		
+		private function applyPresenterModeratorLockSettings():void
+		{
+			view.enabled = true;
+		}
+		
+		private function applyViewerLockSettings():void
+		{
+			view.enabled = userSession.userList.me.disableMyMic ? false : true;
+		}
+		
+		/**
+		 * Destroy view and listeners
+		 */
+		override public function destroy():void
+		{
+			(view as MicButton).removeEventListener(MouseEvent.CLICK, mouseEventClickHandler);
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
+			
+			userSession.userList.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.userList.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
+			
+			super.destroy();
+			
+			view.dispose();
+			
+			view = null;
+		}
+		
 	}
 }

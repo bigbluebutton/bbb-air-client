@@ -49,5 +49,10 @@ package org.bigbluebutton.view.ui
 		{
 			return _selected;
 		}
+		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+		}
 	}
 }

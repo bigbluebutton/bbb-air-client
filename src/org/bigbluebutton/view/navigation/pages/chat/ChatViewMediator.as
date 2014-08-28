@@ -264,7 +264,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 				
 				if(lockSettings.disablePublicChat)
 				{
-					view.pageName.text += " [Locked]";
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
 				}
 			}
 			else
@@ -278,7 +278,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 				}
 				if(lockSettings.disablePrivateChat)
 				{
-					view.pageName.text += " [Locked]";
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
 				}
 			}
 		}

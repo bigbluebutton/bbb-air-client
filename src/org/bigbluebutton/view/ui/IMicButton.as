@@ -8,5 +8,6 @@ package org.bigbluebutton.view.ui
 		function setVisibility(val:Boolean):void;
 		function get selected():Boolean;
 		function set selected(value:Boolean):void;
+		function set enabled(value:Boolean):void;
 	}
 }

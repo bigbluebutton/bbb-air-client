@@ -65,8 +65,8 @@ package org.bigbluebutton.core
 			// are not implemented in the mobile client, so parameters[7] and parameters[8]
 			// are "faked" in order to connect (without them, I couldn't get the connect 
 			// call to work...) - Adam
-			//parameters[7] = false;
-			//parameters[8] = false;
+			parameters[7] = false;
+			parameters[8] = false;
 			
 			try {
 				trace("Trying to connect to [" + uri +  "] ...");
