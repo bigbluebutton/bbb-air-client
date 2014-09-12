@@ -171,14 +171,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		{
 			if(dataProvider != null)
 			{
-				if(dataProvider.length<=2)
-				{
-					FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title');
-				}
-				else
-				{
-					FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title') + "s (" + (dataProvider.length-1) + ")";
-				}
+				FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'chat.title') + "(" + (dataProvider.length-1) + ")";
 			}
 		}		
 		

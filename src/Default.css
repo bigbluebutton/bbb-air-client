@@ -114,7 +114,7 @@ s|Image.iconStyle, s|Image.userDetailIconStyle
 	skinClass: ClassReference("org.bigbluebutton.view.skins.IconSkin");
 }
 
-s|View.userDetailviewStyle
+s|View.userDetailViewStyle
 {
 	bgColor:#F4F4F4;
 }

@@ -19,11 +19,6 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 			return shareMicBtn;
 		}
 		
-		public function get shareMicBtnLabel():String
-		{
-			return shareMicBtn.label;
-		}
-		
 		public function get listenOnlyButton():Button
 		{
 			return listenOnlyBtn;

@@ -39,6 +39,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 			var userMe:User = userSession.userList.me;		
 			
 			view.userNameButton.label = userMe.name;
+			view.raiseHandButton.label = ResourceManager.getInstance().getString('resources', userMe.raiseHand ?'profile.settings.handLower' : 'profile.settings.handRaise');
 			view.raiseHandButton.addEventListener(MouseEvent.CLICK, onRaiseHandClick);
 			view.logoutButton.addEventListener(MouseEvent.CLICK, logoutClick);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'profile.title');

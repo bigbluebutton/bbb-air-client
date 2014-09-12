@@ -12,28 +12,17 @@
 			import org.bigbluebutton.model.User;
 			
 			override public function set data(obj:Object):void {
-				super.data = obj;				
-				if (obj) 
-				{
-					presentationIcon.visible = presentationIcon.includeInLayout = obj.presenter;
-					profileIcon.visible = profileIcon.includeInLayout = ((obj.role == User.MODERATOR) && (!obj.presenter));
-					
-					if(obj.presenter || obj.role == User.MODERATOR)
-					{
-						handIcon.visible = handIcon.includeInLayout = false;
-					}
-					else if(obj.role == User.VIEWER)
-					{
-						handIcon.includeInLayout = true;
-						handIcon.visible = obj.raiseHand;
-						presentationIcon.visible = presentationIcon.includeInLayout = profileIcon.includeInLayout = profileIcon.visible = false;
-					}
-					
+				super.data = obj;
+				if (obj)
+				{					
+					presentationIcon.visible = presentationIcon.includeInLayout = obj.presenter && !obj.raiseHand;
+					profileIcon.visible = profileIcon.includeInLayout = ((obj.role == User.MODERATOR) && (!obj.presenter) && !obj.raiseHand);
+										
 					cameraIcon.visible = obj.hasStream;
 				
-					micIcon.visible = (obj.voiceJoined && !obj.muted);
-					micOffIcon.visible = (obj.voiceJoined && obj.muted);
-					listenOnlyIcon.visible = (!obj.voiceJoined && obj.listenOnly);
+					micIcon.visible = micIcon.includeInLayout = (obj.voiceJoined && !obj.muted);
+					micOffIcon.visible = micOffIcon.includeInLayout = (obj.voiceJoined && obj.muted);
+					listenOnlyIcon.visible = listenOnlyIcon.includeInLayout = (!obj.voiceJoined && obj.listenOnly);
 					soundIcon.visible = obj.talking;
 					
 					if(obj.me)
@@ -47,16 +36,20 @@
 					
 					if(obj.presenter)
 					{
+						handIcon.visible = handIcon.includeInLayout = obj.raiseHand;
 						subLabelDisplay.visible = subLabelDisplay.includeInLayout = true;
 						subLabelDisplay.text = resourceManager.getString('resources', 'participants.status.presenter');
 					}
 					else if(obj.role == "MODERATOR")
 					{
+						handIcon.visible = handIcon.includeInLayout = obj.raiseHand;
 						subLabelDisplay.visible = subLabelDisplay.includeInLayout = true;
 						subLabelDisplay.text = resourceManager.getString('resources', 'participants.status.moderator');
 					}
 					else
 					{
+						handIcon.visible = obj.raiseHand;
+						handIcon.includeInLayout = true;
 						subLabelDisplay.visible = subLabelDisplay.includeInLayout = false;
 					}
 					
@@ -83,8 +76,8 @@
 			<s:Image id="cameraIcon" styleName="iconStyle cameraIconStyle" height="100%"/>
 			<s:Group height="100%">
 				<s:Image id="micIcon" styleName="iconStyle micIconStyle" height="100%"/>
-				<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle" visible="false" height="100%"/>
-				<s:Image id="listenOnlyIcon" styleName="iconStyle listenOnlyIconStyle" visible="false" height="100%"/>
+				<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle"  height="100%"/>
+				<s:Image id="listenOnlyIcon" styleName="iconStyle listenOnlyIconStyle"  height="100%"/>
 			</s:Group>
 			<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" height="100%" />
 	</s:Group>

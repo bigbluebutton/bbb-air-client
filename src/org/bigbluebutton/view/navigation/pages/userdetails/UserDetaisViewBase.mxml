@@ -4,7 +4,7 @@
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				xmlns:view="org.bigbluebutton.core.view.*" 
 				xmlns:userdetails="org.bigbluebutton.view.navigation.pages.userdetails.*"
-				styleName="userDetailviewStyle"
+				styleName="userDetailViewStyle"
 				>
 	<s:Group  width="100%" height="100%" >
 		<s:layout>

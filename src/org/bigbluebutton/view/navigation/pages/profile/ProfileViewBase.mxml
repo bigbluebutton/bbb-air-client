@@ -11,14 +11,10 @@
 			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;			
 		]]>
 	</fx:Script>
-	
-	<s:Group  width="100%" height="100%">
-		<s:layout>
-			<s:VerticalLayout/>
-		</s:layout>		
+	<s:Scroller width="100%" height="100%" >
 		<s:VGroup width="100%" height="100%" horizontalAlign="center">
 			<s:Label width="90%" styleName="contentFontSize userSettingsStyle" text="{resourceManager.getString('resources', 'profile.participant')}"/>					
-			<s:Button id="userName0" width="90%" buttonMode="false" styleName="userSettingsButtonStyle userSettingsUserNameStyle contentFontSize"/>
+			<s:Button id="userName0" width="90%" buttonMode="false" mouseEnabled="false" styleName="userSettingsButtonStyle userSettingsUserNameStyle contentFontSize"/>
 			<s:Button id="raiseHandButton0"  width="90%"
 					  label="{resourceManager.getString('resources', 'profile.settings.handRaise')}" 
 					  styleName="userSettingsButtonStyle userSettingsRaseHandButtonStyle contentFontSize" />
@@ -37,5 +33,5 @@
 								 styleName="profileSettingsButtonStyle videoAudioSettingStyle contentFontSize"
 								 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
 		</s:VGroup>
-	</s:Group>
+	</s:Scroller>
 </view:NoTabView>
