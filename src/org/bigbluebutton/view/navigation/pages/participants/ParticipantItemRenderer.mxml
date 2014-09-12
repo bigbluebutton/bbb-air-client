@@ -72,13 +72,10 @@
 				<s:Label id="labelDisplay" width="100%"  height="100%" styleName="participantNameStyle contentFontSize"/>
 				<s:Label id="subLabelDisplay" width="100%"  height="100%" styleName="participantStatusStyle subContentFontSize"/>
 			</s:Group>
-
 			<s:Image id="cameraIcon" styleName="iconStyle cameraIconStyle" height="100%"/>
-			<s:Group height="100%">
-				<s:Image id="micIcon" styleName="iconStyle micIconStyle" height="100%"/>
-				<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle"  height="100%"/>
-				<s:Image id="listenOnlyIcon" styleName="iconStyle listenOnlyIconStyle"  height="100%"/>
-			</s:Group>
+			<s:Image id="micIcon" styleName="iconStyle micIconStyle" height="100%"/>
+			<s:Image id="micOffIcon" styleName="iconStyle micOffIconStyle"  height="100%"/>
+			<s:Image id="listenOnlyIcon" styleName="iconStyle listenOnlyIconStyle"  height="100%"/>
 			<s:Image id="soundIcon" styleName="iconStyle soundIconStyle" height="100%" />
 	</s:Group>
 	<s:Line width="100%">
