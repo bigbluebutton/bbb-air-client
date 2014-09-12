@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		width="96%"
+		>
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	<s:Label id="question" width="100%" fontWeight="bold" />
+	<s:VGroup id="responsesList" width="100%" horizontalAlign="center" >
+		<!-- This is where the response and number of responses go-->
+	</s:VGroup>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+</s:Group>

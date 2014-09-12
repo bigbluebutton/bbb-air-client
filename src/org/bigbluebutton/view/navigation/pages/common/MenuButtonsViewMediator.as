@@ -29,6 +29,9 @@ package org.bigbluebutton.view.navigation.pages.common
 			{
 				/*var users:ArrayCollection = userSession.userList.users;*/
 				userUISession.loadingSignal.remove(loadingFinished);
+
+				userSession.pollModel.pollsChangedSignal.add(onPollChange);
+				
 				if (userSession.deskshareConnection != null)
 				{
 					view.menuDeskshareButton.visible = view.menuDeskshareButton.includeInLayout = userSession.deskshareConnection.isStreaming;
@@ -45,6 +48,12 @@ package org.bigbluebutton.view.navigation.pages.common
 				}*/
 			}
 		}
+		
+		public function onPollChange(change:int, pollID:String):void
+		{
+			view.menuPollsButton.visible = view.menuPollsButton.includeInLayout = true;
+		}
+		
 		/**
 		 * If we recieve signal that deskshare stream is on - include Deskshare button to the layout
 		 */ 

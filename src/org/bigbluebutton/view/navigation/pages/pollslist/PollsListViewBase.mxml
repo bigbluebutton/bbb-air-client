@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				xmlns:view="org.bigbluebutton.core.view.*" 
+				xmlns:pollresults="org.bigbluebutton.view.navigation.pages.pollresults.*"
+				xmlns:pollslist="org.bigbluebutton.view.navigation.pages.pollslist.*"
+				xmlns:takepoll="org.bigbluebutton.view.navigation.pages.takepoll.*"
+				>
+	<fx:Script>
+		<![CDATA[
+			
+			import spark.events.IndexChangeEvent;
+			
+			// This method is to ensure that a poll cannot become the selected index of the polls list
+			// unless it has been started. This is necessary, because if a poll is started while it is 
+			// the selected index, and the user clicks on that list element, it will not dispatch an 
+			// 'IndexChangeEvent.CHANGE' event.
+			//
+			// http://stackoverflow.com/questions/7539185/prevent-selection-of-a-particular-item-in-spark-list
+			//
+			protected function pollsList_changingHandler(event:IndexChangeEvent):void
+			{
+				if(!(pollsList.dataProvider.getItemAt(event.newIndex).started)) {
+					event.preventDefault();
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group width="100%" height="100%" styleName="pageStyle" >
+		<s:layout>
+			<s:VerticalLayout />
+		</s:layout>
+		<s:List id="pollsList" width="98%" height="100%" changing="pollsList_changingHandler(event)"
+				itemRenderer="org.bigbluebutton.view.navigation.pages.pollslist.PollsListItemRenderer"
+				>
+		</s:List>
+	</s:Group>
+</view:NoTabView>

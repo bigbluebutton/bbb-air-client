@@ -18,6 +18,7 @@
 	<s:layout>
 		<s:HorizontalLayout gap="0"/>
 	</s:layout>
+	<ui:NavigationButton id="pollsBtn0" navigateTo="{[PagesENUM.POLLS_LIST]}" width="100%" visible="false" includeInLayout="false" styleName="pollsBtnStyle" />
 	<ui:NavigationButton id="deskshareBtn0" navigateTo="{[PagesENUM.DESKSHARE]}" width="100%" visible="false" includeInLayout="false" styleName="deskshareBtnStyle" />
 	<ui:NavigationButton id="presentationBtn0" width="100%" navigateTo="{[PagesENUM.PRESENTATION]}" styleName="presentationBtnStyle" />
 	<ui:NavigationButton id="videochatBtn0" navigateTo="{[PagesENUM.VIDEO_CHAT]}" width="100%" styleName="videochatBtnStyle" />

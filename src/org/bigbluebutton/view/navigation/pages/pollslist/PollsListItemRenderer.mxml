@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark"
+				>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			override public function set data(obj:Object):void {
+				super.data = obj;
+				
+				if(obj) {
+					pollTitle.text = obj.title;
+					
+					//Check the state of the poll (1. Not yet started, 2. Finished, 3. Active and I have voted, or 4. Active and I have not voted):
+					if(!obj.started) {
+						pollTitle.text += "  " + resourceManager.getString('resources', 'pollsList.notStarted');
+					}
+					else if(obj.stopped) {
+						pollTitle.text += "  " + resourceManager.getString('resources', 'pollsList.closed');
+					}
+					else if (obj.hasResponded) {
+						pollTitle.text += "  " + resourceManager.getString('resources', 'pollsList.alreadyVoted');
+					}
+					else {
+						pollTitle.text += "  " +resourceManager.getString('resources', 'pollsList.voteNow');
+					}
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout />
+	</s:layout>
+	
+	<s:Label id="pollTitle" width="100%" height="100%" textAlign="left" horizontalCenter="0" />
+	<s:Line width="100%" height="1" horizontalCenter="0" >
+		<s:stroke>
+			<s:SolidColorStroke color="#989898" weight="3" />
+		</s:stroke>
+	</s:Line>
+	
+</s:ItemRenderer>
