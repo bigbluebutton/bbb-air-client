@@ -2,6 +2,7 @@ package org.bigbluebutton.command
 {
 	import flash.events.Event;
 	
+	import mockolate.nice;
 	import mockolate.prepare;
 	import mockolate.received;
 	import mockolate.runner.MockolateRule;
@@ -22,19 +23,14 @@ package org.bigbluebutton.command
 		public var mockolateRule:MockolateRule = new MockolateRule();
 		
 		[Mock]
-		public var videoConnection:VideoConnection;
-		
-		[Mock]
 		public var userSession:UserSession;
-		
-		private static var TIMEOUT:Number = 5000;
 		
 		protected var instance:CameraQualityCommand;
 		
 		[Before(async)]
 		public function setUp():void
 		{
-			Async.proceedOnEvent(this, prepare(VideoConnection), Event.COMPLETE, TIMEOUT, timeoutHandler);
+			Async.proceedOnEvent(this, prepare(VideoConnection), Event.COMPLETE);
 			instance = new CameraQualityCommand();
 			instance.userSession = userSession;
 		}
@@ -60,34 +56,22 @@ package org.bigbluebutton.command
 		[Test]
 		public function executed_callsSelectCameraQualityMethod():void
 		{
-			// arrange	
-			stub(instance.userSession).getter("videoConnection").returns(videoConnection);
-			
-			// act
+			var videoConnection:VideoConnection = nice(VideoConnection);
+			stub(userSession).getter("videoConnection").returns(videoConnection);
 			instance.execute();
-			
-			// assert
 			assertThat(instance.userSession.videoConnection, received().method('selectCameraQuality'));
 		}
 		
 		[Test]
 		public function executed_callsSelectCameraQualityMethodWithCorrectArgs():void
 		{
-			// arrange
+			var videoConnection:VideoConnection = nice(VideoConnection);
 			instance.cameraQualitySelected = 2;
 			instance.userSession = userSession;
-			stub(instance.userSession).getter("videoConnection").returns(videoConnection);
-			
-			// act
+			stub(userSession).getter("videoConnection").returns(videoConnection);
 			instance.execute();
-			
-			// assert
 			assertThat(instance.userSession.videoConnection, received().method('selectCameraQuality').arg(2));
 		}
-		
-		protected function timeoutHandler(passThroughData:Object):void
-		{
-			fail("Timeout occured during setUp() method");
-		}
+
 	}
 }
