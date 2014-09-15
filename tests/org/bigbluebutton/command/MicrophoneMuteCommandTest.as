@@ -78,7 +78,7 @@ package org.bigbluebutton.command
 			stub(user).getter("muted").returns(true);
 			mock(userService).method("unmute").args(user);
 			instance.execute();
-			assertThat(userService, received().method("unmute"));
+			assertThat(instance.userService, received().method("unmute"));
 		}
 		
 		[Test]
@@ -87,7 +87,7 @@ package org.bigbluebutton.command
 			stub(user).getter("muted").returns(false);
 			mock(userService).method("mute").args(user);
 			instance.execute();
-			assertThat(userService, received().method("mute"));
+			assertThat(instance.userService, received().method("mute"));
 		}
 	}
 }
