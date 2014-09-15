@@ -2,7 +2,6 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				width="100%"
 				>
 	
 	<fx:Script>
@@ -19,6 +18,11 @@
 			}
 		]]>
 	</fx:Script>
-	<s:Label id="title" left="0" right="0" width="50%" height="100%" color="#000000"  textAlign="center" verticalAlign="middle" />
-	<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
+	<s:Group width="100%">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="middle"/>
+		</s:layout>
+		<s:Label id="title" width="60%" height="100%" textAlign="center" styleName="videoStreamName contentFontSize"/>
+		<s:Image id="cameraIcon"  styleName="iconStyle cameraIconStyle" />
+	</s:Group>
 </s:ItemRenderer>

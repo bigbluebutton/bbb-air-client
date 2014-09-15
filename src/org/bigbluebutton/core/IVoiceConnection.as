@@ -1,8 +1,9 @@
 package org.bigbluebutton.core
 {
 	import flash.net.NetConnection;
-	import org.osflash.signals.ISignal;
+	
 	import org.bigbluebutton.model.IConferenceParameters;
+	import org.osflash.signals.ISignal;
 
 	public interface IVoiceConnection
 	{
@@ -17,7 +18,7 @@ package org.bigbluebutton.core
 		function failedToJoinVoiceConferenceCallback(msg:String):* 
 		function disconnectedFromJoinVoiceConferenceCallback(msg:String):*
 		function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):*		
-		function call():void
+		function call(listenOnly:Boolean=false):void
 		function hangUp():void 
 	}
 }

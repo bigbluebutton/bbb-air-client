@@ -113,7 +113,7 @@ package org.bigbluebutton.core
 			user.voiceUserId = newUser.voiceUser.userId;
 			user.isLeavingFlag = false;
 			user.listenOnly = newUser.listenOnly;
-			
+			user.muted = newUser.voiceUser.muted;
 			userSession.userList.addUser(user);
 			
 			// The following properties are 'special', in that they have view changes associated with them.
@@ -159,8 +159,10 @@ package org.bigbluebutton.core
 		
 		private function handleUserListeningOnly(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
-			trace("UsersMessageReceiver::handleUserListeningOnly -- user [" + msg.userId + "] has listen only set to [" + msg.listenOnly + "]");
-			userSession.userList.listenOnlyChange(msg.userId, msg.listenOnly);
+			//It seems that listenOnly keeps to be true
+			//Temp solution to set listenOnly to false when user drop listen only mode.
+			trace("UsersMessageReceiver::handleUserListeningOnly -- user [" + msg.userId + "] has listen only set to [" + !userSession.userList.me.listenOnly + "]");
+			userSession.userList.listenOnlyChange(msg.userId, !userSession.userList.me.listenOnly);
 		}
 		
 		private function handleVoiceUserMuted(m:Object):void {

@@ -33,7 +33,7 @@ package org.bigbluebutton.view.ui
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
 			view.setVisibility(userSession.userList.me.voiceJoined);  
-			view.selected = userSession.userList.me.muted;
+			view.muted = userSession.userList.me.muted;
 		}
 		
 		/**
@@ -68,7 +68,7 @@ package org.bigbluebutton.view.ui
 				if (type == UserList.JOIN_AUDIO) {
 					view.setVisibility(user.voiceJoined);
 				} else if (type == UserList.MUTE) {
-					view.selected = user.muted;
+					view.muted = user.muted;
 				}
 			}
 		}

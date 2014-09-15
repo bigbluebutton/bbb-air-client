@@ -19,7 +19,6 @@
 	name=progressIndicator, type=spark.components.supportClasses.Range, required=false
 	name=imageDisplay, type=spark.primitives.BitmapImage, required=true
 	-->
-	<s:BitmapImage id="imageDisplay"
-				   left="0" top="0" right="0" bottom="0" height="{getStyle('height')}" width="{getStyle('width')}" 
-				   source="{getStyle('backgroundImage')}"/>
+	<s:BitmapImage id="imageDisplay" height="{getStyle('height')}" width="{getStyle('width')}" 
+				   source="{getStyle('backgroundImage')}" horizontalCenter="0" verticalCenter="0"/>
 </s:Skin>

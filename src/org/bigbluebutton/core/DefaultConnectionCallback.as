@@ -38,7 +38,7 @@ package org.bigbluebutton.core
 			trace("RECEIVED MESSAGE: [" + messageName + "]");
 			
 			notifyListeners(messageName, result);			
-		}		
+		}
 
 		public function addMessageListener(listener:IMessageListener):void {
 			_messageListeners.push(listener);

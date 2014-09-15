@@ -4,11 +4,11 @@
 				xmlns:view="org.bigbluebutton.core.view.*"
 				>
 	
-	<s:Group id="deskshareGroup0" width="100%" height="100%" styleName="pageStyle">
+	<s:Group id="deskshareGroup0" width="100%" height="100%">
 		<s:layout>
-			<s:VerticalLayout />
+			<s:VerticalLayout verticalAlign="middle"/>
 		</s:layout>		
-		<s:Label id="noDeskshareMessage0" width="100%" height="100%" visible="true" 
+		<s:Label id="noDeskshareMessage0" styleName="contentFontSize"  textAlign="center" width="100%" height="100%"
 				 text="{resourceManager.getString('resources', 'deskshare.noDeskshare')}" />
 	</s:Group>
 	

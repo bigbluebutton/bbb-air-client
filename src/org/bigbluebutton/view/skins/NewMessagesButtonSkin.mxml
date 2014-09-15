@@ -5,12 +5,7 @@
 	<fx:Metadata>
 		[HostComponent("spark.components.Button")]
 	</fx:Metadata>
-	<fx:Script>
-		<![CDATA[
-			import mx.resources.ResourceManager;
-		]]>
-	</fx:Script>
-	
+
 	<!-- states -->
 	<s:states>
 		<s:State name="disabled" />
@@ -23,7 +18,14 @@
 	name=iconDisplay, type=spark.primitives.BitmapImage, required=false
 	name=labelDisplay, type=spark.core.IDisplayText, required=false
 	-->
-	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}" />
-
-	<s:Label id="labelDisplay" text="{ResourceManager.getInstance().getString('resources', 'profile.logout')}" horizontalCenter="0" textAlign="center"/>
+	<s:Rect width="{hostComponent.getStyle('width')}" height="{hostComponent.getStyle('height')}"
+			radiusX="{hostComponent.getStyle('radiusX')}"
+			radiusY="{hostComponent.getStyle('radiusY')}"
+			>
+		<s:fill>
+			<s:SolidColor color="{hostComponent.getStyle('fillColor')}" />
+		</s:fill>
+	</s:Rect>
+	
+	<s:Label id="labelDisplay" color="{hostComponent.getStyle('textColor')}" horizontalCenter="0" verticalCenter="0" />
 </s:Skin>

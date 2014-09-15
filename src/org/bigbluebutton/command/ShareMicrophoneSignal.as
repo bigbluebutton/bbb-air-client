@@ -6,7 +6,7 @@ package org.bigbluebutton.command
 	{
 		public function ShareMicrophoneSignal()
 		{
-			super(Boolean);
+			super(Object);
 		}
 	}
 }

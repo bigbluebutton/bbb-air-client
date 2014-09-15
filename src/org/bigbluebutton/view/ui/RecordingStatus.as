@@ -1,8 +1,8 @@
 package org.bigbluebutton.view.ui
 {
-	import spark.components.Image;
+	import spark.components.Button;
 	
-	public class RecordingStatus extends Image implements IRecordingStatus
+	public class RecordingStatus extends Button implements IRecordingStatus
 	{
 		public function RecordingStatus()
 		{
@@ -11,7 +11,7 @@ package org.bigbluebutton.view.ui
 		
 		public function setVisibility(val:Boolean):void
 		{
-			super.visible = val;
+			super.visible = super.includeInLayout = val;
 		}
 		
 		public function dispose():void

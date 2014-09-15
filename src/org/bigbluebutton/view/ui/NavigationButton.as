@@ -46,12 +46,6 @@ package org.bigbluebutton.view.ui
 		{
 			super.childrenCreated();
 			this.addEventListener(MouseEvent.CLICK, onClick);
-			var selected:State = new State({name : "selected"});
-			var unselected:State = new State({name : "unselected"});
-			selected.overrides = [new SetStyle(this,"backgroundColor", this.getStyle('selectedBackgroundColor') )];
-			unselected.overrides = [new SetStyle(this,"backgroundColor", this.getStyle('backgroundColor') )];
-			this.states.push(selected);
-			this.states.push(unselected);
 		}
 		
 		protected function onClick(e:MouseEvent):void

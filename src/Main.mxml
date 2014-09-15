@@ -36,6 +36,8 @@
 			import org.bigbluebutton.view.navigation.PagesNavigatorConfig;
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
 			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
+			import org.bigbluebutton.view.navigation.pages.audiosettings.AudioSettingsConfig;
+			import org.bigbluebutton.view.navigation.pages.camerasettings.CameraSettingsConfig;
 			import org.bigbluebutton.view.navigation.pages.chat.ChatConfig;
 			import org.bigbluebutton.view.navigation.pages.chatrooms.ChatRoomsConfig;
 			import org.bigbluebutton.view.navigation.pages.common.MenuButtonsConfig;
@@ -124,8 +126,9 @@
 					.configure(SwapCameraConfig)
 					.configure(DisconnectPageConfig)
 					.configure(DeskshareConfig)
-					.configure(MenuButtonsConfig)
 					.configure(RecordingStatusConfig)
+					.configure(CameraSettingsConfig)
+					.configure(AudioSettingsConfig)
 					
 					.configure(new ContextView(this));
 				
@@ -186,22 +189,6 @@
 			private function accelerometerCallback():void {
 				currentOrientation = _orientationCalc.currentOrientation;
 				(pagesNavigatorView.activeView as NoTabView).rotationHandler(_orientationCalc.currentOrientation);
-			}			
-
-			protected function button_clickHandler(event:MouseEvent):void
-			{
-				backBtn.visible=false;
-				backBtn.includeInLayout=false;
-				profileBtn.visible=true;
-				profileBtn.includeInLayout=true;
-			}
-			
-			protected function profileBtn_clickHandler(event:MouseEvent):void
-			{
-				backBtn.visible=true;
-				backBtn.includeInLayout=true;
-				profileBtn.visible=false;
-				profileBtn.includeInLayout=false;
 			}
 
 		]]>
@@ -211,38 +198,27 @@
 		[ResourceBundle("resources")]
 	</fx:Metadata> 
 	
-	<loading:LoadingScreen width="100%" height="100%" />
+	<loading:LoadingScreen width="100%" height="100%"/>
 	
 	<s:Group width="100%" height="100%" id="mainshell" visible="false">
 		<s:layout>
-			<s:VerticalLayout />
+			<s:VerticalLayout gap="0"/>
 		</s:layout>
-		<s:Group width="100%" id="topActionBar" >
-			<s:Rect  height="100%" width="100%">
-				<s:fill>
-					<s:SolidColor color="{getStyle('topActionBarColor')}" />
-				</s:fill>
-			</s:Rect>
-			<s:HGroup width="100%" height="100%" verticalAlign="middle">					
-				<ui:NavigationButton id="profileBtn" click="profileBtn_clickHandler(event)" 					 
-										styleName="profileButtonStyle topButtonStyle "
-										navigateTo="{[PagesENUM.PROFILE]}"
-										transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"
-										height="100%" />
-				<ui:NavigationButton id="backBtn" visible="false" includeInLayout="false" click="button_clickHandler(event)"
-										styleName="backButtonStyle topButtonStyle"
-										navigateTo="{[PagesENUM.LAST]}"
-										transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"
-										height="100%"/> 
-				<ui:RecordingStatus id="recordingStatus" source="{getStyle('recordingStatusImage')}" visible="false" 
-									scaleMode="letterbox" scaleX="{getStyle('imageScaleX')}" scaleY="{getStyle('imageScaleY')}" height="100%"/>
-				<s:Label id="pageName" styleName="pageNameStyle"  width="100%" />
-				<ui:SwapCameraButton id="swapCameraBtn" visible="false" styleName="swapCameraButtonStyle topButtonStyle" height="100%" />
-				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle" height="100%" />	
+		<s:SkinnableContainer id="topActionBar" width="100%" height="{getStyle('toolBarHeight')}" styleName="topToolBarStyle"  verticalCenter="0">
+			<s:HGroup width="100%" height="100%">
+				<s:Group>
+					<ui:NavigationButton id="profileBtn" styleName="profileButtonStyle topButtonStyle"
+										 navigateTo="{[PagesENUM.PROFILE]}" transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
+					<ui:NavigationButton id="backBtn" styleName="backButtonStyle topButtonStyle"
+										 navigateTo="{[PagesENUM.LAST]}" transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"/>
+				</s:Group>
+				<s:Label id="pageName" styleName="pageNameStyle" width="100%" height="100%"/>
+				<ui:RecordingStatus id="recordingStatus" styleName="recordingStatusIconStyle topButtonStyle"/>
+				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
 			</s:HGroup>
-		</s:Group>
+		</s:SkinnableContainer>
 
-		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>	
-    	<common:MenuButtonsView id="bottomMenu" width="100%"  click="button_clickHandler(event)"/>
+		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
+    	<common:MenuButtonsView id="bottomMenu" width="100%" height="{getStyle('bottomToolBarHeight')}"/>
 	</s:Group>	
 </s:Application>

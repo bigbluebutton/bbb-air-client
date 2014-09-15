@@ -405,7 +405,6 @@ package org.bigbluebutton.model
 			
 			if(user != null) {
 				user.listenOnly = listenOnly;
-				// Doesn't do anything at the moment... waiting for css changes - Adam
 				userChangeSignal.dispatch(user, LISTEN_ONLY);
 			}
 		}
