@@ -19,8 +19,8 @@ package org.bigbluebutton.command
 		
 		override public function execute():void
 		{
-			trace("MicrophoneMuteCommand.execute() - user.muted = " + user.muted);
 			if (user != null) {
+				trace("MicrophoneMuteCommand.execute() - user.muted = " + user.muted);
 				if (user.muted) {
 					userService.unmute(user);
 				} else {
