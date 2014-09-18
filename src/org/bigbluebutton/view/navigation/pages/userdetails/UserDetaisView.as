@@ -42,11 +42,24 @@ package org.bigbluebutton.view.navigation.pages.userdetails
 				{
 					userNameText.text = _user.name;
 				}
-				statusText.text = _user.role;
-				cameraIcon.visible = _user.hasStream;
-				micIcon.visible = (_user.voiceJoined && !_user.muted);
-				micOffIcon.visible = (_user.voiceJoined && _user.muted);
-				soundIcon.visible = user.talking; 
+				
+				if(_user.presenter)
+				{
+					statusText.text = resourceManager.getString('resources', 'participants.status.presenter');
+				}
+				else if(_user.role == "MODERATOR")
+				{
+					statusText.text = resourceManager.getString('resources', 'participants.status.moderator');
+				}
+				else
+				{
+					statusText.text = "";
+				}
+				
+				cameraIcon.visible = cameraIcon.includeInLayout = _user.hasStream;
+				micIcon.visible = micIcon.includeInLayout = (_user.voiceJoined && !_user.muted);
+				micOffIcon.visible = micOffIcon.includeInLayout = (_user.voiceJoined && _user.muted);
+				noMediaText.visible = noMediaText.includeInLayout = (!_user.voiceJoined && !_user.hasStream);
 				
 				//TODO: buttons
 				showCameraButton0.includeInLayout = _user.hasStream;

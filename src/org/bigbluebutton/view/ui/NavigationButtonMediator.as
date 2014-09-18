@@ -25,10 +25,6 @@ package org.bigbluebutton.view.ui
 		override public function initialize():void
 		{
 			view.navigationSignal.add(navigate);
-			
-			userSession.pageChangedSignal.add(update);
-			
-			update(userSession.currentPage);
 		}
 		
 		override public function destroy():void
@@ -40,8 +36,6 @@ package org.bigbluebutton.view.ui
 			view.navigationSignal.remove(navigate);
 			
 			view = null;			
-			
-			userSession.pageChangedSignal.remove(update);
 		}
 		
 		/**
@@ -52,23 +46,5 @@ package org.bigbluebutton.view.ui
 			navigateToPageSignal.dispatch(view.navigateTo[0], view.pageDetails, view.transitionAnimation);
 		}
 		
-		/**
-		 * Update the view when there is a change in the model
-		 */ 
-		private function update(page:String, action:Boolean = false, animation:int = TransitionAnimationENUM.APPEAR):void
-		{
-			if(view.navigateTo.indexOf(page) == 0)
-			{
-					view.currentState = "selected";
-			}
-			else if(view.navigateTo.indexOf(page)>0)
-			{				
-					view.currentState = "selected";		
-			}
-			else
-			{
-				view.currentState = "unselected";		
-			}
-		}
 	}
 }

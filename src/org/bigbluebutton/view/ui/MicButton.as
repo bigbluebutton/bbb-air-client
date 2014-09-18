@@ -18,12 +18,14 @@ package org.bigbluebutton.view.ui
 		override protected function childrenCreated():void
 		{
 			super.childrenCreated();
-			var selected:State = new State({name : "selected"});
-			var unselected:State = new State({name : "unselected"});
-			selected.overrides = [new SetStyle(this,"backgroundImage", this.getStyle('mutedBackgroundImage') )];
-			this.states.push(selected);
-			this.states.push(unselected);
-		}		
+			var muted:State = new State({name : "muted"});
+			var unmuted:State = new State({name : "unmuted"});
+			muted.overrides = [new SetStyle(this,"gradientColorTop", this.getStyle('selectedGradientColorTop') ),
+								new SetStyle(this,"gradientColorBottom", this.getStyle('selectedGradientColorBottom') ),
+								new SetStyle(this,"backgroundImage", this.getStyle('mutedBackgroundImage') )];
+			this.states.push(muted);
+			this.states.push(unmuted);
+		}	
 		
 		public function dispose():void
 		{
@@ -34,20 +36,20 @@ package org.bigbluebutton.view.ui
 			this.visible = val;
 		}
 		
-		protected var _selected:Boolean = false;
+		protected var _muted:Boolean = false;
 		
-		public function set selected(b:Boolean):void
+		public function set muted(b:Boolean):void
 		{
-			_selected = b;
-			if(_selected){
-				currentState = "selected";
+			_muted = b;
+			if(_muted){
+				currentState = "muted";
 			}
-			else currentState = "unselected";
+			else currentState = "unmuted";
 		}
 		
-		public function get selected():Boolean
+		public function get muted():Boolean
 		{
-			return _selected;
+			return _muted;
 		}
 		
 		override public function set enabled(value:Boolean):void

@@ -36,7 +36,7 @@ package org.bigbluebutton.view.ui
 			userSession.userList.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
 			
 			view.setVisibility(userSession.userList.me.voiceJoined);  
-			view.selected = userSession.userList.me.muted;
+			view.muted = userSession.userList.me.muted;
 		}
 		
 		/**
@@ -56,7 +56,7 @@ package org.bigbluebutton.view.ui
 				if (type == UserList.JOIN_AUDIO) {
 					view.setVisibility(user.voiceJoined);
 				} else if (type == UserList.MUTE) {
-					view.selected = user.muted;
+					view.muted = user.muted;
 					
 					// Special care needs to be taken with the mute button when lock settings are in place.
 					// For example, if the moderator unmutes somebody, they should still be able to mute
@@ -69,7 +69,6 @@ package org.bigbluebutton.view.ui
 							view.enabled = false;
 						}
 					}
-					
 				}
 			}
 		}

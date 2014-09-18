@@ -41,7 +41,6 @@ package org.bigbluebutton.view.navigation.pages.participants
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
-
 			dataProvider = new ArrayCollection();
 			view.list.dataProvider = dataProvider;
 			
@@ -50,22 +49,25 @@ package org.bigbluebutton.view.navigation.pages.participants
 			dicUserIdtoUser = new Dictionary();
 			
 			var users:ArrayCollection = userSession.userList.users;
-			for each (var user:User in users) 
-			{				
-				addUser(user)
+			for each (var user:User in users)
+			{
+				addUser(user);
 			}
 			
 			userSession.userList.userChangeSignal.add(userChanged);
 			userSession.userList.userAddedSignal.add(addUser);
 			userSession.userList.userRemovedSignal.add(userRemoved);
-			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'participants.title');
+			setPageTitle();
+			FlexGlobals.topLevelApplication.profileBtn.visible = true;
+			FlexGlobals.topLevelApplication.backBtn.visible = false;
 		}
 		
 		private function addUser(user:User):void
 		{
-			dataProvider.addItem(user);		
+			dataProvider.addItem(user);
 			dataProvider.refresh();
-			dicUserIdtoUser[user.userID] = user;			
+			dicUserIdtoUser[user.userID] = user;
+			setPageTitle();
 		}
 		
 		private function userRemoved(userID:String):void
@@ -74,6 +76,7 @@ package org.bigbluebutton.view.navigation.pages.participants
 			var index:uint = dataProvider.getItemIndex(user);
 			dataProvider.removeItemAt(index);
 			dicUserIdtoUser[user.userID] = null;
+			setPageTitle();
 		}
 		
 		private function userChanged(user:User, property:String = null):void
@@ -86,6 +89,17 @@ package org.bigbluebutton.view.navigation.pages.participants
 			if (event.newIndex >= 0) {
 				var user:User = dataProvider.getItemAt(event.newIndex) as User;
 				userUISession.pushPage(PagesENUM.USER_DETAIS, user, TransitionAnimationENUM.SLIDE_LEFT);
+			}
+		}
+		
+		/**
+		 * Count participants and set page title accordingly
+		 **/
+		private function setPageTitle():void
+		{
+			if(dataProvider != null)
+			{
+				FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'participants.title') + "(" + dataProvider.length + ")";
 			}
 		}
 			

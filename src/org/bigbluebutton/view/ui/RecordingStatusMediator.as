@@ -1,5 +1,7 @@
 package org.bigbluebutton.view.ui
 {
+	import mx.core.FlexGlobals;
+	
 	import org.bigbluebutton.model.IUserSession;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -20,6 +22,16 @@ package org.bigbluebutton.view.ui
 		public function setRecordingStatus(recording:Boolean):void
 		{
 			view.setVisibility(recording);
+			
+			//try to keep page title center
+			if(recording)
+			{
+				FlexGlobals.topLevelApplication.pageName.setStyle("paddingLeft", FlexGlobals.topLevelApplication.recordingStatus.getStyle("width"));
+			}
+			else
+			{
+				FlexGlobals.topLevelApplication.pageName.setStyle("paddingLeft", 0);
+			}
 		}
 		
 		override public function destroy():void

@@ -21,9 +21,6 @@
 			
 		]]>
 	</fx:Script>
-	<s:layout>
-		<s:HorizontalLayout />
-	</s:layout>
-	<s:Label id="labelDisplay" width="100%" text="" />
+	<s:Label id="labelDisplay" width="100%" styleName="contentFontSize selectParticipantLabelStyle"/>
 
 </s:ItemRenderer>
