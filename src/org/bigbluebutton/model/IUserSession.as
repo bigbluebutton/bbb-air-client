@@ -41,6 +41,8 @@ package org.bigbluebutton.model
 		function joinMeetingResponse(msg:Object):void;
 		function recordingStatusChanged(recording:Boolean):void;
 		function initializeLockSettings():void;
+		function get applyPresenterModeratorLockSettingsSignal():ISignal;
+		function get applyViewerLockSettingsSignal():ISignal;
 		function set lockSettings(value:LockSettings):void;
 		function get lockSettings():LockSettings;
 		function applyMyLockState():void;

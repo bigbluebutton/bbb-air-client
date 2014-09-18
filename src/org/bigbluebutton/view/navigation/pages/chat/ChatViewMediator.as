@@ -78,8 +78,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
 			
-			userSession.userList.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
-			userSession.userList.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
+			userSession.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
 			
 			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 			FlexGlobals.topLevelApplication.backBtn.visible = false;
@@ -299,8 +299,8 @@ package org.bigbluebutton.view.navigation.pages.chat
 			userSession.userList.userRemovedSignal.remove(userRemoved);	
 			userSession.userList.userAddedSignal.remove(userAdded);
 			
-			userSession.userList.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
-			userSession.userList.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
+			userSession.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
 			
 			(view as View).removeEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 			

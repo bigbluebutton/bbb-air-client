@@ -39,6 +39,8 @@ package org.bigbluebutton.model
 		protected var _unsuccessJoiningMeetingSignal:ISignal = new Signal();
 		protected var _recordingStatusChangedSignal:ISignal = new Signal();
 		protected var _logoutSignal:Signal = new Signal();
+		protected var _applyViewerLockSettingsSignal:Signal = new Signal();
+		protected var _applyPresenterModeratorLockSettingsSignal:Signal = new Signal();
 		
 		[Inject]
 		public var microphoneMuteSignal:MicrophoneMuteSignal;
@@ -165,6 +167,16 @@ package org.bigbluebutton.model
 			return _recordingStatusChangedSignal;
 		}
 		
+		public function get applyViewerLockSettingsSignal():ISignal
+		{
+			return _applyViewerLockSettingsSignal;
+		}
+		
+		public function get applyPresenterModeratorLockSettingsSignal():ISignal
+		{
+			return _applyPresenterModeratorLockSettingsSignal;
+		}
+		
 		public function recordingStatusChanged(recording:Boolean):void {
 			_recording = recording;
 			recordingStatusChangedSignal.dispatch(recording);
@@ -228,11 +240,11 @@ package org.bigbluebutton.model
 				{
 					microphoneMuteSignal.dispatch(me);
 				}
-				userList.applyViewerLockSettingsSignal.dispatch();
+				applyViewerLockSettingsSignal.dispatch();
 			}
 			else  // I am a presenter or moderator
 			{
-				userList.applyPresenterModeratorLockSettingsSignal.dispatch();
+				applyPresenterModeratorLockSettingsSignal.dispatch();
 			}
 		}
 		

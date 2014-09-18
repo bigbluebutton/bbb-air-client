@@ -32,8 +32,8 @@ package org.bigbluebutton.view.ui
 			
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			
-			userSession.userList.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
-			userSession.userList.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
+			userSession.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
 			
 			view.setVisibility(userSession.userList.me.voiceJoined);  
 			view.muted = userSession.userList.me.muted;
@@ -91,8 +91,8 @@ package org.bigbluebutton.view.ui
 			(view as MicButton).removeEventListener(MouseEvent.CLICK, mouseEventClickHandler);
 			userSession.userList.userChangeSignal.remove(userChangeHandler);
 			
-			userSession.userList.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
-			userSession.userList.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
+			userSession.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
 			
 			super.destroy();
 			

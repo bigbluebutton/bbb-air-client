@@ -124,7 +124,6 @@ package org.bigbluebutton.core
 			var permissions:Object = newUser.permissions;			
 			user.setLockSettings(parseLockSettings(permissions));
 
-			/* user.muted = newUser.voiceUser.muted; -Forgot if I need this. Check it out - Adam */
 			userSession.userList.addUser(user);
 		}
 		

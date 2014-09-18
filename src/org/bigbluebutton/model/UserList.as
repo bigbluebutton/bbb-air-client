@@ -29,19 +29,6 @@ package org.bigbluebutton.model
 		[Inject]
 		public var microphoneMuteSignal: MicrophoneMuteSignal;
 		
-		private var _applyViewerLockSettingsSignal:Signal = new Signal();
-		private var _applyPresenterModeratorLockSettingsSignal:Signal = new Signal();
-		
-		public function get applyViewerLockSettingsSignal():ISignal
-		{
-			return _applyViewerLockSettingsSignal;
-		}
-		
-		public function get applyPresenterModeratorLockSettingsSignal():ISignal
-		{
-			return _applyPresenterModeratorLockSettingsSignal;
-		}
-		
 		private var _users:ArrayCollection;	
 		
 		[Bindable]

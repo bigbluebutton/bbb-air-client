@@ -12,6 +12,7 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.LockSettings;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.view.ui.SwapCameraButton;
@@ -39,8 +40,20 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			
 			userSession.userList.userChangeSignal.add(userChangeHandler);
+			userSession.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
+			
 			var userMe:User = userSession.userList.me;
 						
+			if (userMe.role == User.MODERATOR || userMe.presenter)
+			{
+				applyPresenterModeratorLockSettings();
+			}
+			else
+			{
+				applyViewerLockSettings();
+			}
+			
 			if (Camera.getCamera() == null)
 			{
 				view.startCameraButton.label = ResourceManager.getInstance().getString('resources', 'profile.settings.camera.unavailable');
@@ -49,7 +62,6 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 			else
 			{
 				view.startCameraButton.label  = ResourceManager.getInstance().getString('resources', userMe.hasStream? 'profile.settings.camera.on':'profile.settings.camera.off');
-				view.startCameraButton.enabled = true;
 			}
 			if(Camera.names.length <= 1 )
 			{
@@ -69,6 +81,20 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 			view.setCameraQuality(userSession.videoConnection.selectedCameraQuality);
 			setRadioGroupEnable(userMe.hasStream);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'cameraSettings.title');
+		}
+		
+		private function applyPresenterModeratorLockSettings():void
+		{
+			if (Camera.getCamera() != null) {
+				view.startCameraButton.enabled = true;
+			}
+		}
+		
+		private function applyViewerLockSettings():void
+		{
+			if (Camera.getCamera() != null) {
+				view.startCameraButton.enabled = !userSession.lockSettings.disableCam;
+			}
 		}
 		
 		private function userChangeHandler(user:User, type:int):void
@@ -140,6 +166,8 @@ package org.bigbluebutton.view.navigation.pages.camerasettings
 			super.destroy();
 			
 			userSession.userList.userChangeSignal.remove(userChangeHandler);		
+			userSession.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
 			view.startCameraButton.removeEventListener(MouseEvent.CLICK, onShareCameraClick);
 			if(Camera.names.length > 1)
 			{

@@ -199,6 +199,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/video.png");
 	}
 	
+	s|Button.cameraSettingsStartButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/lock_indicator.png");
+	}
+	
 	s|Button.cameraSettingsSwapButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/SwapCamera_up.png");
@@ -229,6 +234,11 @@ global
 		bottomAlign:2;
 		rightAlign:2;
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/sendMsgIcon.png");
+	}
+	
+	s|Button.sendButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/lock_indicator.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -341,6 +351,11 @@ global
 	s|Button.audioSettingsShareMicButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-mdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-mdpi/lock_indicator.png");
 	}
 	
 	s|Button.audioSettingsListenOnlyButtonStyle
@@ -516,6 +531,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/video.png");
 	}
 	
+	s|Button.cameraSettingsStartButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/lock_indicator.png");
+	}
+	
 	s|Button.cameraSettingsSwapButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/SwapCamera_up.png");
@@ -546,6 +566,11 @@ global
 		bottomAlign:3;
 		rightAlign:3;
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/sendMsgIcon.png");
+	}
+	
+	s|Button.sendButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/lock_indicator.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -634,6 +659,11 @@ global
 	s|Button.audioSettingsShareMicButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-hdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-hdpi/lock_indicator.png");
 	}
 	
 	s|Button.audioSettingsListenOnlyButtonStyle
@@ -844,6 +874,11 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/video.png");
 	}
 	
+	s|Button.cameraSettingsStartButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/lock_indicator.png");
+	}
+		
 	s|Button.cameraSettingsSwapButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/SwapCamera_up.png");
@@ -862,6 +897,11 @@ global
 		bottomAlign:4;
 		rightAlign:4;
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/sendMsgIcon.png");
+	}
+	
+	s|Button.sendButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/lock_indicator.png");
 	}
 	
 	s|Label.pageNameStyle
@@ -950,6 +990,11 @@ global
 	s|Button.audioSettingsShareMicButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xhdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/lock_indicator.png");
 	}
 	
 	s|Button.audioSettingsListenOnlyButtonStyle
@@ -1163,9 +1208,19 @@ global
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/sendMsgIcon.png");
 	}
 	
+	s|Button.sendButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/lock_indicator.png");
+	}
+	
 	s|Button.cameraSettingsStartButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/video.png");
+	}
+	
+	s|Button.cameraSettingsStartButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xhdpi/lock_indicator.png");
 	}
 	
 	s|Button.cameraSettingsSwapButtonStyle
@@ -1290,6 +1345,11 @@ global
 	s|Button.audioSettingsShareMicButtonStyle
 	{
 		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/microphone.png");
+	}
+	
+	s|Button.audioSettingsShareMicButtonStyle:disabled
+	{
+		backgroundImage: Embed(source="assets/res/drawable-xxhdpi/lock_indicator.png");
 	}
 	
 	s|Button.audioSettingsListenOnlyButtonStyle
