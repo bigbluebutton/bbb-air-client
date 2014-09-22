@@ -28,6 +28,11 @@ package org.bigbluebutton.command
 			userSession.mainConnection.connection.close();
 			userSession.videoConnection.connection.close();
 			userSession.voiceConnection.connection.close();
+			
+			if(userSession.videoConnection.iosConnection)
+			{
+				userSession.videoConnection.iosConnection.close();
+			}
 		}
 	}
 }

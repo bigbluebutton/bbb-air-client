@@ -8,6 +8,8 @@ package org.bigbluebutton
 	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.command.LoadSlideCommand;
 	import org.bigbluebutton.command.LoadSlideSignal;
+	import org.bigbluebutton.command.ReconnectIOSVideoCommand;
+	import org.bigbluebutton.command.ReconnectIOSVideoSignal;
 	import org.bigbluebutton.command.ShareCameraCommand;
 	import org.bigbluebutton.command.ShareCameraSignal;
 	import org.bigbluebutton.command.ShareMicrophoneCommand;
@@ -21,13 +23,13 @@ package org.bigbluebutton
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.ILoginService;
-	import org.bigbluebutton.core.IUsersService;
-	import org.bigbluebutton.core.UsersService;
 	import org.bigbluebutton.core.IPresentationService;
-	import org.bigbluebutton.core.IVoiceConnection;
+	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.LoginService;
 	import org.bigbluebutton.core.PresentationService;
+	import org.bigbluebutton.core.UsersService;
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.model.ConferenceParameters;
@@ -38,8 +40,6 @@ package org.bigbluebutton
 	import org.bigbluebutton.model.UserUISession;
 	import org.bigbluebutton.model.chat.ChatMessagesSession;
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
-
-
 	
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
@@ -79,6 +79,7 @@ package org.bigbluebutton
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);
 			signalCommandMap.map(CameraQualitySignal).toCommand(CameraQualityCommand);
 			signalCommandMap.map(DisconnectUserSignal).toCommand(DisconnectUserCommand);
+			signalCommandMap.map(ReconnectIOSVideoSignal).toCommand(ReconnectIOSVideoCommand);
 		}
 	}
 }

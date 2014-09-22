@@ -1,19 +1,17 @@
 package org.bigbluebutton.view.navigation.pages.videochat
 {
-	import flash.display.DisplayObject;
-	
 	import mx.collections.ArrayCollection;
 	import mx.core.FlexGlobals;
 	import mx.resources.ResourceManager;
 	import mx.utils.ObjectUtil;
 	
+	import org.bigbluebutton.command.ReconnectIOSVideoSignal;
+	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
-	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
-	import org.mockito.integrations.currentMockito;
 	import org.osmf.logging.Log;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -31,7 +29,12 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		[Inject]
 		public var userUISession: IUserUISession;
 		
+		[Inject]
+		public var reconnectIOSVideoSignal:ReconnectIOSVideoSignal;
+		
 		protected var dataProvider:ArrayCollection;
+		
+		private var currentUser:User;
 		
 		override public function initialize():void
 		{
@@ -42,6 +45,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			
 			userUISession.pageTransitionStartSignal.add(onPageTransitionStart);
 			view.streamlist.addEventListener(IndexChangeEvent.CHANGE, onSelectStream);
+			
+			userSession.videoConnection.successIOSVideoReconnected.add(onVideoReconnected);
 			
 			checkVideo();
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'video.title');
@@ -98,14 +103,16 @@ package org.bigbluebutton.view.navigation.pages.videochat
 		{
 			if (event.newIndex >= 0) 
 			{
-				var user:User = dataProvider.getItemAt(event.newIndex) as User;
-				if(user.hasStream)
+				currentUser = dataProvider.getItemAt(event.newIndex) as User;
+				
+				if(currentUser.hasStream)
 				{
 					if(view && view.getDisplayedUserID() != null)
 					{
 						stopStream(view.getDisplayedUserID());
 					}
-					startStream(user.name, user.streamName);
+					
+					startStream(currentUser.name, currentUser.streamName);
 				}
 			}
 		}
@@ -117,6 +124,8 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			userSession.userList.userChangeSignal.remove(userChangeHandler);
 			
 			userUISession.pageTransitionStartSignal.remove(onPageTransitionStart);
+			
+			userSession.videoConnection.successIOSVideoReconnected.remove(onVideoReconnected);
 			
 			view.dispose();
 			view = null;
@@ -204,7 +213,30 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				var length:Number = Number(String(resolution.dimensions[1]));
 				if (view) 
 				{
-					view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length, view.videoGroup.height, view.videoGroup.width);
+					// iOS client uses nginx-rtmp module to view transcoded video stream.
+					// Everytime after client viewed 4 streams - NetConnection.Connect.Closed will be raised in VideoConnection and 
+					// we need to restart NetConnection in order to play the stream. However magic number 4 will raise NetConnection.Connect.Closed only 
+					// in non-ios devies and in ios devices NetConnection will stop functionality and keep silence, so we need to manully count the number 
+					// of streams viewed on ios and restart the NetConnection after the fourth time. 
+					if (userSession.clientIsIOS)
+					{
+						userSession.videoConnection.increaseStreamViewCounter();
+						
+						if (userSession.videoConnection.streamViewCounter > VideoConnection.MAX_STREAM_VIEWS)
+						{
+							userSession.videoConnection.resetStreamViewCounter();
+							trace("Maximum number of 4 stream views on ios device reached, restarting the ios NetConnection.");
+							reconnectIOSVideoSignal.dispatch();
+						}
+						else
+						{
+							view.startStream(userSession.videoConnection.iosConnection, name, streamName, resolution.userID, width, length, view.videoGroup.height, view.videoGroup.width);
+						}
+					}
+					else 
+					{
+						view.startStream(userSession.videoConnection.connection, name, streamName, resolution.userID, width, length, view.videoGroup.height, view.videoGroup.width);
+					}
 				}
 			}
 		}
@@ -232,7 +264,7 @@ package org.bigbluebutton.view.navigation.pages.videochat
 			var userWithCamera:User = getUserWithCamera();
 			
 			var newUser:User;
-					
+			
 			if (changedUser)
 			{
 				// Priority state machine
@@ -240,28 +272,33 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				if (selectedUser && selectedUser.hasStream && changedUser.userID == selectedUser.userID)
 				{
 					if (view) view.stopStream();	
+					currentUser = changedUser;
 					startStream(changedUser.name, changedUser.streamName);
 				}
 				else if (changedUser.presenter && changedUser.hasStream)
 				{
 					if (view) view.stopStream();	
+					currentUser = changedUser;
 					startStream(changedUser.name, changedUser.streamName);
 				}
 				else if (currentUserID && changedUser.userID == currentUserID)
 				{
 					if (view) view.stopStream();	
+					currentUser = changedUser;
 					startStream(changedUser.name, changedUser.streamName);
 				}
 				else if (userWithCamera)
 				{
 					if (userWithCamera.userID == changedUser.userID)
 					{
-						if (view) view.stopStream();	
+						if (view) view.stopStream();
+						currentUser = changedUser;
 						startStream(changedUser.name, changedUser.streamName);
 					}
 					else if (!changedUser.hasStream && userWithCamera.me)
 					{
-						if (view) view.stopStream();	
+						if (view) view.stopStream();
+						currentUser = userWithCamera;
 						startStream(userWithCamera.name, userWithCamera.streamName);
 					}
 				}
@@ -298,19 +335,28 @@ package org.bigbluebutton.view.navigation.pages.videochat
 				{
 					return;
 				}
-								
+				
 				if (newUser)
 				{
 					if (view) view.stopStream();	
+					currentUser = newUser;
 					startStream(newUser.name, newUser.streamName);
 					view.noVideoMessage.visible = false;
 				}	
 			}
 		}
 		
+		private function onVideoReconnected():void
+		{
+			if (view && currentUser)
+			{
+				startStream(currentUser.name, currentUser.streamName);		
+			}
+		}
+		
 		protected function getVideoResolution(stream:String):Object
 		{
-			var pattern:RegExp = new RegExp("(\\d+x\\d+)-([A-Za-z0-9]+)-\\d+", "");
+			var pattern:RegExp = new RegExp("(\\d+x\\d+)-([A-Za-z0-9]+)-([a-z0-9]+-\\d+)-\\d+", "");
 			if (pattern.test(stream))
 			{
 				trace("The stream name is well formatted [" + stream + "]");

@@ -20,7 +20,7 @@ package org.bigbluebutton.core
 	{	
 		[Inject]
 		public var disconnectUserSignal:DisconnectUserSignal;
-					
+		
 		public static const NAME:String = "BaseConnection";
 		
 		protected var _successConnected:ISignal = new Signal();
@@ -29,7 +29,7 @@ package org.bigbluebutton.core
 		protected var _netConnection:NetConnection;
 		protected var _uri:String;
 		protected var _onUserCommand:Boolean;
-
+		
 		public function BaseConnection() {
 			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
@@ -48,19 +48,19 @@ package org.bigbluebutton.core
 		{
 			return _unsuccessConnected;
 		}
-
+		
 		public function get successConnected():ISignal
 		{
 			return _successConnected;
 		}
-
+		
 		public function get connection():NetConnection {
 			return _netConnection;
 		}
 		
 		public function connect(uri:String, ...parameters):void {
 			_uri = uri;
-
+			
 			// The connect call needs to be done properly. At the moment lock settings
 			// are not implemented in the mobile client, so parameters[7] and parameters[8]
 			// are "faked" in order to connect (without them, I couldn't get the connect 
@@ -110,7 +110,10 @@ package org.bigbluebutton.core
 				
 				case "NetConnection.Connect.Closed":
 					trace(NAME + ": Connection closed. Uri: " + _uri);
-					sendConnectionFailedEvent(ConnectionFailedEvent.CONNECTION_CLOSED);		
+					if (!_uri.indexOf("iosvideo") == -1)
+					{
+						sendConnectionFailedEvent(ConnectionFailedEvent.CONNECTION_CLOSED);		
+					}
 					break;
 				
 				case "NetConnection.Connect.InvalidApp":	
@@ -138,7 +141,7 @@ package org.bigbluebutton.core
 					break;
 			}
 		}
-	
+		
 		protected function sendConnectionSuccessEvent():void 
 		{
 			successConnected.dispatch();
