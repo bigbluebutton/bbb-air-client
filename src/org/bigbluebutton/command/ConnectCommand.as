@@ -65,7 +65,7 @@ package org.bigbluebutton.command
 		}
 		
 		private function successConnected():void {			
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":successConnected()");
+			trace("ConnectCommand::successConnected -- Success connecting to server");
 			
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
@@ -140,7 +140,7 @@ package org.bigbluebutton.command
 		}
 		
 		private function unsuccessConnected(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessConnected()");
+			trace("ConnectCommand::unsuccessConnected() -- Failed to connect to the server!!!");
 			
 			userUISession.loading = false;
 			userUISession.unsuccessJoined.dispatch("connectionFailed");
@@ -150,14 +150,14 @@ package org.bigbluebutton.command
 		}
 		
 		private function successVideoConnected():void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":successVideoConnected()");
+			trace("ConnectionConnamd::successVideoConnected() -- Connected to the video server");
 			
 			videoConnection.successConnected.remove(successVideoConnected);
 			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 		}
 		
 		private function unsuccessVideoConnected(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessVideoConnected()");
+			trace("ConnectionConnamd::unsuccessVideoConnected() -- Failed to connect to the video server");
 			
 			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 			videoConnection.successConnected.remove(successVideoConnected);

@@ -256,9 +256,9 @@ package org.bigbluebutton.model
 			return null;
 		}
 		
-		public function removePresenter(userID:String):void {
+		public function removePresenter():void {
 			var u:User = getPresenter();
-			if (u.presenter) {
+			if (u != null && u.presenter) {
 				u.presenter = false;
 				
 				userChangeSignal.dispatch(u, PRESENTER);

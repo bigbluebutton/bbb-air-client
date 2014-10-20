@@ -43,9 +43,9 @@ package org.bigbluebutton.command
 			voiceConnection = userSession.voiceConnection;
 			
 			if (!voiceConnection.connection.connected) {
-				voiceConnection.connect(conferenceParameters);
 				voiceConnection.successConnected.add(mediaSuccessConnected);
 				voiceConnection.unsuccessConnected.add(mediaUnsuccessConnected);
+				voiceConnection.connect(conferenceParameters);
 			} 
 			else if (!voiceConnection.callActive) {
 				voiceConnection.call();
@@ -63,7 +63,7 @@ package org.bigbluebutton.command
 		}
 		
 		private function mediaSuccessConnected(publishName:String, playName:String, codec:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":mediaSuccessConnected()");
+			// Log.getLogger("org.bigbluebutton").info(String(this) + ":mediaSuccessConnected()");
 			
 			var manager:VoiceStreamManager = new VoiceStreamManager();
 			manager.play(voiceConnection.connection, playName);

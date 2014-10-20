@@ -79,7 +79,7 @@ package org.bigbluebutton.command
 		}
 		
 		/* Mockolate does not allow the mocking and stubbing of static methods. Camera objects are got via
-		 * the 'Camera.getCamera()' method, which is static. Therefore, I am not sure how to properly have
+		 * the 'Camera.getCamera()' method, which is static. So, I am not sure how to properly have
 		 * this return null/'my-fake-camera' for the following three tests... - Adam */
 		[Test]
 		public function execute_cameraIsNull_startPublishingIsNotInvoked():void
