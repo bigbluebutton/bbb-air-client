@@ -30,51 +30,77 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		[Rule]
 		public var mockolateRule:MockolateRule = new MockolateRule();
 		
-		[Mock]
-		public var view:ChatRoomsView;
-		
-		[Mock]
-		public var userSession:UserSession;
-		
-		[Mock]
-		public var userUISession:UserUISession;
-		
-		[Mock]
-		public var chatMessagesSession:ChatMessagesSession;
-		
-		[Mock]
-		public var list:List;
-		
-		[Mock]
-		public var userList:UserList;
-		
-		[Mock]
-		public var userRemovedSignal:Signal;
-		
-		[Mock]
-		public var userAddedSignal:Signal
-		
-		[Mock]
-		public var publicChat:ChatMessages;
-		
-		[Mock]			
-		public var chatMessageChangeSignal:Signal;
-		
-		private static var TIMEOUT:Number = 5000;
-		
 		protected var instance:ChatRoomsViewMediator;
+
 		
-		[Before(async)]
+		/* Mocked fields */
+		
+		[Mock]
+		public var mockView:ChatRoomsView;
+		
+		[Mock]
+		public var mockUserSession:UserSession;
+		
+		[Mock]
+		public var mockChatMessagesSession:ChatMessagesSession;
+		
+		[Mock]
+		public var mockUserUISession:UserUISession;
+		
+		
+		/* Other dependencies */
+		
+		[Mock]
+		public var mockPublicChat:ChatMessages;
+		
+		[Mock]
+		public var mockList:List;
+		
+		[Mock]
+		public var mockUserList:UserList;
+		
+		
+		/* Signals */
+		
+		public var mockChatMessageChangeSignal:Signal = new Signal();
+		
+		public var publicChat_mockChatMessageChangeSignal:Signal = new Signal();
+		
+		public var mockUserRemovedSignal:Signal = new Signal();
+		
+		public var mockUserAddedSignal:Signal = new Signal();
+		
+		
+		[Before]
 		public function setUp():void
 		{
-			Async.proceedOnEvent(this, prepare(ChatRoomsView, UserSession, UserUISession, ChatMessagesSession, Signal, ChatMessages, List, UserList), Event.COMPLETE, TIMEOUT, timeoutHandler)
 			instance = new ChatRoomsViewMediator();
 			
-			instance.chatMessagesSession = this.chatMessagesSession;
-			instance.userSession = this.userSession;
-			instance.userUISession = this.userUISession;
-			instance.view = this.view;
-			instance.list = this.list
+			/* Set up all of the mocked fields: */
+			
+			instance.chatMessagesSession = mockChatMessagesSession;
+			instance.userSession = mockUserSession;
+			instance.userUISession = mockUserUISession;
+			instance.view = mockView;
+				
+			/* String all of the other dependencies together: */
+			
+			stub(mockUserSession).getter("userList").returns(mockUserList);
+			stub(mockUserList).getter("userAddedSignal").returns(mockUserAddedSignal);
+			stub(mockUserList).getter("userRemovedSignal").returns(mockUserRemovedSignal);
+			
+			stub(mockChatMessagesSession).getter("chatMessageChangeSignal").returns(mockChatMessageChangeSignal);
+			stub(mockChatMessagesSession).getter("publicChat").returns(mockPublicChat);
+			stub(mockPublicChat).getter("chatMessageChangeSignal").returns(publicChat_mockChatMessageChangeSignal);
+			
+			stub(mockView).getter("list").returns(mockList);
+			stub(mockList).asEventDispatcher();
+		}
+		
+		[Test]
+		public function initialize():void
+		{
+			
 		}
 		
 		[After]
@@ -83,7 +109,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 			instance = null;
 		}
 		
-		[Test]
+/*		[Test]
 		public function instantiated_isInstanceOfChatRoomsViewMediator():void
 		{
 			assertTrue("instance is ChatRoomsViewMediator", instance is ChatRoomsViewMediator);
@@ -116,6 +142,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		protected function timeoutHandler(passThroughData:Object):void
 		{
 			fail("Timeout occured during setUp() method");
-		}
+		}*/
 	}
 }

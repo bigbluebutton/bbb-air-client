@@ -58,7 +58,7 @@ package org.bigbluebutton.view.navigation.pages.chatrooms
 		
 		override public function initialize():void
 		{
-			Log.getLogger("org.bigbluebutton").info(String(this));
+			trace("ChatRoomsViewMediator::initialize");
 			
 			dicUsertoChat = new Dictionary();
 			

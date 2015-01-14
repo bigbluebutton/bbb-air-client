@@ -55,7 +55,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 		
 		override public function initialize():void
 		{
-			Log.getLogger("org.bigbluebutton").info(String(this));
+			trace("ChatViewMediator::initialize");
 			
 			data = userUISession.currentPageDetails;
 			

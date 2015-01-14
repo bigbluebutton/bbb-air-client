@@ -9,6 +9,7 @@ package org.bigbluebutton.command
 	import mockolate.nice;
 	import mockolate.prepare;
 	import mockolate.received;
+	import mockolate.record;
 	import mockolate.runner.MockolateRule;
 	import mockolate.strict;
 	import mockolate.stub;
@@ -102,7 +103,7 @@ package org.bigbluebutton.command
 		
 		protected var instance:ConnectCommand;
 		
-		[Before]
+		[Before (async)]
 		public function setUp():void
 		{
 			instance = new ConnectCommand();
@@ -189,14 +190,13 @@ package org.bigbluebutton.command
 			instance.execute();
 		}
 		
-		/* This only 'sometimes' works... there is stuff I'm still not understanding about Mockolate (and resources are sparce...). */
 		[Test]
 		public function execute_successJoined_connectInvokedOnVideoAndDeskshareConnection():void
 		{
 			stub(mockConnection).method("connect").args(mockConferenceParameters).calls(mockSuccessConnected.dispatch);
 			stub(mockUsersService).method("sendJoinMeetingMessage").calls(mockSuccessJoiningMeetingSignal.dispatch);
-			expect(mockVideoConnection.connect).once();
-			expect(mockDeskshareConnection.connect).once();
+			expect(mockVideoConnection.connect());
+			expect(mockDeskshareConnection.connect());
 			instance.execute();
 		}
 			
