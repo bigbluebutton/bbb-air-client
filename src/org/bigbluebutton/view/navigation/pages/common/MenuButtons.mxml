@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group  xmlns:fx="http://ns.adobe.com/mxml/2009" 
-				 xmlns:s="library://ns.adobe.com/flex/spark"
-				 xmlns:view="org.bigbluebutton.core.view.*"
-				 xmlns:ui="org.bigbluebutton.view.ui.*"
-				 xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"				 
-				 width="100%" height="100%"
-				>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:view="org.bigbluebutton.core.view.*"
+		 xmlns:ui="org.bigbluebutton.view.ui.*"
+		 xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
+		 width="100%"
+		 height="100%">
 	<fx:Script>
-		<![CDATA[	
-			import org.bigbluebutton.view.navigation.pages.PagesENUM;		
-					
+		<![CDATA[
+			import org.bigbluebutton.view.navigation.pages.PagesENUM;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:layout>
-		<s:HorizontalLayout gap="0"/>
+		<s:HorizontalLayout gap="0" />
 	</s:layout>
-	<ui:NavigationButton id="deskshareBtn0" navigateTo="{[PagesENUM.DESKSHARE]}" width="100%" height="100%" visible="false" includeInLayout="false" styleName="deskshareBtnStyle" />
-	<ui:NavigationButton id="presentationBtn0" width="100%" height="100%" navigateTo="{[PagesENUM.PRESENTATION]}" styleName="presentationBtnStyle" />
-	<ui:NavigationButton id="videochatBtn0" navigateTo="{[PagesENUM.VIDEO_CHAT]}" width="100%" height="100%" styleName="videochatBtnStyle" />
-	<ui:NavigationButton id="chatBtn0" navigateTo="{[PagesENUM.CHATROOMS,PagesENUM.CHAT,PagesENUM.SELECT_PARTICIPANT]}" width="100%" height="100%" styleName="chatBtnStyle" />
-	<ui:NavigationButton id="participantsBtn0" navigateTo="{[PagesENUM.PARTICIPANTS,PagesENUM.USER_DETAIS]}" width="100%" height="100%" styleName="participantsBtnStyle" />
+	<ui:NavigationButton id="deskshareBtn0"
+						 navigateTo="{[PagesENUM.DESKSHARE]}"
+						 width="100%"
+						 height="100%"
+						 visible="false"
+						 includeInLayout="false"
+						 styleName="deskshareBtnStyle" />
+	<ui:NavigationButton id="presentationBtn0"
+						 width="100%"
+						 height="100%"
+						 navigateTo="{[PagesENUM.PRESENTATION]}"
+						 styleName="presentationBtnStyle" />
+	<ui:NavigationButton id="videochatBtn0"
+						 navigateTo="{[PagesENUM.VIDEO_CHAT]}"
+						 width="100%"
+						 height="100%"
+						 styleName="videochatBtnStyle" />
+	<ui:NavigationButton id="chatBtn0"
+						 navigateTo="{[PagesENUM.CHATROOMS,PagesENUM.CHAT,PagesENUM.SELECT_PARTICIPANT]}"
+						 width="100%"
+						 height="100%"
+						 styleName="chatBtnStyle" />
+	<ui:NavigationButton id="participantsBtn0"
+						 navigateTo="{[PagesENUM.PARTICIPANTS,PagesENUM.USER_DETAIS]}"
+						 width="100%"
+						 height="100%"
+						 styleName="participantsBtnStyle" />
 </s:Group>

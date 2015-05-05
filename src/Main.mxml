@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:top="org.bigbluebutton.top.view.*"
-			   xmlns:navigation="org.bigbluebutton.view.navigation.*" 
-			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*" 
-			   xmlns:ui="org.bigbluebutton.view.ui.*" 
-			   xmlns:common="org.bigbluebutton.view.navigation.pages.common.*" 
+			   xmlns:navigation="org.bigbluebutton.view.navigation.*"
+			   xmlns:presentation="org.bigbluebutton.view.navigation.pages.presentation.*"
+			   xmlns:ui="org.bigbluebutton.view.ui.*"
+			   xmlns:common="org.bigbluebutton.view.navigation.pages.common.*"
 			   xmlns:loading="org.bigbluebutton.view.ui.loading.*"
 			   styleName="mainshellStyle"
-			   preinitialize="preinitializeHandler(event)" 
+			   preinitialize="preinitializeHandler(event)"
 			   creationComplete="creationCompleteHandler(event)"
-			   applicationComplete="applicationCompleteHandler(event)" 	
-			   runtimeDPIProvider = "CustomRuntimeDPIProvider"
-			   >
-	<fx:Style source="Default.css"/>
-	
+			   applicationComplete="applicationCompleteHandler(event)"
+			   runtimeDPIProvider="CustomRuntimeDPIProvider">
+	<fx:Style source="Default.css" />
+
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	
+
 	<fx:Script>
 		<![CDATA[
 			import com.adobe.utils.LocaleUtil;
-			
 			import flash.system.Capabilities;
-			
 			import mx.events.FlexEvent;
 			import mx.resources.ResourceManager;
-			
 			import org.bigbluebutton.AppConfig;
 			import org.bigbluebutton.core.util.OrientationCalculator;
 			import org.bigbluebutton.core.view.NoTabView;
@@ -57,55 +53,51 @@
 			import org.bigbluebutton.view.ui.loading.LoadingScreenConfig;
 			import org.osmf.logging.Log;
 			import org.osmf.logging.Logger;
-			
 			import robotlegs.bender.bundles.mvcs.MVCSBundle;
 			import robotlegs.bender.extensions.contextView.ContextView;
 			import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 			import robotlegs.bender.framework.api.IContext;
 			import robotlegs.bender.framework.api.LogLevel;
-			import robotlegs.bender.framework.impl.Context;		
+			import robotlegs.bender.framework.impl.Context;
 			
-			protected var context: IContext;
+			protected var context:IContext;
 			
 			private var _orientationCalc:OrientationCalculator;
+			
 			public var currentOrientation:String;
 			
-			
-			protected function preinitializeHandler(event:FlexEvent):void
-			{
+			protected function preinitializeHandler(event:FlexEvent):void {
 				setupContext();
 				setupLogger();
 				resizeForSoftKeyboard = true;
-				
 				//NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
-				
 				ResourceManager.getInstance().localeChain = LocaleUtil.sortLanguagesByPreference(['en_US', 'pt_BR'], Capabilities.languages, "en_US");
 			}
+			
 			/*
-			public function onInvokeEvent(invocation:InvokeEvent):void 
-			{
-			var traceString:String = "";
+			   public function onInvokeEvent(invocation:InvokeEvent):void
+			   {
+			   var traceString:String = "";
 			
-			var arguments:Array = invocation.arguments;
-			var currentDir:File = invocation.currentDirectory;
-			var reason:String = invocation.reason;
-			traceString += "-----InvokeEvent.INVOKE----\n";
-			traceString += "arguments: "+arguments.toString()+"\n\n";
-			traceString += "currentDir: "+currentDir+"\n\n";
-			traceString += "reason: "+reason+"\n\n";
+			   var arguments:Array = invocation.arguments;
+			   var currentDir:File = invocation.currentDirectory;
+			   var reason:String = invocation.reason;
+			   traceString += "-----InvokeEvent.INVOKE----\n";
+			   traceString += "arguments: "+arguments.toString()+"\n\n";
+			   traceString += "currentDir: "+currentDir+"\n\n";
+			   traceString += "reason: "+reason+"\n\n";
 			
-			var url:String = arguments.toString().replace('bigbluebutton://', 'http://');
+			   var url:String = arguments.toString().replace('bigbluebutton://', 'http://');
 			
-			traceString += "url: "+url+"\n\n";
+			   traceString += "url: "+url+"\n\n";
 			
-			traceText.text += traceString;
-			}
-			*/
+			   traceText.text += traceString;
+			   }
+			 */
 			/**
 			 * Sets up the Robotlegs context.
 			 */
-			private function setupContext(): void
-			{
+			private function setupContext():void {
 				context = new Context()
 					.install(MVCSBundle, SignalCommandMapExtension)
 					.configure(AppConfig)
@@ -120,7 +112,7 @@
 					.configure(ProfileConfig)
 					.configure(UserDetaisConfig)
 					.configure(ParticipantsConfig)
-					.configure(SelectParticipantConfig)		
+					.configure(SelectParticipantConfig)
 					.configure(MicButtonConfig)
 					.configure(NavigationButtonConfig)
 					.configure(SwapCameraConfig)
@@ -131,7 +123,6 @@
 					.configure(AudioSettingsConfig)
 					
 					.configure(new ContextView(this));
-				
 				// If you wish to change the log level then uncomment the line below and set 
 				// the logLevel to the value you desire. The default logLevel is DEBUG, which 
 				// is set in the MVCSBundle. The default log level traces out the framework 
@@ -142,39 +133,32 @@
 			/**
 			 * Sets the logLevel for the robotegs context.
 			 */
-			private function setLogLevel(): void
-			{
+			private function setLogLevel():void {
 				// setting the logLevel to WARN means that robotlegs
 				// will also notify us about ERROR & FATAL.
 				context.logLevel = LogLevel.WARN;
 			}
 			
-			private function setupLogger():void
-			{
-				Log.loggerFactory = new BigBlueButtonLoggerFactory(); 
+			private function setupLogger():void {
+				Log.loggerFactory = new BigBlueButtonLoggerFactory();
 				var logger:Logger = Log.getLogger("org.bigbluebutton");
 				logger.info("Logger on");
 			}
 			
-			protected function creationCompleteHandler(event:FlexEvent):void
-			{
-
+			protected function creationCompleteHandler(event:FlexEvent):void {
 			}
 			
-			protected function applicationCompleteHandler(event:FlexEvent):void
-			{
+			protected function applicationCompleteHandler(event:FlexEvent):void {
 				stage.addEventListener(Event.ACTIVATE, fl_Activate);
 				stage.addEventListener(Event.DEACTIVATE, fl_Deactivate);
-				
 				stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGING, stageOrientationChangingHandler);
-				
 				// setup a custom orientation calculator based on the accelerometer because the default one doesn't work
 				_orientationCalc = new OrientationCalculator(pagesNavigatorView, accelerometerCallback);
 				_orientationCalc.active = true;
 				currentOrientation = _orientationCalc.currentOrientation;
 			}
 			
-			private function fl_Activate(event:Event=null):void {
+			private function fl_Activate(event:Event = null):void {
 				NativeApplication.nativeApplication.systemIdleMode = SystemIdleMode.KEEP_AWAKE;
 			}
 			
@@ -190,35 +174,56 @@
 				currentOrientation = _orientationCalc.currentOrientation;
 				(pagesNavigatorView.activeView as NoTabView).rotationHandler(_orientationCalc.currentOrientation);
 			}
-
 		]]>
 	</fx:Script>
-	
+
 	<fx:Metadata>
 		[ResourceBundle("resources")]
-	</fx:Metadata> 
-	
-	<loading:LoadingScreen width="100%" height="100%"/>
-	
-	<s:Group width="100%" height="100%" id="mainshell" visible="false">
+	</fx:Metadata>
+
+	<loading:LoadingScreen width="100%"
+						   height="100%" />
+
+	<s:Group width="100%"
+			 height="100%"
+			 id="mainshell"
+			 visible="false">
 		<s:layout>
-			<s:VerticalLayout gap="0"/>
+			<s:VerticalLayout gap="0" />
 		</s:layout>
-		<s:SkinnableContainer id="topActionBar" width="100%" height="{getStyle('toolBarHeight')}" styleName="topToolBarStyle"  verticalCenter="0">
-			<s:HGroup width="100%" height="100%">
+		<s:SkinnableContainer id="topActionBar"
+							  width="100%"
+							  height="{getStyle('toolBarHeight')}"
+							  styleName="topToolBarStyle"
+							  verticalCenter="0">
+			<s:HGroup width="100%"
+					  height="100%">
 				<s:Group>
-					<ui:NavigationButton id="profileBtn" styleName="profileButtonStyle topButtonStyle"
-										 navigateTo="{[PagesENUM.PROFILE]}" transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}"/>
-					<ui:NavigationButton id="backBtn" styleName="backButtonStyle topButtonStyle"
-										 navigateTo="{[PagesENUM.LAST]}" transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}"/>
+					<ui:NavigationButton id="profileBtn"
+										 styleName="profileButtonStyle topButtonStyle"
+										 navigateTo="{[PagesENUM.PROFILE]}"
+										 transitionAnimation="{TransitionAnimationENUM.SLIDE_LEFT}" />
+					<ui:NavigationButton id="backBtn"
+										 styleName="backButtonStyle topButtonStyle"
+										 navigateTo="{[PagesENUM.LAST]}"
+										 transitionAnimation="{TransitionAnimationENUM.SLIDE_RIGHT}" />
 				</s:Group>
-				<s:Label id="pageName" styleName="pageNameStyle" width="100%" height="100%"/>
-				<ui:RecordingStatus id="recordingStatus" styleName="recordingStatusIconStyle topButtonStyle"/>
-				<ui:MicButton id="microphoneBtn" styleName="micButtonStyle topButtonStyle"/>
+				<s:Label id="pageName"
+						 styleName="pageNameStyle"
+						 width="100%"
+						 height="100%" />
+				<ui:RecordingStatus id="recordingStatus"
+									styleName="recordingStatusIconStyle topButtonStyle" />
+				<ui:MicButton id="microphoneBtn"
+							  styleName="micButtonStyle topButtonStyle" />
 			</s:HGroup>
 		</s:SkinnableContainer>
 
-		<navigation:PagesNavigatorView id="pagesNavigatorView" width="100%" height="100%"/>
-    	<common:MenuButtonsView id="bottomMenu" width="100%" height="{getStyle('bottomToolBarHeight')}"/>
-	</s:Group>	
+		<navigation:PagesNavigatorView id="pagesNavigatorView"
+									   width="100%"
+									   height="100%" />
+		<common:MenuButtonsView id="bottomMenu"
+								width="100%"
+								height="{getStyle('bottomToolBarHeight')}" />
+	</s:Group>
 </s:Application>

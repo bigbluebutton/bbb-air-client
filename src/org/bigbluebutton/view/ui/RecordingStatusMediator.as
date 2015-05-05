@@ -1,43 +1,33 @@
-package org.bigbluebutton.view.ui
-{
+package org.bigbluebutton.view.ui {
+	
 	import mx.core.FlexGlobals;
-	
 	import org.bigbluebutton.model.IUserSession;
-	
 	import robotlegs.bender.bundles.mvcs.Mediator;
-
-	public class RecordingStatusMediator extends Mediator
-	{
+	
+	public class RecordingStatusMediator extends Mediator {
+		
 		[Inject]
 		public var userSession:IUserSession;
 		
 		[Inject]
 		public var view:IRecordingStatus;
 		
-		override public function initialize():void
-		{
+		override public function initialize():void {
 			userSession.recordingStatusChangedSignal.add(setRecordingStatus);
 		}
 		
-		public function setRecordingStatus(recording:Boolean):void
-		{
+		public function setRecordingStatus(recording:Boolean):void {
 			view.setVisibility(recording);
-			
 			//try to keep page title center
-			if(recording)
-			{
+			if (recording) {
 				FlexGlobals.topLevelApplication.pageName.setStyle("paddingLeft", FlexGlobals.topLevelApplication.recordingStatus.getStyle("width"));
-			}
-			else
-			{
+			} else {
 				FlexGlobals.topLevelApplication.pageName.setStyle("paddingLeft", 0);
 			}
 		}
 		
-		override public function destroy():void
-		{
+		override public function destroy():void {
 			userSession.recordingStatusChangedSignal.remove(setRecordingStatus);
 		}
-		
 	}
 }

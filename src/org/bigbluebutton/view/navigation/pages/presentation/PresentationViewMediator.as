@@ -1,38 +1,34 @@
-package org.bigbluebutton.view.navigation.pages.presentation
-{
+package org.bigbluebutton.view.navigation.pages.presentation {
+	
 	import flash.display.DisplayObject;
-	
 	import mx.core.FlexGlobals;
-	
 	import org.bigbluebutton.command.LoadSlideSignal;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.presentation.Presentation;
 	import org.bigbluebutton.model.presentation.Slide;
 	import org.osmf.logging.Log;
-	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
-	public class PresentationViewMediator extends Mediator
-	{
-		[Inject]
-		public var view: IPresentationView;
+	public class PresentationViewMediator extends Mediator {
 		
 		[Inject]
-		public var userSession: IUserSession;
+		public var view:IPresentationView;
 		
 		[Inject]
-		public var loadSlideSignal: LoadSlideSignal;
+		public var userSession:IUserSession;
+		
+		[Inject]
+		public var loadSlideSignal:LoadSlideSignal;
 		
 		private var _currentPresentation:Presentation;
+		
 		private var _currentSlideNum:int = -1;
+		
 		private var _currentSlide:Slide;
 		
-		override public function initialize():void
-		{
+		override public function initialize():void {
 			Log.getLogger("org.bigbluebutton").info(String(this));
-			
 			userSession.presentationList.presentationChangeSignal.add(presentationChangeHandler);
-			
 			setPresentation(userSession.presentationList.currentPresentation);
 			FlexGlobals.topLevelApplication.backBtn.visible = false;
 			FlexGlobals.topLevelApplication.profileBtn.visible = true;
@@ -42,7 +38,6 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			if (_currentSlide != null) {
 				_currentSlide.slideLoadedSignal.remove(slideLoadedHandler);
 			}
-			
 			if (_currentPresentation != null && _currentSlideNum >= 0) {
 				_currentSlide = _currentPresentation.getSlideAt(_currentSlideNum);
 				if (_currentSlide != null) {
@@ -67,7 +62,7 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		}
 		
 		private function setPresentation(p:Presentation):void {
-			if(_currentPresentation != null) {
+			if (_currentPresentation != null) {
 				_currentPresentation.slideChangeSignal.remove(slideChangeHandler);
 			}
 			_currentPresentation = p;
@@ -89,16 +84,12 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			displaySlide();
 		}
 		
-		override public function destroy():void
-		{
+		override public function destroy():void {
 			userSession.presentationList.presentationChangeSignal.remove(presentationChangeHandler);
-			
-			if(_currentPresentation != null) {
+			if (_currentPresentation != null) {
 				_currentPresentation.slideChangeSignal.remove(slideChangeHandler);
 			}
-			
 			super.destroy();
-			
 			view.dispose();
 			view = null;
 		}

@@ -1,12 +1,10 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import flash.media.Camera;
 	import flash.net.NetConnection;
-	
 	import org.osflash.signals.ISignal;
 	
-	public interface IVideoConnection
-	{
+	public interface IVideoConnection {
 		function get unsuccessConnected():ISignal
 		function get successConnected():ISignal
 		function set uri(uri:String):void
@@ -18,7 +16,7 @@ package org.bigbluebutton.core
 		function set camera(value:Camera):void
 		function get selectedCameraQuality():int;
 		function set selectedCameraQuality(value:int):void
-		function connect():void 
+		function connect():void
 		function startPublishing(camera:Camera, streamName:String):void
 		function stopPublishing():void
 		function selectCameraQuality(value:int):void

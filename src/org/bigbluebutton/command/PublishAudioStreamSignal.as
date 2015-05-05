@@ -1,11 +1,9 @@
-package org.bigbluebutton.command
-{
+package org.bigbluebutton.command {
+	
 	import org.osflash.signals.Signal;
 	
-	public class PublishAudioStreamSignal extends Signal
-	{
-		public function PublishAudioStreamSignal()
-		{
+	public class PublishAudioStreamSignal extends Signal {
+		public function PublishAudioStreamSignal() {
 			super(String, String);
 		}
 	}

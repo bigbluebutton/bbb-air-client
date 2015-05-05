@@ -1,5 +1,5 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetDataEvent;
 	import flash.events.NetStatusEvent;
@@ -12,14 +12,15 @@ package org.bigbluebutton.core
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	import flash.utils.Timer;
-	
 	import mx.utils.ObjectUtil;
-
-	public class VoiceStreamManager
-	{
+	
+	public class VoiceStreamManager {
 		protected var _incomingStream:NetStream = null;
+		
 		protected var _outgoingStream:NetStream = null;
+		
 		protected var _connection:NetConnection = null;
+		
 		protected var _mic:Microphone = null;
 		
 		protected var _heartbeat:Timer = new Timer(2000);
@@ -28,8 +29,7 @@ package org.bigbluebutton.core
 			_heartbeat.addEventListener(TimerEvent.TIMER, onHeartbeat);
 		}
 		
-		protected function onHeartbeat(event:TimerEvent):void
-		{
+		protected function onHeartbeat(event:TimerEvent):void {
 			trace("+++ heartbeat +++");
 			trace(ObjectUtil.toString(_incomingStream.audioCodec));
 		}
@@ -40,25 +40,23 @@ package org.bigbluebutton.core
 			_incomingStream.addEventListener(NetDataEvent.MEDIA_TYPE_DATA, onNetDataEvent);
 			_incomingStream.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 			_incomingStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
-			
 			/*
-			* Set the bufferTime to 0 (zero) for live stream as suggested in the doc.
-			* http://help.adobe.com/en_US/FlashPlatform/beta/reference/actionscript/3/flash/net/NetStream.html#bufferTime
-			* If we don't, we'll have a long audio delay when a momentary network congestion occurs. When the congestion
-			* disappears, a flood of audio packets will arrive at the client and Flash will buffer them all and play them.
-			* http://stackoverflow.com/questions/1079935/actionscript-netstream-stutters-after-buffering
-			* ralam (Dec 13, 2010)
-			*/
+			 * Set the bufferTime to 0 (zero) for live stream as suggested in the doc.
+			 * http://help.adobe.com/en_US/FlashPlatform/beta/reference/actionscript/3/flash/net/NetStream.html#bufferTime
+			 * If we don't, we'll have a long audio delay when a momentary network congestion occurs. When the congestion
+			 * disappears, a flood of audio packets will arrive at the client and Flash will buffer them all and play them.
+			 * http://stackoverflow.com/questions/1079935/actionscript-netstream-stutters-after-buffering
+			 * ralam (Dec 13, 2010)
+			 */
 			_incomingStream.bufferTime = 0;
 			_incomingStream.receiveAudio(true);
 			_incomingStream.receiveVideo(false);
 			_incomingStream.play(streamName);
-//			_heartbeat.start();
+			//			_heartbeat.start();
 		}
 		
-		protected function onNetDataEvent(event:NetDataEvent):void
-		{
-//			trace(ObjectUtil.toString(event));
+		protected function onNetDataEvent(event:NetDataEvent):void {
+			//			trace(ObjectUtil.toString(event));
 		}
 		
 		public function publish(connection:NetConnection, streamName:String, codec:String):void {
@@ -66,7 +64,6 @@ package org.bigbluebutton.core
 			_outgoingStream.client = this;
 			_outgoingStream.addEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 			_outgoingStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
-			
 			setupMicrophone(codec);
 			if (_mic) {
 				_outgoingStream.attachAudio(_mic);
@@ -75,26 +72,23 @@ package org.bigbluebutton.core
 		}
 		
 		private function noMicrophone():Boolean {
-			return ((Microphone.getMicrophone() == null) || (Microphone.names.length == 0) 
+			return ((Microphone.getMicrophone() == null) || (Microphone.names.length == 0)
 				|| ((Microphone.names.length == 1) && (Microphone.names[0] == "Unknown Microphone")));
 		}
 		
-		private function setupMicrophone(codec:String):void
-		{
+		private function setupMicrophone(codec:String):void {
 			if (noMicrophone()) {
 				_mic = null;
 				return;
 			}
-			
 			_mic = getMicrophone(codec);
 		}
 		
 		/**
 		 * first try to use the enhanced microphone
 		 * if it doesn't work, get the regular one
-		 */ 
-		private function getMicrophone(codec:String):Microphone
-		{
+		 */
+		private function getMicrophone(codec:String):Microphone {
 			var mic:Microphone = null;
 			mic = Microphone.getEnhancedMicrophone();
 			if (mic) {
@@ -108,16 +102,13 @@ package org.bigbluebutton.core
 			} else {
 				mic = Microphone.getMicrophone();
 			}
-			
 			if (mic == null) {
 				trace("No microphone! <o>");
 			} else {
 				mic.addEventListener(StatusEvent.STATUS, onMicStatusEvent);
-				
 				mic.setLoopBack(false);
 				mic.setSilenceLevel(0, 20000);
-				mic.gain = 60;			
-				
+				mic.gain = 60;
 				if (codec == "SPEEX") {
 					mic.encodeQuality = 6;
 					mic.codec = SoundCodec.SPEEX;
@@ -133,11 +124,10 @@ package org.bigbluebutton.core
 			return mic;
 		}
 		
-		protected function onMicStatusEvent(event:StatusEvent):void
-		{
+		protected function onMicStatusEvent(event:StatusEvent):void {
 			trace("New microphone status event");
 			//trace(ObjectUtil.toString(event));
-			switch(event.code) {
+			switch (event.code) {
 				case "Microphone.Muted":
 					break;
 				case "Microphone.Unmuted":
@@ -155,7 +145,6 @@ package org.bigbluebutton.core
 				_incomingStream.close();
 				_incomingStream = null;
 			}
-			
 			if (_outgoingStream) {
 				_outgoingStream.removeEventListener(NetStatusEvent.NET_STATUS, onNetStatusEvent);
 				_outgoingStream.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncErrorEvent);
@@ -164,16 +153,14 @@ package org.bigbluebutton.core
 				_outgoingStream = null;
 			}
 		}
-
-		protected function onNetStatusEvent(event:NetStatusEvent):void
-		{
+		
+		protected function onNetStatusEvent(event:NetStatusEvent):void {
 			trace("VoiceStreamManager: onNetStatusEvent - " + event.info.code);
-
-			switch(event.info.code) {
+			switch (event.info.code) {
 				case "NetStream.Play.Reset":
 					break;
 				case "NetStream.Play.StreamNotFound":
-					break;			
+					break;
 				case "NetStream.Play.Failed":
 					break;
 				case "NetStream.Play.Start":
@@ -186,27 +173,23 @@ package org.bigbluebutton.core
 					break;
 				default:
 					break;
-			}	
+			}
 		}
 		
-		protected function onAsyncErrorEvent(event:AsyncErrorEvent):void
-		{
+		protected function onAsyncErrorEvent(event:AsyncErrorEvent):void {
 			trace(ObjectUtil.toString(event));
 		}
 		
-		public function onPlayStatus(... rest):void
-		{
+		public function onPlayStatus(... rest):void {
 			trace("onPlayStatus() " + ObjectUtil.toString(rest));
 		}
 		
-		public function onMetaData(... rest):void
-		{
+		public function onMetaData(... rest):void {
 			trace("onMetaData() " + ObjectUtil.toString(rest));
 		}
 		
 		public function onHeaderData(... rest):void {
 			trace("onHeaderData() " + ObjectUtil.toString(rest));
 		}
-		
 	}
 }

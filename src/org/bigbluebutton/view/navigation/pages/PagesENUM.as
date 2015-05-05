@@ -1,7 +1,6 @@
-package org.bigbluebutton.view.navigation.pages
-{
-	import flash.utils.Dictionary;
+package org.bigbluebutton.view.navigation.pages {
 	
+	import flash.utils.Dictionary;
 	import org.bigbluebutton.view.navigation.pages.audiosettings.AudioSettingsView;
 	import org.bigbluebutton.view.navigation.pages.camerasettings.CameraSettingsView;
 	import org.bigbluebutton.view.navigation.pages.chat.ChatView;
@@ -15,21 +14,32 @@ package org.bigbluebutton.view.navigation.pages
 	import org.bigbluebutton.view.navigation.pages.selectparticipant.SelectParticipantView;
 	import org.bigbluebutton.view.navigation.pages.userdetails.UserDetaisView;
 	import org.bigbluebutton.view.navigation.pages.videochat.VideoChatView;
-
-	public class PagesENUM
-	{
+	
+	public class PagesENUM {
 		public static const PRESENTATION:String = "presentation";
+		
 		public static const LOGIN:String = "login";
+		
 		public static const PROFILE:String = "profile";
+		
 		public static const USER_DETAIS:String = "userdetais";
+		
 		public static const VIDEO_CHAT:String = "videochat";
+		
 		public static const CHATROOMS:String = "chatrooms";
+		
 		public static const CHAT:String = "chat";
+		
 		public static const PARTICIPANTS:String = "participants";
+		
 		public static const SELECT_PARTICIPANT:String = "selectparticipant";
+		
 		public static const DISCONNECT:String = "Disconnect";
+		
 		public static const DESKSHARE:String = "Deskshare";
+		
 		public static const CAMERASETTINGS:String = "CameraSettings";
+		
 		public static const AUDIOSETTINGS:String = "AudioSettings";
 		
 		/**
@@ -37,10 +47,8 @@ package org.bigbluebutton.view.navigation.pages
 		 */
 		public static const LAST:String = "last";
 		
-		protected static function init():void
-		{
-			if(!dicInitiated) 
-			{
+		protected static function init():void {
+			if (!dicInitiated) {
 				dic[PRESENTATION] = PresentationView;
 				dic[LOGIN] = LoginPageView;
 				dic[PROFILE] = ProfileView;
@@ -57,22 +65,20 @@ package org.bigbluebutton.view.navigation.pages
 				dicInitiated = true;
 			}
 		}
-				
+		
 		protected static var dic:Dictionary = new Dictionary();
+		
 		protected static var dicInitiated:Boolean = false;
-				
-		public static function contain(name:String):Boolean
-		{
+		
+		public static function contain(name:String):Boolean {
 			init();
 			return (dic[name] != null)
 		}
 		
-		public static function getClassfromName(name:String):Class
-		{
+		public static function getClassfromName(name:String):Class {
 			init();
 			var klass:Class = null;
-			if(contain(name))
-			{
+			if (contain(name)) {
 				klass = dic[name];
 			}
 			return klass;

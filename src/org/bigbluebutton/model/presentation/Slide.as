@@ -1,25 +1,29 @@
-package org.bigbluebutton.model.presentation
-{
+package org.bigbluebutton.model.presentation {
+	
 	import flash.events.Event;
 	import flash.net.URLLoader;
 	import flash.net.URLLoaderDataFormat;
 	import flash.net.URLRequest;
 	import flash.utils.ByteArray;
-	
 	import mx.controls.SWFLoader;
-	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-
-	public class Slide
-	{
+	
+	public class Slide {
 		private var _loaded:Boolean = false;
+		
 		private var _slideURI:String;
+		
 		private var _slideNum:Number;
+		
 		private var _thumbURI:String;
+		
 		private var _txtURI:String;
+		
 		private var _current:Boolean;
+		
 		private var _data:ByteArray;
+		
 		private var _swfFile:SWFLoader = new SWFLoader();
 		
 		private var _slideLoadedSignal:ISignal = new Signal;
@@ -50,7 +54,7 @@ package org.bigbluebutton.model.presentation
 				_loaded = true;
 				slideLoadedSignal.dispatch();
 			}
-		}		
+		}
 		
 		public function set swfSource(source:Object):void {
 			_swfFile.source = source;

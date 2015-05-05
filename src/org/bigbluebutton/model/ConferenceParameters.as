@@ -1,82 +1,94 @@
-package org.bigbluebutton.model
-{
-	import flash.net.NetConnection;
+package org.bigbluebutton.model {
 	
+	import flash.net.NetConnection;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-
+	
 	/**
 	 * The ConferenceParameters class holds attributes that define the conference. You can access them in your module through the
 	 * attributes property that is passed to your IBigBlueButtonModule instance on startup.
-	 * 
-	 */	
-	public class ConferenceParameters implements IConferenceParameters
-	{
-		private var _changedSignal: Signal = new Signal();
+	 *
+	 */
+	public class ConferenceParameters implements IConferenceParameters {
+		private var _changedSignal:Signal = new Signal();
+		
 		private var _meetingName:String;
+		
 		private var _externMeetingID:String;
+		
 		/**
 		 * The name of the conference
-		 */		
+		 */
 		private var _conference:String;
+		
 		/**
 		 * The username of the local user
-		 */		
+		 */
 		private var _username:String;
+		
 		/**
-		 * The role of the local user. Could be MODERATOR or VIEWER 
-		 */		
+		 * The role of the local user. Could be MODERATOR or VIEWER
+		 */
 		private var _role:String;
+		
 		/**
 		 * The room unique id, as specified in the API /create call.
-		 */		
+		 */
 		private var _room:String;
+		
 		/**
 		 * Voice conference bridge for the client
-		 */		
+		 */
 		private var _webvoiceconf:String;
+		
 		/**
-		 * Voice conference bridge that external SIP clients use. Usually the same as webvoiceconf 
-		 */		
+		 * Voice conference bridge that external SIP clients use. Usually the same as webvoiceconf
+		 */
 		private var _voicebridge:String;
+		
 		/**
 		 *  The welcome string, as passed in through the API /create call.
-		 */		
+		 */
 		private var _welcome:String;
+		
 		private var _meetingID:String;
+		
 		/**
 		 * External unique user id.
-		 */		
+		 */
 		private var _externUserID:String;
+		
 		/**
 		 * Internal unique user id.
-		 */		
-		private var _internalUserID:String;		
+		 */
+		private var _internalUserID:String;
+		
 		private var _logoutUrl:String;
+		
 		/**
-		 * A flash.net.NetConnection object that bbb-client connects to on startup. This connection reference is 
+		 * A flash.net.NetConnection object that bbb-client connects to on startup. This connection reference is
 		 * passed to your module as an already open connection. Use it to talk to the bigbluebutton server.
-		 */		
+		 */
 		private var _connection:NetConnection;
+		
 		/**
 		 * The unique userid internal to bbb-client.
-		 */		
+		 */
 		private var _userid:String;
+		
 		private var _record:Boolean;
-
-		public function ConferenceParameters()
-		{
+		
+		public function ConferenceParameters() {
 		}
 		
 		/**
 		 * Dispatched when the collection is
 		 * changed.
 		 */
-		public function get changedSignal(): ISignal
-		{
+		public function get changedSignal():ISignal {
 			return _changedSignal;
 		}
-
+		
 		public function get meetingName():String {
 			return _meetingName;
 		}
@@ -112,7 +124,7 @@ package org.bigbluebutton.model
 			_username = username;
 			_changedSignal.dispatch();
 		}
-				
+		
 		public function get role():String {
 			return _role;
 		}
@@ -227,9 +239,7 @@ package org.bigbluebutton.model
 			_internalUserID = obj.internalUserId;
 			_logoutUrl = obj.logoutUrl;
 			_record = !(obj.record == "false");
-			
 			_changedSignal.dispatch();
 		}
-		
 	}
 }

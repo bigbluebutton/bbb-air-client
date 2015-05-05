@@ -1,20 +1,18 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.osflash.signals.Signal;
 	
-	public class UsersMessageReceiver implements IMessageListener
-	{
-		public var userSession: IUserSession;
+	public class UsersMessageReceiver implements IMessageListener {
+		public var userSession:IUserSession;
 		
 		public function UsersMessageReceiver() {
-
 		}
 		
 		public function onMessage(messageName:String, message:Object):void {
-			switch(messageName) {
+			switch (messageName) {
 				case "voiceUserTalking":
 					handleVoiceUserTalking(message);
 					break;
@@ -76,18 +74,16 @@ package org.bigbluebutton.core
 		
 		private function handleVoiceUserTalking(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
-			trace("UsersMessageReceiver::handleVoiceUserTalking() -- user [" + + msg.voiceUserId + "," + msg.talking + "] ");			
+			trace("UsersMessageReceiver::handleVoiceUserTalking() -- user [" + +msg.voiceUserId + "," + msg.talking + "] ");
 			userSession.userList.userTalkingChange(msg.voiceUserId, msg.talking);
 		}
 		
 		private function handleGetUsersReply(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
-			
-			for(var i:int; i < msg.users.length; i++) {
+			for (var i:int; i < msg.users.length; i++) {
 				var newUser:Object = msg.users[i];
 				addParticipant(newUser);
 			}
-			
 			userSession.userList.allUsersAddedSignal.dispatch();
 		}
 		
@@ -99,7 +95,6 @@ package org.bigbluebutton.core
 		
 		private function addParticipant(newUser:Object):void {
 			var user:User = new User;
-			
 			user.hasStream = newUser.hasStream;
 			user.streamName = newUser.webcamStream;
 			user.locked = newUser.locked;
@@ -115,7 +110,6 @@ package org.bigbluebutton.core
 			user.listenOnly = newUser.listenOnly;
 			user.muted = newUser.voiceUser.muted;
 			userSession.userList.addUser(user);
-			
 			// The following properties are 'special', in that they have view changes associated with them.
 			// The UserList changes the model appropriately, then dispatches a signal to the views.
 		}
@@ -125,7 +119,7 @@ package org.bigbluebutton.core
 			trace("UsersMessageReceiver::handleParticipantLeft() -- user [" + msg.user.userId + "] has left the meeting");
 			userSession.userList.removeUser(msg.user.userId);
 		}
-
+		
 		private function handleAssignPresenterCallback(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleAssignPresenterCallback() -- user [" + msg.newPresenterID + "] is now the presenter");
@@ -148,7 +142,7 @@ package org.bigbluebutton.core
 		private function handleUserSharedWebcam(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleUserSharedWebcam() -- user [" + msg.userId + "] has shared their webcam with stream [" + msg.webcamStream + "]");
-			userSession.userList.userStreamChange(msg.userId, true, msg.webcamStream); 
+			userSession.userList.userStreamChange(msg.userId, true, msg.webcamStream);
 		}
 		
 		private function handleUserUnsharedWebcam(m:Object):void {
@@ -182,12 +176,13 @@ package org.bigbluebutton.core
 			trace("UsersMessageReceiver::handleUserLoweredHand() -- user [" + msg.userId + "]'s hand was lowered");
 			userSession.userList.raiseHandChange(msg.userId, false);
 		}
+		
 		private function handleMeetingHasEnded(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleMeetingHasEnded() -- meeting has ended");
 			userSession.logoutSignal.dispatch();
 		}
-
+		
 		private function handleLogout(m:Object):void {
 			var msg:Object = JSON.parse(m.msg);
 			trace("UsersMessageReceiver::handleLogout() -- logging out!");

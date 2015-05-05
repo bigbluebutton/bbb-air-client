@@ -2,21 +2,28 @@
 <view:NoTabView xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				xmlns:view="org.bigbluebutton.core.view.*"
-				>
-	
+				xmlns:view="org.bigbluebutton.core.view.*">
+
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.view.navigation.pages.PagesENUM;
-			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;	
+			import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 		]]>
 	</fx:Script>
-	
-	<s:VGroup width="90%" height="100%" horizontalAlign="center" horizontalCenter="0">
-		<s:Label styleName="audioSettingStyle contentFontSize" text="{resourceManager.getString('resources', 'audioSettings.label.text')}" />
-		<s:Button id="shareMicBtn" width="100%" label="{resourceManager.getString('resources', 'audioSettings.shareMicrophone.on')}" 
-				  styleName="audioSettingsShareMicButtonStyle videoAudioSettingStyle contentFontSize"/>
-		<s:Button id="listenOnlyBtn" width="100%" label="{resourceManager.getString('resources', 'audioSettings.listenOnly.on')}" 
-				  styleName="audioSettingsListenOnlyButtonStyle videoAudioSettingStyle contentFontSize"/>
+
+	<s:VGroup width="90%"
+			  height="100%"
+			  horizontalAlign="center"
+			  horizontalCenter="0">
+		<s:Label styleName="audioSettingStyle contentFontSize"
+				 text="{resourceManager.getString('resources', 'audioSettings.label.text')}" />
+		<s:Button id="shareMicBtn"
+				  width="100%"
+				  label="{resourceManager.getString('resources', 'audioSettings.shareMicrophone.on')}"
+				  styleName="audioSettingsShareMicButtonStyle videoAudioSettingStyle contentFontSize" />
+		<s:Button id="listenOnlyBtn"
+				  width="100%"
+				  label="{resourceManager.getString('resources', 'audioSettings.listenOnly.on')}"
+				  styleName="audioSettingsListenOnlyButtonStyle videoAudioSettingStyle contentFontSize" />
 	</s:VGroup>
 </view:NoTabView>

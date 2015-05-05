@@ -1,10 +1,9 @@
-package org.bigbluebutton.model.chat
-{
+package org.bigbluebutton.model.chat {
+	
 	import mx.collections.ArrayCollection;
 	import org.osflash.signals.ISignal;
 	
-	public interface IChatMessagesSession
-	{
+	public interface IChatMessagesSession {
 		function getPrivateMessages(userId:String, userName:String):PrivateChatMessage;
 		function newPrivateMessage(userId:String, userName:String, newMessage:ChatMessageVO):void;
 		function addUserToPrivateMessages(userId:String, userName:String):PrivateChatMessage;

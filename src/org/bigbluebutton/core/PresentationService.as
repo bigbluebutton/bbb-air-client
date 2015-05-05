@@ -1,18 +1,19 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
-
-	public class PresentationService implements IPresentationService
-	{
-		[Inject]
-		public var conferenceParameters: IConferenceParameters;
+	
+	public class PresentationService implements IPresentationService {
 		
 		[Inject]
-		public var userSession: IUserSession;
+		public var conferenceParameters:IConferenceParameters;
+		
+		[Inject]
+		public var userSession:IUserSession;
 		
 		public var presentMessageSender:PresentMessageSender;
+		
 		public var presentMessageReceiver:PresentMessageReceiver;
 		
 		public function PresentationService() {
@@ -29,7 +30,7 @@ package org.bigbluebutton.core
 		public function getPresentationInfo():void {
 			presentMessageSender.getPresentationInfo();
 		}
-
+		
 		public function gotoSlide(id:String):void {
 			presentMessageSender.gotoSlide(id);
 		}

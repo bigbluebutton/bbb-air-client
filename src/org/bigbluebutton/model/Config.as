@@ -1,11 +1,9 @@
-package org.bigbluebutton.model
-{
-	public class Config
-	{
+package org.bigbluebutton.model {
+	
+	public class Config {
 		private var _config:XML;
 		
-		public function Config(config:XML)
-		{
+		public function Config(config:XML) {
 			_config = config;
 		}
 		
@@ -71,13 +69,12 @@ package org.bigbluebutton.model
 		public function isModulePresent(name:String):Boolean {
 			var mn:XMLList = _config.modules..@name;
 			var found:Boolean = false;
-			
 			for each (var n:XML in mn) {
 				if (n.toString().toUpperCase() == name.toUpperCase()) {
 					found = true;
 					break;
 				}
-			}	
+			}
 			return found;
 		}
 		
@@ -87,6 +84,5 @@ package org.bigbluebutton.model
 			}
 			return null;
 		}
-		
 	}
 }

@@ -1,16 +1,15 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import org.bigbluebutton.model.User;
-
-	public interface IUsersService
-	{
+	
+	public interface IUsersService {
 		function setupMessageSenderReceiver():void;
-		function sendJoinMeetingMessage():void; 
+		function sendJoinMeetingMessage():void;
 		function kickUser(userID:String):void;
 		function queryForParticipants():void;
 		function assignPresenter(userid:String, name:String, assignedBy:String):void;
 		function raiseHand():void;
-		function lowerHand(userID:String, loweredBy:String):void; 
+		function lowerHand(userID:String, loweredBy:String):void;
 		function addStream(userID:String, streamName:String):void;
 		function removeStream(userID:String, streamName:String):void;
 		function queryForRecordingStatus():void;

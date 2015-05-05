@@ -1,5 +1,5 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
@@ -7,17 +7,15 @@ package org.bigbluebutton.core
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
-	
 	import mx.utils.ObjectUtil;
-	
 	import org.bigbluebutton.core.util.URLParser;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	import org.bigbluebutton.core.util.URLFetcher;
 	
-	public class ConfigService
-	{
+	public class ConfigService {
 		protected var _successSignal:Signal = new Signal();
+		
 		protected var _unsuccessSignal:Signal = new Signal();
 		
 		public function get successSignal():ISignal {
@@ -30,7 +28,6 @@ package org.bigbluebutton.core
 		
 		public function getConfig(serverUrl:String, urlRequest:URLRequest):void {
 			var configUrl:String = serverUrl + "/bigbluebutton/api/configXML?a=" + new Date().time;
-			
 			var fetcher:URLFetcher = new URLFetcher;
 			fetcher.successSignal.add(onSuccess);
 			fetcher.unsuccessSignal.add(onUnsuccess);

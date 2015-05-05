@@ -1,11 +1,9 @@
-package org.bigbluebutton.command
-{
+package org.bigbluebutton.command {
+	
 	import org.osflash.signals.Signal;
 	
-	public class ShareMicrophoneSignal extends Signal
-	{
-		public function ShareMicrophoneSignal()
-		{
+	public class ShareMicrophoneSignal extends Signal {
+		public function ShareMicrophoneSignal() {
 			super(Object);
 		}
 	}

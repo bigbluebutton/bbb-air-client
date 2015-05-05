@@ -1,14 +1,12 @@
-package org.bigbluebutton.command
-{
+package org.bigbluebutton.command {
+	
 	import org.osflash.signals.Signal;
 	
-	public class DisconnectUserSignal extends Signal
-	{
+	public class DisconnectUserSignal extends Signal {
 		/**
-		 * @1 disconnectionStatusCode 
+		 * @1 disconnectionStatusCode
 		 */
-		public function DisconnectUserSignal()
-		{
+		public function DisconnectUserSignal() {
 			super(int);
 		}
 	}

@@ -1,27 +1,24 @@
-package org.bigbluebutton.view.ui
-{
+package org.bigbluebutton.view.ui {
+	
 	import org.bigbluebutton.command.NavigateToCommand;
 	import org.bigbluebutton.command.NavigateToSignal;
-	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
 	import robotlegs.bender.framework.api.IInjector;
-
-
-	public class NavigationButtonConfig implements IConfig
-	{
-		[Inject]
-		public var injector: IInjector;
+	
+	public class NavigationButtonConfig implements IConfig {
 		
 		[Inject]
-		public var mediatorMap: IMediatorMap;
+		public var injector:IInjector;
 		
 		[Inject]
-		public var signalCommandMap: ISignalCommandMap;
+		public var mediatorMap:IMediatorMap;
 		
-		public function configure(): void
-		{
+		[Inject]
+		public var signalCommandMap:ISignalCommandMap;
+		
+		public function configure():void {
 			dependencies();
 			mediators();
 			signals();
@@ -32,25 +29,21 @@ package org.bigbluebutton.view.ui
 		 * that will be injected onto objects used by the
 		 * application.
 		 */
-		private function dependencies(): void
-		{
-			 
+		private function dependencies():void {
 		}
 		
 		/**
 		 * Maps view mediators to views.
 		 */
-		private function mediators(): void
-		{
+		private function mediators():void {
 			mediatorMap.map(INavigationButton).toMediator(NavigationButtonMediator);
 		}
 		
 		/**
 		 * Maps signals to commands using the signalCommandMap.
 		 */
-		private function signals(): void
-		{
+		private function signals():void {
 			signalCommandMap.map(NavigateToSignal).toCommand(NavigateToCommand);
-		}	
+		}
 	}
 }

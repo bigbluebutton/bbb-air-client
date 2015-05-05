@@ -1,7 +1,6 @@
-package org.bigbluebutton.core
-{
-	public interface IPresentationService
-	{
+package org.bigbluebutton.core {
+	
+	public interface IPresentationService {
 		function setupMessageSenderReceiver():void;
 		function getPresentationInfo():void;
 		function gotoSlide(id:String):void;
