@@ -14,6 +14,7 @@ package org.bigbluebutton.view.navigation.pages.chat
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
+	import org.bigbluebutton.model.LockSettings;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.model.chat.ChatMessage;
@@ -77,6 +78,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			userSession.userList.userRemovedSignal.add(userRemoved);
 			userSession.userList.userAddedSignal.add(userAdded);
 			
+			userSession.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
+			
 			(view as View).addEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 			FlexGlobals.topLevelApplication.backBtn.visible = false;
 			FlexGlobals.topLevelApplication.profileBtn.visible = true;
@@ -138,6 +142,10 @@ package org.bigbluebutton.view.navigation.pages.chat
 			dataProvider = chatMessagesSession.getPrivateMessages(user.userID, user.name).privateChat.messages;
 			list = view.list;
 			list.dataProvider = dataProvider;
+			
+			if(!(userSession.userList.me.role == User.MODERATOR || userSession.userList.me.presenter)) {
+				applyViewerLockSettings();
+			}
 		}
 		
 		protected function openChat(currentPageDetails:Object):void
@@ -153,6 +161,15 @@ package org.bigbluebutton.view.navigation.pages.chat
 				{
 					view.pageName.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
 				}
+			}
+			
+			if(userSession.userList.me.role == User.MODERATOR || userSession.userList.me.presenter)
+			{
+				applyPresenterModeratorLockSettings();
+			}
+			else
+			{
+				applyViewerLockSettings();
 			}
 			
 			var chatMessages:ChatMessages = currentPageDetails.chatMessages as ChatMessages;
@@ -214,6 +231,60 @@ package org.bigbluebutton.view.navigation.pages.chat
 			view.sendButton.enabled = true;
 		}
 		
+		private function applyPresenterModeratorLockSettings():void
+		{
+			var lockSettings:LockSettings = userSession.lockSettings;
+			
+			if(publicChat)
+			{
+				view.sendButton.enabled = view.inputMessage.enabled = true;
+				view.pageName.text = userUISession.currentPageDetails.name;
+			}
+			else // Private chat
+			{
+				if(user == null || !userSession.userList.hasUser(this.user.userID)) // and the user is not online
+				{
+					view.sendButton.enabled = view.inputMessage.enabled = false;
+					view.pageName.text = userUISession.currentPageDetails.name + ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+				}
+				else // the user is online
+				{
+					view.sendButton.enabled = view.inputMessage.enabled = true;
+					view.pageName.text = userUISession.currentPageDetails.name;
+				}
+			}
+		}
+		
+		private function applyViewerLockSettings():void
+		{
+			var lockSettings:LockSettings = userSession.lockSettings;
+
+			if(publicChat)
+			{
+				view.sendButton.enabled = view.inputMessage.enabled = !lockSettings.disablePublicChat;
+				view.pageName.text = userUISession.currentPageDetails.name;
+				
+				if(lockSettings.disablePublicChat)
+				{
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
+				}
+			}
+			else
+			{
+				view.sendButton.enabled = view.inputMessage.enabled = !lockSettings.disablePrivateChat;
+				view.pageName.text = userUISession.currentPageDetails.name;
+				
+				if(user == null || !userSession.userList.hasUser(this.user.userID))
+				{
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'userDetail.userOffline');
+				}
+				if(lockSettings.disablePrivateChat)
+				{
+					view.pageName.text += ResourceManager.getInstance().getString('resources', 'lockSettings.lockedLabel');
+				}
+			}
+		}
+		
 		override public function destroy():void
 		{
 			super.destroy();
@@ -227,6 +298,9 @@ package org.bigbluebutton.view.navigation.pages.chat
 			
 			userSession.userList.userRemovedSignal.remove(userRemoved);	
 			userSession.userList.userAddedSignal.remove(userAdded);
+			
+			userSession.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
 			
 			(view as View).removeEventListener(ViewNavigatorEvent.VIEW_DEACTIVATE, viewDeactivateHandler);
 			

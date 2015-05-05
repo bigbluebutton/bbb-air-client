@@ -9,6 +9,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 	import org.bigbluebutton.command.DisconnectUserSignal;
 	import org.bigbluebutton.command.RaiseHandSignal;
 	import org.bigbluebutton.model.IUserSession;
+	import org.bigbluebutton.model.LockSettings;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
@@ -29,7 +30,7 @@ package org.bigbluebutton.view.navigation.pages.profile
 		
 		[Inject]
 		public var disconnectUserSignal: DisconnectUserSignal;
-			
+		
 		override public function initialize():void
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));

@@ -201,5 +201,48 @@ package org.bigbluebutton.model
 		{
 			_listenOnly = value;
 		}
+		
+		private var _disableMyCam:Boolean;
+		private var _disableMyMic:Boolean;
+		private var _disableMyPrivateChat:Boolean;
+		private var _disableMyPublicChat:Boolean;
+		private var _lockedLayout:Boolean;
+		
+		public function setLockSettings(ls:LockSettings):void
+		{
+			_disableMyCam = ls.disableCam;
+			_disableMyMic = ls.disableMic;
+			_disableMyPrivateChat = ls.disablePrivateChat;
+			_disableMyPublicChat = ls.disablePublicChat;
+			_lockedLayout = ls.lockedLayout;
+			
+			verifyUserStatus();
+		}
+		
+		public function get disableMyCam():Boolean
+		{
+			 return _disableMyCam;
+		}
+		
+		public function get disableMyMic():Boolean
+		{
+			return _disableMyMic;
+		}
+		
+		public function get disableMyPrivateChat():Boolean
+		{
+			return _disableMyPrivateChat;
+		}
+		
+		public function get disableMyPublicChat():Boolean
+		{
+		 	return _disableMyPublicChat;
+		}
+		
+		public function get lockedLayout():Boolean
+		{
+			return _lockedLayout;
+		}
+		
 	}
 }

@@ -29,6 +29,9 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 		{
 			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.userList.userChangeSignal.add(userChangeHandler);
+			userSession.applyPresenterModeratorLockSettingsSignal.add(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.add(applyViewerLockSettings);
+			
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'audioSettings.title');			
 			var userMe:User = userSession.userList.me;
 			
@@ -40,6 +43,24 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 			view.listenOnlyButton.label = ResourceManager.getInstance().getString('resources', userMe.listenOnly ? 'audioSettings.listenOnly.off' : 'audioSettings.listenOnly.on');
 			FlexGlobals.topLevelApplication.backBtn.visible = true;
 			FlexGlobals.topLevelApplication.profileBtn.visible = false;
+			if (userMe.role == User.MODERATOR || userMe.presenter)
+			{
+				applyPresenterModeratorLockSettings();
+			}
+			else
+			{
+				applyViewerLockSettings();
+			}
+		}
+		
+		private function applyPresenterModeratorLockSettings():void
+		{
+			view.shareMicButton.enabled = true;
+		}
+		
+		private function applyViewerLockSettings():void
+		{
+			view.shareMicButton.enabled = !userSession.lockSettings.disableMic;
 		}
 		
 		private function onShareMicClick(event:MouseEvent):void
@@ -77,6 +98,11 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 			super.destroy();
 			view.shareMicButton.removeEventListener(MouseEvent.CLICK, onShareMicClick);
 			view.listenOnlyButton.removeEventListener(MouseEvent.CLICK, onListenOnlyClick);
+			userSession.userList.userChangeSignal.remove(userChangeHandler);
+			userSession.applyPresenterModeratorLockSettingsSignal.remove(applyPresenterModeratorLockSettings);
+			userSession.applyViewerLockSettingsSignal.remove(applyViewerLockSettings);
+			view.dispose();
+			view = null;
 		}
 	}
 }

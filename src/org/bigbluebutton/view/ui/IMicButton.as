@@ -6,7 +6,9 @@ package org.bigbluebutton.view.ui
 	public interface IMicButton extends IView
 	{
 		function setVisibility(val:Boolean):void;
+		function set enabled(value:Boolean):void;
 		function get muted():Boolean;
 		function set muted(value:Boolean):void;
+
 	}
 }

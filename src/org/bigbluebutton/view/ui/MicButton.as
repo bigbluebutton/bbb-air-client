@@ -51,5 +51,10 @@ package org.bigbluebutton.view.ui
 		{
 			return _muted;
 		}
+		
+		override public function set enabled(value:Boolean):void
+		{
+			super.enabled = value;
+		}
 	}
 }
