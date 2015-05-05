@@ -1,5 +1,5 @@
-package org.bigbluebutton.view.navigation.pages.presentation
-{
+package org.bigbluebutton.view.navigation.pages.presentation {
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.StageOrientation;
@@ -11,24 +11,17 @@ package org.bigbluebutton.view.navigation.pages.presentation
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
-	
 	import mx.core.FlexGlobals;
 	import mx.resources.ResourceManager;
-	
 	import org.bigbluebutton.model.presentation.Slide;
-	
 	import spark.components.Image;
 	
-	
-	public class PresentationView extends PresentationViewBase implements IPresentationView
-	{		
-		override protected function childrenCreated():void
-		{
+	public class PresentationView extends PresentationViewBase implements IPresentationView {
+		override protected function childrenCreated():void {
 			super.childrenCreated();
 		}
 		
-		public function onClick(e:MouseEvent):void
-		{
+		public function onClick(e:MouseEvent):void {
 			//buttonTestSignal.dispatch();
 		}
 		
@@ -37,8 +30,8 @@ package org.bigbluebutton.view.navigation.pages.presentation
 		}
 		
 		public function setSlide(s:Slide):void {
-			if (s != null) {	
-				var context:LoaderContext = new LoaderContext();			
+			if (s != null) {
+				var context:LoaderContext = new LoaderContext();
 				context.allowCodeImport = true;
 				slide.loaderContext = context;
 				slide.source = s.SWFFile.source;
@@ -47,9 +40,8 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			}
 		}
 		
-		public function securityError(e:Event):void
-		{
-			trace("PresentationView.as Security error : " + e.toString());	
+		public function securityError(e:Event):void {
+			trace("PresentationView.as Security error : " + e.toString());
 		}
 		
 		override public function rotationHandler(rotation:String):void {
@@ -70,11 +62,7 @@ package org.bigbluebutton.view.navigation.pages.presentation
 			}
 		}
 		
-		
-		public function dispose():void
-		{
-
+		public function dispose():void {
 		}
-		
 	}
 }

@@ -1,23 +1,22 @@
-package org.bigbluebutton.view.navigation.pages.audiosettings
-{	
+package org.bigbluebutton.view.navigation.pages.audiosettings {
+	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
 	import robotlegs.bender.framework.api.IInjector;
-
-	public class AudioSettingsConfig implements IConfig
-	{
-		[Inject]
-		public var injector: IInjector;
+	
+	public class AudioSettingsConfig implements IConfig {
 		
 		[Inject]
-		public var mediatorMap: IMediatorMap;
+		public var injector:IInjector;
 		
 		[Inject]
-		public var signalCommandMap: ISignalCommandMap;
+		public var mediatorMap:IMediatorMap;
 		
-		public function configure(): void
-		{
+		[Inject]
+		public var signalCommandMap:ISignalCommandMap;
+		
+		public function configure():void {
 			dependencies();
 			mediators();
 			signals();
@@ -28,25 +27,20 @@ package org.bigbluebutton.view.navigation.pages.audiosettings
 		 * that will be injected onto objects used by the
 		 * application.
 		 */
-		private function dependencies(): void
-		{
-			
+		private function dependencies():void {
 		}
 		
 		/**
 		 * Maps view mediators to views.
 		 */
-		private function mediators(): void
-		{
+		private function mediators():void {
 			mediatorMap.map(IAudioSettingsView).toMediator(AudioSettingsViewMediator);
 		}
 		
 		/**
 		 * Maps signals to commands using the signalCommandMap.
 		 */
-		private function signals(): void
-		{
-			
-		}	
+		private function signals():void {
+		}
 	}
 }

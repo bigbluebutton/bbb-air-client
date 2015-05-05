@@ -1,37 +1,31 @@
-package org.bigbluebutton.view.navigation.pages.disconnect
-{
+package org.bigbluebutton.view.navigation.pages.disconnect {
+	
 	import flash.desktop.NativeApplication;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.system.Capabilities;
-	
 	import mx.core.FlexGlobals;
-	
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.common.MenuButtons;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectType;
-	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
-	public class DisconnectPageViewMediator extends Mediator
-	{	
+	public class DisconnectPageViewMediator extends Mediator {
+		
 		[Inject]
 		public var view:IDisconnectPageView;
 		
 		[Inject]
 		public var userUISession:IUserUISession;
-			
-		override public function initialize():void
-		{
+		
+		override public function initialize():void {
 			// If operating system is iOS, don't show exit button because there is no way to exit application:
-			if(Capabilities.os.search("iPhone") >= 0) {
+			if (Capabilities.os.search("iPhone") >= 0) {
 				view.exitButton.visible = false;
-			}
-			else {
+			} else {
 				view.exitButton.addEventListener(MouseEvent.CLICK, applicationExit);
 			}
-			
 			changeConnectionStatus(userUISession.currentPageDetails as int);
 			FlexGlobals.topLevelApplication.pageName.text = "";
 			FlexGlobals.topLevelApplication.topActionBar.visible = false;
@@ -40,11 +34,9 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 		
 		/**
 		 * Sets the disconnect status based on disconnectionStatusCode recieved from DisconnectUserCommand
-		 */ 
-		public function changeConnectionStatus(disconnectionStatusCode:int):void
-		{
-			switch(disconnectionStatusCode)
-			{
+		 */
+		public function changeConnectionStatus(disconnectionStatusCode:int):void {
+			switch (disconnectionStatusCode) {
 				case DisconnectEnum.CONNECTION_STATUS_MEETING_ENDED:
 					view.currentState = DisconnectType.CONNECTION_STATUS_MEETING_ENDED_STRING;
 					break;
@@ -57,11 +49,10 @@ package org.bigbluebutton.view.navigation.pages.disconnect
 				case DisconnectEnum.CONNECTION_STATUS_USER_LOGGED_OUT:
 					view.currentState = DisconnectType.CONNECTION_STATUS_USER_LOGGED_OUT_STRING;
 					break;
-			}	
+			}
 		}
 		
-		private function applicationExit(event:Event):void
-		{
+		private function applicationExit(event:Event):void {
 			trace("DisconnectPageViewMediator.applicationExit - exitting the application!");
 			NativeApplication.nativeApplication.exit();
 		}

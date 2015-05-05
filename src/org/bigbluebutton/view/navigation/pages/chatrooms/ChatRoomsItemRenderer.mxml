@@ -2,58 +2,56 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009"
 				xmlns:s="library://ns.adobe.com/flex/spark"
 				xmlns:mx="library://ns.adobe.com/flex/mx"
-				styleName="chatRoomItemStyle"
-				>
-	
+				styleName="chatRoomItemStyle">
+
 	<fx:Script>
 		<![CDATA[
 			import org.bigbluebutton.model.chat.ChatMessage;
 			import org.bigbluebutton.model.chat.ChatMessages;
-					
+			
 			override public function set data(obj:Object):void {
 				super.data = obj;
-				if(obj)
-				{
-					if(!obj.hasOwnProperty("button"))
-					{
+				if (obj) {
+					if (!obj.hasOwnProperty("button")) {
 						title.text = obj.name;
-						if (obj.online == false)
-						{
+						if (obj.online == false) {
 							title.text += resourceManager.getString('resources', 'userDetail.userOffline');
 						}
-
 						var chatMessages:ChatMessages = obj.chatMessages as ChatMessages;
 						newMessages.label = String(chatMessages.newMessages);
-						if(chatMessages.newMessages > 0)
-						{
+						if (chatMessages.newMessages > 0) {
 							newMessages.visible = true;
-						}
-						else
-						{
+						} else {
 							newMessages.visible = false;
 						}
-					}
-					else
-					{
+					} else {
 						newMessages.visible = false;
-						title.text ="+" + resourceManager.getString('resources', 'chat.item.privateChat');
+						title.text = "+" + resourceManager.getString('resources', 'chat.item.privateChat');
 					}
 				}
 			}
-			
 		]]>
 	</fx:Script>
-	<s:Group  width="100%">
+	<s:Group width="100%">
 		<s:layout>
-			<s:HorizontalLayout verticalAlign="middle"/>
+			<s:HorizontalLayout verticalAlign="middle" />
 		</s:layout>
-		<s:Label id="title" width="100%" styleName="contentFontSize chatRoomLabelStyle" verticalCenter="0" horizontalCenter="0"/>
-		<s:Button id="newMessages" buttonMode="false" styleName="newMessagesButtonStyle" />
-		<s:Image styleName="iconStyle arrowRightStyle" horizontalCenter="0"  verticalCenter="0" />
+		<s:Label id="title"
+				 width="100%"
+				 styleName="contentFontSize chatRoomLabelStyle"
+				 verticalCenter="0"
+				 horizontalCenter="0" />
+		<s:Button id="newMessages"
+				  buttonMode="false"
+				  styleName="newMessagesButtonStyle" />
+		<s:Image styleName="iconStyle arrowRightStyle"
+				 horizontalCenter="0"
+				 verticalCenter="0" />
 	</s:Group>
 	<s:Line width="100%">
 		<s:stroke>
-			<s:SolidColorStroke color="{getStyle('lineColor')}" weight="{getStyle('lineWeight')}" />
+			<s:SolidColorStroke color="{getStyle('lineColor')}"
+								weight="{getStyle('lineWeight')}" />
 		</s:stroke>
 	</s:Line>
 </s:ItemRenderer>

@@ -1,5 +1,5 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
@@ -12,14 +12,12 @@ package org.bigbluebutton.core
 	import flash.system.SecurityDomain;
 	import flash.system.System;
 	import flash.utils.ByteArray;
-	
 	import mx.controls.SWFLoader;
-	
 	import org.bigbluebutton.model.presentation.Slide;
 	
-	public class LoadSlideService
-	{
+	public class LoadSlideService {
 		private var _loader:Loader = new Loader();
+		
 		private var _slide:Slide;
 		
 		public function LoadSlideService(s:Slide) {
@@ -30,7 +28,7 @@ package org.bigbluebutton.core
 		}
 		
 		private function handleLoaderComplete(e:Event):void {
-			var context:LoaderContext = new LoaderContext();			
+			var context:LoaderContext = new LoaderContext();
 			context.allowCodeImport = true;
 			_slide.SWFFile.loaderContext = context;
 			_slide.swfSource = e.target.bytes;

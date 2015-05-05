@@ -1,15 +1,12 @@
-package org.bigbluebutton.command
-{
-	import org.osflash.signals.Signal;
+package org.bigbluebutton.command {
 	
+	import org.osflash.signals.Signal;
 	import org.bigbluebutton.model.chat.ChatMessage;
 	
-	public class PublicChatMessage extends Signal
-	{
-		public function PublicChatMessage()
-		{
+	public class PublicChatMessage extends Signal {
+		public function PublicChatMessage() {
 			/**
-			 * @1 
+			 * @1
 			 */
 			super(ChatMessage);
 		}

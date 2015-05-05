@@ -1,16 +1,15 @@
-package org.bigbluebutton.model.presentation
-{
-	import mx.collections.ArrayCollection;
+package org.bigbluebutton.model.presentation {
 	
+	import mx.collections.ArrayCollection;
 	import org.bigbluebutton.model.ConferenceParameters;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.UserSession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-
-	public class PresentationList
-	{
+	
+	public class PresentationList {
+		
 		[Inject]
 		public var userSession:IUserSession;
 		
@@ -24,12 +23,11 @@ package org.bigbluebutton.model.presentation
 		private var _presentationChangeSignal:ISignal = new Signal();
 		
 		public function PresentationList() {
-			
 		}
 		
 		public function addPresentation(presentationName:String, numberOfSlides:int, current:Boolean):Presentation {
 			trace("Adding presentation " + presentationName);
-			for (var i:int=0; i < _presentations.length; i++) {
+			for (var i:int = 0; i < _presentations.length; i++) {
 				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) {
 					return p;
@@ -41,7 +39,7 @@ package org.bigbluebutton.model.presentation
 		}
 		
 		public function removePresentation(presentationName:String):void {
-			for (var i:int=0; i < _presentations.length; i++) {
+			for (var i:int = 0; i < _presentations.length; i++) {
 				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) {
 					trace("Removing presentation " + presentationName);
@@ -49,10 +47,10 @@ package org.bigbluebutton.model.presentation
 				}
 			}
 		}
-			
+		
 		public function getPresentation(presentationName:String):Presentation {
 			trace("PresentProxy::getPresentation: presentationName=" + presentationName);
-			for (var i:int=0; i < _presentations.length; i++) {
+			for (var i:int = 0; i < _presentations.length; i++) {
 				var p:Presentation = _presentations[i] as Presentation;
 				if (p.fileName == presentationName) {
 					return p;
@@ -71,7 +69,7 @@ package org.bigbluebutton.model.presentation
 		
 		public function set currentPresentation(p:Presentation):void {
 			trace("PresentationList changing current presentation");
-			if(_currentPresentation != null) {
+			if (_currentPresentation != null) {
 				_currentPresentation.current = false;
 			}
 			_currentPresentation = p;
@@ -82,6 +80,5 @@ package org.bigbluebutton.model.presentation
 		public function get presentationChangeSignal():ISignal {
 			return _presentationChangeSignal;
 		}
-
 	}
 }

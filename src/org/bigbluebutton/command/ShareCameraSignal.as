@@ -1,11 +1,9 @@
-package org.bigbluebutton.command
-{
+package org.bigbluebutton.command {
+	
 	import org.osflash.signals.Signal;
 	
-	public class ShareCameraSignal extends Signal
-	{
-		public function ShareCameraSignal()
-		{
+	public class ShareCameraSignal extends Signal {
+		public function ShareCameraSignal() {
 			/**
 			 * @1 camera enabled
 			 * @2 camera position

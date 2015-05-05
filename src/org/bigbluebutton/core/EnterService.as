@@ -1,14 +1,13 @@
-package org.bigbluebutton.core
-{
-	import flash.net.URLRequest;
+package org.bigbluebutton.core {
 	
+	import flash.net.URLRequest;
 	import org.bigbluebutton.core.util.URLFetcher;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
-	public class EnterService
-	{
+	public class EnterService {
 		protected var _successSignal:Signal = new Signal();
+		
 		protected var _unsuccessSignal:Signal = new Signal();
 		
 		public function get successSignal():ISignal {
@@ -27,7 +26,7 @@ package org.bigbluebutton.core
 		}
 		
 		protected function onSuccess(data:Object, responseUrl:String, urlRequest:URLRequest):void {
-			var result : Object = JSON.parse(data as String);
+			var result:Object = JSON.parse(data as String);
 			successSignal.dispatch(result.response);
 		}
 		

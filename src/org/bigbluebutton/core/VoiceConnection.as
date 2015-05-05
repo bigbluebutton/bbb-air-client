@@ -1,10 +1,8 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import flash.net.NetConnection;
 	import flash.net.Responder;
-	
 	import mx.utils.ObjectUtil;
-	
 	import org.bigbluebutton.model.ConferenceParameters;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
@@ -12,8 +10,8 @@ package org.bigbluebutton.core
 	import org.osflash.signals.Signal;
 	import org.osmf.logging.Log;
 	
-	public class VoiceConnection extends DefaultConnectionCallback implements IVoiceConnection
-	{
+	public class VoiceConnection extends DefaultConnectionCallback implements IVoiceConnection {
+		
 		[Inject]
 		public var baseConnection:IBaseConnection;
 		
@@ -22,13 +20,16 @@ package org.bigbluebutton.core
 		
 		public static const NAME:String = "VoiceConnection";
 		
-		public var _callActive:Boolean = false; 
+		public var _callActive:Boolean = false;
 		
 		protected var _successConnected:ISignal = new Signal();
+		
 		protected var _unsuccessConnected:ISignal = new Signal();
 		
 		protected var _applicationURI:String;
+		
 		protected var _username:String;
+		
 		protected var _conferenceParameters:IConferenceParameters;
 		
 		public function VoiceConnection() {
@@ -36,30 +37,25 @@ package org.bigbluebutton.core
 		}
 		
 		[PostConstruct]
-		public function init():void
-		{
+		public function init():void {
 			baseConnection.init(this);
 			baseConnection.successConnected.add(onConnectionSuccess);
 			baseConnection.unsuccessConnected.add(onConnectionUnsuccess);
 		}
 		
-		private function onConnectionUnsuccess(reason:String):void
-		{
+		private function onConnectionUnsuccess(reason:String):void {
 			unsuccessConnected.dispatch(reason);
 		}
 		
-		private function onConnectionSuccess():void
-		{
+		private function onConnectionSuccess():void {
 			call(userSession.userList.me.listenOnly);
 		}
 		
-		public function get unsuccessConnected():ISignal
-		{
+		public function get unsuccessConnected():ISignal {
 			return _unsuccessConnected;
 		}
 		
-		public function get successConnected():ISignal
-		{
+		public function get successConnected():ISignal {
 			return _successConnected;
 		}
 		
@@ -81,10 +77,8 @@ package org.bigbluebutton.core
 		
 		public function connect(confParams:IConferenceParameters):void {
 			// we don't use scope in the voice communication (many hours lost on it)
-			
 			_conferenceParameters = confParams;
 			_username = encodeURIComponent(confParams.externUserID + "-bbbID-" + confParams.username);
-				
 			baseConnection.connect(_applicationURI, confParams.externUserID, _username);
 		}
 		
@@ -97,7 +91,6 @@ package org.bigbluebutton.core
 		//			CallBack Methods from Red5			//
 		//												//
 		//**********************************************//
-
 		public function failedToJoinVoiceConferenceCallback(msg:String):* {
 			trace(NAME + "::failedToJoinVoiceConferenceCallback(): " + msg);
 			unsuccessConnected.dispatch("Failed on failedToJoinVoiceConferenceCallback()");
@@ -111,7 +104,6 @@ package org.bigbluebutton.core
 		
 		public function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):* {
 			trace(NAME + "::successfullyJoinedVoiceConferenceCallback()");
-			
 			successConnected.dispatch(publishName, playName, codec);
 		}
 		
@@ -120,9 +112,7 @@ package org.bigbluebutton.core
 		//					SIP Actions					//
 		//												//
 		//**********************************************//
-
-		public function call(listenOnly:Boolean=false):void
-		{
+		public function call(listenOnly:Boolean = false):void {
 			if (!callActive) {
 				trace(NAME + "::call(listenOnly:Boolean): starting voice call");
 				baseConnection.connection.call(
@@ -132,21 +122,18 @@ package org.bigbluebutton.core
 					_username,
 					_conferenceParameters.webvoiceconf,
 					listenOnly.toString()
-				);
-			}
-			else {
+					);
+			} else {
 				trace(NAME + "::call(listenOnly:Boolean=false): voice call already active");
 			}
 		}
 		
-		private function callOnSucess(result:Object):void
-		{
+		private function callOnSucess(result:Object):void {
 			trace("call success: " + ObjectUtil.toString(result));
 			_callActive = true;
 		}
 		
-		private function callUnsucess(status:Object):void
-		{
+		private function callUnsucess(status:Object):void {
 			trace("call error: " + ObjectUtil.toString(status));
 			unsuccessConnected.dispatch("Failed on call()");
 			_callActive = false;
@@ -159,20 +146,18 @@ package org.bigbluebutton.core
 					"voiceconf.hangup",
 					new Responder(hangUpOnSucess, hangUpUnsucess),
 					"default"
-				);
+					);
 			} else {
 				trace(NAME + "::hangUp(): call already hung up");
 			}
 		}
 		
-		private function hangUpOnSucess(result:Object):void
-		{
+		private function hangUpOnSucess(result:Object):void {
 			trace("hangup success: " + ObjectUtil.toString(result));
 			_callActive = false;
 		}
 		
-		private function hangUpUnsucess(status:Object):void
-		{
+		private function hangUpUnsucess(status:Object):void {
 			trace("hangup error: " + ObjectUtil.toString(status));
 		}
 	}

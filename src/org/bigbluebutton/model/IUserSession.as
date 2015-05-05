@@ -1,7 +1,6 @@
-package org.bigbluebutton.model
-{
-	import flash.net.NetConnection;
+package org.bigbluebutton.model {
 	
+	import flash.net.NetConnection;
 	import org.bigbluebutton.core.IBigBlueButtonConnection;
 	import org.bigbluebutton.core.IVideoConnection;
 	import org.bigbluebutton.core.IVoiceConnection;
@@ -15,13 +14,11 @@ package org.bigbluebutton.model
 	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.IDeskshareConnection;
 	
-
-	public interface IUserSession
-	{
+	public interface IUserSession {
 		function get config():Config;
 		function set config(value:Config):void;
 		function get userId():String;
-		function set userId(value:String):void;		
+		function set userId(value:String):void;
 		function get userList():UserList;
 		function get voiceConnection():IVoiceConnection;
 		function set voiceConnection(value:IVoiceConnection):void;

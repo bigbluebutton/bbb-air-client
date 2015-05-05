@@ -1,11 +1,8 @@
-package org.bigbluebutton.view.ui.loading
-{
-	import mx.core.IUIComponent;
+package org.bigbluebutton.view.ui.loading {
 	
+	import mx.core.IUIComponent;
 	import org.bigbluebutton.core.view.IView;
-
-	public interface ILoadingScreen extends IView, IUIComponent
-	{
-		
+	
+	public interface ILoadingScreen extends IView, IUIComponent {
 	}
 }

@@ -1,23 +1,22 @@
-package org.bigbluebutton.view.navigation.pages.deskshare
-{
+package org.bigbluebutton.view.navigation.pages.deskshare {
+	
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
 	import robotlegs.bender.framework.api.IInjector;
 	
-	public class DeskshareConfig implements IConfig
-	{
+	public class DeskshareConfig implements IConfig {
+		
 		[Inject]
-		public var injector: IInjector;
+		public var injector:IInjector;
 		
 		[Inject]
 		public var mediatorMap:IMediatorMap;
 		
 		[Inject]
-		public var signalCommandMap: ISignalCommandMap;
+		public var signalCommandMap:ISignalCommandMap;
 		
-		public function configure():void
-		{
+		public function configure():void {
 			dependencies();
 			mediators();
 			signals();
@@ -28,25 +27,20 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		 * that will be injected onto objects used by the
 		 * application.
 		 */
-		private function dependencies():void
-		{
-			
+		private function dependencies():void {
 		}
 		
 		/**
 		 * Maps view mediators to views.
 		 */
-		private function mediators():void
-		{
+		private function mediators():void {
 			mediatorMap.map(IDeskshareView).toMediator(DeskshareViewMediator);
 		}
 		
 		/**
 		 * Maps signals to commands using the signalCommandMap.
 		 */
-		private function signals():void
-		{
-			
-		}	
+		private function signals():void {
+		}
 	}
 }

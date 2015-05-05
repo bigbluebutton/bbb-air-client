@@ -1,15 +1,13 @@
-package org.bigbluebutton.view.navigation.pages.deskshare
-{
+package org.bigbluebutton.view.navigation.pages.deskshare {
+	
 	import mx.core.FlexGlobals;
 	import mx.resources.ResourceManager;
-	
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
-	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
-	public class DeskshareViewMediator extends Mediator
-	{
+	public class DeskshareViewMediator extends Mediator {
+		
 		[Inject]
 		public var view:IDeskshareView;
 		
@@ -18,11 +16,9 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		
 		[Inject]
 		public var params:IConferenceParameters;
-
-		public override function initialize():void
-		{
+		
+		public override function initialize():void {
 			showDeskshare(userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
-
 			userSession.deskshareConnection.isStreamingSignal.add(onDeskshareStreamChange);
 			userSession.deskshareConnection.mouseLocationChangedSignal.add(onMouseLocationChanged);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'deskshare.title');
@@ -32,9 +28,8 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		
 		/**
 		 * On Deskshare View initialization - start the video stream
-		 */  
-		private function showDeskshare(width:Number, height:Number):void
-		{
+		 */
+		private function showDeskshare(width:Number, height:Number):void {
 			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = false;
 			view.startStream(userSession.deskshareConnection.connection, null, params.room, null, userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
 		}
@@ -42,18 +37,13 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		/**
 		 * If desktop sharing stream dropped - show notification message, remove video
 		 * else show the desktop sharing stream and cursor
-		 */  
-		public function onDeskshareStreamChange(isDeskshareStreaming:Boolean):void
-		{
+		 */
+		public function onDeskshareStreamChange(isDeskshareStreaming:Boolean):void {
 			view.noDeskshareMessage.visible = view.noDeskshareMessage.includeInLayout = !isDeskshareStreaming;
-			
-			if (!isDeskshareStreaming)
-			{
-				 view.stopStream();
-				 userSession.deskshareConnection.mouseLocationChangedSignal.remove(onMouseLocationChanged);
-			}
-			else
-			{
+			if (!isDeskshareStreaming) {
+				view.stopStream();
+				userSession.deskshareConnection.mouseLocationChangedSignal.remove(onMouseLocationChanged);
+			} else {
 				userSession.deskshareConnection.mouseLocationChangedSignal.add(onMouseLocationChanged);
 				showDeskshare(userSession.deskshareConnection.streamWidth, userSession.deskshareConnection.streamHeight);
 			}
@@ -61,21 +51,19 @@ package org.bigbluebutton.view.navigation.pages.deskshare
 		
 		/**
 		 * Notify view that mouse location was changed
-		 */  
-		public function onMouseLocationChanged(x:Number, y:Number):void
-		{
+		 */
+		public function onMouseLocationChanged(x:Number, y:Number):void {
 			view.changeMouseLocation(x, y);
 		}
 		
 		/**
 		 * Unsibscribe from signal listeners
 		 * Stop desktop sharing stream
-		 */ 
-		override public function destroy():void
-		{
+		 */
+		override public function destroy():void {
 			userSession.deskshareConnection.isStreamingSignal.remove(onDeskshareStreamChange);
 			userSession.deskshareConnection.mouseLocationChangedSignal.remove(onMouseLocationChanged);
 			view.stopStream();
 		}
-	}	
+	}
 }

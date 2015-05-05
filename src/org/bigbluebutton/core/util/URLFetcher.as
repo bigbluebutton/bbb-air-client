@@ -1,5 +1,5 @@
-package org.bigbluebutton.core.util
-{
+package org.bigbluebutton.core.util {
+	
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
@@ -8,23 +8,23 @@ package org.bigbluebutton.core.util
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
 	import flash.net.URLRequestMethod;
-	
 	import mx.utils.ObjectUtil;
-	
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-
-	public class URLFetcher
-	{
+	
+	public class URLFetcher {
 		protected var _successSignal:Signal = new Signal();
+		
 		protected var _unsuccessSignal:Signal = new Signal();
+		
 		protected var _urlRequest:URLRequest = null;
+		
 		protected var _responseUrl:String = null;
 		
 		public function get successSignal():ISignal {
 			return _successSignal;
 		}
-
+		
 		public function get unsuccessSignal():ISignal {
 			return _unsuccessSignal;
 		}
@@ -39,14 +39,13 @@ package org.bigbluebutton.core.util
 				_urlRequest.method = URLRequestMethod.GET;
 			}
 			_urlRequest.url = url;
-			
 			var urlLoader:URLLoader = new URLLoader();
-			urlLoader.addEventListener( Event.COMPLETE, handleComplete );
-			urlLoader.addEventListener( HTTPStatusEvent.HTTP_STATUS, httpStatusHandler );
-			urlLoader.addEventListener( IOErrorEvent.IO_ERROR, ioErrorHandler );
-			urlLoader.addEventListener( HTTPStatusEvent.HTTP_RESPONSE_STATUS, httpResponseStatusHandler );
+			urlLoader.addEventListener(Event.COMPLETE, handleComplete);
+			urlLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, httpStatusHandler);
+			urlLoader.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);
+			urlLoader.addEventListener(HTTPStatusEvent.HTTP_RESPONSE_STATUS, httpResponseStatusHandler);
 			urlLoader.dataFormat = dataFormat;
-			urlLoader.load( _urlRequest );
+			urlLoader.load(_urlRequest);
 		}
 		
 		private function httpResponseStatusHandler(e:HTTPStatusEvent):void {

@@ -1,21 +1,22 @@
-package org.bigbluebutton.core
-{
+package org.bigbluebutton.core {
+	
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
-
-	public class UsersService implements IUsersService
-	{	
-		[Inject]
-		public var conferenceParameters: IConferenceParameters;
+	
+	public class UsersService implements IUsersService {
 		
 		[Inject]
-		public var userSession: IUserSession;
+		public var conferenceParameters:IConferenceParameters;
+		
+		[Inject]
+		public var userSession:IUserSession;
 		
 		public var usersMessageSender:UsersMessageSender;
+		
 		public var usersMessageReceiver:UsersMessageReceiver;
-
+		
 		public function UsersService() {
 			usersMessageSender = new UsersMessageSender;
 			usersMessageReceiver = new UsersMessageReceiver;
@@ -24,11 +25,10 @@ package org.bigbluebutton.core
 		public function setupMessageSenderReceiver():void {
 			usersMessageReceiver.userSession = userSession;
 			usersMessageSender.userSession = userSession;
-			
 			userSession.mainConnection.addMessageListener(usersMessageReceiver as IMessageListener);
 			userSession.logoutSignal.add(logout);
 		}
-
+		
 		public function muteMe():void {
 			mute(userSession.userList.me);
 		}
@@ -68,13 +68,11 @@ package org.bigbluebutton.core
 			userSession.mainConnection.disconnect(onUserAction);
 		}
 		
-		public function raiseHand():void
-		{
+		public function raiseHand():void {
 			usersMessageSender.raiseHand();
 		}
 		
-		public function lowerHand(userID:String, loweredBy:String):void
-		{
+		public function lowerHand(userID:String, loweredBy:String):void {
 			usersMessageSender.lowerHand(userID, loweredBy);
 		}
 		
@@ -137,6 +135,5 @@ package org.bigbluebutton.core
 		public function sendJoinMeetingMessage():void {
 			usersMessageSender.sendJoinMeetingMessage(conferenceParameters.internalUserID);
 		}
-		
 	}
 }

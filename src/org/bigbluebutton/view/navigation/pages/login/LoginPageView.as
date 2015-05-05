@@ -1,26 +1,19 @@
-package org.bigbluebutton.view.navigation.pages.login
-{
-	import flash.events.MouseEvent;
+package org.bigbluebutton.view.navigation.pages.login {
 	
+	import flash.events.MouseEvent;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	
 	import spark.components.Label;
 	
-	public class LoginPageView extends LoginPageViewBase implements ILoginPageView
-	{
-		override protected function childrenCreated():void
-		{
+	public class LoginPageView extends LoginPageViewBase implements ILoginPageView {
+		override protected function childrenCreated():void {
 			super.childrenCreated();
 		}
 		
-		public function dispose():void
-		{
-
+		public function dispose():void {
 		}
-
-		public function get messageText():Label
-		{
+		
+		public function get messageText():Label {
 			return messageText0;
 		}
 	}

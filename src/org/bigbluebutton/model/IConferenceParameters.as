@@ -1,12 +1,10 @@
-package org.bigbluebutton.model
-{
-	import flash.net.NetConnection;
+package org.bigbluebutton.model {
 	
+	import flash.net.NetConnection;
 	import org.osflash.signals.ISignal;
-
-	public interface IConferenceParameters
-	{
-		function get changedSignal(): ISignal;
+	
+	public interface IConferenceParameters {
+		function get changedSignal():ISignal;
 		function get meetingName():String;
 		function set meetingName(meetingName:String):void;
 		function get externMeetingID():String;
