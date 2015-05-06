@@ -79,7 +79,7 @@ package org.bigbluebutton.view.navigation.pages.common {
 					// calculate width based on a video height, it order to keep the same aspect ratio
 					video.width = ((originalVideoWidth * video.height) / originalVideoHeight);
 				}
-			}  // if we have device where screen height less than screen width e.g. tablet
+			} // if we have device where screen height less than screen width e.g. tablet
 			else {
 				// make the video height full height of the screen
 				video.height = screenHeight;

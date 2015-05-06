@@ -35,6 +35,8 @@ package org.bigbluebutton.model {
 		function set userid(userid:String):void;
 		function get record():Boolean;
 		function set record(record:Boolean):void;
+		function get authToken():String;
+		function set authToken(authToken:String):void;
 		function load(obj:Object):void;
 	}
 }

@@ -12,7 +12,6 @@ package org.bigbluebutton.view.navigation.pages.videochat {
 	import org.bigbluebutton.model.UserSession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.mockito.integrations.currentMockito;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import spark.events.IndexChangeEvent;
 	
@@ -30,7 +29,6 @@ package org.bigbluebutton.view.navigation.pages.videochat {
 		protected var dataProvider:ArrayCollection;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.userList.userRemovedSignal.add(userRemovedHandler);
 			userSession.userList.userAddedSignal.add(userAddedHandler);
 			userSession.userList.userChangeSignal.add(userChangeHandler);
@@ -201,18 +199,18 @@ package org.bigbluebutton.view.navigation.pages.videochat {
 				// if user was directly selected, show this user as a first priority
 				if (selectedUser && selectedUser.hasStream) {
 					newUser = selectedUser;
-				}  // if presenter is transmitting a video - put them in second priority
+				} // if presenter is transmitting a video - put them in second priority
 				else if (presenter != null && presenter.hasStream) {
 					newUser = presenter;
-				}  // current user is the third priority
+				} // current user is the third priority
 				else if (currentUserID != null) {
 					if (changedUser != null && currentUserID == changedUser.userID) {
 						newUser = changedUser;
 					}
-				}  // any user with camera is the last priority
+				} // any user with camera is the last priority
 				else if (userWithCamera != null) {
 					newUser = userWithCamera;
-				}  // otherwise, nobody transmitts video at this moment
+				} // otherwise, nobody transmitts video at this moment
 				else {
 					return;
 				}

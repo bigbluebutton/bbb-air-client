@@ -8,17 +8,15 @@ package org.bigbluebutton.core {
 	import org.bigbluebutton.model.IUserSession;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.osmf.logging.Log;
 	
 	public class VoiceConnection extends DefaultConnectionCallback implements IVoiceConnection {
+		public const LOG:String = "VoiceConnection::";
 		
 		[Inject]
 		public var baseConnection:IBaseConnection;
 		
 		[Inject]
 		public var userSession:IUserSession;
-		
-		public static const NAME:String = "VoiceConnection";
 		
 		public var _callActive:Boolean = false;
 		
@@ -33,7 +31,6 @@ package org.bigbluebutton.core {
 		protected var _conferenceParameters:IConferenceParameters;
 		
 		public function VoiceConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]
@@ -92,18 +89,18 @@ package org.bigbluebutton.core {
 		//												//
 		//**********************************************//
 		public function failedToJoinVoiceConferenceCallback(msg:String):* {
-			trace(NAME + "::failedToJoinVoiceConferenceCallback(): " + msg);
+			trace(LOG + "failedToJoinVoiceConferenceCallback(): " + msg);
 			unsuccessConnected.dispatch("Failed on failedToJoinVoiceConferenceCallback()");
 		}
 		
 		public function disconnectedFromJoinVoiceConferenceCallback(msg:String):* {
-			trace(NAME + "::disconnectedFromJoinVoiceConferenceCallback(): " + msg);
+			trace(LOG + "disconnectedFromJoinVoiceConferenceCallback(): " + msg);
 			unsuccessConnected.dispatch("Failed on disconnectedFromJoinVoiceConferenceCallback()");
 			//hangUp();
 		}
 		
 		public function successfullyJoinedVoiceConferenceCallback(publishName:String, playName:String, codec:String):* {
-			trace(NAME + "::successfullyJoinedVoiceConferenceCallback()");
+			trace(LOG + "successfullyJoinedVoiceConferenceCallback()");
 			successConnected.dispatch(publishName, playName, codec);
 		}
 		
@@ -114,7 +111,7 @@ package org.bigbluebutton.core {
 		//**********************************************//
 		public function call(listenOnly:Boolean = false):void {
 			if (!callActive) {
-				trace(NAME + "::call(listenOnly:Boolean): starting voice call");
+				trace(LOG + "call(): starting voice call");
 				baseConnection.connection.call(
 					"voiceconf.call",
 					new Responder(callOnSucess, callUnsucess),
@@ -124,41 +121,41 @@ package org.bigbluebutton.core {
 					listenOnly.toString()
 					);
 			} else {
-				trace(NAME + "::call(listenOnly:Boolean=false): voice call already active");
+				trace(LOG + "call(): voice call already active");
 			}
 		}
 		
 		private function callOnSucess(result:Object):void {
-			trace("call success: " + ObjectUtil.toString(result));
+			trace(LOG + "callOnSuccess(): " + ObjectUtil.toString(result));
 			_callActive = true;
 		}
 		
 		private function callUnsucess(status:Object):void {
-			trace("call error: " + ObjectUtil.toString(status));
+			trace(LOG + "callUnsuccess(): " + ObjectUtil.toString(status));
 			unsuccessConnected.dispatch("Failed on call()");
 			_callActive = false;
 		}
 		
 		public function hangUp():void {
 			if (callActive) {
-				trace(NAME + "::hangUp(): hanging up the voice call");
+				trace(LOG + "hangUp(): hanging up the voice call");
 				baseConnection.connection.call(
 					"voiceconf.hangup",
 					new Responder(hangUpOnSucess, hangUpUnsucess),
 					"default"
 					);
 			} else {
-				trace(NAME + "::hangUp(): call already hung up");
+				trace(LOG + "hangUp(): call already hung up");
 			}
 		}
 		
 		private function hangUpOnSucess(result:Object):void {
-			trace("hangup success: " + ObjectUtil.toString(result));
+			trace(LOG + "hangUpOnSucess(): " + ObjectUtil.toString(result));
 			_callActive = false;
 		}
 		
 		private function hangUpUnsucess(status:Object):void {
-			trace("hangup error: " + ObjectUtil.toString(status));
+			trace(LOG + "hangUpUnsucess: " + ObjectUtil.toString(status));
 		}
 	}
 }

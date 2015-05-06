@@ -2,7 +2,6 @@ package org.bigbluebutton.view.ui.loading {
 	
 	import mx.core.FlexGlobals;
 	import org.bigbluebutton.model.IUserUISession;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class LoadingScreenMediator extends Mediator {
@@ -17,7 +16,6 @@ package org.bigbluebutton.view.ui.loading {
 		 * Initialize listeners and Mediator initial state
 		 */
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			view.setVisible(false);
 			view.includeInLayout = false;
 			userUISettings.loadingSignal.add(update);

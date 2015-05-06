@@ -11,10 +11,9 @@ package org.bigbluebutton.core {
 	import org.bigbluebutton.model.IMessageListener;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.osmf.logging.Log;
 	
 	public class DefaultConnectionCallback implements IDefaultConnectionCallback {
-		public static const NAME:String = "DefaultConnectionCallback";
+		private const LOG:String = "DefaultConnectionCallback::";
 		
 		private var _messageListeners:Array = new Array();
 		
@@ -33,7 +32,7 @@ package org.bigbluebutton.core {
 		}
 		
 		public function onMessageFromServer(messageName:String, result:Object):void {
-			trace("RECEIVED MESSAGE: [" + messageName + "]");
+			trace(LOG + "RECEIVED MESSAGE: [" + messageName + "]");
 			notifyListeners(messageName, result);
 		}
 		
@@ -56,7 +55,7 @@ package org.bigbluebutton.core {
 					_messageListeners[notify].onMessage(messageName, message);
 				}
 			} else {
-				trace("Message name is undefined");
+				trace(LOG + "Message name is undefined");
 			}
 		}
 	}

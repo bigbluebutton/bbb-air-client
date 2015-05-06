@@ -3,19 +3,21 @@ package org.bigbluebutton.core {
 	import flash.events.AsyncErrorEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
-	import flash.events.SecurityErrorEvent;
 	import flash.media.Camera;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
-	import mx.utils.ObjectUtil;
+	import org.bigbluebutton.model.IConferenceParameters;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.osmf.logging.Log;
 	
 	public class VideoConnection extends DefaultConnectionCallback implements IVideoConnection {
+		private const LOG:String = "VideoConnection::";
 		
 		[Inject]
 		public var baseConnection:IBaseConnection;
+		
+		[Inject]
+		public var conferenceParameters:IConferenceParameters;
 		
 		private var _ns:NetStream;
 		
@@ -38,7 +40,6 @@ package org.bigbluebutton.core {
 		public static var CAMERA_QUALITY_HIGH:int = 2;
 		
 		public function VideoConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]
@@ -78,7 +79,12 @@ package org.bigbluebutton.core {
 		}
 		
 		public function connect():void {
-			baseConnection.connect(uri);
+			var uri:String = _applicationURI + "/" + conferenceParameters.room;
+			var connectParams:Array = [
+				conferenceParameters.room,
+				conferenceParameters.internalUserID
+				];
+			baseConnection.connect.apply(null, new Array(uri).concat(connectParams));
 		}
 		
 		public function get cameraPosition():String {
@@ -143,15 +149,15 @@ package org.bigbluebutton.core {
 		}
 		
 		private function onNetStatus(e:NetStatusEvent):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":onNetStatus() " + e.info.code);
+			trace(LOG + "onNetStatus() " + e.info.code);
 		}
 		
 		private function onIOError(e:IOErrorEvent):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":onIOError() " + e.toString());
+			trace(LOG + "onIOError() " + e.toString());
 		}
 		
 		private function onAsyncError(e:AsyncErrorEvent):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":onAsyncError() " + e.toString());
+			trace(LOG + "onAsyncError() " + e.toString());
 		}
 		
 		public function stopPublishing():void {

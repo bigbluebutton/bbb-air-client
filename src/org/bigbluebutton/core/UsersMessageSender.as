@@ -125,9 +125,12 @@ package org.bigbluebutton.core {
 			trace("UsersMessageSender::saveLockSettings() -- Sending [saveLockSettings] message to server");
 		}
 		
-		public function sendJoinMeetingMessage(internalUserID:String):void {
-			trace("UsersMessageSender::sendJoinMeetingMessage() -- Sending [joinMeeting] message to server with message [userID: " + internalUserID + "]");
-			userSession.mainConnection.sendMessage("joinMeeting", defaultSuccessResponse, defaultFailureResponse, internalUserID);
+		public function validateToken(internalUserID:String, authToken:String):void {
+			trace("UsersMessageSender::validateToken() -- Sending [validateToken] message to server");
+			var message:Object = new Object();
+			message["userId"] = internalUserID;
+			message["authToken"] = authToken;
+			userSession.mainConnection.sendMessage("validateToken", defaultSuccessResponse, defaultFailureResponse, message);
 		}
 	}
 }

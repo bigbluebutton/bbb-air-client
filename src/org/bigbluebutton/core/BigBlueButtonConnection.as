@@ -6,7 +6,6 @@ package org.bigbluebutton.core {
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.osmf.logging.Log;
 	
 	public class BigBlueButtonConnection extends DefaultConnectionCallback implements IBigBlueButtonConnection {
 		public static const NAME:String = "BigBlueButtonConnection";
@@ -29,7 +28,6 @@ package org.bigbluebutton.core {
 		private var _userId:String;
 		
 		public function BigBlueButtonConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]
@@ -49,8 +47,7 @@ package org.bigbluebutton.core {
 		
 		private function getMyUserId():void {
 			baseConnection.connection.call("participants.getMyUserId",
-										   new Responder(
-										   function(result:String):void {
+										   new Responder(function(result:String):void {
 											   trace("Success connected: My user ID is [" + result + "]");
 											   _userId = result as String;
 											   successConnected.dispatch();

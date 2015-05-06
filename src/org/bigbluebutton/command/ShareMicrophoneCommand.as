@@ -10,10 +10,10 @@ package org.bigbluebutton.command {
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class ShareMicrophoneCommand extends Command {
+		private const LOG:String = "ShareMicrophoneCommand::";
 		
 		[Inject]
 		public var userSession:IUserSession;
@@ -69,7 +69,7 @@ package org.bigbluebutton.command {
 		}
 		
 		private function mediaSuccessConnected(publishName:String, playName:String, codec:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":mediaSuccessConnected()");
+			trace(LOG + "mediaSuccessConnected()");
 			var manager:VoiceStreamManager = new VoiceStreamManager();
 			manager.play(voiceConnection.connection, playName);
 			if (publishName != null && publishName.length != 0) {
@@ -81,7 +81,7 @@ package org.bigbluebutton.command {
 		}
 		
 		private function mediaUnsuccessConnected(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":mediaUnsuccessConnected()");
+			trace(LOG + "mediaUnsuccessConnected()");
 			voiceConnection.successConnected.remove(mediaSuccessConnected);
 			voiceConnection.unsuccessConnected.remove(mediaUnsuccessConnected);
 		}

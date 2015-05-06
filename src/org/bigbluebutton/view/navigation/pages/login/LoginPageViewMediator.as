@@ -13,11 +13,11 @@ package org.bigbluebutton.view.navigation.pages.login {
 	import org.bigbluebutton.model.UserUISession;
 	import org.bigbluebutton.view.navigation.IPagesNavigatorView;
 	import org.flexunit.internals.namespaces.classInternal;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import spark.components.Application;
 	
 	public class LoginPageViewMediator extends Mediator {
+		private const LOG:String = "LoginPageViewMediator::";
 		
 		[Inject]
 		public var view:ILoginPageView;
@@ -35,14 +35,13 @@ package org.bigbluebutton.view.navigation.pages.login {
 		public var userUISession:IUserUISession;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			//loginService.unsuccessJoinedSignal.add(onUnsucess);
 			userUISession.unsuccessJoined.add(onUnsucess);
 			NativeApplication.nativeApplication.addEventListener(InvokeEvent.INVOKE, onInvokeEvent);
 		}
 		
 		private function onUnsucess(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":onUnsucess() " + reason);
+			trace(LOG + "onUnsucess() " + reason);
 			FlexGlobals.topLevelApplication.topActionBar.visible = false;
 			FlexGlobals.topLevelApplication.bottomMenu.visible = false;
 			switch (reason) {
@@ -63,6 +62,12 @@ package org.bigbluebutton.view.navigation.pages.login {
 					break;
 				case "genericError":
 					view.currentState = LoginPageViewBase.STATE_GENERIC_ERROR;
+					break;
+				case "authTokenTimedOut":
+					view.currentState = LoginPageViewBase.STATE_AUTH_TOKEN_TIMEDOUT;
+					break;
+				case "authTokenInvalid":
+					view.currentState = LoginPageViewBase.STATE_AUTH_TOKEN_INVALID;
 					break;
 				default:
 					view.currentState = LoginPageViewBase.STATE_GENERIC_ERROR;

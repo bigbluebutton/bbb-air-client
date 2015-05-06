@@ -10,7 +10,6 @@ package org.bigbluebutton.view.navigation.pages.profile {
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.view.navigation.pages.disconnect.enum.DisconnectEnum;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class ProfileViewMediator extends Mediator {
@@ -28,7 +27,6 @@ package org.bigbluebutton.view.navigation.pages.profile {
 		public var disconnectUserSignal:DisconnectUserSignal;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			var userMe:User = userSession.userList.me;
 			view.userNameButton.label = userMe.name;

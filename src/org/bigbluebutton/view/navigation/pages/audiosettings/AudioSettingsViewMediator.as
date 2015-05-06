@@ -8,7 +8,6 @@ package org.bigbluebutton.view.navigation.pages.audiosettings {
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class AudioSettingsViewMediator extends Mediator {
@@ -23,7 +22,6 @@ package org.bigbluebutton.view.navigation.pages.audiosettings {
 		public var shareMicrophoneSignal:ShareMicrophoneSignal;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			FlexGlobals.topLevelApplication.pageName.text = ResourceManager.getInstance().getString('resources', 'audioSettings.title');
 			var userMe:User = userSession.userList.me;

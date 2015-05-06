@@ -5,7 +5,6 @@ package org.bigbluebutton.view.navigation {
 	import org.bigbluebutton.util.NoTransition;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import spark.components.ViewNavigator;
 	import spark.effects.CrossFade;
@@ -23,7 +22,6 @@ package org.bigbluebutton.view.navigation {
 		public var userUISession:IUserUISession
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			userUISession.pageChangedSignal.add(changePage);
 			userUISession.pushPage(PagesENUM.LOGIN);
 		}

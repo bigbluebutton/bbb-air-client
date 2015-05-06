@@ -1,5 +1,6 @@
 package org.bigbluebutton.core {
 	
+	import org.bigbluebutton.command.AuthenticationSignal;
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.bigbluebutton.model.IMessageListener;
 	import org.bigbluebutton.model.IUserSession;
@@ -13,6 +14,9 @@ package org.bigbluebutton.core {
 		[Inject]
 		public var userSession:IUserSession;
 		
+		[Inject]
+		public var authenticationSignal:AuthenticationSignal;
+		
 		public var usersMessageSender:UsersMessageSender;
 		
 		public var usersMessageReceiver:UsersMessageReceiver;
@@ -24,6 +28,7 @@ package org.bigbluebutton.core {
 		
 		public function setupMessageSenderReceiver():void {
 			usersMessageReceiver.userSession = userSession;
+			usersMessageReceiver.authenticationSignal = authenticationSignal;
 			usersMessageSender.userSession = userSession;
 			userSession.mainConnection.addMessageListener(usersMessageReceiver as IMessageListener);
 			userSession.logoutSignal.add(logout);
@@ -132,8 +137,8 @@ package org.bigbluebutton.core {
 			usersMessageSender.saveLockSettings(newLockSettings);
 		}
 		
-		public function sendJoinMeetingMessage():void {
-			usersMessageSender.sendJoinMeetingMessage(conferenceParameters.internalUserID);
+		public function validateToken():void {
+			usersMessageSender.validateToken(conferenceParameters.internalUserID, conferenceParameters.authToken);
 		}
 	}
 }

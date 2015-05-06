@@ -78,6 +78,8 @@ package org.bigbluebutton.model {
 		
 		private var _record:Boolean;
 		
+		private var _authToken:String;
+		
 		public function ConferenceParameters() {
 		}
 		
@@ -224,6 +226,14 @@ package org.bigbluebutton.model {
 			_changedSignal.dispatch();
 		}
 		
+		public function get authToken():String {
+			return _authToken;
+		}
+		
+		public function set authToken(authToken:String):void {
+			_authToken = authToken;
+		}
+		
 		public function load(obj:Object):void {
 			_meetingName = obj.conferenceName;
 			_externMeetingID = obj.externMeetingID;
@@ -239,6 +249,7 @@ package org.bigbluebutton.model {
 			_internalUserID = obj.internalUserId;
 			_logoutUrl = obj.logoutUrl;
 			_record = !(obj.record == "false");
+			_authToken = obj.authToken;
 			_changedSignal.dispatch();
 		}
 	}

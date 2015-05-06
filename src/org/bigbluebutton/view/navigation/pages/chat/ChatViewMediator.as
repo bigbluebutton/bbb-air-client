@@ -19,7 +19,6 @@ package org.bigbluebutton.view.navigation.pages.chat {
 	import org.bigbluebutton.model.chat.ChatMessages;
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.osflash.signals.ISignal;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import spark.components.List;
 	import spark.components.View;
@@ -55,7 +54,6 @@ package org.bigbluebutton.view.navigation.pages.chat {
 		protected var data:Object;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			data = userUISession.currentPageDetails;
 			if (data is User) {
 				createNewChat(data as User);

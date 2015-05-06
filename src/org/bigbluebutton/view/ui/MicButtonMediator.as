@@ -5,7 +5,6 @@ package org.bigbluebutton.view.ui {
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class MicButtonMediator extends Mediator {
@@ -23,7 +22,6 @@ package org.bigbluebutton.view.ui {
 		 * Initialize listeners and Mediator initial state
 		 */
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			(view as MicButton).addEventListener(MouseEvent.CLICK, mouseEventClickHandler);
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			view.setVisibility(userSession.userList.me.voiceJoined);
