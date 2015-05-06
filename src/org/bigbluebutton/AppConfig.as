@@ -1,5 +1,7 @@
 package org.bigbluebutton {
 	
+	import org.bigbluebutton.command.AuthenticationCommand;
+	import org.bigbluebutton.command.AuthenticationSignal;
 	import org.bigbluebutton.command.CameraQualityCommand;
 	import org.bigbluebutton.command.CameraQualitySignal;
 	import org.bigbluebutton.command.ConnectCommand;
@@ -21,13 +23,13 @@ package org.bigbluebutton {
 	import org.bigbluebutton.core.IChatMessageService;
 	import org.bigbluebutton.core.IDeskshareConnection;
 	import org.bigbluebutton.core.ILoginService;
-	import org.bigbluebutton.core.IUsersService;
-	import org.bigbluebutton.core.UsersService;
 	import org.bigbluebutton.core.IPresentationService;
-	import org.bigbluebutton.core.IVoiceConnection;
+	import org.bigbluebutton.core.IUsersService;
 	import org.bigbluebutton.core.IVideoConnection;
+	import org.bigbluebutton.core.IVoiceConnection;
 	import org.bigbluebutton.core.LoginService;
 	import org.bigbluebutton.core.PresentationService;
+	import org.bigbluebutton.core.UsersService;
 	import org.bigbluebutton.core.VideoConnection;
 	import org.bigbluebutton.core.VoiceConnection;
 	import org.bigbluebutton.model.ConferenceParameters;
@@ -68,6 +70,7 @@ package org.bigbluebutton {
 			injector.map(IVideoConnection).toType(VideoConnection);
 			// Signal to Command mapping
 			signalCommandMap.map(ConnectSignal).toCommand(ConnectCommand);
+			signalCommandMap.map(AuthenticationSignal).toCommand(AuthenticationCommand);
 			signalCommandMap.map(ShareMicrophoneSignal).toCommand(ShareMicrophoneCommand);
 			signalCommandMap.map(ShareCameraSignal).toCommand(ShareCameraCommand);
 			signalCommandMap.map(LoadSlideSignal).toCommand(LoadSlideCommand);

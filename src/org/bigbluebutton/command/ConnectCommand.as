@@ -14,10 +14,10 @@ package org.bigbluebutton.command {
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class ConnectCommand extends Command {
+		private const LOG:String = "ConnectCommand::";
 		
 		[Inject]
 		public var userSession:IUserSession;
@@ -60,7 +60,7 @@ package org.bigbluebutton.command {
 		}
 		
 		private function successConnected():void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":successConnected()");
+			trace(LOG + "successConnected()");
 			userSession.mainConnection = connection;
 			userSession.userId = connection.userId;
 			// Set up users message sender in order to send the "joinMeeting" message:
@@ -68,7 +68,7 @@ package org.bigbluebutton.command {
 			// Send the join meeting message, then wait for the reponse
 			userSession.successJoiningMeetingSignal.add(successJoiningMeeting);
 			userSession.unsuccessJoiningMeetingSignal.add(unsuccessJoiningMeeting);
-			usersService.sendJoinMeetingMessage();
+			usersService.validateToken();
 			connection.successConnected.remove(successConnected);
 			connection.unsuccessConnected.remove(unsuccessConnected);
 		}
@@ -99,11 +99,11 @@ package org.bigbluebutton.command {
 			usersService.queryForRecordingStatus();
 			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
 			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
-			usersService.getRoomLockState();
+			//usersService.getRoomLockState();
 		}
 		
 		private function unsuccessJoiningMeeting():void {
-			trace("ConnectCommand::unsuccessJoiningMeeting() -- Failed to join the meeting!!!");
+			trace(LOG + "unsuccessJoiningMeeting() -- Failed to join the meeting!!!");
 			userSession.successJoiningMeetingSignal.remove(successJoiningMeeting);
 			userSession.unsuccessJoiningMeetingSignal.remove(unsuccessJoiningMeeting);
 		}
@@ -115,7 +115,7 @@ package org.bigbluebutton.command {
 		}
 		
 		private function unsuccessConnected(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessConnected()");
+			trace(LOG + "unsuccessConnected()");
 			userUISession.loading = false;
 			userUISession.unsuccessJoined.dispatch("connectionFailed");
 			connection.successConnected.remove(successConnected);
@@ -123,13 +123,13 @@ package org.bigbluebutton.command {
 		}
 		
 		private function successVideoConnected():void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":successVideoConnected()");
+			trace(LOG + "successVideoConnected()");
 			videoConnection.successConnected.remove(successVideoConnected);
 			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 		}
 		
 		private function unsuccessVideoConnected(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessVideoConnected()");
+			trace(LOG + "unsuccessVideoConnected()");
 			videoConnection.unsuccessConnected.remove(unsuccessVideoConnected);
 			videoConnection.successConnected.remove(successVideoConnected);
 		}

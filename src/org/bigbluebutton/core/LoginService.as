@@ -85,7 +85,7 @@ package org.bigbluebutton.core {
 						internalUserId: result.internalUserID,
 						role: result.role,
 						room: result.room,
-						authToken: result.room,
+						authToken: result.authToken,
 						record: result.record,
 						webvoiceconf: result.webvoiceconf,
 						dialnumber: result.dialnumber,

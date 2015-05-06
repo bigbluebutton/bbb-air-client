@@ -57,17 +57,11 @@ package org.bigbluebutton.core {
 					return;
 				}
 			} catch (e:Error) {
-				switch (e.name) {
-					case URL_REQUEST_ERROR_TYPE:
-						onUnsuccess(URL_REQUEST_INVALID_URL_ERROR);
-						break;
-					default:
-						onUnsuccess(URL_REQUEST_GENERIC_ERROR);
-				}
 				trace("The response is probably not a XML. " + e.message);
+				successSignal.dispatch(urlRequest, responseUrl);
 				return;
 			}
-			successSignal.dispatch(urlRequest, responseUrl);
+			onUnsuccess(URL_REQUEST_GENERIC_ERROR);
 		}
 		
 		protected function onUnsuccess(reason:String):void {

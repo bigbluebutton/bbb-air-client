@@ -64,6 +64,12 @@ package org.bigbluebutton.view.navigation.pages.login {
 				case "genericError":
 					view.currentState = LoginPageViewBase.STATE_GENERIC_ERROR;
 					break;
+				case "authTokenTimedOut":
+					view.currentState = LoginPageViewBase.STATE_AUTH_TOKEN_TIMEDOUT;
+					break;
+				case "authTokenInvalid":
+					view.currentState = LoginPageViewBase.STATE_AUTH_TOKEN_INVALID;
+					break;
 				default:
 					view.currentState = LoginPageViewBase.STATE_GENERIC_ERROR;
 					break;

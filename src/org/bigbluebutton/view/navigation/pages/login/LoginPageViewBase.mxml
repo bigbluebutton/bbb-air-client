@@ -18,6 +18,10 @@
 			public static const STATE_GENERIC_ERROR:String = "GenericError";
 			
 			public static const STATE_INAVLID_URL:String = "InvalidURL";
+			
+			public static const STATE_AUTH_TOKEN_TIMEDOUT:String = "AuthTokenTimedOut";
+			
+			public static const STATE_AUTH_TOKEN_INVALID:String = "AuthTokenInvalid";
 		]]>
 	</fx:Script>
 	<view:states>
@@ -28,6 +32,8 @@
 		<s:State name="InvalidPassword" />
 		<s:State name="GenericError" />
 		<s:State name="InvalidURL" />
+		<s:State name="AuthTokenTimedOut" />
+		<s:State name="AuthTokenInvalid" />
 	</view:states>
 	<s:Group width="100%"
 			 height="100%">
@@ -36,16 +42,20 @@
 							  verticalAlign="middle" />
 		</s:layout>
 		<s:Image styleName="bbbLogoStyle"
-				 includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect,InvalidURL" />
+				 includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect,InvalidURL,AuthTokenTimedOut,AuthTokenInvalid" />
 		<s:Label id="messageText0"
 				 width="90%"
-				 includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect,InvalidURL"
+				 textAlign="center"
+				 includeIn="ChecksumError,GenericError,InvalidMeetingIdentifier,InvalidPassword,NoRedirect,InvalidURL,AuthTokenTimedOut,AuthTokenInvalid"
 				 text.ChecksumError="{resourceManager.getString('resources', 'login.error.checksumError')}"
 				 text.GenericError="{resourceManager.getString('resources', 'login.error.genericError')}"
 				 text.InvalidMeetingIdentifier="{resourceManager.getString('resources', 'login.error.invalidMeetingIdentifier')}"
 				 text.InvalidPassword="{resourceManager.getString('resources', 'login.error.invalidPassword')}"
 				 text.NoRedirect="{resourceManager.getString('resources', 'login.error.noRedirect')}"
-				 text.InvalidURL="{resourceManager.getString('resources', 'login.error.invalidURL')}" />
+				 text.InvalidURL="{resourceManager.getString('resources', 'login.error.invalidURL')}"
+				 text.AuthTokenTimedOut="{resourceManager.getString('resources', 'login.error.authTokenTimedOut')}"
+				 text.AuthTokenInvalid="{resourceManager.getString('resources', 'login.error.authTokenInvalid')}" />
+
 
 	</s:Group>
 </view:NoTabView>
