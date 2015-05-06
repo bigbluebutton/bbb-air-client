@@ -6,7 +6,6 @@ package org.bigbluebutton.view.navigation.pages.presentation {
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.presentation.Presentation;
 	import org.bigbluebutton.model.presentation.Slide;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class PresentationViewMediator extends Mediator {
@@ -27,7 +26,6 @@ package org.bigbluebutton.view.navigation.pages.presentation {
 		private var _currentSlide:Slide;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.presentationList.presentationChangeSignal.add(presentationChangeHandler);
 			setPresentation(userSession.presentationList.currentPresentation);
 			FlexGlobals.topLevelApplication.backBtn.visible = false;

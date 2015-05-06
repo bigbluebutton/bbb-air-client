@@ -11,7 +11,6 @@ package org.bigbluebutton.command {
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class ShareCameraCommand extends Command {

@@ -1,31 +1,24 @@
 package org.bigbluebutton.view.navigation.pages.chatrooms {
 	
-	import flash.display.DisplayObject;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.utils.Dictionary;
+	
 	import mx.collections.ArrayCollection;
 	import mx.core.FlexGlobals;
-	import mx.events.FlexEvent;
 	import mx.resources.ResourceManager;
-	import org.bigbluebutton.core.IChatMessageService;
+	
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.model.User;
-	import org.bigbluebutton.model.UserSession;
-	import org.bigbluebutton.model.chat.ChatMessage;
-	import org.bigbluebutton.model.chat.ChatMessageVO;
-	import org.bigbluebutton.model.chat.ChatMessages;
 	import org.bigbluebutton.model.chat.IChatMessagesSession;
 	import org.bigbluebutton.model.chat.PrivateChatMessage;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
-	import org.osmf.logging.Log;
+	
 	import robotlegs.bender.bundles.mvcs.Mediator;
+	
 	import spark.components.List;
 	import spark.events.IndexChangeEvent;
-	import spark.events.ListEvent;
 	
 	public class ChatRoomsViewMediator extends Mediator {
 		
@@ -56,7 +49,6 @@ package org.bigbluebutton.view.navigation.pages.chatrooms {
 		private var _usersAdded:Array = new Array();
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			dicUsertoChat = new Dictionary();
 			dataProvider = new ArrayCollection();
 			dataProvider.addItem({name: ResourceManager.getInstance().getString('resources', 'chat.item.publicChat'), publicChat: true, user: null, chatMessages: chatMessagesSession.publicChat});

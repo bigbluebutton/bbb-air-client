@@ -10,7 +10,6 @@ package org.bigbluebutton.view.navigation.pages.userdetails {
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.view.navigation.pages.PagesENUM;
 	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class UserDetaisViewMediator extends Mediator {
@@ -27,7 +26,6 @@ package org.bigbluebutton.view.navigation.pages.userdetails {
 		protected var _user:User;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			_user = userUISession.currentPageDetails as User;
 			userSession.userList.userChangeSignal.add(userChanged);
 			userSession.userList.userRemovedSignal.add(userRemoved);

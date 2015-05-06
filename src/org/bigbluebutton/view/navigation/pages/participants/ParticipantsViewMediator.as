@@ -14,7 +14,6 @@ package org.bigbluebutton.view.navigation.pages.participants {
 	import org.bigbluebutton.view.navigation.pages.TransitionAnimationENUM;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import spark.events.IndexChangeEvent;
 	
@@ -36,7 +35,6 @@ package org.bigbluebutton.view.navigation.pages.participants {
 		protected var usersSignal:ISignal;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			dataProvider = new ArrayCollection();
 			view.list.dataProvider = dataProvider;
 			view.list.addEventListener(IndexChangeEvent.CHANGE, onSelectParticipant);

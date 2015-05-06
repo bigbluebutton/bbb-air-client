@@ -8,10 +8,10 @@ package org.bigbluebutton.command {
 	import org.bigbluebutton.model.IUserSession;
 	import org.bigbluebutton.model.IUserUISession;
 	import org.bigbluebutton.view.ui.ILoginButton;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Command;
 	
 	public class JoinMeetingCommand extends Command {
+		private const LOG:String = "JoinMeetingCommand::";
 		
 		[Inject]
 		public var loginService:ILoginService;
@@ -40,7 +40,7 @@ package org.bigbluebutton.command {
 		}
 		
 		protected function successJoined(userObject:Object):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":successJoined()");
+			trace(LOG + "successJoined()");
 			conferenceParameters.load(userObject);
 			connectSignal.dispatch(new String(userSession.config.application.uri));
 		}
@@ -50,7 +50,7 @@ package org.bigbluebutton.command {
 		}
 		
 		protected function unsuccessJoined(reason:String):void {
-			Log.getLogger("org.bigbluebutton").info(String(this) + ":unsuccessJoined()");
+			trace(LOG + "unsuccessJoined()");
 			userUISession.loading = false;
 			userUISession.unsuccessJoined.dispatch(reason);
 		}

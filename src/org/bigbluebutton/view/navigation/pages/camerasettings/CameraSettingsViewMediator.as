@@ -13,7 +13,6 @@ package org.bigbluebutton.view.navigation.pages.camerasettings {
 	import org.bigbluebutton.model.User;
 	import org.bigbluebutton.model.UserList;
 	import org.bigbluebutton.view.ui.SwapCameraButton;
-	import org.osmf.logging.Log;
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
 	public class CameraSettingsViewMediator extends Mediator {
@@ -31,7 +30,6 @@ package org.bigbluebutton.view.navigation.pages.camerasettings {
 		public var changeQualitySignal:CameraQualitySignal;
 		
 		override public function initialize():void {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 			userSession.userList.userChangeSignal.add(userChangeHandler);
 			var userMe:User = userSession.userList.me;
 			if (Camera.getCamera() == null) {

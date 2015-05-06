@@ -7,9 +7,9 @@ package org.bigbluebutton.core {
 	import org.bigbluebutton.model.IConferenceParameters;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
-	import org.osmf.logging.Log;
 	
 	public class DeskshareConnection extends DefaultConnectionCallback implements IDeskshareConnection {
+		private const LOG:String = "DeskshareConnection::";
 		
 		[Inject]
 		public var baseConnection:IBaseConnection;
@@ -40,7 +40,6 @@ package org.bigbluebutton.core {
 		private var _deskSO:SharedObject;
 		
 		public function DeskshareConnection() {
-			Log.getLogger("org.bigbluebutton").info(String(this));
 		}
 		
 		[PostConstruct]
@@ -60,12 +59,9 @@ package org.bigbluebutton.core {
 		
 		private function checkIfStreamIsPublishing():void {
 			baseConnection.connection.call("deskshare.checkIfStreamIsPublishing",
-										   new Responder
-										   (
-										   function(result:Object):void
-										   {
-											   if (result != null && (result.publishing as Boolean))
-											   {
+										   new Responder(
+										   function(result:Object):void {
+											   if (result != null && (result.publishing as Boolean)) {
 												   streamHeight = result.height as Number;
 												   streamWidth = result.width as Number;
 												   
@@ -73,14 +69,11 @@ package org.bigbluebutton.core {
 												   
 												   // if we receive result from the server, then somebody is sharing their desktop - dispatch the notification signal
 												   isStreaming = true;
-											   }
-											   else
-											   {
+											   } else {
 												   trace("No deskshare stream being published");
 											   }
 										   },
-										   function(status:Object):void
-										   {
+										   function(status:Object):void {
 											   trace("Error while trying to call remote method on the server");
 										   }
 										   ),
@@ -158,7 +151,7 @@ package org.bigbluebutton.core {
 		}
 		
 		public function appletStarted(videoWidth:Number, videoHeight:Number):void {
-			trace("Deskshare Applet started sharing.");
+			trace(LOG + "appletStarted() sharing.");
 		}
 		
 		/**
@@ -167,7 +160,7 @@ package org.bigbluebutton.core {
 		 *
 		 */
 		public function startViewing(videoWidth:Number, videoHeight:Number):void {
-			trace("DeskShare-startViewing.");
+			trace(LOG + "startViewing()");
 			streamWidth = videoWidth;
 			streamHeight = videoHeight;
 			isStreaming = true;
@@ -177,7 +170,7 @@ package org.bigbluebutton.core {
 		 * Called by the server to notify clients that the deskshare stream has stopped.
 		 */
 		public function deskshareStreamStopped():void {
-			trace("DeskShare-deskshareStreamStopped.");
+			trace(LOG + "deskshareStreamStopped()");
 			isStreaming = false;
 		}
 		
